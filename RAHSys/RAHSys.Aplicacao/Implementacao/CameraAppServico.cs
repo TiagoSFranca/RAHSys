@@ -31,11 +31,11 @@ namespace RAHSys.Aplicacao.Implementacao
             }
         }
 
-        public ConsultaAppModel<CameraAppModel> Consultar(IEnumerable<int> idList, string localizacao, string descricao, int pagina, int quantidade)
+        public ConsultaAppModel<CameraAppModel> Consultar(IEnumerable<int> idList, string localizacao, string descricao, string ordenacao, bool crescente, int pagina, int quantidade)
         {
             var consulta = new ConsultaAppModel<CameraAppModel>();
 
-            var resultado = _cameraServico.Consultar(idList, localizacao, descricao, pagina, quantidade);
+            var resultado = _cameraServico.Consultar(idList, localizacao, descricao, ordenacao, crescente, pagina, quantidade);
 
             consulta.ItensPorPagina = resultado.ItensPorPagina;
             consulta.PaginaAtual = resultado.PaginaAtual;

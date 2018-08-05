@@ -1,7 +1,50 @@
-﻿<div class="row">
+﻿@using RAHSys.Aplicacao.AppModels;
+@using RAHSys.Extras.Enums;
+
+@model ConsultaAppModel<CameraAppModel>
+<div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="portlet light ">
-            TESTE
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart font-dark hide"></i>
+                    <span class="caption-subject font-green-steel uppercase bold">Buscar</span>
+                </div>
+                <div class="actions">
+                    @Html.ActionLink("Adicionar", "Adicionar", "Camera", new { @class = "btn btn-no-border green btn-outline btn-circle btn-md" })
+                </div>
+            </div>
+            <div class="portlet-body">
+                @using (Html.BeginForm("Index", "Camera", FormMethod.Get))
+                {
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.Editor("localizacao", new { htmlAttributes = new { @class = "form-control", @placeholder = "Localização" } })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.Editor("descricao", new { htmlAttributes = new { @class = "form-control", @placeholder = "Descrição" } })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.DropDownList("itensPagina", EnumHelper.GetSelectList(typeof(ItensPorPaginaEnum)), "Itens Por Página", new { @class = "form-control" })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-md-offset-1">
+                            <div class="form-group form-md-line-input ">
+                                <button type="submit" class="btn blue">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
     </div>
 </div>

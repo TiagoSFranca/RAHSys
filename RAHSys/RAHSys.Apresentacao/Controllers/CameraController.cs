@@ -1,8 +1,4 @@
 ﻿using RAHSys.Aplicacao.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace RAHSys.Apresentacao.Controllers
@@ -14,12 +10,14 @@ namespace RAHSys.Apresentacao.Controllers
         public CameraController(ICameraAppServico cameraAppServico)
         {
             _cameraAppServico = cameraAppServico;
+            ViewBag.Title = "Câmeras";
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string localizacao, string descricao, string ordenacao, bool? crescente, int? pagina, int? itensPagina)
         {
-            var p = _cameraAppServico.GetById(1);
-            return View();
+            ViewBag.SubTitle = "Consultar";
+            var consulta = _cameraAppServico.Consultar(null, localizacao, descricao, ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? 40);
+            return View(consulta);
         }
     }
 }

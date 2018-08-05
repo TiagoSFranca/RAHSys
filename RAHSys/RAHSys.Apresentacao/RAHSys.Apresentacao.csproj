@@ -4627,6 +4627,10 @@
       <Project>{7615F75C-12C1-4316-8E7E-7C632CDB5BCC}</Project>
       <Name>RAHSys.Aplicacao</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RAHSys.Extras\RAHSys.Extras.csproj">
+      <Project>{FEDAE43C-7914-4553-B02E-8DEFA8AEB1E6}</Project>
+      <Name>RAHSys.Extras</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RAHSys.Infra.CrossCutting.IoC\RAHSys.Infra.CrossCutting.IoC.csproj">
       <Project>{BDA642AE-7AAE-4EC1-B370-D481F287FBB3}</Project>
       <Name>RAHSys.Infra.CrossCutting.IoC</Name>

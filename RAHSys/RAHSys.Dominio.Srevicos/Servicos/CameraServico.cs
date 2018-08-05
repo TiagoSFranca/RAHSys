@@ -16,7 +16,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
             _cameraRepositorio = cameraRepositorio;
         }
 
-        public ConsultaModel<CameraModel> Consultar(IEnumerable<int> idList, string localizacao, string descricao, int pagina, int quantidade)
+        public ConsultaModel<CameraModel> Consultar(IEnumerable<int> idList, string localizacao, string descricao, string ordenacao, bool crescente, int pagina, int quantidade)
         {
             var consultaModel = new ConsultaModel<CameraModel>(pagina, quantidade);
 
@@ -29,6 +29,20 @@ namespace RAHSys.Dominio.Servicos.Servicos
 
             if (!string.IsNullOrEmpty(descricao))
                 query = query.Where(c => c.Descricao.ToLower().Contains(descricao.ToLower()));
+
+            switch ((ordenacao ?? string.Empty).ToLower())
+            {
+                case "localização":
+                    query = crescente ? query.OrderBy(c => c.Localizacao) : query.OrderByDescending(c => c.Localizacao);
+                    break;
+                case "descrição":
+                    query = crescente ? query.OrderBy(c => c.Descricao) : query.OrderByDescending(c => c.Descricao);
+                    break;
+                default:
+                    query = crescente ? query.OrderBy(c => c.IdCamera) : query.OrderByDescending(c => c.IdCamera);
+                    break;
+
+            }
 
             var resultado = query.Skip(pagina * quantidade).Take(quantidade).ToList();
             consultaModel.TotalItens = query.Count();

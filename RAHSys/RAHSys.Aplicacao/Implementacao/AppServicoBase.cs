@@ -1,5 +1,6 @@
 ﻿using log4net;
 using RAHSys.Dominio.Servicos.Interfaces.Servicos;
+using RAHSys.Infra.CrossCutting.Exceptions;
 using System;
 using System.Reflection;
 
@@ -21,9 +22,9 @@ namespace RAHSys.Aplicacao.Implementacao
             _serviceBase.Dispose();
         }
 
-        protected void LogExceptions(Exception exceptionThrown)
+        protected void LogExceptions(CustomBaseException exceptionThrown)
         {
-            //TODO: TABELA PARA SALVAR O LOG
+            LogicalThreadContext.Properties["codError"] = exceptionThrown.CodExcecao;
             logger.Error(exceptionThrown.Message, exceptionThrown);
         }
 

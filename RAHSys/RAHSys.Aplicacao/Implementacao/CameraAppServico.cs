@@ -6,6 +6,7 @@ using RAHSys.Aplicacao.AppModels;
 using RAHSys.Aplicacao.Extensoes;
 using System.Collections.Generic;
 using System.Linq;
+using RAHSys.Infra.CrossCutting.Exceptions;
 
 namespace RAHSys.Aplicacao.Implementacao
 {
@@ -26,25 +27,35 @@ namespace RAHSys.Aplicacao.Implementacao
             }
             catch (Exception ex)
             {
-                LogExceptions(ex);
-                throw;
+                var nex = new CustomBaseException(ex);
+                LogExceptions(nex);
+                throw nex;
             }
         }
 
         public ConsultaAppModel<CameraAppModel> Consultar(IEnumerable<int> idList, string localizacao, string descricao, string ordenacao, bool crescente, int pagina, int quantidade)
         {
-            var consulta = new ConsultaAppModel<CameraAppModel>();
+            try
+            {
+                var consulta = new ConsultaAppModel<CameraAppModel>();
 
-            var resultado = _cameraServico.Consultar(idList, localizacao, descricao, ordenacao, crescente, pagina, quantidade);
+                var resultado = _cameraServico.Consultar(idList, localizacao, descricao, ordenacao, crescente, pagina, quantidade);
 
-            consulta.ItensPorPagina = resultado.ItensPorPagina;
-            consulta.PaginaAtual = resultado.PaginaAtual;
-            consulta.TotalPaginas = resultado.TotalPaginas;
-            consulta.TotalItens = resultado.TotalItens;
+                consulta.ItensPorPagina = resultado.ItensPorPagina;
+                consulta.PaginaAtual = resultado.PaginaAtual;
+                consulta.TotalPaginas = resultado.TotalPaginas;
+                consulta.TotalItens = resultado.TotalItens;
 
-            consulta.Resultado = resultado.Resultado.Select(r => r.MapearParaAplicacao()).ToList();
+                consulta.Resultado = resultado.Resultado.Select(r => r.MapearParaAplicacao()).ToList();
 
-            return consulta;
+                return consulta;
+            }
+            catch (Exception ex)
+            {
+                var nex = new CustomBaseException(ex);
+                LogExceptions(nex);
+                throw nex;
+            }
         }
 
         public CameraAppModel ObterPorId(int id)
@@ -55,8 +66,9 @@ namespace RAHSys.Aplicacao.Implementacao
             }
             catch (Exception ex)
             {
-                LogExceptions(ex);
-                throw;
+                var nex = new CustomBaseException(ex);
+                LogExceptions(nex);
+                throw nex;
             }
         }
 
@@ -69,8 +81,9 @@ namespace RAHSys.Aplicacao.Implementacao
             }
             catch (Exception ex)
             {
-                LogExceptions(ex);
-                throw;
+                var nex = new CustomBaseException(ex);
+                LogExceptions(nex);
+                throw nex;
             }
         }
 
@@ -82,8 +95,9 @@ namespace RAHSys.Aplicacao.Implementacao
             }
             catch (Exception ex)
             {
-                LogExceptions(ex);
-                throw;
+                var nex = new CustomBaseException(ex);
+                LogExceptions(nex);
+                throw nex;
             }
         }
     }

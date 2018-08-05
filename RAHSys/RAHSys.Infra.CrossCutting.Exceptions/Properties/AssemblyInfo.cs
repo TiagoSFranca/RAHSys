@@ -5,15 +5,14 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RAHSys.Aplicacao")]
+[assembly: AssemblyTitle("RAHSys.Infra.CrossCutting.Exceptions")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("RAHSys.Aplicacao")]
+[assembly: AssemblyProduct("RAHSys.Infra.CrossCutting.Exceptions")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: log4net.Config.XmlConfigurator(Watch = true)]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from
@@ -21,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("7615f75c-12c1-4316-8e7e-7c632cdb5bcc")]
+[assembly: Guid("cf13771b-3a99-4f43-85ab-3ce7f3a8ebc4")]
 
 // Version information for an assembly consists of the following four values:
 //

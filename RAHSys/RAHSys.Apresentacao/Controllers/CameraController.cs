@@ -4,6 +4,8 @@ using System;
 using System.Web.Mvc;
 using PagedList;
 using RAHSys.Extras;
+using RAHSys.Infra.CrossCutting.Exceptions;
+using System.Collections.Generic;
 
 namespace RAHSys.Apresentacao.Controllers
 {
@@ -25,9 +27,17 @@ namespace RAHSys.Apresentacao.Controllers
             ViewBag.Ordenacao = ordenacao;
             ViewBag.Crescente = crescente ?? true;
             ViewBag.ItensPagina = itensPagina;
-            var consulta = _cameraAppServico.Consultar(null, localizacao, descricao, ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? 40);
-            var s = new StaticPagedList<CameraAppModel>(consulta.Resultado, consulta.PaginaAtual, consulta.ItensPorPagina, consulta.TotalItens);
-            return View(s);
+            try
+            {
+                var consulta = _cameraAppServico.Consultar(null, localizacao, descricao, ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? 40);
+                var resultado = new StaticPagedList<CameraAppModel>(consulta.Resultado, consulta.PaginaAtual, consulta.ItensPorPagina, consulta.TotalItens);
+                return View(resultado);
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+                return View(new StaticPagedList<CameraAppModel>(new List<CameraAppModel>(), 1, 1, 0));
+            }
         }
 
         [HttpGet]
@@ -49,9 +59,9 @@ namespace RAHSys.Apresentacao.Controllers
                     MensagemSucesso(MensagensPadrao.CadastroSucesso);
                     return RedirectToAction("Index", "Camera", new { localizacao = cameraAppModel.Localizacao, descricao = cameraAppModel.Descricao });
                 }
-                catch (Exception ex)
+                catch (CustomBaseException ex)
                 {
-                    MensagemErro(ex.Message);
+                    MensagemErro(ex.Mensagem);
                     return View(cameraAppModel);
                 }
             }
@@ -63,10 +73,18 @@ namespace RAHSys.Apresentacao.Controllers
         {
             ViewBag.SubTitle = "Editar Câmera";
             var cameraModel = new CameraAppModel();
-            cameraModel = _cameraAppServico.ObterPorId(id);
-            if (cameraModel == null)
+            try
             {
-                MensagemErro("Câmera não encontrada");
+                cameraModel = _cameraAppServico.ObterPorId(id);
+                if (cameraModel == null)
+                {
+                    MensagemErro("Câmera não encontrada");
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
                 return RedirectToAction("Index");
             }
             return View(cameraModel);
@@ -83,9 +101,9 @@ namespace RAHSys.Apresentacao.Controllers
                     MensagemSucesso(MensagensPadrao.AtualizacaoSucesso);
                     return RedirectToAction("Index", "Camera", new { localizacao = cameraAppModel.Localizacao, descricao = cameraAppModel.Descricao });
                 }
-                catch (Exception ex)
+                catch (CustomBaseException ex)
                 {
-                    MensagemErro(ex.Message);
+                    MensagemErro(ex.Mensagem);
                     return View(cameraAppModel);
                 }
             }
@@ -97,10 +115,18 @@ namespace RAHSys.Apresentacao.Controllers
         {
             ViewBag.SubTitle = "Excluir Câmera";
             var cameraModel = new CameraAppModel();
-            cameraModel = _cameraAppServico.ObterPorId(id);
-            if (cameraModel == null)
+            try
             {
-                MensagemErro("Câmera não encontrada");
+                cameraModel = _cameraAppServico.ObterPorId(id);
+                if (cameraModel == null)
+                {
+                    MensagemErro("Câmera não encontrada");
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
                 return RedirectToAction("Index");
             }
             return View(cameraModel);
@@ -114,9 +140,9 @@ namespace RAHSys.Apresentacao.Controllers
                 _cameraAppServico.Remover(cameraAppModel.IdCamera);
                 MensagemSucesso(MensagensPadrao.ExclusaoSucesso);
             }
-            catch (Exception ex)
+            catch (CustomBaseException ex)
             {
-                MensagemErro(ex.Message);
+                MensagemErro(ex.Mensagem);
             }
             return RedirectToAction("Index", "Camera");
         }

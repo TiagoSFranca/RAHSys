@@ -41,7 +41,8 @@
                         @Html.Hidden("crescente", (bool)ViewBag.Crescente)
                         <div class="col-md-3">
                             <div class="form-group form-md-line-input ">
-                                <button type="submit" class="btn blue">Buscar</button>
+                                <button type="submit" class="btn blue btn-circle">Buscar</button>
+                                @Html.ActionLink("Limpar", "Index", "Camera", null, new { @class = "btn btn-white btn-outline btn-circle btn-md" })
                             </div>
                         </div>
                     </div>
@@ -97,7 +98,7 @@
                                     </td>
                                     <td class="text-right">
                                         @Html.ActionLink("Alterar", "Editar", "Camera", new { id = item.IdCamera }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
-                                        @Html.ActionLink("Excluir", "Excluir", "Camera", new { id = item.IdCamera }, new { @class = "btn red-flamingo btn-circle btn-md" })
+                                        @Html.ActionLink("Excluir", "Excluir", "Camera", new { id = item.IdCamera }, new { @class = "btn red-flamingo btn-circle btn-md abrirModal" })
                                     </td>
                                 </tr>
                             }
@@ -126,4 +127,5 @@
 
 @section scripts{
     @Scripts.Render("~/Ordenacao/js")
+    @Scripts.Render("~/Modal/js")
 }

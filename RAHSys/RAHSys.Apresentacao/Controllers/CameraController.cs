@@ -3,6 +3,8 @@ using RAHSys.Aplicacao.Interfaces;
 using System;
 using System.Web.Mvc;
 using PagedList;
+using RAHSys.Extras;
+
 namespace RAHSys.Apresentacao.Controllers
 {
     public class CameraController : ControllerBase
@@ -44,7 +46,7 @@ namespace RAHSys.Apresentacao.Controllers
                 try
                 {
                     _cameraAppServico.Adicionar(cameraAppModel);
-                    MensagemSucesso("Cadastro realizado com sucesso!");
+                    MensagemSucesso(MensagensPadrao.CadastroSucesso);
                     return RedirectToAction("Index", "Camera", new { localizacao = cameraAppModel.Localizacao, descricao = cameraAppModel.Descricao });
                 }
                 catch (Exception ex)
@@ -68,6 +70,55 @@ namespace RAHSys.Apresentacao.Controllers
                 return RedirectToAction("Index");
             }
             return View(cameraModel);
+        }
+
+        [HttpPost]
+        public ActionResult Editar(CameraAppModel cameraAppModel)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _cameraAppServico.Atualizar(cameraAppModel);
+                    MensagemSucesso(MensagensPadrao.AtualizacaoSucesso);
+                    return RedirectToAction("Index", "Camera", new { localizacao = cameraAppModel.Localizacao, descricao = cameraAppModel.Descricao });
+                }
+                catch (Exception ex)
+                {
+                    MensagemErro(ex.Message);
+                    return View(cameraAppModel);
+                }
+            }
+            return View(cameraAppModel);
+        }
+
+        [HttpGet]
+        public ActionResult Excluir(int id)
+        {
+            ViewBag.SubTitle = "Excluir Câmera";
+            var cameraModel = new CameraAppModel();
+            cameraModel = _cameraAppServico.ObterPorId(id);
+            if (cameraModel == null)
+            {
+                MensagemErro("Câmera não encontrada");
+                return RedirectToAction("Index");
+            }
+            return View(cameraModel);
+        }
+
+        [HttpPost]
+        public ActionResult Excluir(CameraAppModel cameraAppModel)
+        {
+            try
+            {
+                _cameraAppServico.Remover(cameraAppModel.IdCamera);
+                MensagemSucesso(MensagensPadrao.ExclusaoSucesso);
+            }
+            catch (Exception ex)
+            {
+                MensagemErro(ex.Message);
+            }
+            return RedirectToAction("Index", "Camera");
         }
     }
 }

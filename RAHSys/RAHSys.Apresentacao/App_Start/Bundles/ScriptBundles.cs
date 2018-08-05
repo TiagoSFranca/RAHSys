@@ -69,6 +69,10 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
             bundles.Add(new ScriptBundle("~/Ordenacao/js").Include(
                 "~/Scripts/ordenacao.js"
                 ));
+
+            bundles.Add(new ScriptBundle("~/Modal/js").Include(
+                "~/Scripts/modal.js"
+                ));
         }
     }
 }

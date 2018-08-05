@@ -1,27 +1,29 @@
-﻿using System.Web.Mvc;
+﻿using RAHSys.Extras;
+using System.Web.Mvc;
 
 namespace RAHSys.Apresentacao.Controllers
 {
     public class ControllerBase : Controller
     {
-        public void MensagemSucesso(string mensagem)
+        public void MensagemSucesso(string mensagem = null)
         {
-            TempData["success"] = mensagem;
+
+            TempData["success"] = mensagem ?? MensagensPadrao.SucessoPadrao;
         }
 
-        public void MensagemErro(string mensagem)
+        public void MensagemErro(string mensagem = null)
         {
-            TempData["error"] = mensagem;
+            TempData["error"] = mensagem ?? MensagensPadrao.ErroPadrao;
         }
 
-        public void MensagemInformacao(string mensagem)
+        public void MensagemInformacao(string mensagem = null)
         {
-            TempData["info"] = mensagem;
+            TempData["info"] = mensagem ?? MensagensPadrao.InformacaoPadrao;
         }
 
-        public void MensagemAtencao(string mensagem)
+        public void MensagemAtencao(string mensagem = null)
         {
-            TempData["warning"] = mensagem;
+            TempData["warning"] = mensagem ?? MensagensPadrao.AtencaoPadrao;
         }
     }
 }

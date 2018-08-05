@@ -2,7 +2,7 @@
 using RAHSys.Aplicacao.Interfaces;
 using System;
 using System.Web.Mvc;
-
+using PagedList;
 namespace RAHSys.Apresentacao.Controllers
 {
     public class CameraController : ControllerBase
@@ -18,8 +18,14 @@ namespace RAHSys.Apresentacao.Controllers
         public ActionResult Index(string localizacao, string descricao, string ordenacao, bool? crescente, int? pagina, int? itensPagina)
         {
             ViewBag.SubTitle = "Consultar";
+            ViewBag.Localizacao = localizacao;
+            ViewBag.Cescricao = descricao;
+            ViewBag.Ordenacao = ordenacao;
+            ViewBag.Crescente = crescente ?? true;
+            ViewBag.ItensPagina = itensPagina;
             var consulta = _cameraAppServico.Consultar(null, localizacao, descricao, ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? 40);
-            return View(consulta);
+            var s = new StaticPagedList<CameraAppModel>(consulta.Resultado, consulta.PaginaAtual, consulta.ItensPorPagina, consulta.TotalItens);
+            return View(s);
         }
 
         [HttpGet]

@@ -65,6 +65,10 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
                 "~/Content/assets/layouts/global/scripts/quick-sidebar.min.js",
                 "~/Content/assets/layouts/global/scripts/quick-nav.min.js"
                 ));
+
+            bundles.Add(new ScriptBundle("~/Ordenacao/js").Include(
+                "~/Sscripts/ordenacao.js"
+                ));
         }
     }
 }

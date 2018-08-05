@@ -8,6 +8,7 @@ using System.Linq;
 namespace RAHSys.Dominio.Servicos.Servicos
 {
     //TODO: Verificar se há regras de negócio quanto a duplicidade
+    //TODO: Validação de exclusão
     public class TipoTelhadoServico : ServicoBase<TipoTelhadoModel>, ITipoTelhadoServico
     {
         private readonly ITipoTelhadoRepositorio _tipoTelhadoRepositorio;

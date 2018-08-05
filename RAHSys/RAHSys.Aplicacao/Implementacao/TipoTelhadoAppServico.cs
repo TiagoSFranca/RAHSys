@@ -25,6 +25,11 @@ namespace RAHSys.Aplicacao.Implementacao
             {
                 _tipoTelhadoServico.Adicionar(obj.MapearParaDominio());
             }
+            catch (CustomBaseException ex)
+            {
+                LogExceptions(ex);
+                throw;
+            }
             catch (Exception ex)
             {
                 var nex = new CustomBaseException(ex);
@@ -79,6 +84,11 @@ namespace RAHSys.Aplicacao.Implementacao
                 var tipoTelhado = _tipoTelhadoServico.ObterPorId(id);
                 _tipoTelhadoServico.Remover(tipoTelhado);
             }
+            catch (CustomBaseException ex)
+            {
+                LogExceptions(ex);
+                throw;
+            }
             catch (Exception ex)
             {
                 var nex = new CustomBaseException(ex);
@@ -92,6 +102,11 @@ namespace RAHSys.Aplicacao.Implementacao
             try
             {
                 _tipoTelhadoServico.Atualizar(obj.MapearParaDominio());
+            }
+            catch (CustomBaseException ex)
+            {
+                LogExceptions(ex);
+                throw;
             }
             catch (Exception ex)
             {

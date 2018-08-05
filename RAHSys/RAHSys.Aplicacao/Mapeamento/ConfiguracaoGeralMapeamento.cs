@@ -2,9 +2,9 @@
 
 namespace RAHSys.Aplicacao.Mapeamento
 {
-    public class ConfiguracaoPerfilAplicacao : Profile
+    public class ConfiguracaoGeralMapeamento : Profile
     {
-        public ConfiguracaoPerfilAplicacao()
+        public ConfiguracaoGeralMapeamento()
         {
             CreateMap<string, string>().ConvertUsing(str => (str ?? "").Trim());
         }

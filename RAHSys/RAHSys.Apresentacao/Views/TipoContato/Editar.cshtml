@@ -1,0 +1,46 @@
+﻿@model RAHSys.Aplicacao.AppModels.TipoContatoAppModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart font-dark hide"></i>
+                    <span class="caption-subject font-green-steel uppercase bold">@ViewBag.SubTitle</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                @using (Html.BeginForm("Editar", "TipoContato", FormMethod.Post, new { @class = "form-horizontal margin-bottom-40" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.IdTipoContato)
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(model => model.IdTipoContato, "Código", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.IdTipoContato, new { htmlAttributes = new { @class = "form-control", @placeholder = "Código", @required = "required", @disabled = "disabled" } })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.Descricao, "Descrição", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(model => model.Descricao, new { @class = "form-control", @placeholder = "Descrição", @required = "required" })
+                            @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" class="btn blue btn-circle">Salvar</button>
+                            @Html.ActionLink("Cancelar", "Index", "TipoContato", null, new { @class = "btn yellow-haze btn-outline btn-circle btn-md" })
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

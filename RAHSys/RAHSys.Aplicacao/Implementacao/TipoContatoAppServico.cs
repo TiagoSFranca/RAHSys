@@ -10,20 +10,20 @@ using RAHSys.Infra.CrossCutting.Exceptions;
 
 namespace RAHSys.Aplicacao.Implementacao
 {
-    public class CameraAppServico : AppServicoBase<CameraModel>, ICameraAppServico
+    public class TipoContatoAppServico : AppServicoBase<TipoContatoModel>, ITipoContatoAppServico
     {
-        private readonly ICameraServico _cameraServico;
+        private readonly ITipoContatoServico _tipoContatoServico;
 
-        public CameraAppServico(ICameraServico cameraServico) : base(cameraServico)
+        public TipoContatoAppServico(ITipoContatoServico tipoContatoServico) : base(tipoContatoServico)
         {
-            _cameraServico = cameraServico;
+            _tipoContatoServico = tipoContatoServico;
         }
 
-        public void Adicionar(CameraAppModel obj)
+        public void Adicionar(TipoContatoAppModel obj)
         {
             try
             {
-                _cameraServico.Adicionar(obj.MapearParaDominio());
+                _tipoContatoServico.Adicionar(obj.MapearParaDominio());
             }
             catch (CustomBaseException ex)
             {
@@ -38,13 +38,13 @@ namespace RAHSys.Aplicacao.Implementacao
             }
         }
 
-        public ConsultaAppModel<CameraAppModel> Consultar(IEnumerable<int> idList, string localizacao, string descricao, string ordenacao, bool crescente, int pagina, int quantidade)
+        public ConsultaAppModel<TipoContatoAppModel> Consultar(IEnumerable<int> idList, string descricao, string ordenacao, bool crescente, int pagina, int quantidade)
         {
             try
             {
-                var consulta = new ConsultaAppModel<CameraAppModel>();
+                var consulta = new ConsultaAppModel<TipoContatoAppModel>();
 
-                var resultado = _cameraServico.Consultar(idList, localizacao, descricao, ordenacao, crescente, pagina, quantidade);
+                var resultado = _tipoContatoServico.Consultar(idList, descricao, ordenacao, crescente, pagina, quantidade);
 
                 consulta.ItensPorPagina = resultado.ItensPorPagina;
                 consulta.PaginaAtual = resultado.PaginaAtual;
@@ -63,11 +63,11 @@ namespace RAHSys.Aplicacao.Implementacao
             }
         }
 
-        public CameraAppModel ObterPorId(int id)
+        public TipoContatoAppModel ObterPorId(int id)
         {
             try
             {
-                return _cameraServico.ObterPorId(id).MapearParaAplicacao();
+                return _tipoContatoServico.ObterPorId(id).MapearParaAplicacao();
             }
             catch (Exception ex)
             {
@@ -81,8 +81,8 @@ namespace RAHSys.Aplicacao.Implementacao
         {
             try
             {
-                var camera = _cameraServico.ObterPorId(id);
-                _cameraServico.Remover(camera);
+                var tipoContato = _tipoContatoServico.ObterPorId(id);
+                _tipoContatoServico.Remover(tipoContato);
             }
             catch (CustomBaseException ex)
             {
@@ -97,11 +97,11 @@ namespace RAHSys.Aplicacao.Implementacao
             }
         }
 
-        public void Atualizar(CameraAppModel obj)
+        public void Atualizar(TipoContatoAppModel obj)
         {
             try
             {
-                _cameraServico.Atualizar(obj.MapearParaDominio());
+                _tipoContatoServico.Atualizar(obj.MapearParaDominio());
             }
             catch (CustomBaseException ex)
             {
@@ -115,5 +115,6 @@ namespace RAHSys.Aplicacao.Implementacao
                 throw nex;
             }
         }
+
     }
 }

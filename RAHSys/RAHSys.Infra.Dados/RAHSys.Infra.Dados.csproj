@@ -50,6 +50,7 @@
     <Compile Include="Contexto\RAHSysContexto.cs" />
     <Compile Include="EntityConfig\CameraConfiguracao.cs" />
     <Compile Include="EntityConfig\LogErrorConfiguracao.cs" />
+    <Compile Include="EntityConfig\TipoContatoConfiguracao.cs" />
     <Compile Include="EntityConfig\TipoTelhadoConfiguracao.cs" />
     <Compile Include="Migrations\201808051105333_Criacao da tabela Camera.cs" />
     <Compile Include="Migrations\201808051105333_Criacao da tabela Camera.Designer.cs">
@@ -63,10 +64,15 @@
     <Compile Include="Migrations\201808052214480_Criacao da tabela TipoTelhado.Designer.cs">
       <DependentUpon>201808052214480_Criacao da tabela TipoTelhado.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808052323543_Criacao da tabela TipoContato.cs" />
+    <Compile Include="Migrations\201808052323543_Criacao da tabela TipoContato.Designer.cs">
+      <DependentUpon>201808052323543_Criacao da tabela TipoContato.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\CameraRepositorio.cs" />
     <Compile Include="Repositorios\RepositorioBase.cs" />
+    <Compile Include="Repositorios\TipoContatoRepositorio.cs" />
     <Compile Include="Repositorios\TipoTelhadoRepository.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +103,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808052214480_Criacao da tabela TipoTelhado.resx">
       <DependentUpon>201808052214480_Criacao da tabela TipoTelhado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808052323543_Criacao da tabela TipoContato.resx">
+      <DependentUpon>201808052323543_Criacao da tabela TipoContato.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

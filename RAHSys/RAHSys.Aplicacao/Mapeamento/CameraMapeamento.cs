@@ -4,9 +4,9 @@ using RAHSys.Entidades.Entidades;
 
 namespace RAHSys.Aplicacao.Mapeamento
 {
-    public class CameraPerfilAplicacao : Profile
+    public class CameraMapeamento : Profile
     {
-        public CameraPerfilAplicacao()
+        public CameraMapeamento()
         {
             CreateMap<CameraModel, CameraAppModel>().ReverseMap();
         }

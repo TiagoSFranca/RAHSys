@@ -4,9 +4,9 @@ using RAHSys.Entidades.Entidades;
 
 namespace RAHSys.Aplicacao.Mapeamento
 {
-    public class TipoTelhadoPerfilAplicacao : Profile
+    public class TipoTelhadoMapeamento : Profile
     {
-        public TipoTelhadoPerfilAplicacao()
+        public TipoTelhadoMapeamento()
         {
             CreateMap<TipoTelhadoModel, TipoTelhadoAppModel>().ReverseMap();
         }

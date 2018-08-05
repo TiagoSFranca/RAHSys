@@ -7,6 +7,7 @@ using RAHSys.Entidades;
 
 namespace RAHSys.Dominio.Servicos.Servicos
 {
+    //TODO: Verificar se há regras de negócio quanto a duplicidade
     public class CameraServico : ServicoBase<CameraModel>, ICameraServico
     {
         private readonly ICameraRepositorio _cameraRepositorio;

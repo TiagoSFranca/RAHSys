@@ -16,6 +16,7 @@ namespace RAHSys.Infra.Dados.Contexto
         public DbSet<CameraModel> Camera { get; set; }
         public DbSet<LogErrorModel> LogError { get; set; }
         public DbSet<TipoTelhadoModel> TipoTelhado { get; set; }
+        public DbSet<TipoContatoModel> TipoContato { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -40,6 +41,7 @@ namespace RAHSys.Infra.Dados.Contexto
             modelBuilder.Configurations.Add(new CameraConfiguracao());
             modelBuilder.Configurations.Add(new LogErrorConfiguracao());
             modelBuilder.Configurations.Add(new TipoTelhadoConfiguracao());
+            modelBuilder.Configurations.Add(new TipoContatoConfiguracao());
         }
     }
 }

@@ -9,11 +9,13 @@ namespace RAHSys.Apresentacao.AutoMapper
         {
             Mapper.Initialize(x =>
             {
-                x.AddProfile(new ConfiguracaoPerfilAplicacao());
+                x.AddProfile(new ConfiguracaoGeralMapeamento());
 
-                x.AddProfile(new CameraPerfilAplicacao());
+                x.AddProfile(new CameraMapeamento());
 
-                x.AddProfile(new TipoTelhadoPerfilAplicacao());
+                x.AddProfile(new TipoTelhadoMapeamento());
+
+                x.AddProfile(new TipoContatoMapeamento());
             });
         }
     }

@@ -167,6 +167,7 @@
     <Compile Include="Controllers\CameraController.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TipoContatoController.cs" />
     <Compile Include="Controllers\TipoTelhadoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -4641,6 +4642,10 @@
     <Content Include="Views\TipoTelhado\Editar.cshtml" />
     <Content Include="Views\TipoTelhado\Adicionar.cshtml" />
     <Content Include="Views\TipoTelhado\Excluir.cshtml" />
+    <Content Include="Views\TipoContato\Index.cshtml" />
+    <Content Include="Views\TipoContato\Adicionar.cshtml" />
+    <Content Include="Views\TipoContato\Editar.cshtml" />
+    <Content Include="Views\TipoContato\Excluir.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

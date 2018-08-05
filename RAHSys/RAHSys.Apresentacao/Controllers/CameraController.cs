@@ -61,11 +61,11 @@ namespace RAHSys.Apresentacao.Controllers
         {
             ViewBag.SubTitle = "Editar Câmera";
             var cameraModel = new CameraAppModel();
-            if (id > 0)
+            cameraModel = _cameraAppServico.ObterPorId(id);
+            if (cameraModel == null)
             {
-                cameraModel = _cameraAppServico.ObterPorId(id);
-                if (cameraModel == null)
-                    MensagemErro("Câmera não encontrada");
+                MensagemErro("Câmera não encontrada");
+                return RedirectToAction("Index");
             }
             return View(cameraModel);
         }

@@ -43,6 +43,7 @@
     <Compile Include="ConsultaModel.cs" />
     <Compile Include="Entidades\CameraModel.cs" />
     <Compile Include="Entidades\LogErrorModel.cs" />
+    <Compile Include="Entidades\TipoTelhadoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

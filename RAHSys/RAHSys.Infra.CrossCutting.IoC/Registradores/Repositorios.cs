@@ -9,6 +9,7 @@ namespace RAHSys.Infra.CrossCutting.IoC.Registradores
         public static void Register(Container container)
         {
             container.Register<ICameraRepositorio, CameraRepositorio>(Lifestyle.Scoped);
+            container.Register<ITipoTelhadoRepositorio, TipoTelhadoRepositorio>(Lifestyle.Scoped);
         }
     }
 }

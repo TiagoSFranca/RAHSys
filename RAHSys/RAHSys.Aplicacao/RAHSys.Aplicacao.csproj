@@ -32,13 +32,18 @@
   <ItemGroup>
     <Compile Include="AppModels\CameraAppModel.cs" />
     <Compile Include="AppModels\ConsultaAppModel.cs" />
+    <Compile Include="AppModels\TipoTelhadoAppModel.cs" />
     <Compile Include="Extensoes\CameraExtensao.cs" />
+    <Compile Include="Extensoes\TipoTelhadoExtensao.cs" />
     <Compile Include="Implementacao\AppServicoBase.cs" />
     <Compile Include="Implementacao\CameraAppServico.cs" />
+    <Compile Include="Implementacao\TipoTelhadoAppServico.cs" />
     <Compile Include="Interfaces\IAppServicoBase.cs" />
     <Compile Include="Interfaces\ICameraAppServico.cs" />
+    <Compile Include="Interfaces\ITipoTelhadoAppServico.cs" />
     <Compile Include="Mapeamento\CameraPerfilAplicacao.cs" />
     <Compile Include="Mapeamento\ConfiguracaoPerfilAplicacao.cs" />
+    <Compile Include="Mapeamento\TipoTelhadoPerfilAplicacao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -2,25 +2,24 @@ namespace RAHSys.Infra.Dados.Migrations
 {
     using System.Data.Entity.Migrations;
 
-    public partial class CriacaodatabelaCamera : DbMigration
+    public partial class CriacaodatabelaTipoTelhado : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.Camera",
+                "dbo.TipoTelhado",
                 c => new
                     {
-                        IdCamera = c.Int(nullable: false, identity: true),
-                        Localizacao = c.String(nullable: false, maxLength: 256, unicode: false),
+                        IdTipoTelhado = c.Int(nullable: false, identity: true),
                         Descricao = c.String(nullable: false, maxLength: 256, unicode: false),
                     })
-                .PrimaryKey(t => t.IdCamera);
+                .PrimaryKey(t => t.IdTipoTelhado);
             
         }
         
         public override void Down()
         {
-            DropTable("dbo.Camera");
+            DropTable("dbo.TipoTelhado");
         }
     }
 }

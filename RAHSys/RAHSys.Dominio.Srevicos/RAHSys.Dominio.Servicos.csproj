@@ -42,11 +42,14 @@
   <ItemGroup>
     <Compile Include="Interfaces\Repositorios\ICameraRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioBase.cs" />
+    <Compile Include="Interfaces\Repositorios\ITipoTelhadoRepositorio.cs" />
     <Compile Include="Interfaces\Servicos\ICameraServico.cs" />
     <Compile Include="Interfaces\Servicos\IServicoBase.cs" />
+    <Compile Include="Interfaces\Servicos\ITipoTelhadoServico.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicos\CameraServico.cs" />
     <Compile Include="Servicos\ServicoBase.cs" />
+    <Compile Include="Servicos\TipoTelhadoServico.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RAHSys.Entidades\RAHSys.Dominio.Entidades.csproj">

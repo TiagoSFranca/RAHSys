@@ -13,6 +13,7 @@ namespace RAHSys.Apresentacao.AutoMapper
 
                 x.AddProfile(new CameraPerfilAplicacao());
 
+                x.AddProfile(new TipoTelhadoPerfilAplicacao());
             });
         }
     }

@@ -1,4 +1,4 @@
-﻿@model RAHSys.Aplicacao.AppModels.CameraAppModel
+﻿@model RAHSys.Aplicacao.AppModels.TipoTelhadoAppModel
 @{
     Layout = "~/Views/Shared/_LayoutModal.cshtml";
 }
@@ -7,10 +7,10 @@
     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
     <h4 class="modal-title">@ViewBag.SubTitle</h4>
 </div>
-@using (Html.BeginForm("Excluir", "Camera", FormMethod.Post, new { @class = "form-horizontal margin-bottom-40" }))
+@using (Html.BeginForm("Excluir", "TipoTelhado", FormMethod.Post, new { @class = "form-horizontal margin-bottom-40" }))
 {
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(model => model.IdCamera)
+    @Html.HiddenFor(model => model.IdTipoTelhado)
     <div class="modal-body">
         <div class="row">
             <div class="col-md-12 col-sm-12">
@@ -18,7 +18,7 @@
                     <div class="portlet-body">
                         <div class="form-group form-md-line-input">
                             <div class="col-md-12">
-                                Tem certeza que deseja excluir a câmera com a localização <strong>@Model.Localizacao</strong> e descrição <strong>@Model.Descricao</strong>
+                                Tem certeza que deseja excluir o tipo de telhado com a descrição <strong>@Model.Descricao</strong>
                             </div>
                         </div>
                     </div>

@@ -1,8 +1,7 @@
 namespace RAHSys.Infra.Dados.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class CriacaodatabelaLogError : DbMigration
     {
         public override void Up()

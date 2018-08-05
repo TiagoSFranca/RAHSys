@@ -20,7 +20,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
         {
             var consultaModel = new ConsultaModel<CameraModel>(pagina, quantidade);
 
-            var query = _cameraRepositorio.Query();
+            var query = _cameraRepositorio.Consultar();
             if (idList?.Count() > 0)
                 query = query.Where(c => idList.Contains(c.IdCamera));
 
@@ -43,8 +43,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
                     break;
 
             }
-
-            var resultado = query.Skip(pagina * quantidade).Take(quantidade).ToList();
+            var resultado = query.Skip((pagina == 1 ? 0 : pagina) * quantidade).Take(quantidade).ToList();
             consultaModel.TotalItens = query.Count();
             consultaModel.Resultado = resultado;
 

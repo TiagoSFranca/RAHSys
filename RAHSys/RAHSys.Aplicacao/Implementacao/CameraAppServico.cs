@@ -18,11 +18,11 @@ namespace RAHSys.Aplicacao.Implementacao
             _cameraServico = cameraServico;
         }
 
-        public void Add(CameraAppModel obj)
+        public void Adicionar(CameraAppModel obj)
         {
             try
             {
-                _cameraServico.Add(obj.MapearParaDominio());
+                _cameraServico.Adicionar(obj.MapearParaDominio());
             }
             catch (Exception ex)
             {
@@ -47,11 +47,11 @@ namespace RAHSys.Aplicacao.Implementacao
             return consulta;
         }
 
-        public CameraAppModel GetById(int id)
+        public CameraAppModel ObterPorId(int id)
         {
             try
             {
-                return _cameraServico.GetById(id).MapearParaAplicacao();
+                return _cameraServico.ObterPorId(id).MapearParaAplicacao();
             }
             catch (Exception ex)
             {
@@ -60,12 +60,12 @@ namespace RAHSys.Aplicacao.Implementacao
             }
         }
 
-        public void Remove(int id)
+        public void Remover(int id)
         {
             try
             {
-                var camera = _cameraServico.GetById(id);
-                _cameraServico.Remove(camera);
+                var camera = _cameraServico.ObterPorId(id);
+                _cameraServico.Remover(camera);
             }
             catch (Exception ex)
             {
@@ -74,11 +74,11 @@ namespace RAHSys.Aplicacao.Implementacao
             }
         }
 
-        public void Update(CameraAppModel obj)
+        public void Atualizar(CameraAppModel obj)
         {
             try
             {
-                _cameraServico.Update(obj.MapearParaDominio());
+                _cameraServico.Atualizar(obj.MapearParaDominio());
             }
             catch (Exception ex)
             {

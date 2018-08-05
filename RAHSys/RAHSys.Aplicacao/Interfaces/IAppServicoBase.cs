@@ -2,12 +2,12 @@
 {
     public interface IAppServicoBase<TEntity> where TEntity : class
     {
-        void Add(TEntity obj);
+        void Adicionar(TEntity obj);
 
-        void Update(TEntity obj);
+        void Atualizar(TEntity obj);
 
-        TEntity GetById(int id);
+        TEntity ObterPorId(int id);
 
-        void Remove(int id);
+        void Remover(int id);
     }
 }

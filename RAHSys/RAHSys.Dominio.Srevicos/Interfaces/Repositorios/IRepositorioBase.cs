@@ -4,16 +4,16 @@ namespace RAHSys.Dominio.Servicos.Interfaces.Repositorios
 {
     public interface IRepositorioBase<TEntity> where TEntity : class
     {
-        void Add(TEntity obj);
+        void Adicionar(TEntity obj);
 
-        void Update(TEntity obj);
+        void Atualizar(TEntity obj);
 
-        TEntity GetById(int id, bool detached = false);
+        TEntity ObterPorId(int id, bool detached = false);
 
-        void Remove(TEntity obj);
+        void Remover(TEntity obj);
 
         void Dispose();
 
-        IQueryable<TEntity> Query();
+        IQueryable<TEntity> Consultar();
     }
 }

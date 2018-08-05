@@ -159,6 +159,7 @@
     <Compile Include="App_Start\Bundles\StyleBundles.cs" />
     <Compile Include="AutoMapper\AutoMapperConfiguracao.cs" />
     <Compile Include="Controllers\CameraController.cs" />
+    <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -4229,6 +4230,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\img\avatar.png" />
     <Content Include="Content\img\logo-default.jpg" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -4586,6 +4589,8 @@
     <Content Include="Content\assets\global\plugins\wysihtml\minified\wysihtml.min.map" />
     <Content Include="Content\assets\global\plugins\wysihtml\minified\wysihtml.table_editing.min.map" />
     <Content Include="Content\assets\global\plugins\wysihtml\minified\wysihtml.toolbar.min.map" />
+    <Content Include="Content\toastr.scss" />
+    <Content Include="Content\toastr.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -4599,6 +4604,8 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -4616,6 +4623,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Camera\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Camera\Adicionar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

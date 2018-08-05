@@ -2,13 +2,13 @@
 {
     public interface IServicoBase<TEntity> where TEntity : class
     {
-        void Add(TEntity obj);
+        void Adicionar(TEntity obj);
 
-        void Update(TEntity obj);
+        void Atualizar(TEntity obj);
 
-        TEntity GetById(int id);
+        TEntity ObterPorId(int id);
 
-        void Remove(TEntity obj);
+        void Remover(TEntity obj);
 
         void Dispose();
 

@@ -12,9 +12,9 @@ namespace RAHSys.Dominio.Servicos.Servicos
             _repository = repository;
         }
 
-        public void Add(TEntity obj)
+        public void Adicionar(TEntity obj)
         {
-            _repository.Add(obj);
+            _repository.Adicionar(obj);
         }
 
         public void Dispose()
@@ -22,19 +22,19 @@ namespace RAHSys.Dominio.Servicos.Servicos
             _repository.Dispose();
         }
 
-        public TEntity GetById(int id)
+        public TEntity ObterPorId(int id)
         {
-            return _repository.GetById(id);
+            return _repository.ObterPorId(id);
         }
 
-        public void Remove(TEntity obj)
+        public void Remover(TEntity obj)
         {
-            _repository.Remove(obj);
+            _repository.Remover(obj);
         }
 
-        public void Update(TEntity obj)
+        public void Atualizar(TEntity obj)
         {
-            _repository.Update(obj);
+            _repository.Atualizar(obj);
         }
     }
 }

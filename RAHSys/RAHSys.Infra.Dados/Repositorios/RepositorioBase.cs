@@ -10,7 +10,7 @@ namespace RAHSys.Infra.Dados.Repositorios
     {
         protected RAHSysContexto _context = new RAHSysContexto();
 
-        public void Add(TEntity obj)
+        public void Adicionar(TEntity obj)
         {
             _context.Set<TEntity>().Add(obj);
             _context.SaveChanges();
@@ -21,7 +21,7 @@ namespace RAHSys.Infra.Dados.Repositorios
             _context.Dispose();
         }
 
-        public TEntity GetById(int id, bool detached = false)
+        public TEntity ObterPorId(int id, bool detached = false)
         {
             var element = _context.Set<TEntity>().Find(id);
             if (detached && element != null)
@@ -30,19 +30,19 @@ namespace RAHSys.Infra.Dados.Repositorios
 
         }
 
-        public void Remove(TEntity obj)
+        public void Remover(TEntity obj)
         {
             _context.Set<TEntity>().Remove(obj);
             _context.SaveChanges();
         }
 
-        public void Update(TEntity obj)
+        public void Atualizar(TEntity obj)
         {
             _context.Entry(obj).State = EntityState.Modified;
             _context.SaveChanges();
         }
 
-        public IQueryable<TEntity> Query()
+        public IQueryable<TEntity> Consultar()
         {
             return _context.Set<TEntity>().AsQueryable();
         }

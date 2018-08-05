@@ -25,7 +25,8 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
                 "~/Content/assets/global/plugins/js.cookie.min.js",
                 "~/Content/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js",
                 "~/Content/assets/global/plugins/jquery.blockui.min.js",
-                "~/Content/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js"
+                "~/Content/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js",
+                "~/Scripts/toastr.min.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/PageLevelPlugins/js").Include(

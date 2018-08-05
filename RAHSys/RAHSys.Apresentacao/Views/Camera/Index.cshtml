@@ -12,7 +12,7 @@
                     <span class="caption-subject font-green-steel uppercase bold">Buscar</span>
                 </div>
                 <div class="actions">
-                    @Html.ActionLink("Adicionar", "Adicionar", "Camera", new { @class = "btn btn-no-border green btn-outline btn-circle btn-md" })
+                    @Html.ActionLink("Adicionar", "Adicionar", "Camera", null, new { @class = "btn btn-no-border green btn-outline btn-circle btn-md" })
                 </div>
             </div>
             <div class="portlet-body">
@@ -113,13 +113,15 @@
                             <span class="italic bold">
                                 @Model.FirstItemOnPage a @Model.LastItemOnPage de @Model.TotalItemCount registros
                             </span>
-                            @Html.PagedListPager(Model,
-                           pagina => Url.Action("Index", "Camera", new {
-                               pagina, localizacao = ViewBag.Localizacao, descricao = ViewBag.Descricao,
-                               itensPagina = ViewBag.ItensPagina,
-                               ordenacao = ViewBag.Ordenacao,
-                               crescente= ViewBag.Crescente
-                           }))
+                            <div class="text-center">
+                                @Html.PagedListPager(Model,
+                               pagina => Url.Action("Index", "Camera", new {
+                                   pagina, localizacao = ViewBag.Localizacao, descricao = ViewBag.Descricao,
+                                   itensPagina = ViewBag.ItensPagina,
+                                   ordenacao = ViewBag.Ordenacao,
+                                   crescente= ViewBag.Crescente
+                               }))
+                            </div>
                         </div>
                     </div>
                 }

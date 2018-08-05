@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F8D891E8-4056-4F3F-BEED-2379498F6E70}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RAHSys.Infra.Dados</RootNamespace>
+    <AssemblyName>RAHSys.Infra.Dados</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Contexto\RAHSysContexto.cs" />
+    <Compile Include="EntityConfig\CameraConfiguracao.cs" />
+    <Compile Include="EntityConfig\LogErrorConfiguracao.cs" />
+    <Compile Include="Migrations\201808051105333_Criacao da tabela Camera.cs" />
+    <Compile Include="Migrations\201808051105333_Criacao da tabela Camera.Designer.cs">
+      <DependentUpon>201808051105333_Criacao da tabela Camera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808051106120_Criacao da tabela LogError.cs" />
+    <Compile Include="Migrations\201808051106120_Criacao da tabela LogError.Designer.cs">
+      <DependentUpon>201808051106120_Criacao da tabela LogError.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\CameraRepositorio.cs" />
+    <Compile Include="Repositorios\RepositorioBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RAHSys.Dominio.Srevicos\RAHSys.Dominio.Servicos.csproj">
+      <Project>{E21BA9C2-8EE8-467E-B909-3B7114C6D646}</Project>
+      <Name>RAHSys.Dominio.Servicos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RAHSys.Entidades\RAHSys.Dominio.Entidades.csproj">
+      <Project>{173F46C6-E4E8-4FB6-BAFB-A25A1560B09C}</Project>
+      <Name>RAHSys.Dominio.Entidades</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201808051105333_Criacao da tabela Camera.resx">
+      <DependentUpon>201808051105333_Criacao da tabela Camera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808051106120_Criacao da tabela LogError.resx">
+      <DependentUpon>201808051106120_Criacao da tabela LogError.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

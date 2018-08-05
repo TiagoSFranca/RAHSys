@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BDA642AE-7AAE-4EC1-B370-D481F287FBB3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RAHSys.Infra.CrossCutting.IoC</RootNamespace>
+    <AssemblyName>RAHSys.Infra.CrossCutting.IoC</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="BootStrapper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registradores\AppServicos.cs" />
+    <Compile Include="Registradores\Repositorios.cs" />
+    <Compile Include="Registradores\Servicos.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RAHSys.Aplicacao\RAHSys.Aplicacao.csproj">
+      <Project>{7615F75C-12C1-4316-8E7E-7C632CDB5BCC}</Project>
+      <Name>RAHSys.Aplicacao</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RAHSys.Dominio.Srevicos\RAHSys.Dominio.Servicos.csproj">
+      <Project>{E21BA9C2-8EE8-467E-B909-3B7114C6D646}</Project>
+      <Name>RAHSys.Dominio.Servicos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RAHSys.Infra.Dados\RAHSys.Infra.Dados.csproj">
+      <Project>{F8D891E8-4056-4F3F-BEED-2379498F6E70}</Project>
+      <Name>RAHSys.Infra.Dados</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="SimpleInjector, Version=4.3.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.4.3.0\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

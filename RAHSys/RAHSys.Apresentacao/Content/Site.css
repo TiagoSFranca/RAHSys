@@ -22,3 +22,11 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.circulo {
+    min-height: 200px;
+    min-width: 200px;
+    background-color: #e5e9f2;
+    border-radius: 50%;
+    display: inline-block;
+}

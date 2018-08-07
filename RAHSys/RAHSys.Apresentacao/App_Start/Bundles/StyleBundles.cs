@@ -15,7 +15,8 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
                 "~/Content/assets/global/plugins/simple-line-icons/simple-line-icons.min.css",
                 "~/Content/assets/global/plugins/bootstrap/css/bootstrap.min.css",
                 "~/Content/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css",
-                "~/Content/toastr.min.css"
+                "~/Content/toastr.min.css",
+                "~/Content/site.css"
                 ));
 
             bundles.Add(new StyleBundle("~/PageLevelPlugins/css").Include(
@@ -26,7 +27,7 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
                 ));
 
             bundles.Add(new StyleBundle("~/Global/css").Include(
-                "~/Content/assets/global/css/components-md.min.css" ,
+                "~/Content/assets/global/css/components-md.min.css",
                 "~/Content/assets/global/css/plugins-md.min.css"
                 ));
 

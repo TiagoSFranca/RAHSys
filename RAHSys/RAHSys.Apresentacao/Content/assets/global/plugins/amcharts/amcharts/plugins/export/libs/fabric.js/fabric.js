@@ -3562,7 +3562,7 @@ if (typeof console !== 'undefined') {
       }, { });
 
       // add values parsed from style, which take precedence over attributes
-      // (see: http://www.w3.org/TR/SVG/styling.html#UsingPresentationAttributes)
+      // (see: http://www.w3.org/TR/SVG/styling.html#UsingApresentacaoAttributes)
       ownAttributes = extend(ownAttributes,
         extend(getGlobalStylesForElement(element, svgUid), fabric.parseStyleAttribute(element)));
       if (ownAttributes.font) {

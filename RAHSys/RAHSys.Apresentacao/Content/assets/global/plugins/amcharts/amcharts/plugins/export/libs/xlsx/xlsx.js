@@ -2007,7 +2007,7 @@ function parse_FontFlags(data, length) {
 var DocSummaryPIDDSI = {
     0x01: { n: 'CodePage', t: VT_I2 },
     0x02: { n: 'Category', t: VT_STRING },
-    0x03: { n: 'PresentationFormat', t: VT_STRING },
+    0x03: { n: 'ApresentacaoFormat', t: VT_STRING },
     0x04: { n: 'ByteCount', t: VT_I4 },
     0x05: { n: 'LineCount', t: VT_I4 },
     0x06: { n: 'ParagraphCount', t: VT_I4 },

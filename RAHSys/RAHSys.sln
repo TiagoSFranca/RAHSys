@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RAHSys.Apresentacao", "RAHSys.Apresentacao\RAHSys.Apresentacao.csproj", "{DBE46D72-15CB-4E88-AB3F-8EBCDE292AA8}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Apresentação", "0 - Apresentação", "{69570954-4DAC-48F2-96FA-B1B4921E86DB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Infra", "3 - Infra", "{CA86BD98-8768-43A1-A482-F475A2C0F729}"
@@ -33,16 +31,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RAHSys.Extras", "RAHSys.Ext
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RAHSys.Infra.CrossCutting.Exceptions", "RAHSys.Infra.CrossCutting.Exceptions\RAHSys.Infra.CrossCutting.Exceptions.csproj", "{CF13771B-3A99-4F43-85AB-3CE7F3A8EBC4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RAHSys.Apresentacao", "RAHSys.Apresentacao\RAHSys.Apresentacao.csproj", "{C6D4CEC1-F05A-4AF2-B688-3AAD640A075E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DBE46D72-15CB-4E88-AB3F-8EBCDE292AA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DBE46D72-15CB-4E88-AB3F-8EBCDE292AA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DBE46D72-15CB-4E88-AB3F-8EBCDE292AA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DBE46D72-15CB-4E88-AB3F-8EBCDE292AA8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{173F46C6-E4E8-4FB6-BAFB-A25A1560B09C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{173F46C6-E4E8-4FB6-BAFB-A25A1560B09C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{173F46C6-E4E8-4FB6-BAFB-A25A1560B09C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -71,12 +67,15 @@ Global
 		{CF13771B-3A99-4F43-85AB-3CE7F3A8EBC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF13771B-3A99-4F43-85AB-3CE7F3A8EBC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF13771B-3A99-4F43-85AB-3CE7F3A8EBC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6D4CEC1-F05A-4AF2-B688-3AAD640A075E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6D4CEC1-F05A-4AF2-B688-3AAD640A075E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6D4CEC1-F05A-4AF2-B688-3AAD640A075E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6D4CEC1-F05A-4AF2-B688-3AAD640A075E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{DBE46D72-15CB-4E88-AB3F-8EBCDE292AA8} = {69570954-4DAC-48F2-96FA-B1B4921E86DB}
 		{173F46C6-E4E8-4FB6-BAFB-A25A1560B09C} = {32AF86EE-61AA-4A42-9E19-9F3654771D98}
 		{E21BA9C2-8EE8-467E-B909-3B7114C6D646} = {32AF86EE-61AA-4A42-9E19-9F3654771D98}
 		{DE8039E2-6118-4CD9-A247-C31A2347D0B5} = {CA86BD98-8768-43A1-A482-F475A2C0F729}
@@ -86,6 +85,7 @@ Global
 		{7615F75C-12C1-4316-8E7E-7C632CDB5BCC} = {75025FC1-191F-4258-9B4C-3E5CB34A477D}
 		{FEDAE43C-7914-4553-B02E-8DEFA8AEB1E6} = {CBEEE14B-2C1E-4537-BF48-FC422065B08F}
 		{CF13771B-3A99-4F43-85AB-3CE7F3A8EBC4} = {452A86BF-D48E-427B-A9EC-C84A7E727522}
+		{C6D4CEC1-F05A-4AF2-B688-3AAD640A075E} = {69570954-4DAC-48F2-96FA-B1B4921E86DB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {40FB3E43-0D9B-4307-BCCC-D5962292D435}

@@ -1,6 +1,7 @@
 ﻿using PagedList;
 using RAHSys.Aplicacao.AppModels;
 using RAHSys.Aplicacao.Interfaces;
+using RAHSys.Apresentacao.Attributes;
 using RAHSys.Extras;
 using RAHSys.Infra.CrossCutting.Exceptions;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 namespace RAHSys.Apresentacao.Controllers
 {
     //TODO: Verificar se há regras de negócio quanto a duplicidade
+    [RAHAuthorize(Roles = "Engenharia")]
     public class TipoTelhadoController : ControllerBase
     {
         private readonly ITipoTelhadoAppServico _tipoTelhadoAppServico;
@@ -22,7 +24,7 @@ namespace RAHSys.Apresentacao.Controllers
         public ActionResult Index(string descricao, string ordenacao, bool? crescente, int? pagina, int? itensPagina)
         {
             ViewBag.SubTitle = "Consultar";
-            ViewBag.Cescricao = descricao;
+            ViewBag.Descricao = descricao;
             ViewBag.Ordenacao = ordenacao;
             ViewBag.Crescente = crescente ?? true;
             ViewBag.ItensPagina = itensPagina;

@@ -38,7 +38,7 @@
                                     <li class="dropdown dropdown-user dropdown-dark">
                                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                             <img alt="" class="img-circle" src="@Url.Content("~/Content/img/avatar.png")">
-                                            <span class="username username-hide-mobile">USUÁRIO</span>
+                                            <span class="username username-hide-mobile">@User.Identity.Name</span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu-default">
                                             <li>
@@ -116,7 +116,7 @@
                                         </a>
                                         <ul class="dropdown-menu pull-left">
                                             <li aria-haspopup="true" class=" ">
-                                                @Html.ActionLink("Inicio", "Index", "Home")
+                                                @Html.ActionLink("Tipos de Telhado", "Index", "TipoTelhado")
                                             </li>
                                         </ul>
                                     </li>

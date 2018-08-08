@@ -12,7 +12,7 @@ using RAHSys.Apresentacao.Models;
 
 namespace RAHSys.Apresentacao.Controllers
 {
-    [Authorize]
+    [Authorize]    
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -48,6 +48,15 @@ namespace RAHSys.Apresentacao.Controllers
             }
         }
 
+        /// <summary>
+        /// Redirecionamento para a tela de acesso negado.
+        /// </summary>
+        /// <returns>Tela de Acesso Negado</returns>
+        [AllowAnonymous]
+        public ActionResult Unauthorized()
+        {            
+            return View("AccessDenied");
+        }
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -71,7 +80,19 @@ namespace RAHSys.Apresentacao.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            //var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+
+            // **************************************************************************
+            // ATENÇÃO: Trecho alterado para correção do Login do ASP.NET que considerava  
+            // o e-mail como o UserName para login.
+            var userLogin = await SignInManager.UserManager.FindByEmailAsync(model.Email);
+            SignInStatus result;
+            if (userLogin != null)
+                result = await SignInManager.PasswordSignInAsync(userLogin.UserName, model.Password, model.RememberMe, shouldLockout: false);
+            else
+                result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            // **************************************************************************
+
             switch (result)
             {
                 case SignInStatus.Success:
@@ -192,7 +213,7 @@ namespace RAHSys.Apresentacao.Controllers
         //
         // POST: /Account/ForgotPassword
         [HttpPost]
-        [AllowAnonymous]
+        [AllowAnonymous]        
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {

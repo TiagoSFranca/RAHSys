@@ -14,6 +14,8 @@ namespace RAHSys.Aplicacao.AppModels
         [MaxLength(256)]
         public string ContatoInicial { get; set; }
 
+        public int? IdContratoEndereco { get; set; }
+
         public ContratoEnderecoAppModel ContratoEndereco { get; set; }
     }
 }

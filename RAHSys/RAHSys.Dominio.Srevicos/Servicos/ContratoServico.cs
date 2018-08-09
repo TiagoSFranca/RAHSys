@@ -46,6 +46,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
                     break;
 
             }
+            var p = query.ToList();
             var resultado = query.Skip((pagina == 1 ? 0 : pagina - 1) * quantidade).Take(quantidade).ToList();
             consultaModel.TotalItens = query.Count();
             consultaModel.Resultado = resultado;

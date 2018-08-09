@@ -86,10 +86,47 @@ namespace RAHSys.Apresentacao.Controllers
                 catch (CustomBaseException ex)
                 {
                     MensagemErro(ex.Mensagem);
-                    return View(contratoAdicionarModel);
+                    return View(contratoRetorno);
                 }
             }
             return View(contratoRetorno);
+        }
+
+        [HttpGet]
+        public ActionResult Excluir(int id)
+        {
+            ViewBag.SubTitle = "Excluir Contrato";
+            var contratoModel = new ContratoAppModel();
+            try
+            {
+                contratoModel = _contratoAppServico.ObterPorId(id);
+                if (contratoModel == null)
+                {
+                    MensagemErro("Contrato não encontrado");
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+                return RedirectToAction("Index");
+            }
+            return View(contratoModel);
+        }
+
+        [HttpPost]
+        public ActionResult Excluir(ContratoAppModel contratoAppModel)
+        {
+            try
+            {
+                _contratoAppServico.Remover(contratoAppModel.IdContrato);
+                MensagemSucesso(MensagensPadrao.ExclusaoSucesso);
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+            }
+            return RedirectToAction("Index", "Contrato");
         }
     }
 }

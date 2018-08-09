@@ -1,5 +1,6 @@
 ﻿using RAHSys.Dominio.Servicos.Interfaces.Repositorios;
 using RAHSys.Entidades.Entidades;
+using System.Data.Entity;
 
 namespace RAHSys.Infra.Dados.Repositorios
 {
@@ -23,6 +24,12 @@ namespace RAHSys.Infra.Dados.Repositorios
             contratoEndereco.IdEndereco = endereco.IdEndereco;
 
             _context.ContratoEndereco.Add(contratoEndereco);
+
+            _context.SaveChanges();
+
+            obj.IdContratoEndereco = contratoEndereco.IdContratoEndereco;
+
+            _context.Entry(obj).State = EntityState.Modified;
 
             _context.SaveChanges();
         }

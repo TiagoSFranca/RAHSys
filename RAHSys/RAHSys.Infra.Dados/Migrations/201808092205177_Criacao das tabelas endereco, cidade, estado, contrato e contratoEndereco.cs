@@ -3,7 +3,7 @@ namespace RAHSys.Infra.Dados.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class CriacaodastabelasenderecocidadeestadoecontratoEndereco : DbMigration
+    public partial class CriacaodastabelasenderecocidadeestadocontratoecontratoEndereco : DbMigration
     {
         public override void Up()
         {
@@ -50,6 +50,19 @@ namespace RAHSys.Infra.Dados.Migrations
                 .Index(t => t.IdEndereco);
             
             CreateTable(
+                "dbo.Contrato",
+                c => new
+                    {
+                        IdContrato = c.Int(nullable: false, identity: true),
+                        NomeEmpresa = c.String(nullable: false, maxLength: 256, unicode: false),
+                        ContatoInicial = c.String(nullable: false, maxLength: 256, unicode: false),
+                        IdContratoEndereco = c.Int(),
+                    })
+                .PrimaryKey(t => t.IdContrato)
+                .ForeignKey("dbo.ContratoEndereco", t => t.IdContratoEndereco)
+                .Index(t => t.IdContratoEndereco);
+            
+            CreateTable(
                 "dbo.Estado",
                 c => new
                     {
@@ -59,27 +72,22 @@ namespace RAHSys.Infra.Dados.Migrations
                     })
                 .PrimaryKey(t => t.IdEstado);
             
-            AddColumn("dbo.Contrato", "ContratoEndereco_IdContratoEndereco", c => c.Int());
-            CreateIndex("dbo.Contrato", "ContratoEndereco_IdContratoEndereco");
-            AddForeignKey("dbo.Contrato", "ContratoEndereco_IdContratoEndereco", "dbo.ContratoEndereco", "IdContratoEndereco");
-            DropColumn("dbo.Contrato", "Endereco");
         }
         
         public override void Down()
         {
-            AddColumn("dbo.Contrato", "Endereco", c => c.String(nullable: false, maxLength: 256, unicode: false));
             DropForeignKey("dbo.Cidade", "IdEstado", "dbo.Estado");
             DropForeignKey("dbo.Endereco", "IdCidade", "dbo.Cidade");
             DropForeignKey("dbo.ContratoEndereco", "IdEndereco", "dbo.Endereco");
             DropForeignKey("dbo.ContratoEndereco", "IdContrato", "dbo.Contrato");
-            DropForeignKey("dbo.Contrato", "ContratoEndereco_IdContratoEndereco", "dbo.ContratoEndereco");
+            DropForeignKey("dbo.Contrato", "IdContratoEndereco", "dbo.ContratoEndereco");
             DropIndex("dbo.Cidade", new[] { "IdEstado" });
             DropIndex("dbo.Endereco", new[] { "IdCidade" });
             DropIndex("dbo.ContratoEndereco", new[] { "IdEndereco" });
             DropIndex("dbo.ContratoEndereco", new[] { "IdContrato" });
-            DropIndex("dbo.Contrato", new[] { "ContratoEndereco_IdContratoEndereco" });
-            DropColumn("dbo.Contrato", "ContratoEndereco_IdContratoEndereco");
+            DropIndex("dbo.Contrato", new[] { "IdContratoEndereco" });
             DropTable("dbo.Estado");
+            DropTable("dbo.Contrato");
             DropTable("dbo.ContratoEndereco");
             DropTable("dbo.Endereco");
             DropTable("dbo.Cidade");

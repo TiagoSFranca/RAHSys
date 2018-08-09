@@ -18,7 +18,10 @@ namespace RAHSys.Infra.Dados.EntityConfig
             Property(c => c.ContatoInicial)
                 .IsRequired()
                 .HasMaxLength(256);
-            
+
+            HasOptional(x => x.ContratoEndereco)
+                .WithMany()
+                .HasForeignKey(x => x.IdContratoEndereco);
         }
     }
 }

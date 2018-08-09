@@ -73,13 +73,9 @@
     <Compile Include="Migrations\201808052323543_Criacao da tabela TipoContato.Designer.cs">
       <DependentUpon>201808052323543_Criacao da tabela TipoContato.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201808082258512_Criacao da tabela Contrato.cs" />
-    <Compile Include="Migrations\201808082258512_Criacao da tabela Contrato.Designer.cs">
-      <DependentUpon>201808082258512_Criacao da tabela Contrato.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201808091613043_Criacao das tabelas endereco, cidade, estado e contratoEndereco.cs" />
-    <Compile Include="Migrations\201808091613043_Criacao das tabelas endereco, cidade, estado e contratoEndereco.Designer.cs">
-      <DependentUpon>201808091613043_Criacao das tabelas endereco, cidade, estado e contratoEndereco.cs</DependentUpon>
+    <Compile Include="Migrations\201808092205177_Criacao das tabelas endereco, cidade, estado, contrato e contratoEndereco.cs" />
+    <Compile Include="Migrations\201808092205177_Criacao das tabelas endereco, cidade, estado, contrato e contratoEndereco.Designer.cs">
+      <DependentUpon>201808092205177_Criacao das tabelas endereco, cidade, estado, contrato e contratoEndereco.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -125,11 +121,8 @@
     <EmbeddedResource Include="Migrations\201808052323543_Criacao da tabela TipoContato.resx">
       <DependentUpon>201808052323543_Criacao da tabela TipoContato.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201808082258512_Criacao da tabela Contrato.resx">
-      <DependentUpon>201808082258512_Criacao da tabela Contrato.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201808091613043_Criacao das tabelas endereco, cidade, estado e contratoEndereco.resx">
-      <DependentUpon>201808091613043_Criacao das tabelas endereco, cidade, estado e contratoEndereco.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201808092205177_Criacao das tabelas endereco, cidade, estado, contrato e contratoEndereco.resx">
+      <DependentUpon>201808092205177_Criacao das tabelas endereco, cidade, estado, contrato e contratoEndereco.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

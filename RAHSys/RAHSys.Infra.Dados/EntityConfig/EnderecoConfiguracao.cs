@@ -27,7 +27,7 @@ namespace RAHSys.Infra.Dados.EntityConfig
             Property(c => c.Bairro)
                 .IsOptional()
                 .HasMaxLength(128);
-            
+
             Property(c => c.CEP)
                 .IsOptional()
                 .HasMaxLength(10);
@@ -38,7 +38,8 @@ namespace RAHSys.Infra.Dados.EntityConfig
 
             HasMany(e => e.ContratoEnderecos)
                 .WithRequired(es => es.Endereco)
-                .HasForeignKey(es => es.IdEndereco);
+                .HasForeignKey(es => es.IdEndereco)
+                .WillCascadeOnDelete(true);
         }
     }
 }

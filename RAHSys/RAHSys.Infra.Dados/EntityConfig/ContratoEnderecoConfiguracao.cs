@@ -15,6 +15,7 @@ namespace RAHSys.Infra.Dados.EntityConfig
             HasRequired(e => e.Contrato)
                 .WithMany()
                 .HasForeignKey(es => es.IdContrato);
+                //.WillCascadeOnDelete(true);
 
             HasRequired(e => e.Endereco)
                 .WithMany(es => es.ContratoEnderecos)

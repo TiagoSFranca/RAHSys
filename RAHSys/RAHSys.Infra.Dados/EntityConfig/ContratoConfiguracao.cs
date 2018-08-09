@@ -21,7 +21,8 @@ namespace RAHSys.Infra.Dados.EntityConfig
 
             HasOptional(x => x.ContratoEndereco)
                 .WithMany()
-                .HasForeignKey(x => x.IdContratoEndereco);
+                .HasForeignKey(x => x.IdContratoEndereco)
+                .WillCascadeOnDelete(true);
         }
     }
 }

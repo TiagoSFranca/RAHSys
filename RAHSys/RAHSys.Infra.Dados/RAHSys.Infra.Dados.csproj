@@ -77,6 +77,10 @@
     <Compile Include="Migrations\201808092205177_Criacao das tabelas endereco, cidade, estado, contrato e contratoEndereco.Designer.cs">
       <DependentUpon>201808092205177_Criacao das tabelas endereco, cidade, estado, contrato e contratoEndereco.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808092230075_Adicionado drop cascade para as entidades contrato, contratoendereco e endereco.cs" />
+    <Compile Include="Migrations\201808092230075_Adicionado drop cascade para as entidades contrato, contratoendereco e endereco.Designer.cs">
+      <DependentUpon>201808092230075_Adicionado drop cascade para as entidades contrato, contratoendereco e endereco.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\CameraRepositorio.cs" />
@@ -123,6 +127,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808092205177_Criacao das tabelas endereco, cidade, estado, contrato e contratoEndereco.resx">
       <DependentUpon>201808092205177_Criacao das tabelas endereco, cidade, estado, contrato e contratoEndereco.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808092230075_Adicionado drop cascade para as entidades contrato, contratoendereco e endereco.resx">
+      <DependentUpon>201808092230075_Adicionado drop cascade para as entidades contrato, contratoendereco e endereco.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

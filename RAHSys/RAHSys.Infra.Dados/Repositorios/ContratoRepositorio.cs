@@ -33,5 +33,20 @@ namespace RAHSys.Infra.Dados.Repositorios
 
             _context.SaveChanges();
         }
+
+        public void Remover(ContratoModel obj)
+        {
+            var contratoEndereco = obj.ContratoEndereco;
+            var endereco = contratoEndereco.Endereco;
+
+            obj.IdContratoEndereco = null;
+            _context.Entry(obj).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            _context.Set<ContratoEnderecoModel>().Remove(contratoEndereco);
+            _context.Set<EnderecoModel>().Remove(endereco);
+            _context.Set<ContratoModel>().Remove(obj);
+            _context.SaveChanges();
+        }
     }
 }

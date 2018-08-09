@@ -223,6 +223,7 @@
     <Compile Include="AutoMapper\AutoMapperConfiguracao.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CameraController.cs" />
+    <Compile Include="Controllers\ContratoController.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -1082,6 +1083,7 @@
     <Content Include="Views\TipoTelhado\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutModal.cshtml" />
     <Content Include="Views\Shared\AccessDenied.cshtml" />
+    <Content Include="Views\Contrato\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

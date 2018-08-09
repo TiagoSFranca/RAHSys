@@ -16,6 +16,14 @@ namespace RAHSys.Apresentacao.AutoMapper
                 x.AddProfile(new TipoTelhadoMapeamento());
 
                 x.AddProfile(new TipoContatoMapeamento());
+
+                x.AddProfile(new ContratoMapeamento());
+
+                x.AddProfile(new EstadoMapeamento());
+
+                x.AddProfile(new EnderecoMapeamento());
+
+                x.AddProfile(new ContratoEnderecoMapeamento());
             });
         }
     }

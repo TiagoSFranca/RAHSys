@@ -1,6 +1,5 @@
 ﻿using RAHSys.Entidades.Entidades;
 using RAHSys.Infra.Dados.EntityConfig;
-using System;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
@@ -17,6 +16,10 @@ namespace RAHSys.Infra.Dados.Contexto
         public DbSet<LogErrorModel> LogError { get; set; }
         public DbSet<TipoTelhadoModel> TipoTelhado { get; set; }
         public DbSet<TipoContatoModel> TipoContato { get; set; }
+        public DbSet<ContratoModel> Contrato { get; set; }
+        public DbSet<EstadoModel> Estado { get; set; }
+        public DbSet<EnderecoModel> Endereco { get; set; }
+        public DbSet<ContratoEnderecoModel> ContratoEndereco { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -42,6 +45,10 @@ namespace RAHSys.Infra.Dados.Contexto
             modelBuilder.Configurations.Add(new LogErrorConfiguracao());
             modelBuilder.Configurations.Add(new TipoTelhadoConfiguracao());
             modelBuilder.Configurations.Add(new TipoContatoConfiguracao());
+            modelBuilder.Configurations.Add(new ContratoConfiguracao());
+            modelBuilder.Configurations.Add(new EstadoConfiguracao());
+            modelBuilder.Configurations.Add(new EnderecoConfiguracao());
+            modelBuilder.Configurations.Add(new ContratoEnderecoConfiguracao());
         }
     }
 }

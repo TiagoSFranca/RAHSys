@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Contexto\RAHSysContexto.cs" />
     <Compile Include="EntityConfig\CameraConfiguracao.cs" />
+    <Compile Include="EntityConfig\CidadeConfiguracao.cs" />
     <Compile Include="EntityConfig\ContratoConfiguracao.cs" />
     <Compile Include="EntityConfig\ContratoEnderecoConfiguracao.cs" />
     <Compile Include="EntityConfig\EnderecoConfiguracao.cs" />
@@ -87,6 +88,10 @@
     <Compile Include="Migrations\201808090004389_Criacao da tabela ContratoEndereco.cs" />
     <Compile Include="Migrations\201808090004389_Criacao da tabela ContratoEndereco.Designer.cs">
       <DependentUpon>201808090004389_Criacao da tabela ContratoEndereco.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808090030182_Criacao da tabela Cidade.cs" />
+    <Compile Include="Migrations\201808090030182_Criacao da tabela Cidade.Designer.cs">
+      <DependentUpon>201808090030182_Criacao da tabela Cidade.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -140,6 +145,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808090004389_Criacao da tabela ContratoEndereco.resx">
       <DependentUpon>201808090004389_Criacao da tabela ContratoEndereco.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808090030182_Criacao da tabela Cidade.resx">
+      <DependentUpon>201808090030182_Criacao da tabela Cidade.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

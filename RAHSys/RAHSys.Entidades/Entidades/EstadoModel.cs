@@ -8,6 +8,6 @@ namespace RAHSys.Entidades.Entidades
         public string Descricao { get; set; }
         public string Sigla { get; set; }
 
-        public virtual ICollection<EnderecoModel> Enderecos { get; set; }
+        public virtual ICollection<CidadeModel> Cidades { get; set; }
     }
 }

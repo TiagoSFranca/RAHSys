@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="ConsultaModel.cs" />
     <Compile Include="Entidades\CameraModel.cs" />
+    <Compile Include="Entidades\CidadeModel.cs" />
     <Compile Include="Entidades\ContratoEnderecoModel.cs" />
     <Compile Include="Entidades\ContratoModel.cs" />
     <Compile Include="Entidades\EnderecoModel.cs" />

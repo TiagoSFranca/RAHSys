@@ -20,6 +20,7 @@ namespace RAHSys.Infra.Dados.Contexto
         public DbSet<EstadoModel> Estado { get; set; }
         public DbSet<EnderecoModel> Endereco { get; set; }
         public DbSet<ContratoEnderecoModel> ContratoEndereco { get; set; }
+        public DbSet<CidadeModel> Cidade { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -49,6 +50,7 @@ namespace RAHSys.Infra.Dados.Contexto
             modelBuilder.Configurations.Add(new EstadoConfiguracao());
             modelBuilder.Configurations.Add(new EnderecoConfiguracao());
             modelBuilder.Configurations.Add(new ContratoEnderecoConfiguracao());
+            modelBuilder.Configurations.Add(new CidadeConfiguracao());
         }
     }
 }

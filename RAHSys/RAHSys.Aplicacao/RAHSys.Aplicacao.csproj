@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AppModels\CameraAppModel.cs" />
+    <Compile Include="AppModels\CidadeAppModel.cs" />
     <Compile Include="AppModels\ConsultaAppModel.cs" />
     <Compile Include="AppModels\ContratoAppModel.cs" />
     <Compile Include="AppModels\ContratoEnderecoAppModel.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Interfaces\ITipoContatoAppServico.cs" />
     <Compile Include="Interfaces\ITipoTelhadoAppServico.cs" />
     <Compile Include="Mapeamento\CameraMapeamento.cs" />
+    <Compile Include="Mapeamento\CidadeMapeamento.cs" />
     <Compile Include="Mapeamento\ConfiguracaoGeralMapeamento.cs" />
     <Compile Include="Mapeamento\ContratoEnderecoMapeamento.cs" />
     <Compile Include="Mapeamento\ContratoMapeamento.cs" />

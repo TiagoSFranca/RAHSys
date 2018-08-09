@@ -27,18 +27,14 @@ namespace RAHSys.Infra.Dados.EntityConfig
             Property(c => c.Bairro)
                 .IsOptional()
                 .HasMaxLength(128);
-
-            Property(c => c.Cidade)
-                .IsOptional()
-                .HasMaxLength(128);
-
+            
             Property(c => c.CEP)
                 .IsOptional()
                 .HasMaxLength(10);
 
-            HasRequired(e => e.Estado)
+            HasRequired(e => e.Cidade)
                 .WithMany(es => es.Enderecos)
-                .HasForeignKey(e => e.IdEstado);
+                .HasForeignKey(e => e.IdCidade);
 
             HasMany(e => e.ContratoEnderecos)
                 .WithRequired(es => es.Endereco)

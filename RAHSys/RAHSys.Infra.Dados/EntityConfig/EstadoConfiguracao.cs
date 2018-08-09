@@ -1,4 +1,5 @@
 ﻿using RAHSys.Entidades.Entidades;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 
 namespace RAHSys.Infra.Dados.EntityConfig
@@ -19,9 +20,12 @@ namespace RAHSys.Infra.Dados.EntityConfig
                 .IsRequired()
                 .HasMaxLength(2);
 
-            HasMany(e => e.Enderecos)
+            HasMany(e => e.Cidades)
                 .WithRequired(es => es.Estado)
                 .HasForeignKey(es => es.IdEstado);
+
+            Property(pt => pt.IdEstado)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
         }
     }
 }

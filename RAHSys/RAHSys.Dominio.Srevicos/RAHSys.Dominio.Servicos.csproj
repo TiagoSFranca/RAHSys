@@ -42,7 +42,9 @@
   <ItemGroup>
     <Compile Include="Interfaces\Repositorios\ICameraRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\ICidadeRepositorio.cs" />
+    <Compile Include="Interfaces\Repositorios\IContratoEnderecoRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IContratoRepositorio.cs" />
+    <Compile Include="Interfaces\Repositorios\IEnderecoRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IEstadoRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioBase.cs" />
     <Compile Include="Interfaces\Repositorios\ITipoContatoRepositorio.cs" />

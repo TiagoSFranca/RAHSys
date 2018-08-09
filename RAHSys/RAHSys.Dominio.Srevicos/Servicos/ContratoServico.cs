@@ -12,18 +12,18 @@ namespace RAHSys.Dominio.Servicos.Servicos
 {
     public class ContratoServico : ServicoBase<ContratoModel>, IContratoServico
     {
-        private readonly IContratoRepositorio _cameraRepositorio;
+        private readonly IContratoRepositorio _contratoRepositorio;
 
-        public ContratoServico(IContratoRepositorio cameraRepositorio) : base(cameraRepositorio)
+        public ContratoServico(IContratoRepositorio contratoRepositorio) : base(contratoRepositorio)
         {
-            _cameraRepositorio = cameraRepositorio;
+            _contratoRepositorio = contratoRepositorio;
         }
 
         public ConsultaModel<ContratoModel> Consultar(IEnumerable<int> idList, string nomeEmpresa, string cidade, string ordenacao, bool crescente, int pagina, int quantidade)
         {
             var consultaModel = new ConsultaModel<ContratoModel>(pagina, quantidade);
 
-            var query = _cameraRepositorio.Consultar();
+            var query = _contratoRepositorio.Consultar();
             if (idList?.Count() > 0)
                 query = query.Where(c => idList.Contains(c.IdContrato));
 
@@ -52,5 +52,27 @@ namespace RAHSys.Dominio.Servicos.Servicos
 
             return consultaModel;
         }
+
+        //public void Adicionar(ContratoModel obj)
+        //{
+        //    var contratoEndereco = obj.ContratoEndereco;
+
+        //    obj.ContratoEndereco = null;
+        //    _context.Contrato.Add(obj);
+
+        //    var endereco = contratoEndereco.Endereco;
+        //    endereco.Cidade = null;
+
+        //    _context.Endereco.Add(endereco);
+
+        //    contratoEndereco.Endereco = null;
+        //    contratoEndereco.Contrato = null;
+        //    contratoEndereco.IdContrato = obj.IdContrato;
+        //    contratoEndereco.IdEndereco = endereco.IdEndereco;
+
+        //    _context.ContratoEndereco.Add(contratoEndereco);
+
+        //    _context.SaveChanges();
+        //}
     }
 }

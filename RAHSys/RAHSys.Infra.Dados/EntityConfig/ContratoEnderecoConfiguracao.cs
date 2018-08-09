@@ -13,7 +13,8 @@ namespace RAHSys.Infra.Dados.EntityConfig
             HasKey(c => c.IdContratoEndereco);
 
             HasRequired(e => e.Contrato)
-                .WithRequiredDependent(es => es.ContratoEndereco);
+                .WithMany()
+                .HasForeignKey(es => es.IdContrato);
 
             HasRequired(e => e.Endereco)
                 .WithMany(es => es.ContratoEnderecos)

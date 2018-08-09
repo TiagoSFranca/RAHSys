@@ -72,13 +72,13 @@
                     <div class="form-group form-md-line-input">
                         @Html.LabelFor(m => m.Contrato.ContratoEndereco.Endereco.IdCidade, "Cidade", new { @class = "col-md-2 control-label" })
                         <div class="col-md-4">
-                            @Html.DropDownListFor(model => model.Contrato.ContratoEndereco.Endereco.IdCidade, new SelectList(Model.Cidades.Select(x => new { Value = x.IdCidade, Text = x.Nome })), new { @class = "form-control", @placeholder = "Cidade" })
+                            @Html.DropDownListFor(model => model.Contrato.ContratoEndereco.Endereco.IdCidade, new SelectList(Model.Cidades, "IdCidade", "Nome"), new { @class = "form-control", @placeholder = "Cidade", @required = "required" })
                             @Html.ValidationMessageFor(model => model.Contrato.ContratoEndereco.Endereco.IdCidade, "", new { @class = "text-danger" })
                             <div class="form-control-focus"> </div>
                         </div>
                         @Html.Label("Estado", new { @class = "col-md-2 control-label" })
                         <div class="col-md-3">
-                            @Html.DropDownList("Estado", new SelectList(Model.Estados.Select(x => new { Value = x.IdEstado, Text = x.Descricao }), "Value", "Text"), new { @class = "form-control", @placeholder = "Estado" })
+                            @Html.DropDownListFor(m => m.Contrato.ContratoEndereco.Endereco.Cidade.IdEstado, new SelectList(Model.Estados, "IdEstado", "Descricao "), new { @class = "form-control", @placeholder = "Estado" })
                             <div class="form-control-focus"> </div>
                         </div>
                     </div>

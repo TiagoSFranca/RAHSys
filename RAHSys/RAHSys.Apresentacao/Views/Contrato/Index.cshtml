@@ -19,6 +19,12 @@
                 @using (Html.BeginForm("Index", "Contrato", FormMethod.Get, new { @id = "form-busca" }))
                 {
                     <div class="row">
+                        <div class="col-md-1">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.Editor("codigo", new { htmlAttributes = new { @class = "form-control", @placeholder = "Código" } })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
                         <div class="col-md-3">
                             <div class="form-group form-md-line-input has-success">
                                 @Html.Editor("nomeEmpresa", new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome da Empresa" } })
@@ -51,7 +57,7 @@
         </div>
     </div>
 </div>
-@*<div class="row">
+<div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="portlet light ">
             <div class="portlet-title">
@@ -72,14 +78,19 @@
                                             #
                                         </a>
                                     </th>
-                                    <th onclick="ordenar('Localização')">
+                                    <th onclick="ordenar('NomeEmpresa')">
                                         <a>
-                                            Localização
+                                            Nome da Empresa
                                         </a>
                                     </th>
-                                    <th onclick="ordenar('Descrição')">
+                                    <th onclick="ordenar('Cidade')">
                                         <a>
-                                            Descrição
+                                            Cidade
+                                        </a>
+                                    </th>
+                                    <th onclick="ordenar('Status')">
+                                        <a>
+                                            Status
                                         </a>
                                     </th>
                                     <th></th>
@@ -90,17 +101,17 @@
                                 {
                                     <tr>
                                         <td>
-                                            @item.IdCamera
+                                            @item.IdContrato
                                         </td>
                                         <td>
-                                            @item.Localizacao
+                                            @item.NomeEmpresa
                                         </td>
                                         <td>
-                                            @item.Descricao
+                                            @item.ContratoEndereco.Endereco.Cidade.Nome
                                         </td>
                                         <td class="text-right">
-                                            @Html.ActionLink("Alterar", "Editar", "Camera", new { id = item.IdCamera }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
-                                            @Html.ActionLink("Excluir", "Excluir", "Camera", new { id = item.IdCamera }, new { @class = "btn red-flamingo btn-circle btn-md abrirModal" })
+                                            @Html.ActionLink("Alterar", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
+                                            @Html.ActionLink("Excluir", "Excluir", "Contrato", new { id = item.IdContrato }, new { @class = "btn red-flamingo btn-circle btn-md abrirModal" })
                                         </td>
                                     </tr>
                                 }
@@ -115,11 +126,15 @@
                             </span>
                             <div class="text-center">
                                 @Html.PagedListPager(Model,
-                               pagina => Url.Action("Index", "Camera", new {
-                                   pagina, localizacao = ViewBag.Localizacao, descricao = ViewBag.Descricao,
+                               pagina => Url.Action("Index", "Camera", new
+                               {
+                                   pagina,
+                                   codigo = ViewBag.Codigo,
+                                   nomeEmpresa = ViewBag.NomeEmpresa,
+                                   cidade = ViewBag.Cidade,
                                    itensPagina = ViewBag.ItensPagina,
                                    ordenacao = ViewBag.Ordenacao,
-                                   crescente= ViewBag.Crescente
+                                   crescente = ViewBag.Crescente
                                }))
                             </div>
                         </div>
@@ -140,7 +155,7 @@
             </div>
         </div>
     </div>
-</div>*@
+</div>
 
 @section scripts{
     @Scripts.Render("~/Ordenacao/js")

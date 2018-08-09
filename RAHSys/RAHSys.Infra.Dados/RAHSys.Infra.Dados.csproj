@@ -77,31 +77,17 @@
     <Compile Include="Migrations\201808082258512_Criacao da tabela Contrato.Designer.cs">
       <DependentUpon>201808082258512_Criacao da tabela Contrato.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201808082327545_Criacao da tabela Estado.cs" />
-    <Compile Include="Migrations\201808082327545_Criacao da tabela Estado.Designer.cs">
-      <DependentUpon>201808082327545_Criacao da tabela Estado.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201808082340451_Criacao da tabela Endereco.cs" />
-    <Compile Include="Migrations\201808082340451_Criacao da tabela Endereco.Designer.cs">
-      <DependentUpon>201808082340451_Criacao da tabela Endereco.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201808090004389_Criacao da tabela ContratoEndereco.cs" />
-    <Compile Include="Migrations\201808090004389_Criacao da tabela ContratoEndereco.Designer.cs">
-      <DependentUpon>201808090004389_Criacao da tabela ContratoEndereco.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201808090030182_Criacao da tabela Cidade.cs" />
-    <Compile Include="Migrations\201808090030182_Criacao da tabela Cidade.Designer.cs">
-      <DependentUpon>201808090030182_Criacao da tabela Cidade.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201808091327036_Alteracao em Contrato para remover campo endereco.cs" />
-    <Compile Include="Migrations\201808091327036_Alteracao em Contrato para remover campo endereco.Designer.cs">
-      <DependentUpon>201808091327036_Alteracao em Contrato para remover campo endereco.cs</DependentUpon>
+    <Compile Include="Migrations\201808091613043_Criacao das tabelas endereco, cidade, estado e contratoEndereco.cs" />
+    <Compile Include="Migrations\201808091613043_Criacao das tabelas endereco, cidade, estado e contratoEndereco.Designer.cs">
+      <DependentUpon>201808091613043_Criacao das tabelas endereco, cidade, estado e contratoEndereco.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\CameraRepositorio.cs" />
     <Compile Include="Repositorios\CidadeRepositorio.cs" />
+    <Compile Include="Repositorios\ContratoEnderecoRepositorio.cs" />
     <Compile Include="Repositorios\ContratoRepositorio.cs" />
+    <Compile Include="Repositorios\EnderecoRepositorio.cs" />
     <Compile Include="Repositorios\EstadoRepositorio.cs" />
     <Compile Include="Repositorios\RepositorioBase.cs" />
     <Compile Include="Repositorios\TipoContatoRepositorio.cs" />
@@ -142,20 +128,8 @@
     <EmbeddedResource Include="Migrations\201808082258512_Criacao da tabela Contrato.resx">
       <DependentUpon>201808082258512_Criacao da tabela Contrato.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201808082327545_Criacao da tabela Estado.resx">
-      <DependentUpon>201808082327545_Criacao da tabela Estado.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201808082340451_Criacao da tabela Endereco.resx">
-      <DependentUpon>201808082340451_Criacao da tabela Endereco.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201808090004389_Criacao da tabela ContratoEndereco.resx">
-      <DependentUpon>201808090004389_Criacao da tabela ContratoEndereco.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201808090030182_Criacao da tabela Cidade.resx">
-      <DependentUpon>201808090030182_Criacao da tabela Cidade.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201808091327036_Alteracao em Contrato para remover campo endereco.resx">
-      <DependentUpon>201808091327036_Alteracao em Contrato para remover campo endereco.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201808091613043_Criacao das tabelas endereco, cidade, estado e contratoEndereco.resx">
+      <DependentUpon>201808091613043_Criacao das tabelas endereco, cidade, estado e contratoEndereco.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

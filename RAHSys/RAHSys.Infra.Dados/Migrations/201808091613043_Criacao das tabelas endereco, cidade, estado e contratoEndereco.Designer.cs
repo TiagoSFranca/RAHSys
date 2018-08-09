@@ -7,13 +7,13 @@ namespace RAHSys.Infra.Dados.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.0.0-20911")]
-    public sealed partial class CriacaodatabelaEndereco : IMigrationMetadata
+    public sealed partial class CriacaodastabelasenderecocidadeestadoecontratoEndereco : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CriacaodatabelaEndereco));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CriacaodastabelasenderecocidadeestadoecontratoEndereco));
         
         string IMigrationMetadata.Id
         {
-            get { return "201808082340451_Criacao da tabela Endereco"; }
+            get { return "201808091613043_Criacao das tabelas endereco, cidade, estado e contratoEndereco"; }
         }
         
         string IMigrationMetadata.Source

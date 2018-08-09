@@ -2,6 +2,7 @@
 using RAHSys.Dominio.Servicos.Interfaces.Servicos;
 using RAHSys.Entidades;
 using RAHSys.Entidades.Entidades;
+using RAHSys.Infra.CrossCutting.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,27 @@ namespace RAHSys.Dominio.Servicos.Servicos
     public class ContratoServico : ServicoBase<ContratoModel>, IContratoServico
     {
         private readonly IContratoRepositorio _contratoRepositorio;
+        private readonly IAnaliseInvestimentoRepositorio _analiseInvestimentoRepositorio;
 
-        public ContratoServico(IContratoRepositorio contratoRepositorio) : base(contratoRepositorio)
+        public ContratoServico(IContratoRepositorio contratoRepositorio, IAnaliseInvestimentoRepositorio analiseInvestimentoRepositorio) : base(contratoRepositorio)
         {
             _contratoRepositorio = contratoRepositorio;
+            _analiseInvestimentoRepositorio = analiseInvestimentoRepositorio;
+        }
+
+        private bool ExisteAnaliseInvestimento(AnaliseInvestimentoModel analiseInvestimento)
+        {
+            var query = _analiseInvestimentoRepositorio.Consultar().Where(e => e.IdContrato == analiseInvestimento.IdContrato);
+
+            return query.Count() > 0;
+        }
+
+        public void AdicionarAnaliseInvestimento(AnaliseInvestimentoModel analiseInvestimentoModel)
+        {
+            if (ExisteAnaliseInvestimento(analiseInvestimentoModel))
+                throw new CustomBaseException(new Exception(), "Análise de Investimento já cadastrada");
+
+            _analiseInvestimentoRepositorio.Adicionar(analiseInvestimentoModel);
         }
 
         public ConsultaModel<ContratoModel> Consultar(IEnumerable<int> idList, string nomeEmpresa, string cidade, string ordenacao, bool crescente, int pagina, int quantidade)
@@ -54,26 +72,5 @@ namespace RAHSys.Dominio.Servicos.Servicos
             return consultaModel;
         }
 
-        //public void Adicionar(ContratoModel obj)
-        //{
-        //    var contratoEndereco = obj.ContratoEndereco;
-
-        //    obj.ContratoEndereco = null;
-        //    _context.Contrato.Add(obj);
-
-        //    var endereco = contratoEndereco.Endereco;
-        //    endereco.Cidade = null;
-
-        //    _context.Endereco.Add(endereco);
-
-        //    contratoEndereco.Endereco = null;
-        //    contratoEndereco.Contrato = null;
-        //    contratoEndereco.IdContrato = obj.IdContrato;
-        //    contratoEndereco.IdEndereco = endereco.IdEndereco;
-
-        //    _context.ContratoEndereco.Add(contratoEndereco);
-
-        //    _context.SaveChanges();
-        //}
     }
 }

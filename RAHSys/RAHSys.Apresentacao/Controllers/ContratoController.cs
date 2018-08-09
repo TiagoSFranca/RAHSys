@@ -13,17 +13,19 @@ namespace RAHSys.Apresentacao.Controllers
     public class ContratoController : ControllerBase
     {
         private readonly IContratoAppServico _contratoAppServico;
-        private readonly IEstadoAppServico _estadoAppService;
-        private readonly ICidadeAppServico _cidadeAppService;
+        private readonly IEstadoAppServico _estadoAppServico;
+        private readonly ICidadeAppServico _cidadeAppServico;
+        private readonly ITipoTelhadoAppServico _tipoTelhadoAppServico;
 
-        public ContratoController(IContratoAppServico contratoAppServico, IEstadoAppServico estadoAppService, ICidadeAppServico cidadeAppService)
+        public ContratoController(IContratoAppServico contratoAppServico, IEstadoAppServico estadoAppService,
+            ICidadeAppServico cidadeAppService, ITipoTelhadoAppServico tipoTelhadoAppServico)
         {
             _contratoAppServico = contratoAppServico;
-            _estadoAppService = estadoAppService;
-            _cidadeAppService = cidadeAppService;
+            _estadoAppServico = estadoAppService;
+            _cidadeAppServico = cidadeAppService;
+            _tipoTelhadoAppServico = tipoTelhadoAppServico;
             ViewBag.Title = "Clientes/Contratos";
         }
-
         public ActionResult Index(int? codigo, string nomeEmpresa, string cidade, string ordenacao, bool? crescente, int? pagina, int? itensPagina)
         {
             ViewBag.SubTitle = "Consultar";
@@ -58,16 +60,23 @@ namespace RAHSys.Apresentacao.Controllers
         {
             var contratoModel = new ContratoAdicionarModel();
 
-            contratoModel.Estados = _estadoAppService.ListarTodos();
+            contratoModel.Estados = _estadoAppServico.ListarTodos();
             if (idEstado != null)
-                contratoModel.Cidades = _cidadeAppService.ObterCidadesPorEstado((int)idEstado);
+                contratoModel.Cidades = _cidadeAppServico.ObterCidadesPorEstado((int)idEstado);
             else
             {
                 var estado = contratoModel.Estados.FirstOrDefault();
                 if (estado != null)
-                    contratoModel.Cidades = _cidadeAppService.ObterCidadesPorEstado(estado.IdEstado);
+                    contratoModel.Cidades = _cidadeAppServico.ObterCidadesPorEstado(estado.IdEstado);
             }
             return contratoModel;
+        }
+
+        private AnaliseInvestimentoAdicionar MontarAnaliseInvestimento()
+        {
+            var retorno = new AnaliseInvestimentoAdicionar();
+            retorno.TipoTelhados = _tipoTelhadoAppServico.ListarTodos();
+            return retorno;
         }
 
         [HttpPost]
@@ -127,6 +136,63 @@ namespace RAHSys.Apresentacao.Controllers
                 MensagemErro(ex.Mensagem);
             }
             return RedirectToAction("Index", "Contrato");
+        }
+
+        [HttpPost]
+        public ActionResult Adicionar(AnaliseInvestimentoAdicionar analiseInvestimentoAdicionarModel)
+        {
+            var analiseInvestimentoRetorno = MontarAnaliseInvestimento();
+            analiseInvestimentoRetorno.AnaliseInvestimento = analiseInvestimentoAdicionarModel.AnaliseInvestimento;
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _contratoAppServico.AdicionarAnaliseInvestimento(analiseInvestimentoAdicionarModel.AnaliseInvestimento);
+                    MensagemSucesso(MensagensPadrao.CadastroSucesso);
+                    return RedirectToAction("Index", "Contrato");
+                }
+                catch (CustomBaseException ex)
+                {
+                    MensagemErro(ex.Mensagem);
+                    return View(analiseInvestimentoRetorno);
+                }
+            }
+            return View(analiseInvestimentoRetorno);
+        }
+
+
+        [HttpGet]
+        public ActionResult AdicionarAnaliseInvestimento(int idContrato)
+        {
+            ViewBag.SubTitle = "Ficha do Cliente (Análise de Investimento/Receita)";
+            var retorno = MontarAnaliseInvestimento();
+            retorno.AnaliseInvestimento = new AnaliseInvestimentoAppModel() { IdContrato = idContrato };
+
+            return View(retorno);
+        }
+
+        [HttpGet]
+        public ActionResult Editar(int id)
+        {
+            ViewBag.SubTitle = "Editar Contrato";
+            var contratoModel = new ContratoAppModel();
+            try
+            {
+                contratoModel = _contratoAppServico.ObterPorId(id);
+                if (contratoModel == null)
+                {
+                    MensagemErro("Contrato não encontrado");
+                    return RedirectToAction("Index");
+                }
+                if (contratoModel.AnaliseInvestimento == null)
+                    ViewBag.SubSubTitle = "Ficha do Cliente (Análise de Investimento/Receita)";
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+                return RedirectToAction("Index");
+            }
+            return View(contratoModel);
         }
     }
 }

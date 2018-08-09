@@ -15,4 +15,15 @@ namespace RAHSys.Apresentacao.Models
             Estados = new List<EstadoAppModel>();
         }
     }
+
+    public class AnaliseInvestimentoAdicionar
+    {
+        public AnaliseInvestimentoAppModel AnaliseInvestimento { get; set; }
+        public List<TipoTelhadoAppModel> TipoTelhados { get; set; }
+
+        public AnaliseInvestimentoAdicionar()
+        {
+            TipoTelhados = new List<TipoTelhadoAppModel>();
+        }
+    }
 }

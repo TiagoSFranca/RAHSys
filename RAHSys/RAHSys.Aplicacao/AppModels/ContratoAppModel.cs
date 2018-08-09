@@ -17,5 +17,7 @@ namespace RAHSys.Aplicacao.AppModels
         public int? IdContratoEndereco { get; set; }
 
         public ContratoEnderecoAppModel ContratoEndereco { get; set; }
+
+        public AnaliseInvestimentoAppModel AnaliseInvestimento { get; set; }
     }
 }

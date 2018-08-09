@@ -14,6 +14,11 @@ namespace RAHSys.Infra.Dados.EntityConfig
             Property(c => c.Descricao)
                 .IsRequired()
                 .HasMaxLength(256);
+
+            HasMany(e => e.AnaliseInvestimentos)
+                .WithRequired(es => es.TipoTelhado)
+                .HasForeignKey(es => es.IdTipoTelhado);
+
         }
     }
 }

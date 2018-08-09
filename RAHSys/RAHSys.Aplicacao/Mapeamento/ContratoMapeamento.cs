@@ -9,6 +9,7 @@ namespace RAHSys.Aplicacao.Mapeamento
         public ContratoMapeamento()
         {
             CreateMap<ContratoModel, ContratoAppModel>().ReverseMap();
+            CreateMap<AnaliseInvestimentoModel, AnaliseInvestimentoAppModel>().ReverseMap();
         }
     }
 }

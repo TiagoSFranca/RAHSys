@@ -1,0 +1,24 @@
+﻿@model RAHSys.Aplicacao.AppModels.ContratoAppModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart font-dark hide"></i>
+                    <span class="caption-subject font-green-steel uppercase bold">@ViewBag.SubSubTitle</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                @if (Model.AnaliseInvestimento == null)
+                {
+                    @Html.Action("AdicionarAnaliseInvestimento", "Contrato", new { idContrato = Model.IdContrato })
+                }
+            </div>
+        </div>
+    </div>
+</div>

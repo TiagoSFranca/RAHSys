@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contexto\RAHSysContexto.cs" />
+    <Compile Include="EntityConfig\AnaliseInvestimentoConfiguracao.cs" />
     <Compile Include="EntityConfig\CameraConfiguracao.cs" />
     <Compile Include="EntityConfig\CidadeConfiguracao.cs" />
     <Compile Include="EntityConfig\ContratoConfiguracao.cs" />
@@ -81,8 +82,13 @@
     <Compile Include="Migrations\201808092230075_Adicionado drop cascade para as entidades contrato, contratoendereco e endereco.Designer.cs">
       <DependentUpon>201808092230075_Adicionado drop cascade para as entidades contrato, contratoendereco e endereco.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808092305385_Criacao da tabela AnaliseInvestimento.cs" />
+    <Compile Include="Migrations\201808092305385_Criacao da tabela AnaliseInvestimento.Designer.cs">
+      <DependentUpon>201808092305385_Criacao da tabela AnaliseInvestimento.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\AnaliseInvestimentoRepositorio.cs" />
     <Compile Include="Repositorios\CameraRepositorio.cs" />
     <Compile Include="Repositorios\CidadeRepositorio.cs" />
     <Compile Include="Repositorios\ContratoEnderecoRepositorio.cs" />
@@ -130,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808092230075_Adicionado drop cascade para as entidades contrato, contratoendereco e endereco.resx">
       <DependentUpon>201808092230075_Adicionado drop cascade para as entidades contrato, contratoendereco e endereco.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808092305385_Criacao da tabela AnaliseInvestimento.resx">
+      <DependentUpon>201808092305385_Criacao da tabela AnaliseInvestimento.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

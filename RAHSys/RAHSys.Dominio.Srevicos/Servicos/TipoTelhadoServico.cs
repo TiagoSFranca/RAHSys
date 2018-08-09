@@ -46,5 +46,10 @@ namespace RAHSys.Dominio.Servicos.Servicos
 
             return consultaModel;
         }
+
+        public IEnumerable<TipoTelhadoModel> ListarTodos()
+        {
+            return _tipoTelhadoRepositorio.Consultar().OrderBy(e => e.Descricao).ToList();
+        }
     }
 }

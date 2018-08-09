@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RAHSys.Entidades.Entidades
+﻿namespace RAHSys.Entidades.Entidades
 {
     public class ContratoModel
     {
@@ -10,5 +8,6 @@ namespace RAHSys.Entidades.Entidades
         public int? IdContratoEndereco { get; set; }
 
         public virtual ContratoEnderecoModel ContratoEndereco { get; set; }
+        public virtual AnaliseInvestimentoModel AnaliseInvestimento { get; set; }
     }
 }

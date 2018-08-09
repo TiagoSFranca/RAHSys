@@ -14,5 +14,15 @@ namespace RAHSys.Aplicacao.Extensoes
         {
             return AutoMapper.Mapper.Map<ContratoAppModel>(obj);
         }
+
+        public static AnaliseInvestimentoModel MapearParaDominio(this AnaliseInvestimentoAppModel obj)
+        {
+            return AutoMapper.Mapper.Map<AnaliseInvestimentoModel>(obj);
+        }
+
+        public static AnaliseInvestimentoAppModel MapearParaAplicacao(this AnaliseInvestimentoModel obj)
+        {
+            return AutoMapper.Mapper.Map<AnaliseInvestimentoAppModel>(obj);
+        }
     }
 }

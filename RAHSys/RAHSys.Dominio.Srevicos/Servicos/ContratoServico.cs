@@ -19,7 +19,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
             _cameraRepositorio = cameraRepositorio;
         }
 
-        public ConsultaModel<ContratoModel> Consultar(IEnumerable<int> idList, string nomeEmpresa, string endereco, string ordenacao, bool crescente, int pagina, int quantidade)
+        public ConsultaModel<ContratoModel> Consultar(IEnumerable<int> idList, string nomeEmpresa, string cidade, string ordenacao, bool crescente, int pagina, int quantidade)
         {
             var consultaModel = new ConsultaModel<ContratoModel>(pagina, quantidade);
 
@@ -30,16 +30,16 @@ namespace RAHSys.Dominio.Servicos.Servicos
             if (!string.IsNullOrEmpty(nomeEmpresa))
                 query = query.Where(c => c.NomeEmpresa.ToLower().Contains(nomeEmpresa.ToLower()));
 
-            if (!string.IsNullOrEmpty(endereco))
-                query = query.Where(c => c.Endereco.ToLower().Contains(endereco.ToLower()));
+            if (!string.IsNullOrEmpty(cidade))
+                query = query.Where(c => c.ContratoEndereco.Endereco.Cidade.Nome.ToLower().Contains(cidade.ToLower()));
 
             switch ((ordenacao ?? string.Empty).ToLower())
             {
                 case "nomeempresa":
                     query = crescente ? query.OrderBy(c => c.NomeEmpresa) : query.OrderByDescending(c => c.NomeEmpresa);
                     break;
-                case "endereco":
-                    query = crescente ? query.OrderBy(c => c.Endereco) : query.OrderByDescending(c => c.Endereco);
+                case "cidade":
+                    query = crescente ? query.OrderBy(c => c.ContratoEndereco.Endereco.Cidade.Nome) : query.OrderByDescending(c => c.ContratoEndereco.Endereco.Cidade.Nome);
                     break;
                 default:
                     query = crescente ? query.OrderBy(c => c.IdContrato) : query.OrderByDescending(c => c.IdContrato);

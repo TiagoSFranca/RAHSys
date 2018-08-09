@@ -7,7 +7,7 @@
         public string CodCidade { get; set; }
         public string Nome { get; set; }
 
-        public virtual EstadoAppModel Estado { get; set; }
+        public EstadoAppModel Estado { get; set; }
 
     }
 }

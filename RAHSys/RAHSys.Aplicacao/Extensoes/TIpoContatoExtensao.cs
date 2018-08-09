@@ -3,7 +3,7 @@ using RAHSys.Entidades.Entidades;
 
 namespace RAHSys.Aplicacao.Extensoes
 {
-    internal static class TipoContatoExtension
+    internal static class TipoContatoExtensao
     {
         public static TipoContatoModel MapearParaDominio(this TipoContatoAppModel obj)
         {

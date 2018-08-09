@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace RAHSys.Dominio.Servicos.Interfaces.Servicos
 {
-    public interface IEstadoServico : IServicoBase<EstadoModel>
+    public interface ICidadeServico : IServicoBase<CidadeModel>
     {
-        IEnumerable<EstadoModel> ListarTodos();
+        List<CidadeModel> ObterCidadesPorEstado(int idEstado);
     }
 }

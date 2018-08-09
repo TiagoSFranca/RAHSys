@@ -93,9 +93,14 @@
     <Compile Include="Migrations\201808090030182_Criacao da tabela Cidade.Designer.cs">
       <DependentUpon>201808090030182_Criacao da tabela Cidade.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808091327036_Alteracao em Contrato para remover campo endereco.cs" />
+    <Compile Include="Migrations\201808091327036_Alteracao em Contrato para remover campo endereco.Designer.cs">
+      <DependentUpon>201808091327036_Alteracao em Contrato para remover campo endereco.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\CameraRepositorio.cs" />
+    <Compile Include="Repositorios\CidadeRepositorio.cs" />
     <Compile Include="Repositorios\ContratoRepositorio.cs" />
     <Compile Include="Repositorios\EstadoRepositorio.cs" />
     <Compile Include="Repositorios\RepositorioBase.cs" />
@@ -148,6 +153,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808090030182_Criacao da tabela Cidade.resx">
       <DependentUpon>201808090030182_Criacao da tabela Cidade.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808091327036_Alteracao em Contrato para remover campo endereco.resx">
+      <DependentUpon>201808091327036_Alteracao em Contrato para remover campo endereco.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

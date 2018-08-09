@@ -14,11 +14,7 @@ namespace RAHSys.Infra.Dados.EntityConfig
             Property(c => c.NomeEmpresa)
                 .IsRequired()
                 .HasMaxLength(256);
-
-            Property(c => c.Endereco)
-                .IsRequired()
-                .HasMaxLength(256);
-
+            
             Property(c => c.ContatoInicial)
                 .IsRequired()
                 .HasMaxLength(256);

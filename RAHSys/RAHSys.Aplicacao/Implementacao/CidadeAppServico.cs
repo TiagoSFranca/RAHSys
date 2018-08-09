@@ -10,16 +10,16 @@ using System.Linq;
 
 namespace RAHSys.Aplicacao.Implementacao
 {
-    public class EstadoAppServico : AppServicoBase<EstadoModel>, IEstadoAppServico
+    public class CidadeAppServico : AppServicoBase<CidadeModel>, ICidadeAppServico
     {
-        private readonly IEstadoServico _estadoServico;
+        private readonly ICidadeServico _cidadeServico;
 
-        public EstadoAppServico(IEstadoServico estadoServico) : base(estadoServico)
+        public CidadeAppServico(ICidadeServico cidadeServico) : base(cidadeServico)
         {
-            _estadoServico = estadoServico;
+            _cidadeServico = cidadeServico;
         }
 
-        public void Adicionar(EstadoAppModel obj)
+        public void Adicionar(CidadeAppModel obj)
         {
             try
             {
@@ -38,11 +38,11 @@ namespace RAHSys.Aplicacao.Implementacao
             }
         }
 
-        public EstadoAppModel ObterPorId(int id)
+        public CidadeAppModel ObterPorId(int id)
         {
             try
             {
-                return _estadoServico.ObterPorId(id).MapearParaAplicacao();
+                return _cidadeServico.ObterPorId(id).MapearParaAplicacao();
             }
             catch (Exception ex)
             {
@@ -71,7 +71,7 @@ namespace RAHSys.Aplicacao.Implementacao
             }
         }
 
-        public void Atualizar(EstadoAppModel obj)
+        public void Atualizar(CidadeAppModel obj)
         {
             try
             {
@@ -90,11 +90,11 @@ namespace RAHSys.Aplicacao.Implementacao
             }
         }
 
-        public List<EstadoAppModel> ListarTodos()
+        public List<CidadeAppModel> ObterCidadesPorEstado(int idEstado)
         {
             try
             {
-                return _estadoServico.ListarTodos().Select(e => e.MapearParaAplicacao()).ToList();
+                return _cidadeServico.ObterCidadesPorEstado(idEstado).Select(e => e.MapearParaAplicacao()).ToList();
             }
             catch (CustomBaseException ex)
             {

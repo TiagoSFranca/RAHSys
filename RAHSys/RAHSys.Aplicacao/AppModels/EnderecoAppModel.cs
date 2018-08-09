@@ -9,7 +9,7 @@
         public string Bairro { get; set; }
         public string CEP { get; set; }
 
-        public virtual CidadeAppModel Cidade { get; set; }
+        public CidadeAppModel Cidade { get; set; }
 
     }
 }

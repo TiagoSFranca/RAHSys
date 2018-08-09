@@ -6,7 +6,7 @@
         public int IdContrato { get; set; }
         public int IdEndereco { get; set; }
 
-        public virtual ContratoAppModel Contrato { get; set; }
-        public virtual EnderecoAppModel Endereco { get; set; }
+        public ContratoAppModel Contrato { get; set; }
+        public EnderecoAppModel Endereco { get; set; }
     }
 }

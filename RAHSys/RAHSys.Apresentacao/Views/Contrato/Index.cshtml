@@ -107,8 +107,9 @@
                                             @item.NomeEmpresa
                                         </td>
                                         <td>
-                                            @item.ContratoEndereco.Endereco.Cidade.Nome
+                                            @item.ContratoEndereco.Endereco.Cidade.Nome/@item.ContratoEndereco.Endereco.Cidade.Estado.Sigla
                                         </td>
+                                        <td>NADA</td>
                                         <td class="text-right">
                                             @Html.ActionLink("Alterar", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
                                             @Html.ActionLink("Excluir", "Excluir", "Contrato", new { id = item.IdContrato }, new { @class = "btn red-flamingo btn-circle btn-md abrirModal" })

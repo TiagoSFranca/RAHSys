@@ -1,40 +1,107 @@
 ﻿@model  RAHSys.Apresentacao.Models.AnaliseInvestimentoAdicionar
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-TT
-@using (Html.BeginForm("Adicionar", "Contrato", FormMethod.Post, new { @class = "form-horizontal margin-bottom-40" }))
-    {
-        @Html.AntiForgeryToken()
-        @Html.HiddenFor(model => model.AnaliseInvestimento.IdContrato)
-        @*<div class="form-group form-md-line-input">
-            @Html.LabelFor(model => model.IdCamera, "Código", new { @class = "col-md-2 control-label" })
-            <div class="col-md-8">
-                @Html.EditorFor(model => model.IdCamera, new { htmlAttributes = new { @class = "form-control", @placeholder = "Código", @required = "required", @disabled = "disabled" } })
-                <div class="form-control-focus"> </div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart font-dark hide"></i>
+                    <span class="caption-subject font-green-steel uppercase bold">@ViewBag.SubSubTitle</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                @using (Html.BeginForm("AdicionarAnaliseInvestimento", "Contrato", FormMethod.Post, new { @class = "form-horizontal margin-bottom-40" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.AnaliseInvestimento.IdContrato)
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(model => model.AnaliseInvestimento.IdContrato, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.AnaliseInvestimento.IdContrato, new { htmlAttributes = new { @class = "form-control", @placeholder = "Código", @required = "required", @disabled = "disabled" } })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(model => model.AnaliseInvestimento.NomeCliente, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.AnaliseInvestimento.NomeCliente, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome do Cliente", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.AnaliseInvestimento.NomeCliente, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.AnaliseInvestimento.IdTipoTelhado, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(model => model.AnaliseInvestimento.IdTipoTelhado, new SelectList(Model.TipoTelhados, "IdTipoTelhado", "Descricao"), new { @class = "form-control", @placeholder = "Tipo de Telhado", @required = "required" })
+                            @Html.ValidationMessageFor(model => model.AnaliseInvestimento.IdTipoTelhado, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.AnaliseInvestimento.Potencia, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.AnaliseInvestimento.Potencia, new { htmlAttributes = new { @class = "form-control", @placeholder = "Potência", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.AnaliseInvestimento.Potencia, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.AnaliseInvestimento.Investimento, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.AnaliseInvestimento.Investimento, new { htmlAttributes = new { @class = "form-control", @placeholder = "Investimento", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.AnaliseInvestimento.Investimento, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.AnaliseInvestimento.ConsumoTotal, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.AnaliseInvestimento.ConsumoTotal, new { htmlAttributes = new { @class = "form-control", @placeholder = "Consumo Total", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.AnaliseInvestimento.ConsumoTotal, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.AnaliseInvestimento.NumeroPlacas, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-3">
+                            @Html.EditorFor(model => model.AnaliseInvestimento.NumeroPlacas, new { htmlAttributes = new { @class = "form-control", @placeholder = "Número de Placas", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.AnaliseInvestimento.NumeroPlacas, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                        @Html.LabelFor(m => m.AnaliseInvestimento.TipoPlacas, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.AnaliseInvestimento.TipoPlacas, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tipo de Placas", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.AnaliseInvestimento.TipoPlacas, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.AnaliseInvestimento.QtdInversores, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-3">
+                            @Html.EditorFor(model => model.AnaliseInvestimento.QtdInversores, new { htmlAttributes = new { @class = "form-control", @placeholder = "Número de Inversores", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.AnaliseInvestimento.QtdInversores, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                        @Html.LabelFor(m => m.AnaliseInvestimento.TipoPlacas, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.AnaliseInvestimento.TipoInversores, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tipo de Inversores", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.AnaliseInvestimento.TipoInversores, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" class="btn blue btn-circle">Salvar</button>
+                            @Html.ActionLink("Cancelar", "Index", "Contrato", null, new { @class = "btn yellow-haze btn-outline btn-circle btn-md" })
+                        </div>
+                    </div>
+                }
             </div>
         </div>
-        <div class="form-group form-md-line-input">
-            @Html.LabelFor(model => model.Localizacao, "Localização", new { @class = "col-md-2 control-label" })
-            <div class="col-md-8">
-                @Html.EditorFor(model => model.Localizacao, new { htmlAttributes = new { @class = "form-control", @placeholder = "Localização", @required = "required" } })
-                @Html.ValidationMessageFor(model => model.Localizacao, "", new { @class = "text-danger" })
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
-        <div class="form-group form-md-line-input">
-            @Html.LabelFor(m => m.Descricao, "Descrição", new { @class = "col-md-2 control-label" })
-            <div class="col-md-8">
-                @Html.TextAreaFor(model => model.Descricao, new { @class = "form-control", @placeholder = "Descrição", @required = "required" })
-                @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
-                <div class="form-control-focus"> </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <button type="submit" class="btn blue btn-circle">Salvar</button>
-                @Html.ActionLink("Cancelar", "Index", "Camera", null, new { @class = "btn yellow-haze btn-outline btn-circle btn-md" })
-            </div>
-        </div>*@
-    }
+    </div>
+</div>
 

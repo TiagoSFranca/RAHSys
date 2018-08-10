@@ -26,6 +26,7 @@ namespace RAHSys.Apresentacao.Controllers
             _tipoTelhadoAppServico = tipoTelhadoAppServico;
             ViewBag.Title = "Clientes/Contratos";
         }
+
         public ActionResult Index(int? codigo, string nomeEmpresa, string cidade, string ordenacao, bool? crescente, int? pagina, int? itensPagina)
         {
             ViewBag.SubTitle = "Consultar";
@@ -138,8 +139,40 @@ namespace RAHSys.Apresentacao.Controllers
             return RedirectToAction("Index", "Contrato");
         }
 
+        [HttpGet]
+        public ActionResult AdicionarAnaliseInvestimento(int id)
+        {
+            ViewBag.SubTitle = "Editar Contrato";
+            ViewBag.SubSubTitle = "Ficha do Cliente (Análise de Investimento/Receita)";
+
+            try
+            {
+                var contratoModel = _contratoAppServico.ObterPorId(id);
+                if (contratoModel == null)
+                {
+                    MensagemErro("Contrato não encontrado");
+                    return RedirectToAction("Index");
+                }
+                if (contratoModel.AnaliseInvestimento != null)
+                {
+                    MensagemErro("Não é possível adicionar análise de investimento");
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+                return RedirectToAction("Index");
+            }
+
+            var retorno = MontarAnaliseInvestimento();
+            retorno.AnaliseInvestimento = new AnaliseInvestimentoAppModel() { IdContrato = id };
+
+            return View(retorno);
+        }
+
         [HttpPost]
-        public ActionResult Adicionar(AnaliseInvestimentoAdicionar analiseInvestimentoAdicionarModel)
+        public ActionResult AdicionarAnaliseInvestimento(AnaliseInvestimentoAdicionar analiseInvestimentoAdicionarModel)
         {
             var analiseInvestimentoRetorno = MontarAnaliseInvestimento();
             analiseInvestimentoRetorno.AnaliseInvestimento = analiseInvestimentoAdicionarModel.AnaliseInvestimento;
@@ -160,17 +193,6 @@ namespace RAHSys.Apresentacao.Controllers
             return View(analiseInvestimentoRetorno);
         }
 
-
-        [HttpGet]
-        public ActionResult AdicionarAnaliseInvestimento(int idContrato)
-        {
-            ViewBag.SubTitle = "Ficha do Cliente (Análise de Investimento/Receita)";
-            var retorno = MontarAnaliseInvestimento();
-            retorno.AnaliseInvestimento = new AnaliseInvestimentoAppModel() { IdContrato = idContrato };
-
-            return View(retorno);
-        }
-
         [HttpGet]
         public ActionResult Editar(int id)
         {
@@ -185,14 +207,16 @@ namespace RAHSys.Apresentacao.Controllers
                     return RedirectToAction("Index");
                 }
                 if (contratoModel.AnaliseInvestimento == null)
-                    ViewBag.SubSubTitle = "Ficha do Cliente (Análise de Investimento/Receita)";
+                    return RedirectToAction("AdicionarAnaliseInvestimento", new { id = id });
+                else
+                    MensagemErro("Não é possível editar o contrato");
+                return RedirectToAction("Index");
             }
             catch (CustomBaseException ex)
             {
                 MensagemErro(ex.Mensagem);
                 return RedirectToAction("Index");
             }
-            return View(contratoModel);
         }
     }
 }

@@ -1087,7 +1087,6 @@
     <Content Include="Views\Contrato\Index.cshtml" />
     <Content Include="Views\Contrato\Adicionar.cshtml" />
     <Content Include="Views\Contrato\Excluir.cshtml" />
-    <Content Include="Views\Contrato\Editar.cshtml" />
     <Content Include="Views\Contrato\AdicionarAnaliseInvestimento.cshtml" />
   </ItemGroup>
   <ItemGroup>

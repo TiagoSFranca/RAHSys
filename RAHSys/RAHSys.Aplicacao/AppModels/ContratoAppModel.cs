@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using RAHSys.Extras.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace RAHSys.Aplicacao.AppModels
 {
@@ -19,5 +20,15 @@ namespace RAHSys.Aplicacao.AppModels
         public ContratoEnderecoAppModel ContratoEndereco { get; set; }
 
         public AnaliseInvestimentoAppModel AnaliseInvestimento { get; set; }
+
+        public SituacaoContrato ObterSituacaoContrato()
+        {
+            if (AnaliseInvestimento != null)
+                return SituacaoContratoEnum.EmAnalise;
+            //TODO: ADICIONAR OUTRO STATUS
+            //else if()
+
+            return SituacaoContratoEnum.NovoContrato;
+        }
     }
 }

@@ -31,8 +31,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Enums\ItensPorPaginaEnum.cs" />
+    <Compile Include="Enums\SituacaoContratoEnum.cs" />
     <Compile Include="MensagensPadrao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

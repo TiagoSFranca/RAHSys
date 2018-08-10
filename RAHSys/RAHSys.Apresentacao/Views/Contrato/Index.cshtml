@@ -88,10 +88,8 @@
                                             Cidade
                                         </a>
                                     </th>
-                                    <th onclick="ordenar('Status')">
-                                        <a>
-                                            Status
-                                        </a>
+                                    <th>
+                                        Status
                                     </th>
                                     <th></th>
                                 </tr>
@@ -109,13 +107,20 @@
                                         <td>
                                             @item.ContratoEndereco.Endereco.Cidade.Nome/@item.ContratoEndereco.Endereco.Cidade.Estado.Sigla
                                         </td>
-                                        <td>NADA</td>
+                                        <td>
+                                            @{
+                                                var situacao = item.ObterSituacaoContrato();
+                                            }
+                                            <span class="@situacao.Classe">
+                                                <strong>@situacao.Nome.ToUpper()</strong>
+                                            </span>
+                                        </td>
                                         <td class="text-right">
                                             @Html.ActionLink("Alterar", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
                                             @Html.ActionLink("Excluir", "Excluir", "Contrato", new { id = item.IdContrato }, new { @class = "btn red-flamingo btn-circle btn-md abrirModal" })
                                         </td>
                                     </tr>
-                                }
+                                                }
                             </tbody>
                         </table>
                     </div>
@@ -140,19 +145,19 @@
                             </div>
                         </div>
                     </div>
-                }
-                else
-                {
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-info">
-                                <h5 class="text-center">
-                                    Não foram encontrados resultados
-                                </h5>
-                            </div>
-                        </div>
-                    </div>
-                }
+                                                }
+                                                else
+                                                {
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="alert alert-info">
+                                                                <h5 class="text-center">
+                                                                    Não foram encontrados resultados
+                                                                </h5>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
             </div>
         </div>
     </div>

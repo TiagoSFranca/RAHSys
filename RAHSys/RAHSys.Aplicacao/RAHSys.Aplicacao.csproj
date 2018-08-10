@@ -83,6 +83,10 @@
       <Project>{173F46C6-E4E8-4FB6-BAFB-A25A1560B09C}</Project>
       <Name>RAHSys.Dominio.Entidades</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RAHSys.Extras\RAHSys.Extras.csproj">
+      <Project>{FEDAE43C-7914-4553-B02E-8DEFA8AEB1E6}</Project>
+      <Name>RAHSys.Extras</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RAHSys.Infra.CrossCutting.Exceptions\RAHSys.Infra.CrossCutting.Exceptions.csproj">
       <Project>{CF13771B-3A99-4F43-85AB-3CE7F3A8EBC4}</Project>
       <Name>RAHSys.Infra.CrossCutting.Exceptions</Name>

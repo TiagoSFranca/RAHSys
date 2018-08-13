@@ -26,6 +26,7 @@ namespace RAHSys.Infra.Dados.Contexto
         public DbSet<FiadorModel> Fiador { get; set; }
         public DbSet<FiadorEnderecoModel> FiadorEndereco { get; set; }
         public DbSet<DocumentoModel> Documento { get; set; }
+        public DbSet<EstadoCivilModel> EstadoCivil { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -61,6 +62,7 @@ namespace RAHSys.Infra.Dados.Contexto
             modelBuilder.Configurations.Add(new FiadorConfiguracao());
             modelBuilder.Configurations.Add(new FiadorEnderecoConfiguracao());
             modelBuilder.Configurations.Add(new DocumentoConfiguracao());
+            modelBuilder.Configurations.Add(new EstadoCivilConfiguracao());
         }
     }
 }

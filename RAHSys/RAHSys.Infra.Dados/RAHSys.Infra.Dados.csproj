@@ -56,6 +56,7 @@
     <Compile Include="EntityConfig\ContratoEnderecoConfiguracao.cs" />
     <Compile Include="EntityConfig\DocumentoConfiguracao.cs" />
     <Compile Include="EntityConfig\EnderecoConfiguracao.cs" />
+    <Compile Include="EntityConfig\EstadoCivilConfiguracao.cs" />
     <Compile Include="EntityConfig\EstadoConfiguracao.cs" />
     <Compile Include="EntityConfig\FiadorConfiguracao.cs" />
     <Compile Include="EntityConfig\FiadorEnderecoConfiguracao.cs" />
@@ -94,14 +95,20 @@
     <Compile Include="Migrations\201808131350470_Criacao da tabela Cliente, Fiador, FiadorEndereco e Documento.Designer.cs">
       <DependentUpon>201808131350470_Criacao da tabela Cliente, Fiador, FiadorEndereco e Documento.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808131855104_Criacao da tabela EstadoCivil.cs" />
+    <Compile Include="Migrations\201808131855104_Criacao da tabela EstadoCivil.Designer.cs">
+      <DependentUpon>201808131855104_Criacao da tabela EstadoCivil.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\AnaliseInvestimentoRepositorio.cs" />
     <Compile Include="Repositorios\CameraRepositorio.cs" />
     <Compile Include="Repositorios\CidadeRepositorio.cs" />
+    <Compile Include="Repositorios\ClienteRepositorio.cs" />
     <Compile Include="Repositorios\ContratoEnderecoRepositorio.cs" />
     <Compile Include="Repositorios\ContratoRepositorio.cs" />
     <Compile Include="Repositorios\EnderecoRepositorio.cs" />
+    <Compile Include="Repositorios\EstadoCivilRepositorio.cs" />
     <Compile Include="Repositorios\EstadoRepositorio.cs" />
     <Compile Include="Repositorios\RepositorioBase.cs" />
     <Compile Include="Repositorios\TipoContatoRepositorio.cs" />
@@ -150,6 +157,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808131350470_Criacao da tabela Cliente, Fiador, FiadorEndereco e Documento.resx">
       <DependentUpon>201808131350470_Criacao da tabela Cliente, Fiador, FiadorEndereco e Documento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808131855104_Criacao da tabela EstadoCivil.resx">
+      <DependentUpon>201808131855104_Criacao da tabela EstadoCivil.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

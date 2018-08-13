@@ -1,6 +1,7 @@
 namespace RAHSys.Infra.Dados.Migrations
 {
     using Entidades.Entidades;
+    using Entidades.Seeds;
     using System.Data.Entity.Migrations;
 
     internal sealed class Configuration : DbMigrationsConfiguration<RAHSys.Infra.Dados.Contexto.RAHSysContexto>
@@ -25,6 +26,8 @@ namespace RAHSys.Infra.Dados.Migrations
 
             context.TipoTelhado.AddOrUpdate(new TipoTelhadoModel() { IdTipoTelhado = 1, Descricao = "Tipo 01" });
             context.TipoTelhado.AddOrUpdate(new TipoTelhadoModel() { IdTipoTelhado = 2, Descricao = "Tipo 02" });
+
+            context.EstadoCivil.AddOrUpdate(EstadoCivilSeed.Seeds.ToArray());
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 

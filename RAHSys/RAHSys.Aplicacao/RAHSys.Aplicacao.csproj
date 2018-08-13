@@ -40,6 +40,7 @@
     <Compile Include="AppModels\DocumentoAppModel.cs" />
     <Compile Include="AppModels\EnderecoAppModel.cs" />
     <Compile Include="AppModels\EstadoAppModel.cs" />
+    <Compile Include="AppModels\EstadoCivilAppModel.cs" />
     <Compile Include="AppModels\FiadorAppModel.cs" />
     <Compile Include="AppModels\FiadorEnderecoAppModel.cs" />
     <Compile Include="AppModels\TipoContatoAppModel.cs" />
@@ -47,6 +48,7 @@
     <Compile Include="Extensoes\CameraExtensao.cs" />
     <Compile Include="Extensoes\CidadeExtensao.cs" />
     <Compile Include="Extensoes\ContratoExtensao.cs" />
+    <Compile Include="Extensoes\EstadoCivilExtensao.cs" />
     <Compile Include="Extensoes\EstadoExtensao.cs" />
     <Compile Include="Extensoes\TIpoContatoExtensao.cs" />
     <Compile Include="Extensoes\TipoTelhadoExtensao.cs" />
@@ -55,6 +57,7 @@
     <Compile Include="Implementacao\CidadeAppServico.cs" />
     <Compile Include="Implementacao\ContratoAppServico.cs" />
     <Compile Include="Implementacao\EstadoAppServico.cs" />
+    <Compile Include="Implementacao\EstadoCivilAppServico.cs" />
     <Compile Include="Implementacao\TipoContatoAppServico.cs" />
     <Compile Include="Implementacao\TipoTelhadoAppServico.cs" />
     <Compile Include="Interfaces\IAppServicoBase.cs" />
@@ -62,6 +65,7 @@
     <Compile Include="Interfaces\ICidadeAppServico.cs" />
     <Compile Include="Interfaces\IContratoAppServico.cs" />
     <Compile Include="Interfaces\IEstadoAppServico.cs" />
+    <Compile Include="Interfaces\IEstadoCivilAppServico.cs" />
     <Compile Include="Interfaces\ITipoContatoAppServico.cs" />
     <Compile Include="Interfaces\ITipoTelhadoAppServico.cs" />
     <Compile Include="Mapeamento\CameraMapeamento.cs" />
@@ -69,6 +73,7 @@
     <Compile Include="Mapeamento\ConfiguracaoGeralMapeamento.cs" />
     <Compile Include="Mapeamento\ContratoMapeamento.cs" />
     <Compile Include="Mapeamento\EnderecoMapeamento.cs" />
+    <Compile Include="Mapeamento\EstadoCivilMapeamento.cs" />
     <Compile Include="Mapeamento\EstadoMapeamento.cs" />
     <Compile Include="Mapeamento\TipoContatoMapeamento.cs" />
     <Compile Include="Mapeamento\TipoTelhadoMapeamento.cs" />

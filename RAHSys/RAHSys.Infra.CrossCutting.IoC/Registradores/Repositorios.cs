@@ -17,6 +17,8 @@ namespace RAHSys.Infra.CrossCutting.IoC.Registradores
             container.Register<IEnderecoRepositorio, EnderecoRepositorio>(Lifestyle.Scoped);
             container.Register<IContratoEnderecoRepositorio, ContratoEnderecoRepositorio>(Lifestyle.Scoped);
             container.Register<IAnaliseInvestimentoRepositorio, AnaliseInvestimentoRepositorio>(Lifestyle.Scoped);
+            container.Register<IEstadoCivilRepositorio, EstadoCivilRepositorio>(Lifestyle.Scoped);
+            container.Register<IClienteRepositorio, ClienteRepositorio>(Lifestyle.Scoped);
         }
     }
 }

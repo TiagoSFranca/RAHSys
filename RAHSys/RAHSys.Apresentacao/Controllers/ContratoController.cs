@@ -16,14 +16,16 @@ namespace RAHSys.Apresentacao.Controllers
         private readonly IEstadoAppServico _estadoAppServico;
         private readonly ICidadeAppServico _cidadeAppServico;
         private readonly ITipoTelhadoAppServico _tipoTelhadoAppServico;
+        private readonly IEstadoCivilAppServico _estadoCivilAppServico;
 
-        public ContratoController(IContratoAppServico contratoAppServico, IEstadoAppServico estadoAppService,
-            ICidadeAppServico cidadeAppService, ITipoTelhadoAppServico tipoTelhadoAppServico)
+        public ContratoController(IContratoAppServico contratoAppServico, IEstadoAppServico estadoAppServico,
+            ICidadeAppServico cidadeAppServico, ITipoTelhadoAppServico tipoTelhadoAppServico, IEstadoCivilAppServico estadoCivilAppServico)
         {
             _contratoAppServico = contratoAppServico;
-            _estadoAppServico = estadoAppService;
-            _cidadeAppServico = cidadeAppService;
+            _estadoAppServico = estadoAppServico;
+            _cidadeAppServico = cidadeAppServico;
             _tipoTelhadoAppServico = tipoTelhadoAppServico;
+            _estadoCivilAppServico = estadoCivilAppServico;
             ViewBag.Title = "Clientes/Contratos";
         }
 
@@ -74,12 +76,19 @@ namespace RAHSys.Apresentacao.Controllers
             return retorno;
         }
 
-        private FichaClienteAdicionar MontarFichaCliente(int id)
+        private FichaClienteAdicionar MontarFichaCliente(int id, int? idEstado = null, int? idEstadoConjuge = null)
         {
             var retorno = new FichaClienteAdicionar();
             retorno.Contrato = _contratoAppServico.ObterPorId(id);
 
             retorno.Estados = _estadoAppServico.ListarTodos();
+            retorno.EstadosCivis = _estadoCivilAppServico.ListarTodos();
+
+            if (idEstado != null)
+                retorno.CidadesFiador = _cidadeAppServico.ObterCidadesPorEstado((int)idEstado);
+
+            if (idEstadoConjuge != null)
+                retorno.CidadesFiadorConjuge = _cidadeAppServico.ObterCidadesPorEstado((int)idEstado);
 
             return retorno;
         }
@@ -175,6 +184,28 @@ namespace RAHSys.Apresentacao.Controllers
             return View(retorno);
         }
 
+        [HttpPost]
+        public ActionResult AdicionarAnaliseInvestimento(AnaliseInvestimentoAdicionar analiseInvestimentoAdicionarModel)
+        {
+            var analiseInvestimentoRetorno = MontarAnaliseInvestimento();
+            analiseInvestimentoRetorno.AnaliseInvestimento = analiseInvestimentoAdicionarModel.AnaliseInvestimento;
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _contratoAppServico.AdicionarAnaliseInvestimento(analiseInvestimentoAdicionarModel.AnaliseInvestimento);
+                    MensagemSucesso(MensagensPadrao.CadastroSucesso);
+                    return RedirectToAction("Index", "Contrato");
+                }
+                catch (CustomBaseException ex)
+                {
+                    MensagemErro(ex.Mensagem);
+                    return View(analiseInvestimentoRetorno);
+                }
+            }
+            return View(analiseInvestimentoRetorno);
+        }
+
         [HttpGet]
         public ActionResult AdicionarFichaCliente(int id)
         {
@@ -216,15 +247,19 @@ namespace RAHSys.Apresentacao.Controllers
         }
 
         [HttpPost]
-        public ActionResult AdicionarAnaliseInvestimento(AnaliseInvestimentoAdicionar analiseInvestimentoAdicionarModel)
+        public ActionResult AdicionarFichaCliente(FichaClienteAdicionar fichaCliente)
         {
-            var analiseInvestimentoRetorno = MontarAnaliseInvestimento();
-            analiseInvestimentoRetorno.AnaliseInvestimento = analiseInvestimentoAdicionarModel.AnaliseInvestimento;
+            int? idEstado = fichaCliente?.Cliente?.Fiadores?.FirstOrDefault()?.FiadorEndereco?.Endereco?.Cidade?.IdEstado;
+            int? idEstadoConjuge = null;
+            if (fichaCliente?.Cliente?.Fiadores?.Count() > 1)
+                idEstadoConjuge = fichaCliente?.Cliente?.Fiadores[1]?.FiadorEndereco?.Endereco?.Cidade?.IdEstado;
+            var analiseInvestimentoRetorno = MontarFichaCliente(fichaCliente.Cliente.IdAnaliseInvestimento, idEstado, idEstadoConjuge);
+            analiseInvestimentoRetorno.Cliente = fichaCliente.Cliente;
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _contratoAppServico.AdicionarAnaliseInvestimento(analiseInvestimentoAdicionarModel.AnaliseInvestimento);
+                    _contratoAppServico.AdicionarFichaCliente(fichaCliente.Cliente);
                     MensagemSucesso(MensagensPadrao.CadastroSucesso);
                     return RedirectToAction("Index", "Contrato");
                 }

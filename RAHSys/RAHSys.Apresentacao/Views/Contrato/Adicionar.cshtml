@@ -97,11 +97,4 @@
 <input type="hidden" value="@Url.Action("ObterCidadesPorEstado", "Contrato")" id="consultaCidades" />
 @section scripts{
     @Scripts.Render("~/BuscarCidades/js");
-    @*<script type="text/javascript">
-        $(document).ready(function () {
-            var valEstado = $("#ddlEstados").val();
-            if (valEstado > 0)
-                buscarCidades(valEstado, "ddlCidades");
-        });
-    </script>*@
 }

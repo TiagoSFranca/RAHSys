@@ -43,9 +43,11 @@
     <Compile Include="Interfaces\Repositorios\IAnaliseInvestimentoRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\ICameraRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\ICidadeRepositorio.cs" />
+    <Compile Include="Interfaces\Repositorios\IClienteRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IContratoEnderecoRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IContratoRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IEnderecoRepositorio.cs" />
+    <Compile Include="Interfaces\Repositorios\IEstadoCivilRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IEstadoRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioBase.cs" />
     <Compile Include="Interfaces\Repositorios\ITipoContatoRepositorio.cs" />
@@ -53,6 +55,7 @@
     <Compile Include="Interfaces\Servicos\ICameraServico.cs" />
     <Compile Include="Interfaces\Servicos\ICidadeServico.cs" />
     <Compile Include="Interfaces\Servicos\IContratoServico.cs" />
+    <Compile Include="Interfaces\Servicos\IEstadoCivilServico.cs" />
     <Compile Include="Interfaces\Servicos\IEstadoServico.cs" />
     <Compile Include="Interfaces\Servicos\IServicoBase.cs" />
     <Compile Include="Interfaces\Servicos\ITipoContatoServico.cs" />
@@ -61,6 +64,7 @@
     <Compile Include="Servicos\CameraServico.cs" />
     <Compile Include="Servicos\CidadeServico.cs" />
     <Compile Include="Servicos\ContratoServico.cs" />
+    <Compile Include="Servicos\EstadoCivilServico.cs" />
     <Compile Include="Servicos\EstadoServico.cs" />
     <Compile Include="Servicos\ServicoBase.cs" />
     <Compile Include="Servicos\TipoContatoServico.cs" />

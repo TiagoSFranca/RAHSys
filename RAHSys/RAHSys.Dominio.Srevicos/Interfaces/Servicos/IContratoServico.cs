@@ -8,5 +8,6 @@ namespace RAHSys.Dominio.Servicos.Interfaces.Servicos
     {
         ConsultaModel<ContratoModel> Consultar(IEnumerable<int> idList, string nomeEmpresa, string cidade, string ordenacao, bool crescente, int pagina, int quantidade);
         void AdicionarAnaliseInvestimento(AnaliseInvestimentoModel analiseInvestimentoModel);
+        void AdicionarFichaCliente(ClienteModel clienteModel);
     }
 }

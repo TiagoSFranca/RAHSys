@@ -15,16 +15,27 @@ namespace RAHSys.Dominio.Servicos.Servicos
     {
         private readonly IContratoRepositorio _contratoRepositorio;
         private readonly IAnaliseInvestimentoRepositorio _analiseInvestimentoRepositorio;
+        private readonly IClienteRepositorio _clienteRepositorio;
 
-        public ContratoServico(IContratoRepositorio contratoRepositorio, IAnaliseInvestimentoRepositorio analiseInvestimentoRepositorio) : base(contratoRepositorio)
+        public ContratoServico(IContratoRepositorio contratoRepositorio, IAnaliseInvestimentoRepositorio analiseInvestimentoRepositorio,
+            IClienteRepositorio clienteRepositorio)
+            : base(contratoRepositorio)
         {
             _contratoRepositorio = contratoRepositorio;
             _analiseInvestimentoRepositorio = analiseInvestimentoRepositorio;
+            _clienteRepositorio = clienteRepositorio;
         }
 
         private bool ExisteAnaliseInvestimento(AnaliseInvestimentoModel analiseInvestimento)
         {
             var query = _analiseInvestimentoRepositorio.Consultar().Where(e => e.IdContrato == analiseInvestimento.IdContrato);
+
+            return query.Count() > 0;
+        }
+
+        private bool ExisteFichaCliente(ClienteModel cliente)
+        {
+            var query = _clienteRepositorio.Consultar().Where(e => e.IdAnaliseInvestimento == cliente.IdAnaliseInvestimento);
 
             return query.Count() > 0;
         }
@@ -72,5 +83,12 @@ namespace RAHSys.Dominio.Servicos.Servicos
             return consultaModel;
         }
 
+        public void AdicionarFichaCliente(ClienteModel clienteModel)
+        {
+            if (ExisteFichaCliente(clienteModel))
+                throw new CustomBaseException(new Exception(), "Cliente já cadastrado para o contrato");
+
+            _clienteRepositorio.Adicionar(clienteModel);
+        }
     }
 }

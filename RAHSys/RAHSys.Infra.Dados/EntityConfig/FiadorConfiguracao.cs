@@ -31,6 +31,10 @@ namespace RAHSys.Infra.Dados.EntityConfig
                 .WithMany(es => es.Fiadores)
                 .HasForeignKey(e => e.IdCliente);
 
+            HasRequired(e => e.EstadoCivil)
+                .WithMany(es => es.Fiadores)
+                .HasForeignKey(e => e.IdEstadoCivil);
+
             HasOptional(x => x.FiadorEndereco)
                 .WithMany()
                 .HasForeignKey(x => x.IdFiadorEndereco);

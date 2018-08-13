@@ -32,13 +32,17 @@ namespace RAHSys.Apresentacao.Models
         public ContratoAppModel Contrato { get; set; }
         public ClienteAppModel Cliente { get; set; }
 
-        public List<CidadeAppModel> Cidades { get; set; }
+        public List<CidadeAppModel> CidadesFiador { get; set; }
+        public List<CidadeAppModel> CidadesFiadorConjuge { get; set; }
         public List<EstadoAppModel> Estados { get; set; }
+        public List<EstadoCivilAppModel> EstadosCivis { get; set; }
 
         public FichaClienteAdicionar()
         {
-            Cidades = new List<CidadeAppModel>();
+            CidadesFiador = new List<CidadeAppModel>();
+            CidadesFiadorConjuge = new List<CidadeAppModel>();
             Estados = new List<EstadoAppModel>();
+            EstadosCivis = new List<EstadoCivilAppModel>();
         }
     }
 }

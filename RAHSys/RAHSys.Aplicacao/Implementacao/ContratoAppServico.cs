@@ -134,5 +134,24 @@ namespace RAHSys.Aplicacao.Implementacao
                 throw nex;
             }
         }
+
+        public void AdicionarFichaCliente(ClienteAppModel cliente)
+        {
+            try
+            {
+                _contratoServico.AdicionarFichaCliente(cliente.MapearParaDominio());
+            }
+            catch (CustomBaseException ex)
+            {
+                LogExceptions(ex);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                var nex = new CustomBaseException(ex);
+                LogExceptions(nex);
+                throw nex;
+            }
+        }
     }
 }

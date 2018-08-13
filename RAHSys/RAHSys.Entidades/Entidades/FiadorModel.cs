@@ -4,6 +4,7 @@
     {
         public int IdFiador { get; set; }
         public int IdCliente { get; set; }
+        public int IdEstadoCivil { get; set; }
         public string Nome { get; set; }
         public bool Conjuge { get; set; }
         public string Telefone { get; set; }
@@ -12,6 +13,7 @@
 
         public virtual FiadorEnderecoModel FiadorEndereco { get; set; }
         public virtual ClienteModel Cliente { get; set; }
+        public virtual EstadoCivilModel EstadoCivil { get; set; }
 
     }
 }

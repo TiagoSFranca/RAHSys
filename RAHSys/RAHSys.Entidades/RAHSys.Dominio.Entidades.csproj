@@ -49,6 +49,7 @@
     <Compile Include="Entidades\ContratoModel.cs" />
     <Compile Include="Entidades\DocumentoModel.cs" />
     <Compile Include="Entidades\EnderecoModel.cs" />
+    <Compile Include="Entidades\EstadoCivilModel.cs" />
     <Compile Include="Entidades\EstadoModel.cs" />
     <Compile Include="Entidades\FiadorEnderecoModel.cs" />
     <Compile Include="Entidades\FiadorModel.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Entidades\TipoContatoModel.cs" />
     <Compile Include="Entidades\TipoTelhadoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Seeds\EstadoCivilSeed.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

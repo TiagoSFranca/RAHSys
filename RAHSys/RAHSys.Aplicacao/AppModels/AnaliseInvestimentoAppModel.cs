@@ -48,5 +48,7 @@ namespace RAHSys.Aplicacao.AppModels
         public string TipoInversores { get; set; }
 
         public virtual TipoTelhadoAppModel TipoTelhado { get; set; }
+
+        public virtual ClienteAppModel Cliente { get; set; }
     }
 }

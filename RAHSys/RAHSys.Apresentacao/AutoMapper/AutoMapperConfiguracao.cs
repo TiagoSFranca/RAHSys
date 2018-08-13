@@ -23,8 +23,6 @@ namespace RAHSys.Apresentacao.AutoMapper
 
                 x.AddProfile(new EnderecoMapeamento());
 
-                x.AddProfile(new ContratoEnderecoMapeamento());
-
                 x.AddProfile(new CidadeMapeamento());
             });
         }

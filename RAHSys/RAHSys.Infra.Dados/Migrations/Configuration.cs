@@ -22,6 +22,9 @@ namespace RAHSys.Infra.Dados.Migrations
             context.Cidade.AddOrUpdate(new CidadeModel() { IdCidade = 11, IdEstado = 2, CodCidade = "CT01", Nome = "Cidade Teste 11" });
             context.Cidade.AddOrUpdate(new CidadeModel() { IdCidade = 12, IdEstado = 2, CodCidade = "CT02", Nome = "Cidade Teste 12" });
             context.Cidade.AddOrUpdate(new CidadeModel() { IdCidade = 13, IdEstado = 2, CodCidade = "CT03", Nome = "Cidade Teste 13" });
+
+            context.TipoTelhado.AddOrUpdate(new TipoTelhadoModel() { IdTipoTelhado = 1, Descricao = "Tipo 01" });
+            context.TipoTelhado.AddOrUpdate(new TipoTelhadoModel() { IdTipoTelhado = 2, Descricao = "Tipo 02" });
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 

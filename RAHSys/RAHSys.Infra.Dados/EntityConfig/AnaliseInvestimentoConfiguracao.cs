@@ -40,6 +40,10 @@ namespace RAHSys.Infra.Dados.EntityConfig
                 .WithMany(tt => tt.AnaliseInvestimentos)
                 .HasForeignKey(c => c.IdTipoTelhado);
 
+            HasRequired(e => e.Cliente)
+                .WithRequiredPrincipal(s => s.AnaliseInvestimento)
+                .WillCascadeOnDelete(true);
+
             HasRequired(c => c.Contrato)
                 .WithRequiredDependent(cc => cc.AnaliseInvestimento);
 

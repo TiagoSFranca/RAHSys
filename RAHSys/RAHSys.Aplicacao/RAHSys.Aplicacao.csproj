@@ -33,11 +33,15 @@
     <Compile Include="AppModels\AnaliseInvestimentoAppModel.cs" />
     <Compile Include="AppModels\CameraAppModel.cs" />
     <Compile Include="AppModels\CidadeAppModel.cs" />
+    <Compile Include="AppModels\ClienteAppModel.cs" />
     <Compile Include="AppModels\ConsultaAppModel.cs" />
     <Compile Include="AppModels\ContratoAppModel.cs" />
     <Compile Include="AppModels\ContratoEnderecoAppModel.cs" />
+    <Compile Include="AppModels\DocumentoAppModel.cs" />
     <Compile Include="AppModels\EnderecoAppModel.cs" />
     <Compile Include="AppModels\EstadoAppModel.cs" />
+    <Compile Include="AppModels\FiadorAppModel.cs" />
+    <Compile Include="AppModels\FiadorEnderecoAppModel.cs" />
     <Compile Include="AppModels\TipoContatoAppModel.cs" />
     <Compile Include="AppModels\TipoTelhadoAppModel.cs" />
     <Compile Include="Extensoes\CameraExtensao.cs" />
@@ -63,7 +67,6 @@
     <Compile Include="Mapeamento\CameraMapeamento.cs" />
     <Compile Include="Mapeamento\CidadeMapeamento.cs" />
     <Compile Include="Mapeamento\ConfiguracaoGeralMapeamento.cs" />
-    <Compile Include="Mapeamento\ContratoEnderecoMapeamento.cs" />
     <Compile Include="Mapeamento\ContratoMapeamento.cs" />
     <Compile Include="Mapeamento\EnderecoMapeamento.cs" />
     <Compile Include="Mapeamento\EstadoMapeamento.cs" />

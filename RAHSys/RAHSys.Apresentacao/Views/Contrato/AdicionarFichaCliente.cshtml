@@ -1,0 +1,207 @@
+﻿@model  RAHSys.Apresentacao.Models.FichaClienteAdicionar
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("AdicionarFichaCliente", "Contrato", FormMethod.Post, new { @class = "form-horizontal margin-bottom-40" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Cliente.IdAnaliseInvestimento)
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart font-dark hide"></i>
+                        <span class="caption-subject font-green-steel uppercase bold">@ViewBag.SubSubTitle</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(model => model.Cliente.IdAnaliseInvestimento, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Cliente.IdAnaliseInvestimento, new { htmlAttributes = new { @class = "form-control", @placeholder = "Código", @required = "required", @disabled = "disabled" } })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(model => model.Contrato.NomeEmpresa, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Contrato.NomeEmpresa, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome do Cliente", @required = "required", @disabled = "disabled" } })
+                            <div class="form-control-focus"></div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(model => model.Contrato.AnaliseInvestimento.NomeCliente, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.Contrato.AnaliseInvestimento.NomeCliente, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome do Cliente", @required = "required", @disabled = "disabled" } })
+                            <div class="form-control-focus"></div>
+                        </div>
+                        @Html.LabelFor(model => model.Contrato.ContatoInicial, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-3">
+                            @Html.EditorFor(model => model.Contrato.ContatoInicial, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome do Cliente", @required = "required", @disabled = "disabled" } })
+                            <div class="form-control-focus"></div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        <div class="col-md-2 control-label">
+                            <div class="caption caption-md">
+                                <i class="icon-bar-chart font-dark hide"></i>
+                                <span class="caption-subject font-green-steel uppercase bold">Endereço</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.Contrato.ContratoEndereco.Endereco.Logradouro, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-5">
+                            @Html.EditorFor(model => model.Contrato.ContratoEndereco.Endereco.Logradouro, new { htmlAttributes = new { @class = "form-control", @placeholder = "Logradouro", @disabled = "disabled" } })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                        @Html.LabelFor(m => m.Contrato.ContratoEndereco.Endereco.Numero, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-2">
+                            @Html.EditorFor(model => model.Contrato.ContratoEndereco.Endereco.Numero, new { htmlAttributes = new { @class = "form-control", @placeholder = "Número", @disabled = "disabled" } })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.Contrato.ContratoEndereco.Endereco.Bairro, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-5">
+                            @Html.EditorFor(model => model.Contrato.ContratoEndereco.Endereco.Bairro, new { htmlAttributes = new { @class = "form-control", @placeholder = "Bairro", @disabled = "disabled" } })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                        @Html.LabelFor(m => m.Contrato.ContratoEndereco.Endereco.CEP, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-2">
+                            @Html.EditorFor(model => model.Contrato.ContratoEndereco.Endereco.CEP, new { htmlAttributes = new { @class = "form-control", @placeholder = "CEP", @disabled = "disabled" } })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.Contrato.ContratoEndereco.Endereco.IdCidade, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.Contrato.ContratoEndereco.Endereco.Cidade.Nome, new { htmlAttributes = new { @class = "form-control", @placeholder = "Cidade", @required = "required", @disabled = "disabled" } })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                        @Html.Label("Estado", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-3">
+                            @Html.EditorFor(m => m.Contrato.ContratoEndereco.Endereco.Cidade.Estado.Descricao, new { htmlAttributes = new { @class = "form-control", @placeholder = "Estado", @disabled = "disabled" } })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        <div class="col-md-2 control-label">
+                            <div class="caption caption-md">
+                                <i class="icon-bar-chart font-dark hide"></i>
+                                <span class="caption-subject font-green-steel uppercase bold"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.Cliente.MediaKW, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-3">
+                            @Html.EditorFor(model => model.Cliente.MediaKW, new { htmlAttributes = new { @class = "form-control", @placeholder = "Investimento", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.Cliente.MediaKW, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                        @Html.LabelFor(m => m.Cliente.ConsumoTotal, new { @class = "col-md-2 control-label col-md-offset-1" })
+                        <div class="col-md-3">
+                            @Html.EditorFor(model => model.Cliente.ConsumoTotal, new { htmlAttributes = new { @class = "form-control", @placeholder = "Investimento", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.Cliente.ConsumoTotal, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart font-dark hide"></i>
+                        <span class="caption-subject font-green-steel uppercase bold">Fiador(a)</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(model => model.Cliente.Fiadores[0].Nome, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Cliente.Fiadores[0].Nome, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome do(a) Fiador(a)", @required = "required" } })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.Cliente.Fiadores[0].Email, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-5">
+                            @Html.EditorFor(model => model.Cliente.Fiadores[0].Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email" } })
+                            @Html.ValidationMessageFor(model => model.Cliente.Fiadores[0].Email, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                        @Html.LabelFor(m => m.Cliente.Fiadores[0].Telefone, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-2">
+                            @Html.EditorFor(model => model.Cliente.Fiadores[0].Telefone, new { htmlAttributes = new { @class = "form-control", @placeholder = "Telefone" } })
+                            @Html.ValidationMessageFor(model => model.Cliente.Fiadores[0].Telefone, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        <div class="col-md-2 control-label">
+                            <div class="caption caption-md">
+                                <i class="icon-bar-chart font-dark hide"></i>
+                                <span class="caption-subject font-green-steel uppercase bold">Endereço</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.Cliente.Fiadores[0].FiadorEndereco.Endereco.Logradouro, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-5">
+                            @Html.EditorFor(model => model.Cliente.Fiadores[0].FiadorEndereco.Endereco.Logradouro, new { htmlAttributes = new { @class = "form-control", @placeholder = "Logradouro" } })
+                            @Html.ValidationMessageFor(model => model.Cliente.Fiadores[0].FiadorEndereco.Endereco.Logradouro, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                        @Html.LabelFor(m => m.Cliente.Fiadores[0].FiadorEndereco.Endereco.Numero, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-2">
+                            @Html.EditorFor(model => model.Cliente.Fiadores[0].FiadorEndereco.Endereco.Numero, new { htmlAttributes = new { @class = "form-control", @placeholder = "Número" } })
+                            @Html.ValidationMessageFor(model => model.Cliente.Fiadores[0].FiadorEndereco.Endereco.Numero, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.Cliente.Fiadores[0].FiadorEndereco.Endereco.Bairro, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-5">
+                            @Html.EditorFor(model => model.Cliente.Fiadores[0].FiadorEndereco.Endereco.Bairro, new { htmlAttributes = new { @class = "form-control", @placeholder = "Bairro" } })
+                            @Html.ValidationMessageFor(model => model.Cliente.Fiadores[0].FiadorEndereco.Endereco.Bairro, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                        @Html.LabelFor(m => m.Cliente.Fiadores[0].FiadorEndereco.Endereco.CEP, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-2">
+                            @Html.EditorFor(model => model.Cliente.Fiadores[0].FiadorEndereco.Endereco.CEP, new { htmlAttributes = new { @class = "form-control", @placeholder = "CEP" } })
+                            @Html.ValidationMessageFor(model => model.Cliente.Fiadores[0].FiadorEndereco.Endereco.CEP, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.Cliente.Fiadores[0].FiadorEndereco.Endereco.IdCidade, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(model => model.Cliente.Fiadores[0].FiadorEndereco.Endereco.IdCidade, new SelectList(Model.Cidades, "IdCidade", "Nome"), new { @class = "form-control", @placeholder = "Cidade", @required = "required", @id = "ddlCidades" })
+                            @Html.ValidationMessageFor(model => model.Cliente.Fiadores[0].FiadorEndereco.Endereco.IdCidade, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                        @Html.Label("Estado", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-3">
+                            @Html.DropDownListFor(m => m.Cliente.Fiadores[0].FiadorEndereco.Endereco.Cidade.IdEstado, new SelectList(Model.Estados, "IdEstado", "Descricao "), new { @class = "form-control", @placeholder = "Estado", @onchange = "buscarCidades(this.value)" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" class="btn blue btn-circle">Salvar</button>
+                            @Html.ActionLink("Cancelar", "Index", "Contrato", null, new { @class = "btn yellow-haze btn-outline btn-circle btn-md" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

@@ -1,4 +1,5 @@
 ﻿using RAHSys.Extras.Enums;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace RAHSys.Aplicacao.AppModels
@@ -21,13 +22,14 @@ namespace RAHSys.Aplicacao.AppModels
 
         public AnaliseInvestimentoAppModel AnaliseInvestimento { get; set; }
 
+        public virtual List<DocumentoAppModel> Documentos { get; set; }
+
         public SituacaoContrato ObterSituacaoContrato()
         {
-            if (AnaliseInvestimento != null)
+            if (AnaliseInvestimento?.Cliente != null)
+                return SituacaoContratoEnum.ContratoAssinado;
+            else if (AnaliseInvestimento != null)
                 return SituacaoContratoEnum.EmAnalise;
-            //TODO: ADICIONAR OUTRO STATUS
-            //else if()
-
             return SituacaoContratoEnum.NovoContrato;
         }
     }

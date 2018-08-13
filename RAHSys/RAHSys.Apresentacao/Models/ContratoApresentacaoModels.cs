@@ -26,4 +26,19 @@ namespace RAHSys.Apresentacao.Models
             TipoTelhados = new List<TipoTelhadoAppModel>();
         }
     }
+
+    public class FichaClienteAdicionar
+    {
+        public ContratoAppModel Contrato { get; set; }
+        public ClienteAppModel Cliente { get; set; }
+
+        public List<CidadeAppModel> Cidades { get; set; }
+        public List<EstadoAppModel> Estados { get; set; }
+
+        public FichaClienteAdicionar()
+        {
+            Cidades = new List<CidadeAppModel>();
+            Estados = new List<EstadoAppModel>();
+        }
+    }
 }

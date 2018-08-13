@@ -1,4 +1,6 @@
-﻿namespace RAHSys.Entidades.Entidades
+﻿using System.Collections.Generic;
+
+namespace RAHSys.Entidades.Entidades
 {
     public class ContratoModel
     {
@@ -9,5 +11,7 @@
 
         public virtual ContratoEnderecoModel ContratoEndereco { get; set; }
         public virtual AnaliseInvestimentoModel AnaliseInvestimento { get; set; }
+
+        public virtual ICollection<DocumentoModel> Documentos { get; set; }
     }
 }

@@ -1089,6 +1089,7 @@
     <Content Include="Views\Contrato\Adicionar.cshtml" />
     <Content Include="Views\Contrato\Excluir.cshtml" />
     <Content Include="Views\Contrato\AdicionarAnaliseInvestimento.cshtml" />
+    <Content Include="Views\Contrato\AdicionarFichaCliente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

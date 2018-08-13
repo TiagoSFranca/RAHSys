@@ -22,6 +22,10 @@ namespace RAHSys.Infra.Dados.Contexto
         public DbSet<ContratoEnderecoModel> ContratoEndereco { get; set; }
         public DbSet<CidadeModel> Cidade { get; set; }
         public DbSet<AnaliseInvestimentoModel> AnaliseInvestimento { get; set; }
+        public DbSet<ClienteModel> Cliente { get; set; }
+        public DbSet<FiadorModel> Fiador { get; set; }
+        public DbSet<FiadorEnderecoModel> FiadorEndereco { get; set; }
+        public DbSet<DocumentoModel> Documento { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -53,6 +57,10 @@ namespace RAHSys.Infra.Dados.Contexto
             modelBuilder.Configurations.Add(new ContratoEnderecoConfiguracao());
             modelBuilder.Configurations.Add(new CidadeConfiguracao());
             modelBuilder.Configurations.Add(new AnaliseInvestimentoConfiguracao());
+            modelBuilder.Configurations.Add(new ClienteConfiguracao());
+            modelBuilder.Configurations.Add(new FiadorConfiguracao());
+            modelBuilder.Configurations.Add(new FiadorEnderecoConfiguracao());
+            modelBuilder.Configurations.Add(new DocumentoConfiguracao());
         }
     }
 }

@@ -14,5 +14,6 @@ namespace RAHSys.Entidades.Entidades
         public virtual CidadeModel Cidade { get; set; }
 
         public virtual ICollection<ContratoEnderecoModel> ContratoEnderecos { get; set; }
+        public virtual ICollection<FiadorEnderecoModel> FiadorEnderecos { get; set; }
     }
 }

@@ -18,7 +18,7 @@
                 {
                     @Html.AntiForgeryToken()
                     <div class="form-group form-md-line-input">
-                        @Html.LabelFor(model => model.Contrato.NomeEmpresa, "Nome", new { @class = "col-md-2 control-label" })
+                        @Html.LabelFor(model => model.Contrato.NomeEmpresa, new { @class = "col-md-2 control-label" })
                         <div class="col-md-9">
                             @Html.EditorFor(model => model.Contrato.NomeEmpresa, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome da Empresa", @required = "required" } })
                             @Html.ValidationMessageFor(model => model.Contrato.NomeEmpresa, "", new { @class = "text-danger" })
@@ -26,7 +26,7 @@
                         </div>
                     </div>
                     <div class="form-group form-md-line-input">
-                        @Html.LabelFor(m => m.Contrato.ContatoInicial, "Contato Inicial", new { @class = "col-md-2 control-label" })
+                        @Html.LabelFor(m => m.Contrato.ContatoInicial, new { @class = "col-md-2 control-label" })
                         <div class="col-md-9">
                             @Html.EditorFor(model => model.Contrato.ContatoInicial, new { htmlAttributes = new { @class = "form-control", @placeholder = "Contato inicial de venda", @required = "required" } })
                             @Html.ValidationMessageFor(model => model.Contrato.ContatoInicial, "", new { @class = "text-danger" })
@@ -42,13 +42,13 @@
                         </div>
                     </div>
                     <div class="form-group form-md-line-input">
-                        @Html.LabelFor(m => m.Contrato.ContratoEndereco.Endereco.Logradouro, "Logradouro", new { @class = "col-md-2 control-label" })
+                        @Html.LabelFor(m => m.Contrato.ContratoEndereco.Endereco.Logradouro, new { @class = "col-md-2 control-label" })
                         <div class="col-md-5">
                             @Html.EditorFor(model => model.Contrato.ContratoEndereco.Endereco.Logradouro, new { htmlAttributes = new { @class = "form-control", @placeholder = "Logradouro" } })
                             @Html.ValidationMessageFor(model => model.Contrato.ContratoEndereco.Endereco.Logradouro, "", new { @class = "text-danger" })
                             <div class="form-control-focus"> </div>
                         </div>
-                        @Html.LabelFor(m => m.Contrato.ContratoEndereco.Endereco.Numero, "Número", new { @class = "col-md-2 control-label" })
+                        @Html.LabelFor(m => m.Contrato.ContratoEndereco.Endereco.Numero, new { @class = "col-md-2 control-label" })
                         <div class="col-md-2">
                             @Html.EditorFor(model => model.Contrato.ContratoEndereco.Endereco.Numero, new { htmlAttributes = new { @class = "form-control", @placeholder = "Número" } })
                             @Html.ValidationMessageFor(model => model.Contrato.ContratoEndereco.Endereco.Numero, "", new { @class = "text-danger" })
@@ -56,13 +56,13 @@
                         </div>
                     </div>
                     <div class="form-group form-md-line-input">
-                        @Html.LabelFor(m => m.Contrato.ContratoEndereco.Endereco.Bairro, "Bairro", new { @class = "col-md-2 control-label" })
+                        @Html.LabelFor(m => m.Contrato.ContratoEndereco.Endereco.Bairro, new { @class = "col-md-2 control-label" })
                         <div class="col-md-5">
                             @Html.EditorFor(model => model.Contrato.ContratoEndereco.Endereco.Bairro, new { htmlAttributes = new { @class = "form-control", @placeholder = "Bairro" } })
                             @Html.ValidationMessageFor(model => model.Contrato.ContratoEndereco.Endereco.Bairro, "", new { @class = "text-danger" })
                             <div class="form-control-focus"> </div>
                         </div>
-                        @Html.LabelFor(m => m.Contrato.ContratoEndereco.Endereco.CEP, "CEP", new { @class = "col-md-2 control-label" })
+                        @Html.LabelFor(m => m.Contrato.ContratoEndereco.Endereco.CEP, new { @class = "col-md-2 control-label" })
                         <div class="col-md-2">
                             @Html.EditorFor(model => model.Contrato.ContratoEndereco.Endereco.CEP, new { htmlAttributes = new { @class = "form-control", @placeholder = "CEP" } })
                             @Html.ValidationMessageFor(model => model.Contrato.ContratoEndereco.Endereco.CEP, "", new { @class = "text-danger" })
@@ -70,7 +70,7 @@
                         </div>
                     </div>
                     <div class="form-group form-md-line-input">
-                        @Html.LabelFor(m => m.Contrato.ContratoEndereco.Endereco.IdCidade, "Cidade", new { @class = "col-md-2 control-label" })
+                        @Html.LabelFor(m => m.Contrato.ContratoEndereco.Endereco.IdCidade, new { @class = "col-md-2 control-label" })
                         <div class="col-md-4">
                             @Html.DropDownListFor(model => model.Contrato.ContratoEndereco.Endereco.IdCidade, new SelectList(Model.Cidades, "IdCidade", "Nome"), new { @class = "form-control", @placeholder = "Cidade", @required = "required", @id = "ddlCidades" })
                             @Html.ValidationMessageFor(model => model.Contrato.ContratoEndereco.Endereco.IdCidade, "", new { @class = "text-danger" })

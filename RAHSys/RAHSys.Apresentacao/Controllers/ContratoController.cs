@@ -80,6 +80,16 @@ namespace RAHSys.Apresentacao.Controllers
             return retorno;
         }
 
+        private FichaClienteAdicionar MontarFichaCliente(int id)
+        {
+            var retorno = new FichaClienteAdicionar();
+            retorno.Contrato = _contratoAppServico.ObterPorId(id);
+
+            retorno.Estados = _estadoAppServico.ListarTodos();
+
+            return retorno;
+        }
+
         [HttpPost]
         public ActionResult Adicionar(ContratoAdicionarModel contratoAdicionarModel)
         {
@@ -171,6 +181,46 @@ namespace RAHSys.Apresentacao.Controllers
             return View(retorno);
         }
 
+        [HttpGet]
+        public ActionResult AdicionarFichaCliente(int id)
+        {
+            ViewBag.SubTitle = "Editar Contrato";
+            ViewBag.SubSubTitle = "Ficha do Cliente";
+
+            try
+            {
+                var contratoModel = _contratoAppServico.ObterPorId(id);
+                if (contratoModel == null)
+                {
+                    MensagemErro("Contrato não encontrado");
+                    return RedirectToAction("Index");
+                }
+
+                if (contratoModel.AnaliseInvestimento == null)
+                {
+
+                    MensagemErro("Necessário adicionar análise de investimento");
+                    return RedirectToAction("Index");
+                }
+
+                if (contratoModel.AnaliseInvestimento.Cliente != null)
+                {
+                    MensagemErro("Não é possível adicionar ficha do cliente");
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+                return RedirectToAction("Index");
+            }
+
+            var retorno = MontarFichaCliente(id);
+            retorno.Cliente = new ClienteAppModel() { IdAnaliseInvestimento = id };
+
+            return View(retorno);
+        }
+
         [HttpPost]
         public ActionResult AdicionarAnaliseInvestimento(AnaliseInvestimentoAdicionar analiseInvestimentoAdicionarModel)
         {
@@ -208,6 +258,8 @@ namespace RAHSys.Apresentacao.Controllers
                 }
                 if (contratoModel.AnaliseInvestimento == null)
                     return RedirectToAction("AdicionarAnaliseInvestimento", new { id = id });
+                else if (contratoModel.AnaliseInvestimento.Cliente == null)
+                    return RedirectToAction("AdicionarFichaCliente", new { id = id });
                 else
                     MensagemErro("Não é possível editar o contrato");
                 return RedirectToAction("Index");

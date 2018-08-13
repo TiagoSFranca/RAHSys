@@ -44,10 +44,14 @@
     <Compile Include="Entidades\AnaliseInvestimentoModel.cs" />
     <Compile Include="Entidades\CameraModel.cs" />
     <Compile Include="Entidades\CidadeModel.cs" />
+    <Compile Include="Entidades\ClienteModel.cs" />
     <Compile Include="Entidades\ContratoEnderecoModel.cs" />
     <Compile Include="Entidades\ContratoModel.cs" />
+    <Compile Include="Entidades\DocumentoModel.cs" />
     <Compile Include="Entidades\EnderecoModel.cs" />
     <Compile Include="Entidades\EstadoModel.cs" />
+    <Compile Include="Entidades\FiadorEnderecoModel.cs" />
+    <Compile Include="Entidades\FiadorModel.cs" />
     <Compile Include="Entidades\LogErrorModel.cs" />
     <Compile Include="Entidades\TipoContatoModel.cs" />
     <Compile Include="Entidades\TipoTelhadoModel.cs" />

@@ -15,5 +15,6 @@
 
         public virtual TipoTelhadoModel TipoTelhado { get; set; }
         public virtual ContratoModel Contrato { get; set; }
+        public virtual ClienteModel Cliente { get; set; }
     }
 }

@@ -40,6 +40,10 @@ namespace RAHSys.Infra.Dados.EntityConfig
                 .WithRequired(es => es.Endereco)
                 .HasForeignKey(es => es.IdEndereco)
                 .WillCascadeOnDelete(true);
+
+            HasMany(e => e.FiadorEnderecos)
+                .WithRequired(es => es.Endereco)
+                .HasForeignKey(es => es.IdEndereco);
         }
     }
 }

@@ -51,10 +51,14 @@
     <Compile Include="EntityConfig\AnaliseInvestimentoConfiguracao.cs" />
     <Compile Include="EntityConfig\CameraConfiguracao.cs" />
     <Compile Include="EntityConfig\CidadeConfiguracao.cs" />
+    <Compile Include="EntityConfig\ClienteConfiguracao.cs" />
     <Compile Include="EntityConfig\ContratoConfiguracao.cs" />
     <Compile Include="EntityConfig\ContratoEnderecoConfiguracao.cs" />
+    <Compile Include="EntityConfig\DocumentoConfiguracao.cs" />
     <Compile Include="EntityConfig\EnderecoConfiguracao.cs" />
     <Compile Include="EntityConfig\EstadoConfiguracao.cs" />
+    <Compile Include="EntityConfig\FiadorConfiguracao.cs" />
+    <Compile Include="EntityConfig\FiadorEnderecoConfiguracao.cs" />
     <Compile Include="EntityConfig\LogErrorConfiguracao.cs" />
     <Compile Include="EntityConfig\TipoContatoConfiguracao.cs" />
     <Compile Include="EntityConfig\TipoTelhadoConfiguracao.cs" />
@@ -85,6 +89,10 @@
     <Compile Include="Migrations\201808092305385_Criacao da tabela AnaliseInvestimento.cs" />
     <Compile Include="Migrations\201808092305385_Criacao da tabela AnaliseInvestimento.Designer.cs">
       <DependentUpon>201808092305385_Criacao da tabela AnaliseInvestimento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808131350470_Criacao da tabela Cliente, Fiador, FiadorEndereco e Documento.cs" />
+    <Compile Include="Migrations\201808131350470_Criacao da tabela Cliente, Fiador, FiadorEndereco e Documento.Designer.cs">
+      <DependentUpon>201808131350470_Criacao da tabela Cliente, Fiador, FiadorEndereco e Documento.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -139,6 +147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808092305385_Criacao da tabela AnaliseInvestimento.resx">
       <DependentUpon>201808092305385_Criacao da tabela AnaliseInvestimento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808131350470_Criacao da tabela Cliente, Fiador, FiadorEndereco e Documento.resx">
+      <DependentUpon>201808131350470_Criacao da tabela Cliente, Fiador, FiadorEndereco e Documento.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

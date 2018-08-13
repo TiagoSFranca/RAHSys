@@ -218,5 +218,13 @@ namespace RAHSys.Apresentacao.Controllers
                 return RedirectToAction("Index");
             }
         }
+
+        [HttpGet]
+        public JsonResult ObterCidadesPorEstado(int id)
+        {
+            List<CidadeAppModel> lista = new List<CidadeAppModel>();
+            lista.AddRange(_cidadeAppServico.ObterCidadesPorEstado(id));
+            return Json(lista, JsonRequestBehavior.AllowGet);
+        }
     }
 }

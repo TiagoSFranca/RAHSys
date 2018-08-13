@@ -78,7 +78,7 @@
                         </div>
                         @Html.Label("Estado", new { @class = "col-md-2 control-label" })
                         <div class="col-md-3">
-                            @Html.DropDownListFor(m => m.Contrato.ContratoEndereco.Endereco.Cidade.IdEstado, new SelectList(Model.Estados, "IdEstado", "Descricao "), new { @class = "form-control", @placeholder = "Estado", @onchange = "buscarCidades(this.value)" })
+                            @Html.DropDownListFor(m => m.Contrato.ContratoEndereco.Endereco.Cidade.IdEstado, new SelectList(Model.Estados, "IdEstado", "Descricao"),"Selecione", new { @class = "form-control", @placeholder = "Estado", @onchange = "buscarCidades(this.value, \"ddlCidades\")", @id = "ddlEstados" })
                             <div class="form-control-focus"> </div>
                         </div>
                     </div>
@@ -96,5 +96,12 @@
 </div>
 <input type="hidden" value="@Url.Action("ObterCidadesPorEstado", "Contrato")" id="consultaCidades" />
 @section scripts{
-    @Scripts.Render("~/BuscarCidades/js")
+    @Scripts.Render("~/BuscarCidades/js");
+    @*<script type="text/javascript">
+        $(document).ready(function () {
+            var valEstado = $("#ddlEstados").val();
+            if (valEstado > 0)
+                buscarCidades(valEstado, "ddlCidades");
+        });
+    </script>*@
 }

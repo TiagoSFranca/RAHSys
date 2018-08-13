@@ -64,12 +64,6 @@ namespace RAHSys.Apresentacao.Controllers
             contratoModel.Estados = _estadoAppServico.ListarTodos();
             if (idEstado != null)
                 contratoModel.Cidades = _cidadeAppServico.ObterCidadesPorEstado((int)idEstado);
-            else
-            {
-                var estado = contratoModel.Estados.FirstOrDefault();
-                if (estado != null)
-                    contratoModel.Cidades = _cidadeAppServico.ObterCidadesPorEstado(estado.IdEstado);
-            }
             return contratoModel;
         }
 

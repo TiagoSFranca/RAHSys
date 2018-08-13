@@ -1,10 +1,12 @@
-﻿function buscarCidades(id) {
+﻿function buscarCidades(id, dropdown) {
     var $consultaCidades = $("#consultaCidades");
-    $.get($consultaCidades.val(), { id: id }, function (data) {
-        var $ddlCidades = $('#ddlCidades');
-        $ddlCidades.empty();
-        $.each(data, function (index, elemento) {
-            $ddlCidades.append("<option value=\"" + elemento.IdCidade + "\">" + elemento.Nome + "</option>");
+    var $ddlCidades = $("#" + dropdown);    
+    $ddlCidades.empty();
+    if (id > 0) {
+        $.get($consultaCidades.val(), { id: id }, function (data) {
+            $.each(data, function (index, elemento) {
+                $ddlCidades.append("<option value=\"" + elemento.IdCidade + "\">" + elemento.Nome + "</option>");
+            });
         });
-    });
+    }
 }

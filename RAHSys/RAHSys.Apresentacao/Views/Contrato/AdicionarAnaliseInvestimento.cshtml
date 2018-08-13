@@ -36,7 +36,7 @@
                     <div class="form-group form-md-line-input">
                         @Html.LabelFor(m => m.AnaliseInvestimento.IdTipoTelhado, new { @class = "col-md-2 control-label" })
                         <div class="col-md-4">
-                            @Html.DropDownListFor(model => model.AnaliseInvestimento.IdTipoTelhado, new SelectList(Model.TipoTelhados, "IdTipoTelhado", "Descricao"), new { @class = "form-control", @placeholder = "Tipo de Telhado", @required = "required" })
+                            @Html.DropDownListFor(model => model.AnaliseInvestimento.IdTipoTelhado, new SelectList(Model.TipoTelhados, "IdTipoTelhado", "Descricao"), "Selecione", new { @class = "form-control", @placeholder = "Tipo de Telhado", @required = "required" })
                             @Html.ValidationMessageFor(model => model.AnaliseInvestimento.IdTipoTelhado, "", new { @class = "text-danger" })
                             <div class="form-control-focus"> </div>
                         </div>

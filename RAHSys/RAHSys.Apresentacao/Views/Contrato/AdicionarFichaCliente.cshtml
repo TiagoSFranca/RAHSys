@@ -71,7 +71,7 @@
                         </div>
                         @Html.LabelFor(m => m.Contrato.ContratoEndereco.Endereco.CEP, new { @class = "col-md-2 control-label" })
                         <div class="col-md-2">
-                            @Html.EditorFor(model => model.Contrato.ContratoEndereco.Endereco.CEP, new { htmlAttributes = new { @class = "form-control", @placeholder = "CEP", @disabled = "disabled" } })
+                            @Html.EditorFor(model => model.Contrato.ContratoEndereco.Endereco.CEP, new { htmlAttributes = new { @class = "form-control cep", @placeholder = "CEP", @disabled = "disabled" } })
                             <div class="form-control-focus"> </div>
                         </div>
                     </div>
@@ -181,7 +181,7 @@
                         </div>
                         @Html.LabelFor(m => m.Cliente.Fiadores[0].FiadorEndereco.Endereco.CEP, new { @class = "col-md-2 control-label" })
                         <div class="col-md-2">
-                            @Html.EditorFor(model => model.Cliente.Fiadores[0].FiadorEndereco.Endereco.CEP, new { htmlAttributes = new { @class = "form-control", @placeholder = "CEP" } })
+                            @Html.EditorFor(model => model.Cliente.Fiadores[0].FiadorEndereco.Endereco.CEP, new { htmlAttributes = new { @class = "form-control cep", @placeholder = "CEP" } })
                             @Html.ValidationMessageFor(model => model.Cliente.Fiadores[0].FiadorEndereco.Endereco.CEP, "", new { @class = "text-danger" })
                             <div class="form-control-focus"> </div>
                         </div>

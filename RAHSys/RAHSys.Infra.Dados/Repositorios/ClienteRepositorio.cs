@@ -1,5 +1,6 @@
 ﻿using RAHSys.Dominio.Servicos.Interfaces.Repositorios;
 using RAHSys.Entidades.Entidades;
+using System.Data.Entity;
 
 namespace RAHSys.Infra.Dados.Repositorios
 {
@@ -33,6 +34,14 @@ namespace RAHSys.Infra.Dados.Repositorios
                 fiadorEndereco.IdEndereco = endereco.IdEndereco;
 
                 _context.FiadorEndereco.Add(fiadorEndereco);
+
+                _context.SaveChanges();
+
+                fiador.IdFiadorEndereco = fiadorEndereco.IdFiadorEndereco;
+
+                _context.Entry(fiador).State = EntityState.Modified;
+
+                _context.SaveChanges();
             }
             _context.SaveChanges();
         }

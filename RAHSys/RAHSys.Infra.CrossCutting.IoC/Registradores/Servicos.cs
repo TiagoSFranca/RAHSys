@@ -11,6 +11,7 @@ namespace RAHSys.Infra.CrossCutting.IoC.Registradores
             container.Register<ICameraServico, CameraServico>(Lifestyle.Scoped);
             container.Register<ITipoTelhadoServico, TipoTelhadoServico>(Lifestyle.Scoped);
             container.Register<ITipoContatoServico, TipoContatoServico>(Lifestyle.Scoped);
+            container.Register<IAuditoriaServico, AuditoriaServico>(Lifestyle.Scoped);
         }
     }
 }

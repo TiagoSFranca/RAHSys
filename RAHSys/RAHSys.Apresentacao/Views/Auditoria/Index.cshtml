@@ -1,0 +1,181 @@
+﻿@using RAHSys.Aplicacao.AppModels;
+@using RAHSys.Extras.Enums;
+@using PagedList.Mvc;
+
+@model PagedList.StaticPagedList<AuditoriaAppModel>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart font-dark hide"></i>
+                    <span class="caption-subject font-green-steel uppercase bold">Buscar</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                @using (Html.BeginForm("Index", "Auditoria", FormMethod.Get, new { @id = "form-busca" }))
+                {
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group form-md-line-input has-success">
+                            @Html.Editor("usuario", new { htmlAttributes = new { @class = "form-control", @placeholder = "Usuário" } })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-md-line-input has-success">
+                            @Html.Editor("funcao", new { htmlAttributes = new { @class = "form-control", @placeholder = "Função" } })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-md-line-input has-success">
+                            @Html.Editor("acao", new { htmlAttributes = new { @class = "form-control", @placeholder = "Ação" } })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-md-line-input has-success">
+                            @Html.Editor("enderecoIP", new { htmlAttributes = new { @class = "form-control", @placeholder = "Endereço IP" } })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        @*<div class="form-group form-md-line-input has-success">
+                            @Html.Editor("dataHora", new { htmlAttributes = new { @class = "form-control", @placeholder = "Data/Hora" } })
+                            <div class="form-control-focus"> </div>
+                        </div>*@
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-md-line-input has-success">
+                            @Html.DropDownList("itensPagina", EnumHelper.GetSelectList(typeof(ItensPorPaginaEnum)), "Itens Por Página", new { @class = "form-control" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    @Html.Hidden("ordenacao", (string)ViewBag.Ordenacao)
+                    @Html.Hidden("crescente", (bool)ViewBag.Crescente)
+                    <div class="col-md-3">
+                        <div class="form-group form-md-line-input ">
+                            <button type="submit" class="btn blue btn-circle">Buscar</button>
+                            @Html.ActionLink("Limpar", "Index", "Auditoria", null, new { @class = "btn btn-white btn-outline btn-circle btn-md" })
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart font-dark hide"></i>
+                    <span class="caption-subject font-green-steel uppercase bold">Dados</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                @if (Model.Count > 0)
+                {
+                    <div class="table-scrollable">
+                        <table class="table table-hover table-light">
+                            <thead>
+                                <tr>
+                                    <th onclick="ordenar('')">
+                                        <a>
+                                            #
+                                        </a>
+                                    </th>
+                                    <th onclick="ordenar('Usuário')">
+                                        <a>
+                                            Usuário
+                                        </a>
+                                    </th>
+                                    <th onclick="ordenar('Função')">
+                                        <a>
+                                            Função
+                                        </a>
+                                    </th>
+                                    <th onclick="ordenar('Ação')">
+                                        <a>
+                                            Ação
+                                        </a>
+                                    </th>
+                                    <th onclick="ordenar('Data/Hora')">
+                                        <a>
+                                            Data/Hora
+                                        </a>
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td>
+                                        @item.IdAuditoria
+                                    </td>
+                                    <td>
+                                        @item.Usuario
+                                    </td>
+                                    <td>
+                                        @item.Funcao
+                                    </td>
+                                    <td>
+                                        @item.Acao
+                                    </td>
+                                    <td>
+                                        @item.DataHora
+                                    </td>
+                                    <td class="text-right">
+                                        @Html.ActionLink("Detalhes", "Detalhar", "Auditoria", new { id = item.IdAuditoria }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class="italic bold">
+                                @Model.FirstItemOnPage a @Model.LastItemOnPage de @Model.TotalItemCount registros
+                            </span>
+                            <div class="text-center">
+                                @Html.PagedListPager(Model,
+                               pagina => Url.Action("Index", "Auditoria", new {
+                                   pagina, usuario = ViewBag.Usuario, funcao = ViewBag.Funcao,
+                                   acao = ViewBag.Acao,
+                                   enderecoIP = ViewBag.EnderecoIP,
+                                   dataHora = ViewBag.DataHora,
+                                   itensPagina = ViewBag.ItensPagina,
+                                   ordenacao = ViewBag.Ordenacao,
+                                   crescente= ViewBag.Crescente
+                               }))
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-info">
+                                <h5 class="text-center">
+                                    Não foram encontrados resultados
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/Ordenacao/js")
+    @Scripts.Render("~/Modal/js")
+}

@@ -25,14 +25,14 @@ namespace RAHSys.Apresentacao.Attributes
 
             // Regra para Autorização: 
             // Um usuário está autorizado se o seu perfil condiz com 
-            // um dos perfis autorizado da função, ou se ele for um Admin            
-            var isAuthorized = base.AuthorizeCore(httpContext);
+            // um dos perfis autorizado da função, ou se ele for um Admin 
+            if (String.IsNullOrEmpty(Roles))
+                Roles = "Admin";
+            else
+                Roles += ", Admin";
 
-            if (!isAuthorized)
-            {
-                isAuthorized = httpContext.User.IsInRole("Admin");
-            }
-              
+            var isAuthorized = base.AuthorizeCore(httpContext);
+            
             return isAuthorized;
         }
 

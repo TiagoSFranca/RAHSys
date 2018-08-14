@@ -1,18 +1,19 @@
-namespace RAHSys.Infra.Dados.Migrations
+namespace RAHSys.Infra.Dados.Migrations.Audit
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<RAHSys.Infra.Dados.Contexto.RAHSysContexto>
+    internal sealed class Configuration : DbMigrationsConfiguration<RAHSys.Infra.Dados.Contexto.RAHSysAuditContexto>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            MigrationsDirectory = @"Migrations\Audit";
         }
 
-        protected override void Seed(RAHSys.Infra.Dados.Contexto.RAHSysContexto context)
+        protected override void Seed(RAHSys.Infra.Dados.Contexto.RAHSysAuditContexto context)
         {
             //  This method will be called after migrating to the latest version.
 

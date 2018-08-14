@@ -6,9 +6,11 @@ using PagedList;
 using RAHSys.Extras;
 using RAHSys.Infra.CrossCutting.Exceptions;
 using System.Collections.Generic;
+using RAHSys.Apresentacao.Attributes;
 
 namespace RAHSys.Apresentacao.Controllers
 {
+    [RAHAudit]
     public class CameraController : ControllerBase
     {
         private readonly ICameraAppServico _cameraAppServico;

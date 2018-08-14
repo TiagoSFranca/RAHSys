@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsultaModel.cs" />
+    <Compile Include="Entidades\AuditoriaModel.cs" />
     <Compile Include="Entidades\CameraModel.cs" />
     <Compile Include="Entidades\LogErrorModel.cs" />
     <Compile Include="Entidades\TipoContatoModel.cs" />

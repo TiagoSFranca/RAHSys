@@ -47,7 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contexto\RAHSysAuditContexto.cs" />
     <Compile Include="Contexto\RAHSysContexto.cs" />
+    <Compile Include="EntityConfig\AuditoriaConfiguracao.cs" />
     <Compile Include="EntityConfig\CameraConfiguracao.cs" />
     <Compile Include="EntityConfig\LogErrorConfiguracao.cs" />
     <Compile Include="EntityConfig\TipoContatoConfiguracao.cs" />
@@ -68,9 +70,16 @@
     <Compile Include="Migrations\201808052323543_Criacao da tabela TipoContato.Designer.cs">
       <DependentUpon>201808052323543_Criacao da tabela TipoContato.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.cs" />
+    <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.Designer.cs">
+      <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Audit\Configuration.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\AuditoriaRepositorio.cs" />
     <Compile Include="Repositorios\CameraRepositorio.cs" />
+    <Compile Include="Repositorios\RepositorioAuditBase.cs" />
     <Compile Include="Repositorios\RepositorioBase.cs" />
     <Compile Include="Repositorios\TipoContatoRepositorio.cs" />
     <Compile Include="Repositorios\TipoTelhadoRepository.cs" />
@@ -106,6 +115,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808052323543_Criacao da tabela TipoContato.resx">
       <DependentUpon>201808052323543_Criacao da tabela TipoContato.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\Audit\201808101838532_CriacaoDBAudit.resx">
+      <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

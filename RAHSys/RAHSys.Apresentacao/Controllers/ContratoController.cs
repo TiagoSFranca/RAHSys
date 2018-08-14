@@ -257,8 +257,21 @@ namespace RAHSys.Apresentacao.Controllers
                 fichaCliente.Cliente.Fiadores[1].IdEstadoCivil = fichaCliente.Cliente.Fiadores[0].IdEstadoCivil;
                 fichaCliente.Cliente.Fiadores[1].Conjuge = true;
             }
+            else
+                fichaCliente.Cliente.Fiadores.Add(new FiadorAppModel());
+
             var analiseInvestimentoRetorno = MontarFichaCliente(fichaCliente.Cliente.IdAnaliseInvestimento, idEstado, idEstadoConjuge);
             analiseInvestimentoRetorno.Cliente = fichaCliente.Cliente;
+
+            var p = Request.Files;
+
+            if (p.Count > 0)
+            {
+                MensagemSucesso("Arquivo adicionado com sucesso!");
+            }
+
+            return View(analiseInvestimentoRetorno);
+
             if (ModelState.IsValid)
             {
                 try
@@ -273,6 +286,7 @@ namespace RAHSys.Apresentacao.Controllers
                     return View(analiseInvestimentoRetorno);
                 }
             }
+
             return View(analiseInvestimentoRetorno);
         }
 

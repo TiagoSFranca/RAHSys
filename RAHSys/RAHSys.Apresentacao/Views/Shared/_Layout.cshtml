@@ -14,6 +14,7 @@
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
     @Styles.Render("~/Mandatory/css")
     @Styles.Render("~/PageLevelPlugins/css")
+    @RenderSection("styles", required: false)
     @Styles.Render("~/Global/css")
     @Styles.Render("~/Theme/css")
     <link rel="shortcut icon" href="favicon.ico" />
@@ -449,9 +450,9 @@
     @Scripts.Render("~/PageLevelPlugins/js")
     @Scripts.Render("~/Global/js")
     @Scripts.Render("~/PageLevel/js")
+    @RenderSection("scripts", required: false)
     @Scripts.Render("~/Theme/js")
 
-    @RenderSection("scripts", required: false)
     <script>
         $(document).ready(function () {
             $('#clickmewow').click(function () {

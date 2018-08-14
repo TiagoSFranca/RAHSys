@@ -81,6 +81,10 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
             bundles.Add(new ScriptBundle("~/FichaCliente/js").Include(
                 "~/Scripts/fichaCliente.js"
                 ));
+
+            bundles.Add(new ScriptBundle("~/FileInput/js").Include(
+                "~/Content/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"
+                ));
         }
     }
 }

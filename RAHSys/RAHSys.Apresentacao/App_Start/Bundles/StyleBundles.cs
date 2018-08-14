@@ -36,6 +36,10 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
                 "~/Content/assets/layouts/layout3/css/themes/default.min.css",
                 "~/Content/assets/layouts/layout3/css/custom.min.css"
                 ));
+
+            bundles.Add(new StyleBundle("~/FileInput/css").Include(
+                "~/Content/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css"
+                ));
         }
     }
 }

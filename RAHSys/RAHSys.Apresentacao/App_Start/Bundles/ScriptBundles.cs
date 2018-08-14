@@ -77,6 +77,10 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
             bundles.Add(new ScriptBundle("~/BuscarCidades/js").Include(
                 "~/Scripts/buscarCidades.js"
                 ));
+
+            bundles.Add(new ScriptBundle("~/FichaCliente/js").Include(
+                "~/Scripts/fichaCliente.js"
+                ));
         }
     }
 }

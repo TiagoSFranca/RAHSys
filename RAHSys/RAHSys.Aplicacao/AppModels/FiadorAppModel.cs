@@ -24,6 +24,7 @@ namespace RAHSys.Aplicacao.AppModels
 
         [Required]
         [Display(Name = "Email")]
+        [EmailAddress]
         [MaxLength(256)]
         public string Email { get; set; }
         public int? IdFiadorEndereco { get; set; }

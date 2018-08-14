@@ -252,7 +252,11 @@ namespace RAHSys.Apresentacao.Controllers
             int? idEstado = fichaCliente?.Cliente?.Fiadores?.FirstOrDefault()?.FiadorEndereco?.Endereco?.Cidade?.IdEstado;
             int? idEstadoConjuge = null;
             if (fichaCliente?.Cliente?.Fiadores?.Count() > 1)
+            {
                 idEstadoConjuge = fichaCliente?.Cliente?.Fiadores[1]?.FiadorEndereco?.Endereco?.Cidade?.IdEstado;
+                fichaCliente.Cliente.Fiadores[1].IdEstadoCivil = fichaCliente.Cliente.Fiadores[0].IdEstadoCivil;
+                fichaCliente.Cliente.Fiadores[1].Conjuge = true;
+            }
             var analiseInvestimentoRetorno = MontarFichaCliente(fichaCliente.Cliente.IdAnaliseInvestimento, idEstado, idEstadoConjuge);
             analiseInvestimentoRetorno.Cliente = fichaCliente.Cliente;
             if (ModelState.IsValid)

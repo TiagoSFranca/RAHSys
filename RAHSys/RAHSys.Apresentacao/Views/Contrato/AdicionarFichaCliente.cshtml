@@ -131,7 +131,7 @@
                         </div>
                         @Html.LabelFor(m => m.Cliente.Fiadores[0].IdEstadoCivil, new { @class = "col-md-2 control-label" })
                         <div class="col-md-3">
-                            @Html.DropDownListFor(model => model.Cliente.Fiadores[0].IdEstadoCivil, new SelectList(Model.EstadosCivis, "IdEstadoCivil", "Descricao"), "Selecione", new { @class = "form-control", @placeholder = "Estado civil", @required = "required" })
+                            @Html.DropDownListFor(model => model.Cliente.Fiadores[0].IdEstadoCivil, new SelectList(Model.EstadosCivis, "IdEstadoCivil", "Descricao"), "Selecione", new { @class = "form-control", @placeholder = "Estado civil", @required = "required", @id = "ddlEstadoCivil", @onchange = "exibirConjuge(this.value)" })
                             @Html.ValidationMessageFor(model => model.Cliente.Fiadores[0].IdEstadoCivil, "", new { @class = "text-danger" })
                             <div class="form-control-focus"> </div>
                         </div>
@@ -199,6 +199,99 @@
                             <div class="form-control-focus"> </div>
                         </div>
                     </div>
+                    <div class="form-group nao-conjuge">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" class="btn blue btn-circle">Salvar</button>
+                            @Html.ActionLink("Cancelar", "Index", "Contrato", null, new { @class = "btn yellow-haze btn-outline btn-circle btn-md" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row conjuge">
+        <div class="col-md-12 col-sm-12">
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart font-dark hide"></i>
+                        <span class="caption-subject font-green-steel uppercase bold">Cônjuge</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(model => model.Cliente.Fiadores[1].Nome, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.Cliente.Fiadores[1].Nome, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome do(a) Fiador(a)", @required = "required" } })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.Cliente.Fiadores[1].Email, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-5">
+                            @Html.EditorFor(model => model.Cliente.Fiadores[1].Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email" } })
+                            @Html.ValidationMessageFor(model => model.Cliente.Fiadores[1].Email, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                        @Html.LabelFor(m => m.Cliente.Fiadores[1].Telefone, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-2">
+                            @Html.EditorFor(model => model.Cliente.Fiadores[1].Telefone, new { htmlAttributes = new { @class = "form-control", @placeholder = "Telefone" } })
+                            @Html.ValidationMessageFor(model => model.Cliente.Fiadores[1].Telefone, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        <div class="col-md-2 control-label">
+                            <div class="caption caption-md">
+                                <i class="icon-bar-chart font-dark hide"></i>
+                                <span class="caption-subject font-green-steel uppercase bold">Endereço</span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn blue btn-circle" id="repetir-endereco">REPETIR</button>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.Cliente.Fiadores[1].FiadorEndereco.Endereco.Logradouro, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-5">
+                            @Html.EditorFor(model => model.Cliente.Fiadores[1].FiadorEndereco.Endereco.Logradouro, new { htmlAttributes = new { @class = "form-control", @placeholder = "Logradouro" } })
+                            @Html.ValidationMessageFor(model => model.Cliente.Fiadores[1].FiadorEndereco.Endereco.Logradouro, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                        @Html.LabelFor(m => m.Cliente.Fiadores[1].FiadorEndereco.Endereco.Numero, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-2">
+                            @Html.EditorFor(model => model.Cliente.Fiadores[1].FiadorEndereco.Endereco.Numero, new { htmlAttributes = new { @class = "form-control", @placeholder = "Número" } })
+                            @Html.ValidationMessageFor(model => model.Cliente.Fiadores[1].FiadorEndereco.Endereco.Numero, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.Cliente.Fiadores[1].FiadorEndereco.Endereco.Bairro, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-5">
+                            @Html.EditorFor(model => model.Cliente.Fiadores[1].FiadorEndereco.Endereco.Bairro, new { htmlAttributes = new { @class = "form-control", @placeholder = "Bairro" } })
+                            @Html.ValidationMessageFor(model => model.Cliente.Fiadores[1].FiadorEndereco.Endereco.Bairro, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                        @Html.LabelFor(m => m.Cliente.Fiadores[1].FiadorEndereco.Endereco.CEP, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-2">
+                            @Html.EditorFor(model => model.Cliente.Fiadores[1].FiadorEndereco.Endereco.CEP, new { htmlAttributes = new { @class = "form-control cep", @placeholder = "CEP" } })
+                            @Html.ValidationMessageFor(model => model.Cliente.Fiadores[1].FiadorEndereco.Endereco.CEP, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.Cliente.Fiadores[1].FiadorEndereco.Endereco.IdCidade, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(model => model.Cliente.Fiadores[1].FiadorEndereco.Endereco.IdCidade, new SelectList(Model.CidadesFiadorConjuge, "IdCidade", "Nome"), new { @class = "form-control", @placeholder = "Cidade", @required = "required", @id = "ddlCidadesFiadorConjuge" })
+                            @Html.ValidationMessageFor(model => model.Cliente.Fiadores[1].FiadorEndereco.Endereco.IdCidade, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                        @Html.Label("Estado", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-3">
+                            @Html.DropDownListFor(m => m.Cliente.Fiadores[1].FiadorEndereco.Endereco.Cidade.IdEstado, new SelectList(Model.Estados, "IdEstado", "Descricao"), "Selecione", new { @class = "form-control", @placeholder = "Estado", @onchange = "buscarCidades(this.value,\"ddlCidadesFiadorConjuge\")" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
                             <button type="submit" class="btn blue btn-circle">Salvar</button>
@@ -211,7 +304,9 @@
     </div>
 }
 <input type="hidden" value="@Url.Action("ObterCidadesPorEstado", "Contrato")" id="consultaCidades" />
+<input type="hidden" value="@RAHSys.Entidades.Seeds.EstadoCivilSeed.Casado.IdEstadoCivil" id="idCasado" />
 @section scripts{
     @Scripts.Render("~/BuscarCidades/js");
+    @Scripts.Render("~/FichaCliente/js");
 }
 

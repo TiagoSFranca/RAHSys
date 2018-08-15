@@ -47,7 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contexto\RAHSysAuditContexto.cs" />
     <Compile Include="Contexto\RAHSysContexto.cs" />
+    <Compile Include="EntityConfig\AuditoriaConfiguracao.cs" />
     <Compile Include="EntityConfig\AnaliseInvestimentoConfiguracao.cs" />
     <Compile Include="EntityConfig\CameraConfiguracao.cs" />
     <Compile Include="EntityConfig\CidadeConfiguracao.cs" />
@@ -79,6 +81,11 @@
     <Compile Include="Migrations\201808052323543_Criacao da tabela TipoContato.Designer.cs">
       <DependentUpon>201808052323543_Criacao da tabela TipoContato.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.cs" />
+    <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.Designer.cs">
+      <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Audit\Configuration.cs" />
     <Compile Include="Migrations\201808092205177_Criacao das tabelas endereco, cidade, estado, contrato e contratoEndereco.cs" />
     <Compile Include="Migrations\201808092205177_Criacao das tabelas endereco, cidade, estado, contrato e contratoEndereco.Designer.cs">
       <DependentUpon>201808092205177_Criacao das tabelas endereco, cidade, estado, contrato e contratoEndereco.cs</DependentUpon>
@@ -101,8 +108,10 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\AuditoriaRepositorio.cs" />
     <Compile Include="Repositorios\AnaliseInvestimentoRepositorio.cs" />
     <Compile Include="Repositorios\CameraRepositorio.cs" />
+    <Compile Include="Repositorios\RepositorioAuditBase.cs" />
     <Compile Include="Repositorios\CidadeRepositorio.cs" />
     <Compile Include="Repositorios\ClienteRepositorio.cs" />
     <Compile Include="Repositorios\ContratoEnderecoRepositorio.cs" />
@@ -146,6 +155,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808052323543_Criacao da tabela TipoContato.resx">
       <DependentUpon>201808052323543_Criacao da tabela TipoContato.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\Audit\201808101838532_CriacaoDBAudit.resx">
+      <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808092205177_Criacao das tabelas endereco, cidade, estado, contrato e contratoEndereco.resx">
       <DependentUpon>201808092205177_Criacao das tabelas endereco, cidade, estado, contrato e contratoEndereco.cs</DependentUpon>

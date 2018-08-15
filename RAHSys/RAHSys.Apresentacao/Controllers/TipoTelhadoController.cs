@@ -49,6 +49,7 @@ namespace RAHSys.Apresentacao.Controllers
             return View(new TipoTelhadoAppModel());
         }
 
+        [RAHAudit]
         [HttpPost]
         public ActionResult Adicionar(TipoTelhadoAppModel tipoTelhadoAppModel)
         {

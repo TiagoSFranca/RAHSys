@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AppModels\AuditoriaAppModel.cs" />
     <Compile Include="AppModels\AnaliseInvestimentoAppModel.cs" />
     <Compile Include="AppModels\ArquivoAppModel.cs" />
     <Compile Include="AppModels\CameraAppModel.cs" />
@@ -46,6 +47,7 @@
     <Compile Include="AppModels\FiadorEnderecoAppModel.cs" />
     <Compile Include="AppModels\TipoContatoAppModel.cs" />
     <Compile Include="AppModels\TipoTelhadoAppModel.cs" />
+    <Compile Include="Extensoes\AuditoriaExtensao.cs" />
     <Compile Include="Extensoes\CameraExtensao.cs" />
     <Compile Include="Extensoes\CidadeExtensao.cs" />
     <Compile Include="Extensoes\ContratoExtensao.cs" />
@@ -53,7 +55,9 @@
     <Compile Include="Extensoes\EstadoExtensao.cs" />
     <Compile Include="Extensoes\TIpoContatoExtensao.cs" />
     <Compile Include="Extensoes\TipoTelhadoExtensao.cs" />
+    <Compile Include="Implementacao\AppServicoAuditoriaBase.cs" />
     <Compile Include="Implementacao\AppServicoBase.cs" />
+    <Compile Include="Implementacao\AuditoriaAppServico.cs" />
     <Compile Include="Implementacao\CameraAppServico.cs" />
     <Compile Include="Implementacao\CidadeAppServico.cs" />
     <Compile Include="Implementacao\ContratoAppServico.cs" />
@@ -62,6 +66,7 @@
     <Compile Include="Implementacao\TipoContatoAppServico.cs" />
     <Compile Include="Implementacao\TipoTelhadoAppServico.cs" />
     <Compile Include="Interfaces\IAppServicoBase.cs" />
+    <Compile Include="Interfaces\IAuditoriaAppServico.cs" />
     <Compile Include="Interfaces\ICameraAppServico.cs" />
     <Compile Include="Interfaces\ICidadeAppServico.cs" />
     <Compile Include="Interfaces\IContratoAppServico.cs" />
@@ -69,6 +74,7 @@
     <Compile Include="Interfaces\IEstadoCivilAppServico.cs" />
     <Compile Include="Interfaces\ITipoContatoAppServico.cs" />
     <Compile Include="Interfaces\ITipoTelhadoAppServico.cs" />
+    <Compile Include="Mapeamento\AuditoriaMapeamento.cs" />
     <Compile Include="Mapeamento\CameraMapeamento.cs" />
     <Compile Include="Mapeamento\CidadeMapeamento.cs" />
     <Compile Include="Mapeamento\ConfiguracaoGeralMapeamento.cs" />

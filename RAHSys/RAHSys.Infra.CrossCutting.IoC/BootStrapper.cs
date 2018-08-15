@@ -9,6 +9,7 @@ namespace RAHSys.Infra.CrossCutting.IoC
         public static void RegisterServices(Container container)
         {
             container.Register<RAHSysContexto>(Lifestyle.Scoped);
+            container.Register<RAHSysAuditContexto>(Lifestyle.Scoped);
 
             AppServicos.Register(container);
 

@@ -46,6 +46,7 @@
     <Compile Include="Interfaces\Repositorios\IClienteRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IContratoEnderecoRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IContratoRepositorio.cs" />
+    <Compile Include="Interfaces\Repositorios\IDocumentoRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IEnderecoRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IEstadoCivilRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IEstadoRepositorio.cs" />

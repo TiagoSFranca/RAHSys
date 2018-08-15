@@ -155,51 +155,33 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            <a>
-                                                #
-                                            </a>
+                                            #
                                         </th>
                                         <th>
-                                            <a>
-                                                Nome da Empresa
-                                            </a>
+                                            Nome do Arquivo
                                         </th>
                                         <th>
-                                            <a>
-                                                Cidade
-                                            </a>
-                                        </th>
-                                        <th>
-                                            Status
+                                            Data Cadastro
                                         </th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model.Contrato.Documentos)
+                                    @foreach (var item in Model.Contrato.Documentos.OrderByDescending(e => e.DataUpload))
                                     {
                                         <tr>
                                             <td>
-                                                @item.IdContrato
+                                                @item.IdDocumento
                                             </td>
-                                            @*<td>
-                                                    @item.NomeEmpresa
-                                                </td>
-                                                <td>
-                                                    @item.ContratoEndereco.Endereco.Cidade.Nome/@item.ContratoEndereco.Endereco.Cidade.Estado.Sigla
-                                                </td>
-                                                <td>
-                                                    @{
-                                                        var situacao = item.ObterSituacaoContrato();
-                                                    }
-                                                    <span class="@situacao.Classe">
-                                                        <strong>@situacao.Nome.ToUpper()</strong>
-                                                    </span>
-                                                </td>
-                                                <td class="text-right">
-                                                    @Html.ActionLink("Alterar", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
-                                                    @Html.ActionLink("Excluir", "Excluir", "Contrato", new { id = item.IdContrato }, new { @class = "btn red-flamingo btn-circle btn-md abrirModal" })
-                                                </td>*@
+                                            <td>
+                                                @item.NomeArquivo
+                                            </td>
+                                            <td>
+                                                @item.DataUpload
+                                            </td>
+                                            <td class="text-right">
+                                                @Html.ActionLink("Visualizar", "VisualizarContrato", "Contrato", new { id = item.IdDocumento }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md", target = "_blank" })
+                                            </td>
                                         </tr>
                                     }
                                 </tbody>
@@ -408,10 +390,10 @@
     @Scripts.Render("~/BuscarCidades/js")
     @Scripts.Render("~/FichaCliente/js")
     <script type="text/javascript">
-        //$(document).ready(function () {
-        //    $("#conjugeBody").val($(".conjuge-body").html());
-        //    $(".conjuge-body").html("");
-        //});
+                                        //$(document).ready(function () {
+                                        //    $("#conjugeBody").val($(".conjuge-body").html());
+                                        //    $(".conjuge-body").html("");
+                                        //});
     </script>
 }
 

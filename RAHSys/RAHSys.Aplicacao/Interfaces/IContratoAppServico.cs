@@ -8,6 +8,9 @@ namespace RAHSys.Aplicacao.Interfaces
         ConsultaAppModel<ContratoAppModel> Consultar(IEnumerable<int> idList, string nomeEmpresa, string cidade, string ordenacao, bool crescente, int pagina, int quantidade);
 
         void AdicionarAnaliseInvestimento(AnaliseInvestimentoAppModel analiseInvestimento);
+
         void AdicionarFichaCliente(ClienteAppModel cliente);
+
+        void AdicionarDocumento(int idContrato, ArquivoAppModel arquivo);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using RAHSys.Aplicacao.AppModels;
+using RAHSys.Entidades;
 using RAHSys.Entidades.Entidades;
 
 namespace RAHSys.Aplicacao.Extensoes
@@ -33,6 +34,11 @@ namespace RAHSys.Aplicacao.Extensoes
         public static ClienteAppModel MapearParaAplicacao(this ClienteModel obj)
         {
             return AutoMapper.Mapper.Map<ClienteAppModel>(obj);
+        }
+
+        public static ArquivoModel MapearParaDominio(this ArquivoAppModel obj)
+        {
+            return AutoMapper.Mapper.Map<ArquivoModel>(obj);
         }
     }
 }

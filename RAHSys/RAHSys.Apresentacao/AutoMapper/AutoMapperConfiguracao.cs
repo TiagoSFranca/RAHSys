@@ -26,6 +26,8 @@ namespace RAHSys.Apresentacao.AutoMapper
                 x.AddProfile(new CidadeMapeamento());
 
                 x.AddProfile(new EstadoCivilMapeamento());
+
+                x.AddProfile(new ArquivoMapeamento());
             });
         }
     }

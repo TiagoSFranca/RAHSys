@@ -107,6 +107,7 @@
     <Compile Include="Repositorios\ClienteRepositorio.cs" />
     <Compile Include="Repositorios\ContratoEnderecoRepositorio.cs" />
     <Compile Include="Repositorios\ContratoRepositorio.cs" />
+    <Compile Include="Repositorios\DocumentoRepositorio.cs" />
     <Compile Include="Repositorios\EnderecoRepositorio.cs" />
     <Compile Include="Repositorios\EstadoCivilRepositorio.cs" />
     <Compile Include="Repositorios\EstadoRepositorio.cs" />

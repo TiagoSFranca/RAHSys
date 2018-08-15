@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using RAHSys.Aplicacao.AppModels;
+using RAHSys.Entidades;
 using RAHSys.Entidades.Entidades;
 
 namespace RAHSys.Aplicacao.Mapeamento
@@ -15,6 +16,7 @@ namespace RAHSys.Aplicacao.Mapeamento
             CreateMap<FiadorEnderecoModel, FiadorEnderecoAppModel>().ReverseMap();
             CreateMap<ClienteModel, ClienteAppModel>().ReverseMap();
             CreateMap<DocumentoModel, DocumentoAppModel>().ReverseMap();
+            CreateMap<ArquivoAppModel, ArquivoModel>();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using PagedList;
+﻿using AutoMapper;
+using PagedList;
 using RAHSys.Aplicacao.AppModels;
 using RAHSys.Aplicacao.Interfaces;
 using RAHSys.Apresentacao.Models;
@@ -263,14 +264,25 @@ namespace RAHSys.Apresentacao.Controllers
             var analiseInvestimentoRetorno = MontarFichaCliente(fichaCliente.Cliente.IdAnaliseInvestimento, idEstado, idEstadoConjuge);
             analiseInvestimentoRetorno.Cliente = fichaCliente.Cliente;
 
-            var p = Request.Files;
+            var arquivo = Request.Files[0];
 
-            if (p.Count > 0)
+            if (arquivo?.ContentLength > 0)
             {
-                MensagemSucesso("Arquivo adicionado com sucesso!");
+                try
+                {
+                    _contratoAppServico.AdicionarDocumento(fichaCliente.Cliente.IdAnaliseInvestimento, Mapper.Map<ArquivoAppModel>(arquivo));
+                    MensagemSucesso("Arquivo adicionado com sucesso!");
+                }
+                catch (CustomBaseException ex)
+                {
+                    MensagemErro(ex.Mensagem);
+                    return View(analiseInvestimentoRetorno);
+                }
             }
 
-            return View(analiseInvestimentoRetorno);
+
+            analiseInvestimentoRetorno = MontarFichaCliente(fichaCliente.Cliente.IdAnaliseInvestimento, idEstado, idEstadoConjuge);
+            analiseInvestimentoRetorno.Cliente = fichaCliente.Cliente;
 
             if (ModelState.IsValid)
             {
@@ -324,6 +336,22 @@ namespace RAHSys.Apresentacao.Controllers
             List<CidadeAppModel> lista = new List<CidadeAppModel>();
             lista.AddRange(_cidadeAppServico.ObterCidadesPorEstado(id));
             return Json(lista, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult VisualizarContrato(int id)
+        {
+            ViewBag.SubTitle = "Editar Contrato";
+            var contratoModel = new ContratoAppModel();
+            try
+            {
+                return RedirectToAction("Index");
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+                return RedirectToAction("Index");
+            }
         }
     }
 }

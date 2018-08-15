@@ -153,5 +153,24 @@ namespace RAHSys.Aplicacao.Implementacao
                 throw nex;
             }
         }
+
+        public void AdicionarDocumento(int idContrato, ArquivoAppModel arquivo)
+        {
+            try
+            {
+                _contratoServico.AdicionarDocumento(idContrato, arquivo.MapearParaDominio());
+            }
+            catch (CustomBaseException ex)
+            {
+                LogExceptions(ex);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                var nex = new CustomBaseException(ex);
+                LogExceptions(nex);
+                throw nex;
+            }
+        }
     }
 }

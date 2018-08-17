@@ -61,6 +61,7 @@
     <Compile Include="Implementacao\CameraAppServico.cs" />
     <Compile Include="Implementacao\CidadeAppServico.cs" />
     <Compile Include="Implementacao\ContratoAppServico.cs" />
+    <Compile Include="Implementacao\DocumentoAppServico.cs" />
     <Compile Include="Implementacao\EstadoAppServico.cs" />
     <Compile Include="Implementacao\EstadoCivilAppServico.cs" />
     <Compile Include="Implementacao\TipoContatoAppServico.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Interfaces\ICameraAppServico.cs" />
     <Compile Include="Interfaces\ICidadeAppServico.cs" />
     <Compile Include="Interfaces\IContratoAppServico.cs" />
+    <Compile Include="Interfaces\IDocumentoAppServico.cs" />
     <Compile Include="Interfaces\IEstadoAppServico.cs" />
     <Compile Include="Interfaces\IEstadoCivilAppServico.cs" />
     <Compile Include="Interfaces\ITipoContatoAppServico.cs" />

@@ -18,15 +18,18 @@ namespace RAHSys.Apresentacao.Controllers
         private readonly ICidadeAppServico _cidadeAppServico;
         private readonly ITipoTelhadoAppServico _tipoTelhadoAppServico;
         private readonly IEstadoCivilAppServico _estadoCivilAppServico;
+        private readonly IDocumentoAppServico _documentoAppServico;
 
         public ContratoController(IContratoAppServico contratoAppServico, IEstadoAppServico estadoAppServico,
-            ICidadeAppServico cidadeAppServico, ITipoTelhadoAppServico tipoTelhadoAppServico, IEstadoCivilAppServico estadoCivilAppServico)
+            ICidadeAppServico cidadeAppServico, ITipoTelhadoAppServico tipoTelhadoAppServico, IEstadoCivilAppServico estadoCivilAppServico,
+            IDocumentoAppServico documentoAppServico)
         {
             _contratoAppServico = contratoAppServico;
             _estadoAppServico = estadoAppServico;
             _cidadeAppServico = cidadeAppServico;
             _tipoTelhadoAppServico = tipoTelhadoAppServico;
             _estadoCivilAppServico = estadoCivilAppServico;
+            _documentoAppServico = documentoAppServico;
             ViewBag.Title = "Clientes/Contratos";
         }
 
@@ -345,6 +348,11 @@ namespace RAHSys.Apresentacao.Controllers
             var contratoModel = new ContratoAppModel();
             try
             {
+                var documento = _documentoAppServico.ObterPorId(id);
+                if (documento == null)
+                {
+                    MensagemErro("Documento não encontrado");
+                }
                 return RedirectToAction("Index");
             }
             catch (CustomBaseException ex)

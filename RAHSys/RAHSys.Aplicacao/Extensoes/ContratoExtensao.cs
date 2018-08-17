@@ -40,5 +40,15 @@ namespace RAHSys.Aplicacao.Extensoes
         {
             return AutoMapper.Mapper.Map<ArquivoModel>(obj);
         }
+
+        public static DocumentoModel MapearParaDominio(this DocumentoAppModel obj)
+        {
+            return AutoMapper.Mapper.Map<DocumentoModel>(obj);
+        }
+
+        public static DocumentoAppModel MapearParaAplicacao(this DocumentoModel obj)
+        {
+            return AutoMapper.Mapper.Map<DocumentoAppModel>(obj);
+        }
     }
 }

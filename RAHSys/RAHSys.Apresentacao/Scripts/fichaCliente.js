@@ -4,6 +4,7 @@
     exibirConjuge($ddlEstadoCivil.val());
     exibirBotaoAdicionarContrato(false);
 });
+
 function removerConjugeBody() {
     if ($("#conjugeBody").val() == "") {
         $("#conjugeBody").val($(".conjuge-body").html());
@@ -13,6 +14,8 @@ function removerConjugeBody() {
 
 function exibirConjugeBody() {
     $(".conjuge-body").html($("#conjugeBody").val());
+    $(".cep").inputmask("99.999-999");
+    $('.telefone').inputmask('(99) 9999[9]-9999');
 }
 
 function exibirConjuge(value) {

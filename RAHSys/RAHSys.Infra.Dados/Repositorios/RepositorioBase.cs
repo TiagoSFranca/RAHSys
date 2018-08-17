@@ -8,7 +8,12 @@ namespace RAHSys.Infra.Dados.Repositorios
 {
     public class RepositorioBase<TEntity> : IDisposable, IRepositorioBase<TEntity> where TEntity : class
     {
-        protected RAHSysContexto _context = new RAHSysContexto();
+        protected RAHSysContexto _context { get; set; }
+
+        public RepositorioBase()
+        {
+            _context = new RAHSysContexto();
+        }
 
         public void Adicionar(TEntity obj)
         {
@@ -23,11 +28,13 @@ namespace RAHSys.Infra.Dados.Repositorios
 
         public TEntity ObterPorId(int id, bool detached = false)
         {
+            var _context = new RAHSysContexto();
+
             var element = _context.Set<TEntity>().Find(id);
+
             if (detached && element != null)
                 _context.Entry(element).State = EntityState.Detached;
             return element;
-
         }
 
         public void Remover(TEntity obj)

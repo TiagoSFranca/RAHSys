@@ -460,12 +460,9 @@
     @Scripts.Render("~/Theme/js")
 
     <script>
-        $(document).ready(function () {
-            $('#clickmewow').click(function () {
-                $('#radio1003').attr('checked', 'checked');
-            });
-        });
         $(function () {
+            $(".cep").inputmask("99.999-999");
+            $('.telefone').inputmask('(99) 9999[9]-9999');
             var displayMessage = function (message, msgType) {
                 toastr.options = {
                     "closeButton": true,

@@ -224,7 +224,7 @@
                         </div>
                         @Html.LabelFor(m => m.Cliente.Fiadores[0].Telefone, new { @class = "col-md-2 control-label" })
                         <div class="col-md-2">
-                            @Html.EditorFor(model => model.Cliente.Fiadores[0].Telefone, new { htmlAttributes = new { @class = "form-control", @placeholder = "Telefone" } })
+                            @Html.EditorFor(model => model.Cliente.Fiadores[0].Telefone, new { htmlAttributes = new { @class = "form-control telefone", @placeholder = "Telefone" } })
                             @Html.ValidationMessageFor(model => model.Cliente.Fiadores[0].Telefone, "", new { @class = "text-danger" })
                             <div class="form-control-focus"> </div>
                         </div>
@@ -314,7 +314,7 @@
                         </div>
                         @Html.LabelFor(m => m.Cliente.Fiadores[1].Telefone, new { @class = "col-md-2 control-label" })
                         <div class="col-md-2">
-                            @Html.EditorFor(model => model.Cliente.Fiadores[1].Telefone, new { htmlAttributes = new { @class = "form-control", @placeholder = "Telefone" } })
+                            @Html.EditorFor(model => model.Cliente.Fiadores[1].Telefone, new { htmlAttributes = new { @class = "form-control telefone", @placeholder = "Telefone" } })
                             @Html.ValidationMessageFor(model => model.Cliente.Fiadores[1].Telefone, "", new { @class = "text-danger" })
                             <div class="form-control-focus"> </div>
                         </div>
@@ -389,11 +389,5 @@
     @Scripts.Render("~/FileInput/js")
     @Scripts.Render("~/BuscarCidades/js")
     @Scripts.Render("~/FichaCliente/js")
-    <script type="text/javascript">
-                                        //$(document).ready(function () {
-                                        //    $("#conjugeBody").val($(".conjuge-body").html());
-                                        //    $(".conjuge-body").html("");
-                                        //});
-    </script>
 }
 

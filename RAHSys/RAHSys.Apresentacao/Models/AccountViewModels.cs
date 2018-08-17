@@ -55,10 +55,10 @@ namespace RAHSys.Apresentacao.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Senha")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Manter conectado")]
         public bool RememberMe { get; set; }
     }
 

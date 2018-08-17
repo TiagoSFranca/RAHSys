@@ -20,7 +20,7 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
                 ));
 
             bundles.Add(new StyleBundle("~/PageLevelPlugins/css").Include(
-                "~/Content/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css",
+                "~/Content/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css",
                 "~/Content/assets/global/plugins/morris/morris.css",
                 "~/Content/assets/global/plugins/fullcalendar/fullcalendar.min.css",
                 "~/Content/assets/global/plugins/jqvmap/jqvmap/jqvmap.css"
@@ -39,6 +39,18 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
 
             bundles.Add(new StyleBundle("~/FileInput/css").Include(
                 "~/Content/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css"
+                ));
+
+            bundles.Add(new StyleBundle("~/Login/css").Include(
+                "~/Content/assets/pages/css/login-3.min.css"
+                ));
+
+            bundles.Add(new StyleBundle("~/Error/css").Include(
+                    "~/Content/assets/pages/css/error.min.css"
+                    ));
+
+            bundles.Add(new StyleBundle("~/MultiSelect/css").Include(
+                "~/Content/assets/global/plugins/jquery-multi-select/css/multi-select.css"
                 ));
         }
     }

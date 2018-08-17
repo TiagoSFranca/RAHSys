@@ -26,6 +26,10 @@ namespace RAHSys.Infra.Dados.EntityConfig
                 .HasForeignKey(es => es.IdCliente)
                 .WillCascadeOnDelete(true);
 
+            HasOptional(e => e.Equipe)
+                .WithMany(es => es.Clientes)
+                .HasForeignKey(e => e.IdEquipe);
+
             Property(pt => pt.IdAnaliseInvestimento)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 

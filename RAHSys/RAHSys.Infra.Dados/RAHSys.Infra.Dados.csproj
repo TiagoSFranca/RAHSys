@@ -58,13 +58,19 @@
     <Compile Include="EntityConfig\ContratoEnderecoConfiguracao.cs" />
     <Compile Include="EntityConfig\DocumentoConfiguracao.cs" />
     <Compile Include="EntityConfig\EnderecoConfiguracao.cs" />
+    <Compile Include="EntityConfig\EquipeConfiguracao.cs" />
+    <Compile Include="EntityConfig\EquipeUsuarioConfiguracao.cs" />
     <Compile Include="EntityConfig\EstadoCivilConfiguracao.cs" />
     <Compile Include="EntityConfig\EstadoConfiguracao.cs" />
     <Compile Include="EntityConfig\FiadorConfiguracao.cs" />
     <Compile Include="EntityConfig\FiadorEnderecoConfiguracao.cs" />
     <Compile Include="EntityConfig\LogErrorConfiguracao.cs" />
+    <Compile Include="EntityConfig\PagamentoConfiguracao.cs" />
+    <Compile Include="EntityConfig\PerfilConfiguracao.cs" />
     <Compile Include="EntityConfig\TipoContatoConfiguracao.cs" />
     <Compile Include="EntityConfig\TipoTelhadoConfiguracao.cs" />
+    <Compile Include="EntityConfig\UsuarioConfiguracao.cs" />
+    <Compile Include="EntityConfig\UsuarioPerfilConfiguracao.cs" />
     <Compile Include="Migrations\201808051105333_Criacao da tabela Camera.cs" />
     <Compile Include="Migrations\201808051105333_Criacao da tabela Camera.Designer.cs">
       <DependentUpon>201808051105333_Criacao da tabela Camera.cs</DependentUpon>
@@ -80,6 +86,26 @@
     <Compile Include="Migrations\201808052323543_Criacao da tabela TipoContato.cs" />
     <Compile Include="Migrations\201808052323543_Criacao da tabela TipoContato.Designer.cs">
       <DependentUpon>201808052323543_Criacao da tabela TipoContato.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808271553110_Adicioando Excluido a Contrato.cs" />
+    <Compile Include="Migrations\201808271553110_Adicioando Excluido a Contrato.Designer.cs">
+      <DependentUpon>201808271553110_Adicioando Excluido a Contrato.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809201201292_Adicionado Pagamento.cs" />
+    <Compile Include="Migrations\201809201201292_Adicionado Pagamento.Designer.cs">
+      <DependentUpon>201809201201292_Adicionado Pagamento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809221412147_Adicionado Usuario, Perfil e UsuarioPerfil do Identity.cs" />
+    <Compile Include="Migrations\201809221412147_Adicionado Usuario, Perfil e UsuarioPerfil do Identity.Designer.cs">
+      <DependentUpon>201809221412147_Adicionado Usuario, Perfil e UsuarioPerfil do Identity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809231147406_Adicionado Equipe e EquipeUsuario.cs" />
+    <Compile Include="Migrations\201809231147406_Adicionado Equipe e EquipeUsuario.Designer.cs">
+      <DependentUpon>201809231147406_Adicionado Equipe e EquipeUsuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809231403517_Adicionado IdEquipe a Cliente.cs" />
+    <Compile Include="Migrations\201809231403517_Adicionado IdEquipe a Cliente.Designer.cs">
+      <DependentUpon>201809231403517_Adicionado IdEquipe a Cliente.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.cs" />
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.Designer.cs">
@@ -111,6 +137,8 @@
     <Compile Include="Repositorios\AuditoriaRepositorio.cs" />
     <Compile Include="Repositorios\AnaliseInvestimentoRepositorio.cs" />
     <Compile Include="Repositorios\CameraRepositorio.cs" />
+    <Compile Include="Repositorios\EquipeRepositorio.cs" />
+    <Compile Include="Repositorios\PagamentoRepositorio.cs" />
     <Compile Include="Repositorios\RepositorioAuditBase.cs" />
     <Compile Include="Repositorios\CidadeRepositorio.cs" />
     <Compile Include="Repositorios\ClienteRepositorio.cs" />
@@ -123,6 +151,7 @@
     <Compile Include="Repositorios\RepositorioBase.cs" />
     <Compile Include="Repositorios\TipoContatoRepositorio.cs" />
     <Compile Include="Repositorios\TipoTelhadoRepository.cs" />
+    <Compile Include="Repositorios\UsuarioRepositorio.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RAHSys.Dominio.Srevicos\RAHSys.Dominio.Servicos.csproj">
@@ -155,6 +184,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808052323543_Criacao da tabela TipoContato.resx">
       <DependentUpon>201808052323543_Criacao da tabela TipoContato.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808271553110_Adicioando Excluido a Contrato.resx">
+      <DependentUpon>201808271553110_Adicioando Excluido a Contrato.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809201201292_Adicionado Pagamento.resx">
+      <DependentUpon>201809201201292_Adicionado Pagamento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809221412147_Adicionado Usuario, Perfil e UsuarioPerfil do Identity.resx">
+      <DependentUpon>201809221412147_Adicionado Usuario, Perfil e UsuarioPerfil do Identity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809231147406_Adicionado Equipe e EquipeUsuario.resx">
+      <DependentUpon>201809231147406_Adicionado Equipe e EquipeUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809231403517_Adicionado IdEquipe a Cliente.resx">
+      <DependentUpon>201809231403517_Adicionado IdEquipe a Cliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\Audit\201808101838532_CriacaoDBAudit.resx">
       <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>

@@ -1,9 +1,27 @@
 ﻿@model System.Web.Mvc.HandleErrorAttribute
 
 @{
-    ViewBag.Title = "Access Denied";
+    ViewBag.Title = "Accesso Negado";
 }
 
-<h1 class="text-danger">Acesso Negado.</h1>
-<h2 class="text-danger">Você não possui permissão para executar esta ação. <br /> 
-    Favor contactar o Administrador do sistema.</h2>
+@section styles{
+    @Styles.Render("~/Error/css");
+}
+
+<div class="row">
+    <div class="col-md-12 page-500">
+        <div class=" number font-red"> 400 </div>
+        <div class=" details">
+            <h3>Oops! Ocorreu um erro</h3>
+            <p>
+                Você não possui permissão para executar esta ação. <br />
+                Favor contactar o Administrador do sistema.
+                <br />
+            </p>
+            <p>
+                <a href="@Url.Action("Index","Home")" class="btn red btn-outline"> Retornar Ao Inicio</a>
+                <br>
+            </p>
+        </div>
+    </div>
+</div>

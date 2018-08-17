@@ -25,7 +25,7 @@ namespace RAHSys.Infra.Dados.EntityConfig
 
             Property(a => a.Acao)
                 .IsRequired()
-                .HasMaxLength(10);
+                .HasMaxLength(100);
 
             Property(a => a.Dados)
                 .IsRequired()

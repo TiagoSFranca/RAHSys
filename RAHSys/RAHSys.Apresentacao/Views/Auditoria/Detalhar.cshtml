@@ -4,10 +4,8 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Detalhes Auditoria";
 }
 
-<h2>Detalhes do Registro Auditado</h2>
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="portlet light ">
@@ -18,51 +16,47 @@
                 </div>
             </div>
             <div class="portlet-body">
-                <div class="form-group form-md-line-input">
-                    @Html.DisplayFor(model => model.IdAuditoria)
-                    <div class="col-md-3 bold">
-                        @Html.DisplayNameFor(model => model.IdAuditoria)
+                <div class="form-horizontal margin-bottom-40">
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(model => model.IdAuditoria, new { @class = "col-md-3 control-label" })
+                        <div class="col-md-3">
+                            @Html.EditorFor(model => model.IdAuditoria, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                        </div>
+                        @Html.LabelFor(model => model.Usuario, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-3">
+                            @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                        </div>
                     </div>
-                </div>
-                <div class="form-group form-md-line-input">
-                    @Html.DisplayFor(model => model.Usuario)
-                    <div class="col-md-3 bold">
-                        @Html.DisplayNameFor(model => model.Usuario)
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(model => model.Funcao, new { @class = "col-md-3 control-label" })
+                        <div class="col-md-3">
+                            @Html.EditorFor(model => model.Funcao, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                        </div>
+                        @Html.LabelFor(model => model.Acao, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-3">
+                            @Html.EditorFor(model => model.Acao, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                        </div>
                     </div>
-                </div>
-                <div class="form-group form-md-line-input">
-                    @Html.DisplayFor(model => model.Funcao)
-                    <div class="col-md-3 bold">
-                        @Html.DisplayNameFor(model => model.Funcao)
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(model => model.DataHora, new { @class = "col-md-3 control-label" })
+                        <div class="col-md-3">
+                            @Html.EditorFor(model => model.DataHora, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                        </div>
+                        @Html.LabelFor(model => model.EnderecoIP, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-3">
+                            @Html.EditorFor(model => model.EnderecoIP, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                        </div>
                     </div>
-                </div>
-                <div class="form-group form-md-line-input">
-                    @Html.DisplayFor(model => model.Acao)
-                    <div class="col-md-3 bold">
-                        @Html.DisplayNameFor(model => model.Acao)
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(model => model.Dados, new { @class = "col-md-3 control-label" })
+                        <div class="col-md-9">
+                            @Html.Raw(Html.Encode(Model.Dados).Replace("\n", "<br />"))
+                        </div>
                     </div>
-                </div>
-                <div class="form-group form-md-line-input">
-                    @Html.DisplayFor(model => model.DataHora)
-                    <div class="col-md-3 bold">
-                        @Html.DisplayNameFor(model => model.DataHora)
-                    </div>
-                </div>
-                <div class="form-group form-md-line-input">
-                    @Html.DisplayFor(model => model.EnderecoIP)
-                    <div class="col-md-3 bold">
-                        @Html.DisplayNameFor(model => model.EnderecoIP)
-                    </div>
-                </div>
-                <div class="form-group form-md-line-input">
-                    @Html.DisplayFor(model => model.Dados)                    
-                    <div class="col-md-3 bold">
-                        @Html.DisplayNameFor(model => model.Dados)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        @Html.ActionLink("Voltar", "Index", "Auditoria", null, new { @class = "btn yellow-haze btn-outline btn-circle btn-md" })
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            @Html.ActionLink("Voltar", "Index", "Auditoria", null, new { @class = "btn yellow-haze btn-outline btn-circle btn-md" })
+                        </div>
                     </div>
                 </div>
             </div>

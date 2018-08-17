@@ -11,6 +11,7 @@ namespace RAHSys.Apresentacao.Controllers
 {
     //TODO: Verificar se há regras de negócio quanto a duplicidade
     [RAHAuthorize(Roles = "Engenharia")]
+    [RAHAudit]
     public class TipoTelhadoController : ControllerBase
     {
         private readonly ITipoTelhadoAppServico _tipoTelhadoAppServico;

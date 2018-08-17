@@ -33,9 +33,6 @@ namespace RAHSys.Infra.Dados.Contexto
             modelBuilder.Properties<string>()
                 .Configure(p => p.HasColumnType("VARCHAR"));
 
-            modelBuilder.Properties<string>()
-                .Configure(p => p.HasMaxLength(256));
-
             #endregion
 
             modelBuilder.Configurations.Add(new AuditoriaConfiguracao());

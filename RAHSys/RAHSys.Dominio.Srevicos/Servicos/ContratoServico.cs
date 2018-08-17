@@ -20,10 +20,8 @@ namespace RAHSys.Dominio.Servicos.Servicos
         private readonly IClienteRepositorio _clienteRepositorio;
         private readonly IDocumentoRepositorio _documentoRepositorio;
 
-
         private readonly string Rota = "/Contratos/";
         private readonly string RootPath = AppDomain.CurrentDomain.BaseDirectory;
-
 
         public ContratoServico(IContratoRepositorio contratoRepositorio, IAnaliseInvestimentoRepositorio analiseInvestimentoRepositorio,
             IClienteRepositorio clienteRepositorio, IDocumentoRepositorio documentoRepositorio)
@@ -61,7 +59,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
         {
             var consultaModel = new ConsultaModel<ContratoModel>(pagina, quantidade);
 
-            var query = _contratoRepositorio.Consultar();
+            var query = _contratoRepositorio.Consultar().Where(e => !e.Excluido);
             if (idList?.Count() > 0)
                 query = query.Where(c => idList.Contains(c.IdContrato));
 
@@ -138,6 +136,21 @@ namespace RAHSys.Dominio.Servicos.Servicos
 
             if (!Directory.Exists(RootPath + Rota + idContrato.ToString()))
                 Directory.CreateDirectory(RootPath + Rota + idContrato.ToString());
+        }
+
+        public void Remover(ContratoModel obj)
+        {
+            var contrato = _contratoRepositorio.ObterPorId(obj.IdContrato, true);
+            contrato.Excluido = true;
+            _contratoRepositorio.Atualizar(contrato);
+        }
+
+        public ContratoModel ObterPorId(int id)
+        {
+            var contrato = _contratoRepositorio.ObterPorId(id, false, true);
+            if (contrato?.Excluido == true)
+                return null;
+            return contrato;
         }
     }
 }

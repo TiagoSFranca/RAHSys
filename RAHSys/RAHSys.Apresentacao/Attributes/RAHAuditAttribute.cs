@@ -15,7 +15,7 @@ namespace RAHSys.Apresentacao.Attributes
             base.OnActionExecuted(filterContext);
 
             string actionName = filterContext.ActionDescriptor.ActionName;
-            if(actionName.ToUpper() == "ADICIONAR" || actionName.ToUpper() == "EDITAR" || actionName.ToUpper() == "EXCLUIR")
+            if(actionName.ToUpper().Contains("ADICIONAR") || actionName.ToUpper().Contains("EDITAR") || actionName.ToUpper().Contains("EXCLUIR"))
             {
                 var formData = filterContext.HttpContext.Request.Form;
                 // Verifica se houve postagem de dados no form
@@ -31,8 +31,12 @@ namespace RAHSys.Apresentacao.Attributes
                     foreach (string key in formData.Keys)
                     {
                         // Exclui o ResgistrationToken (desnecessário)
-                        if(!key.StartsWith("_"))
-                            dataToSave += key + ":" + formData[key] + ";\n";
+                        if (!key.StartsWith("_"))
+                        {
+                            string[] nomeCampoArr = key.Split('.');
+                            string campo = nomeCampoArr[nomeCampoArr.Length - 1];
+                            dataToSave += campo + ":" + formData[key] + ";\n";
+                        }
                     }
 
                     // Insere os dados na tabela de auditoria

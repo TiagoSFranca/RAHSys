@@ -24,11 +24,19 @@ namespace RAHSys.Infra.Dados.EntityConfig
                 .HasForeignKey(x => x.IdContratoEndereco)
                 .WillCascadeOnDelete(true);
 
+            Property(e => e.Excluido)
+                .IsRequired();
+
             HasRequired(e => e.AnaliseInvestimento)
                 .WithRequiredPrincipal(s => s.Contrato)
                 .WillCascadeOnDelete(true);
 
             HasMany(e => e.Documentos)
+                .WithRequired(es => es.Contrato)
+                .HasForeignKey(es => es.IdContrato)
+                .WillCascadeOnDelete(true);
+
+            HasMany(e => e.Pagamentos)
                 .WithRequired(es => es.Contrato)
                 .HasForeignKey(es => es.IdContrato)
                 .WillCascadeOnDelete(true);

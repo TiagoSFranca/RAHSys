@@ -1,0 +1,81 @@
+﻿@model RAHSys.Apresentacao.Models.EquipeAdicionarEditarModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+    @Styles.Render("~/MultiSelect/css")
+}
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart font-dark hide"></i>
+                    <span class="caption-subject font-green-steel uppercase bold">@ViewBag.SubTitle</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                @using (Html.BeginForm("Editar", "Equipe", FormMethod.Post, new { @class = "form-horizontal margin-bottom-40" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.Equipe.IdEquipe)
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.Equipe.IdLider, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(model => model.Equipe.IdLider, new SelectList(Model.Lideres, "IdUsuario", "EmailEUserName"), "Selecione", new { @class = "form-control", @placeholder = "Líder", @required = "required", @id = "ddlLider" })
+                            @Html.ValidationMessageFor(model => model.Equipe.IdLider, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input integrantes">
+                        <div class="col-md-2 control-label">
+                            <div class="caption caption-md">
+                                <i class="icon-bar-chart font-dark hide"></i>
+                                <span class="caption-subject font-green-steel uppercase bold">Integrantes</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input integrantes">
+                        <div class="col-md-9 col-md-offset-2">
+                            <select multiple="multiple" class="multi-select" id="selectIntegrantes" name="IdIntegrantes[]">
+                                @if (Model.Integrantes?.Count > 0)
+                                {
+                                    foreach (var listaAgrupada in Model.Integrantes)
+                                    {
+                                        <optgroup label="@listaAgrupada.FirstOrDefault().UsuarioPerfis.FirstOrDefault().Perfil.Nome">
+                                            @foreach (var opcao in listaAgrupada)
+                                            {
+                                                <option value="@opcao.IdUsuario" @(Model.IdIntegrantes?.FirstOrDefault(e => e.Equals(opcao.IdUsuario)) != null ? "selected" : "")>@opcao.EmailEUserName</option>
+                                            }
+                                        </optgroup>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.Equipe.Descricao, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.TextAreaFor(model => model.Equipe.Descricao, new { @class = "form-control", @placeholder = "Descrição" })
+                            @Html.ValidationMessageFor(model => model.Equipe.Descricao, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" class="btn blue btn-circle">Salvar</button>
+                            @Html.ActionLink("Limpar", "Editar", "Equipe", new { id = Model.Equipe.IdEquipe }, new { @class = "btn btn-white btn-outline btn-circle btn-md" })
+                            @Html.ActionLink("Cancelar", "Index", "Equipe", null, new { @class = "btn yellow-haze btn-outline btn-circle btn-md" })
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" value="@Url.Action("ObterIntegrantes", "Equipe")" id="consultaIntegrantes" />
+@section scripts{
+    @Scripts.Render("~/MultiSelect/js");
+    @Scripts.Render("~/Integrantes/js");
+}

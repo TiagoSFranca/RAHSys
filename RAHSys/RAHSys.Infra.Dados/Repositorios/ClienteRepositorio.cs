@@ -1,6 +1,7 @@
 ﻿using RAHSys.Dominio.Servicos.Interfaces.Repositorios;
 using RAHSys.Entidades.Entidades;
 using System.Data.Entity;
+using System.Linq;
 
 namespace RAHSys.Infra.Dados.Repositorios
 {
@@ -14,7 +15,7 @@ namespace RAHSys.Infra.Dados.Repositorios
 
             _context.Cliente.Add(obj);
 
-            foreach (var fiador in fiadores)
+            foreach (var fiador in fiadores.Where(e => !string.IsNullOrEmpty(e.Email)))
             {
                 var fiadorEndereco = fiador.FiadorEndereco;
 

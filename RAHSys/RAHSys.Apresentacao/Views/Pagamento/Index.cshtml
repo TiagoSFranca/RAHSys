@@ -1,0 +1,171 @@
+﻿@using RAHSys.Aplicacao.AppModels;
+@using RAHSys.Extras.Enums;
+@using PagedList.Mvc;
+
+@model RAHSys.Apresentacao.Models.PagamentoIndexModel
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart font-dark hide"></i>
+                    <span class="caption-subject font-green-steel uppercase bold">Contrato</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                @{Html.RenderPartial("_ContratoInfo", Model.Contrato);}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart font-dark hide"></i>
+                    <span class="caption-subject font-green-steel uppercase bold">Buscar</span>
+                </div>
+                <div class="actions">
+                    @Html.ActionLink("Adicionar", "Adicionar", "Pagamento", new { id = Model.Contrato.IdContrato }, new { @class = "btn btn-no-border green btn-outline btn-circle btn-md" })
+                </div>
+            </div>
+            <div class="portlet-body">
+                @using (Html.BeginForm("Index", "Pagamento", FormMethod.Get, new { @id = "form-busca" }))
+                {
+                    @Html.Hidden("id", Model.Contrato.IdContrato)
+                    <div class="row">
+                        <div class="col-md-1">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.Editor("codigo", new { htmlAttributes = new { @class = "form-control", @placeholder = "Código" } })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.Editor("data", new { htmlAttributes = new { @class = "form-control dataPagamento", @placeholder = "Data de Pagamento" } })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.DropDownList("itensPagina", EnumHelper.GetSelectList(typeof(ItensPorPaginaEnum)), "Itens Por Página", new { @class = "form-control" })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        @Html.Hidden("ordenacao", (string)ViewBag.Ordenacao)
+                        @Html.Hidden("crescente", (bool)ViewBag.Crescente)
+                        <div class="col-md-3">
+                            <div class="form-group form-md-line-input ">
+                                <button type="submit" class="btn blue btn-circle">Buscar</button>
+                                @Html.ActionLink("Limpar", "Index", "Pagamento", new { id = Model.Contrato.IdContrato }, new { @class = "btn btn-white btn-outline btn-circle btn-md" })
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart font-dark hide"></i>
+                    <span class="caption-subject font-green-steel uppercase bold">Dados</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                @if (Model.Pagamentos.Count > 0)
+                {
+                    <div class="table-scrollable">
+                        <table class="table table-hover table-light">
+                            <thead>
+                                <tr>
+                                    <th onclick="ordenar('')">
+                                        <a>
+                                            #
+                                        </a>
+                                    </th>
+                                    <th onclick="ordenar('data')">
+                                        <a>
+                                            Data de Pagamento
+                                        </a>
+                                    </th>
+                                    <th>
+                                        Observação
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Pagamentos)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.IdPagamento
+                                        </td>
+                                        <td>
+                                            @{
+                                                DateTime data = item.DataPagamento != null ? (DateTime)item.DataPagamento : DateTime.Now;
+                                            }
+                                            @data.ToString("MM/yyyy")
+                                        </td>
+                                        <td>
+                                            <label class="btn blue btn-outline btn-circle btn-md tooltips" data-container="body" data-placement="top" data-original-title="@item.Observacao">
+                                                <i class="fa fa-eye"></i>
+                                            </label>
+                                        </td>
+                                        <td class="text-right">
+                                            @Html.ActionLink("Excluir", "Excluir", "Pagamento", new { idContrato = Model.Contrato.IdContrato, idPagamento = item.IdPagamento }, new { @class = "btn red-flamingo btn-circle btn-md abrirModal" })
+                                        </td>
+                                    </tr>
+                                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class="italic bold">
+                                @Model.Pagamentos.FirstItemOnPage a @Model.Pagamentos.LastItemOnPage de @Model.Pagamentos.TotalItemCount registros
+                            </span>
+                            <div class="text-center">
+                                @Html.PagedListPager(Model.Pagamentos,
+                               pagina => Url.Action("Index", "Pagamento", new
+                               {
+                                   id = Model.Contrato.IdContrato,
+                                   pagina,
+                                   codigo = ViewBag.Codigo,
+                                   data = ViewBag.DataPagamento,
+                                   itensPagina = ViewBag.ItensPagina,
+                                   ordenacao = ViewBag.Ordenacao,
+                                   crescente = ViewBag.Crescente
+                               }))
+                            </div>
+                        </div>
+                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="alert alert-info">
+                                                                <h5 class="text-center">
+                                                                    Não foram encontrados resultados
+                                                                </h5>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/Ordenacao/js")
+    @Scripts.Render("~/Modal/js")
+    @Scripts.Render("~/Pagamento/js")
+}

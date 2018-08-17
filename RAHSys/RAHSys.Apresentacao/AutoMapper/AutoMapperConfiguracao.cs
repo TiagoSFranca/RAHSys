@@ -28,6 +28,10 @@ namespace RAHSys.Apresentacao.AutoMapper
                 x.AddProfile(new EstadoCivilMapeamento());
 
                 x.AddProfile(new ArquivoMapeamento());
+
+                x.AddProfile(new UsuarioMapeamento());
+
+                x.AddProfile(new EquipeMapeamento());
             });
         }
     }

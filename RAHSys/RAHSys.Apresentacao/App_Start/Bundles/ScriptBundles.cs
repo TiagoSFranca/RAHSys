@@ -31,24 +31,10 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
 
             bundles.Add(new ScriptBundle("~/PageLevelPlugins/js").Include(
                 "~/Content/assets/global/plugins/moment.min.js",
-                "~/Content/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js",
+                "~/Content/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js",
                 "~/Content/assets/global/plugins/morris/morris.min.js",
                 "~/Content/assets/global/plugins/morris/raphael-min.js",
-                "~/Content/assets/global/plugins/counterup/jquery.waypoints.min.js",
-                "~/Content/assets/global/plugins/counterup/jquery.counterup.min.js",
-                "~/Content/assets/global/plugins/fullcalendar/fullcalendar.min.js",
-                "~/Content/assets/global/plugins/flot/jquery.flot.min.js",
-                "~/Content/assets/global/plugins/flot/jquery.flot.resize.min.js",
-                "~/Content/assets/global/plugins/flot/jquery.flot.categories.min.js",
-                "~/Content/assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js",
-                "~/Content/assets/global/plugins/jquery.sparkline.min.js",
-                "~/Content/assets/global/plugins/jqvmap/jqvmap/jquery.vmap.js",
-                "~/Content/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js",
-                "~/Content/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js",
-                "~/Content/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js",
-                "~/Content/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js",
-                "~/Content/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js",
-                "~/Content/assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js"
+                "~/Content/assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/Global/js").Include(
@@ -84,6 +70,28 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
 
             bundles.Add(new ScriptBundle("~/FileInput/js").Include(
                 "~/Content/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/Login/js").Include(
+                "~/Content/assets/pages/scripts/login.min.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/LoginPageLevel/js").Include(
+                "~/Content/assets/global/plugins/jquery-validation/js/jquery.validate.min.js",
+                "~/Content/assets/global/plugins/jquery-validation/js/additional-methods.min.js",
+                "~/Content/assets/global/plugins/select2/js/select2.full.min.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/Pagamento/js").Include(
+                "~/Scripts/pagamento.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/MultiSelect/js").Include(
+                "~/Content/assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/Integrantes/js").Include(
+                "~/Scripts/integrantes.js"
                 ));
         }
     }

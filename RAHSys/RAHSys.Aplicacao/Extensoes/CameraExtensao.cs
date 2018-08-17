@@ -3,7 +3,7 @@ using RAHSys.Entidades.Entidades;
 
 namespace RAHSys.Aplicacao.Extensoes
 {
-    internal static class CameraExtension
+    internal static class CameraExtensao
     {
         public static CameraModel MapearParaDominio(this CameraAppModel obj)
         {

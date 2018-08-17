@@ -91,6 +91,9 @@
                                     <th>
                                         Status
                                     </th>
+                                    <th>
+                                        Pagamento
+                                    </th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -115,6 +118,15 @@
                                                 <strong>@situacao.Nome.ToUpper()</strong>
                                             </span>
                                         </td>
+                                        <td>
+                                            @{
+                                                var situacaoPagamento = item.ObterSituacaoPagamento();
+                                            }
+                                            <label class="btn @situacaoPagamento.Classe btn-circle btn-md tooltips" data-container="body" data-placement="top" data-original-title="@situacaoPagamento.Nome">
+                                                <i></i>
+                                            </label>
+                                            @Html.ActionLink("Visualizar", "Index", "Pagamento", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
+                                        </td>
                                         <td class="text-right">
                                             @Html.ActionLink("Alterar", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
                                             @Html.ActionLink("Excluir", "Excluir", "Contrato", new { id = item.IdContrato }, new { @class = "btn red-flamingo btn-circle btn-md abrirModal" })
@@ -132,7 +144,7 @@
                             </span>
                             <div class="text-center">
                                 @Html.PagedListPager(Model,
-                               pagina => Url.Action("Index", "Camera", new
+                               pagina => Url.Action("Index", "Contrato", new
                                {
                                    pagina,
                                    codigo = ViewBag.Codigo,

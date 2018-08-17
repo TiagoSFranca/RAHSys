@@ -228,8 +228,10 @@
     <Compile Include="Controllers\CameraController.cs" />
     <Compile Include="Controllers\ContratoController.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
+    <Compile Include="Controllers\EquipeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PagamentoController.cs" />
     <Compile Include="Controllers\TipoContatoController.cs" />
     <Compile Include="Controllers\TipoTelhadoController.cs" />
     <Compile Include="Global.asax.cs">
@@ -238,9 +240,19 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AuditoriaModel.cs" />
     <Compile Include="Models\ContratoApresentacaoModels.cs" />
+    <Compile Include="Models\EquipeApresentacaoModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PagamentoApresentacaoModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Content\assets\pages\css\error.css" />
+    <Content Include="Content\assets\pages\css\error.min.css" />
+    <Content Include="Content\assets\pages\css\login-3.css" />
+    <Content Include="Content\assets\pages\css\login-3.min.css" />
+    <Content Include="Content\assets\pages\scripts\login.js" />
+    <Content Include="Content\assets\pages\scripts\login.min.js" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\img\logo-big.png" />
     <Content Include="Scripts\buscarCidades.js" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -1028,6 +1040,7 @@
     <Content Include="Content\toastr.scss" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\fichaCliente.js" />
+    <Content Include="Scripts\integrantes.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -1040,6 +1053,7 @@
     <Content Include="Scripts\modal.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\ordenacao.js" />
+    <Content Include="Scripts\pagamento.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
     <Content Include="Web.config">
@@ -1097,6 +1111,15 @@
     <Content Include="Views\Contrato\Excluir.cshtml" />
     <Content Include="Views\Contrato\AdicionarAnaliseInvestimento.cshtml" />
     <Content Include="Views\Contrato\AdicionarFichaCliente.cshtml" />
+    <Content Include="Views\Contrato\VisualizarPagamentos.cshtml" />
+    <Content Include="Views\Pagamento\Index.cshtml" />
+    <Content Include="Views\Shared\_ContratoInfo.cshtml" />
+    <Content Include="Views\Pagamento\Adicionar.cshtml" />
+    <Content Include="Views\Pagamento\Excluir.cshtml" />
+    <Content Include="Views\Equipe\Index.cshtml" />
+    <Content Include="Views\Equipe\Adicionar.cshtml" />
+    <Content Include="Views\Equipe\Excluir.cshtml" />
+    <Content Include="Views\Equipe\Editar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

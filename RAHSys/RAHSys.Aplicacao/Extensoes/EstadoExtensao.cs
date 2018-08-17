@@ -3,7 +3,7 @@ using RAHSys.Entidades.Entidades;
 
 namespace RAHSys.Aplicacao.Extensoes
 {
-    internal static class EstadoExtension
+    internal static class EstadoExtensao
     {
         public static EstadoModel MapearParaDominio(this EstadoAppModel obj)
         {

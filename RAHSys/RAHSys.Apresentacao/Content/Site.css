@@ -30,3 +30,7 @@ textarea {
     border-radius: 50%;
     display: inline-block;
 }
+
+.tooltip-inner {
+    max-width: 350px !important;
+}

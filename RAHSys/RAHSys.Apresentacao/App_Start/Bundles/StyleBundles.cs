@@ -40,6 +40,10 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
             bundles.Add(new StyleBundle("~/FileInput/css").Include(
                 "~/Content/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css"
                 ));
+
+            bundles.Add(new StyleBundle("~/Login/css").Include(
+                "~/Content/assets/pages/css/login-3.min.css"
+                ));
         }
     }
 }

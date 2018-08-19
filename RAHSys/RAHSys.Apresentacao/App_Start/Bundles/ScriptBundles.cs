@@ -86,6 +86,16 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
             bundles.Add(new ScriptBundle("~/FileInput/js").Include(
                 "~/Content/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"
                 ));
+
+            bundles.Add(new ScriptBundle("~/Login/js").Include(
+                "~/Content/assets/pages/scripts/login.min.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/LoginPageLevel/js").Include(
+                "~/Content/assets/global/plugins/jquery-validation/js/jquery.validate.min.js",
+                "~/Content/assets/global/plugins/jquery-validation/js/additional-methods.min.js",
+                "~/Content/assets/global/plugins/select2/js/select2.full.min.js"
+                ));
         }
     }
 }

@@ -44,6 +44,10 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
             bundles.Add(new StyleBundle("~/Login/css").Include(
                 "~/Content/assets/pages/css/login-3.min.css"
                 ));
+
+            bundles.Add(new StyleBundle("~/Error/css").Include(
+                    "~/Content/assets/pages/css/error.min.css"
+                    ));
         }
     }
 }

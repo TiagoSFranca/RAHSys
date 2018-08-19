@@ -241,6 +241,8 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Content\assets\pages\css\error.css" />
+    <Content Include="Content\assets\pages\css\error.min.css" />
     <Content Include="Content\assets\pages\css\login-3.css" />
     <Content Include="Content\assets\pages\css\login-3.min.css" />
     <Content Include="Content\assets\pages\scripts\login.js" />

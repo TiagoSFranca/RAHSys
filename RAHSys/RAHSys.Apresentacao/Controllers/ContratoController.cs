@@ -13,6 +13,7 @@ using System.Web.Mvc;
 
 namespace RAHSys.Apresentacao.Controllers
 {
+    [RAHAudit]
     public class ContratoController : ControllerBase
     {
         private readonly IContratoAppServico _contratoAppServico;

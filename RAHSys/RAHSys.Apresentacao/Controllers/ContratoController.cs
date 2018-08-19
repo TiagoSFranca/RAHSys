@@ -2,10 +2,12 @@
 using PagedList;
 using RAHSys.Aplicacao.AppModels;
 using RAHSys.Aplicacao.Interfaces;
+using RAHSys.Apresentacao.Attributes;
 using RAHSys.Apresentacao.Models;
 using RAHSys.Extras;
 using RAHSys.Infra.CrossCutting.Exceptions;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -56,6 +58,7 @@ namespace RAHSys.Apresentacao.Controllers
         }
 
         [HttpGet]
+        [RAHAuthorize(Roles = "Comercial")]
         public ActionResult Adicionar()
         {
             ViewBag.SubTitle = "Adicionar novo Contrato";
@@ -63,41 +66,8 @@ namespace RAHSys.Apresentacao.Controllers
             return View(contratoModel);
         }
 
-        private ContratoAdicionarModel MontarContratoAdicionar(int? idEstado = null)
-        {
-            var contratoModel = new ContratoAdicionarModel();
-
-            contratoModel.Estados = _estadoAppServico.ListarTodos();
-            if (idEstado != null)
-                contratoModel.Cidades = _cidadeAppServico.ObterCidadesPorEstado((int)idEstado);
-            return contratoModel;
-        }
-
-        private AnaliseInvestimentoAdicionar MontarAnaliseInvestimento()
-        {
-            var retorno = new AnaliseInvestimentoAdicionar();
-            retorno.TipoTelhados = _tipoTelhadoAppServico.ListarTodos();
-            return retorno;
-        }
-
-        private FichaClienteAdicionar MontarFichaCliente(int id, int? idEstado = null, int? idEstadoConjuge = null)
-        {
-            var retorno = new FichaClienteAdicionar();
-            retorno.Contrato = _contratoAppServico.ObterPorId(id);
-
-            retorno.Estados = _estadoAppServico.ListarTodos();
-            retorno.EstadosCivis = _estadoCivilAppServico.ListarTodos();
-
-            if (idEstado != null)
-                retorno.CidadesFiador = _cidadeAppServico.ObterCidadesPorEstado((int)idEstado);
-
-            if (idEstadoConjuge != null)
-                retorno.CidadesFiadorConjuge = _cidadeAppServico.ObterCidadesPorEstado((int)idEstado);
-
-            return retorno;
-        }
-
         [HttpPost]
+        [RAHAuthorize(Roles = "Comercial")]
         public ActionResult Adicionar(ContratoAdicionarModel contratoAdicionarModel)
         {
             var contratoRetorno = MontarContratoAdicionar(contratoAdicionarModel.Contrato.ContratoEndereco.Endereco.Cidade.IdEstado);
@@ -120,43 +90,7 @@ namespace RAHSys.Apresentacao.Controllers
         }
 
         [HttpGet]
-        public ActionResult Excluir(int id)
-        {
-            ViewBag.SubTitle = "Excluir Contrato";
-            var contratoModel = new ContratoAppModel();
-            try
-            {
-                contratoModel = _contratoAppServico.ObterPorId(id);
-                if (contratoModel == null)
-                {
-                    MensagemErro("Contrato não encontrado");
-                    return RedirectToAction("Index");
-                }
-            }
-            catch (CustomBaseException ex)
-            {
-                MensagemErro(ex.Mensagem);
-                return RedirectToAction("Index");
-            }
-            return View(contratoModel);
-        }
-
-        [HttpPost]
-        public ActionResult Excluir(ContratoAppModel contratoAppModel)
-        {
-            try
-            {
-                _contratoAppServico.Remover(contratoAppModel.IdContrato);
-                MensagemSucesso(MensagensPadrao.ExclusaoSucesso);
-            }
-            catch (CustomBaseException ex)
-            {
-                MensagemErro(ex.Mensagem);
-            }
-            return RedirectToAction("Index", "Contrato");
-        }
-
-        [HttpGet]
+        [RAHAuthorize(Roles = "Engenharia")]
         public ActionResult AdicionarAnaliseInvestimento(int id)
         {
             ViewBag.SubTitle = "Editar Contrato";
@@ -189,6 +123,7 @@ namespace RAHSys.Apresentacao.Controllers
         }
 
         [HttpPost]
+        [RAHAuthorize(Roles = "Engenharia")]
         public ActionResult AdicionarAnaliseInvestimento(AnaliseInvestimentoAdicionar analiseInvestimentoAdicionarModel)
         {
             var analiseInvestimentoRetorno = MontarAnaliseInvestimento();
@@ -211,6 +146,7 @@ namespace RAHSys.Apresentacao.Controllers
         }
 
         [HttpGet]
+        [RAHAuthorize(Roles = "Comercial")]
         public ActionResult AdicionarFichaCliente(int id)
         {
             ViewBag.SubTitle = "Editar Contrato";
@@ -251,6 +187,7 @@ namespace RAHSys.Apresentacao.Controllers
         }
 
         [HttpPost]
+        [RAHAuthorize(Roles = "Comercial")]
         public ActionResult AdicionarFichaCliente(FichaClienteAdicionar fichaCliente)
         {
             int? idEstado = fichaCliente?.Cliente?.Fiadores?.FirstOrDefault()?.FiadorEndereco?.Endereco?.Cidade?.IdEstado;
@@ -334,11 +271,40 @@ namespace RAHSys.Apresentacao.Controllers
         }
 
         [HttpGet]
-        public JsonResult ObterCidadesPorEstado(int id)
+        public ActionResult Excluir(int id)
         {
-            List<CidadeAppModel> lista = new List<CidadeAppModel>();
-            lista.AddRange(_cidadeAppServico.ObterCidadesPorEstado(id));
-            return Json(lista, JsonRequestBehavior.AllowGet);
+            ViewBag.SubTitle = "Excluir Contrato";
+            var contratoModel = new ContratoAppModel();
+            try
+            {
+                contratoModel = _contratoAppServico.ObterPorId(id);
+                if (contratoModel == null)
+                {
+                    MensagemErro("Contrato não encontrado");
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+                return RedirectToAction("Index");
+            }
+            return View(contratoModel);
+        }
+
+        [HttpPost]
+        public ActionResult Excluir(ContratoAppModel contratoAppModel)
+        {
+            try
+            {
+                _contratoAppServico.Remover(contratoAppModel.IdContrato);
+                MensagemSucesso(MensagensPadrao.ExclusaoSucesso);
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+            }
+            return RedirectToAction("Index", "Contrato");
         }
 
         [HttpGet]
@@ -349,10 +315,17 @@ namespace RAHSys.Apresentacao.Controllers
             try
             {
                 var documento = _documentoAppServico.ObterPorId(id);
-                if (documento == null)
+                if (documento != null)
                 {
-                    MensagemErro("Documento não encontrado");
+                    var route = HttpContext.Server.MapPath(documento.CaminhoArquivo);
+                    if (System.IO.File.Exists(route))
+                    {
+                        var extensao = Path.GetExtension(route);
+                        var arquivo = System.IO.File.ReadAllBytes(route);
+                        return File(arquivo, ContentTypeHelper.GetMimeType(extensao));
+                    }
                 }
+                MensagemErro("Documento não encontrado");
                 return RedirectToAction("Index");
             }
             catch (CustomBaseException ex)
@@ -361,5 +334,51 @@ namespace RAHSys.Apresentacao.Controllers
                 return RedirectToAction("Index");
             }
         }
+
+        #region Métodos Aux
+
+        private ContratoAdicionarModel MontarContratoAdicionar(int? idEstado = null)
+        {
+            var contratoModel = new ContratoAdicionarModel();
+
+            contratoModel.Estados = _estadoAppServico.ListarTodos();
+            if (idEstado != null)
+                contratoModel.Cidades = _cidadeAppServico.ObterCidadesPorEstado((int)idEstado);
+            return contratoModel;
+        }
+
+        private AnaliseInvestimentoAdicionar MontarAnaliseInvestimento()
+        {
+            var retorno = new AnaliseInvestimentoAdicionar();
+            retorno.TipoTelhados = _tipoTelhadoAppServico.ListarTodos();
+            return retorno;
+        }
+
+        private FichaClienteAdicionar MontarFichaCliente(int id, int? idEstado = null, int? idEstadoConjuge = null)
+        {
+            var retorno = new FichaClienteAdicionar();
+            retorno.Contrato = _contratoAppServico.ObterPorId(id);
+
+            retorno.Estados = _estadoAppServico.ListarTodos();
+            retorno.EstadosCivis = _estadoCivilAppServico.ListarTodos();
+
+            if (idEstado != null)
+                retorno.CidadesFiador = _cidadeAppServico.ObterCidadesPorEstado((int)idEstado);
+
+            if (idEstadoConjuge != null)
+                retorno.CidadesFiadorConjuge = _cidadeAppServico.ObterCidadesPorEstado((int)idEstado);
+
+            return retorno;
+        }
+
+        [HttpGet]
+        public JsonResult ObterCidadesPorEstado(int id)
+        {
+            List<CidadeAppModel> lista = new List<CidadeAppModel>();
+            lista.AddRange(_cidadeAppServico.ObterCidadesPorEstado(id));
+            return Json(lista, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
     }
 }

@@ -81,6 +81,10 @@
     <Compile Include="Migrations\201808052323543_Criacao da tabela TipoContato.Designer.cs">
       <DependentUpon>201808052323543_Criacao da tabela TipoContato.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808271553110_Adicioando Excluido a Contrato.cs" />
+    <Compile Include="Migrations\201808271553110_Adicioando Excluido a Contrato.Designer.cs">
+      <DependentUpon>201808271553110_Adicioando Excluido a Contrato.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.cs" />
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.Designer.cs">
       <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>
@@ -155,6 +159,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808052323543_Criacao da tabela TipoContato.resx">
       <DependentUpon>201808052323543_Criacao da tabela TipoContato.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808271553110_Adicioando Excluido a Contrato.resx">
+      <DependentUpon>201808271553110_Adicioando Excluido a Contrato.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\Audit\201808101838532_CriacaoDBAudit.resx">
       <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>

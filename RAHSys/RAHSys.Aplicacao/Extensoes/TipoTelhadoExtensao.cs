@@ -3,7 +3,7 @@ using RAHSys.Entidades.Entidades;
 
 namespace RAHSys.Aplicacao.Extensoes
 {
-    internal static class TipoTelhadoExtension
+    internal static class TipoTelhadoExtensao
     {
         public static TipoTelhadoModel MapearParaDominio(this TipoTelhadoAppModel obj)
         {

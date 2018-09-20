@@ -45,6 +45,7 @@
     <Compile Include="AppModels\EstadoCivilAppModel.cs" />
     <Compile Include="AppModels\FiadorAppModel.cs" />
     <Compile Include="AppModels\FiadorEnderecoAppModel.cs" />
+    <Compile Include="AppModels\PagamentoAppModel.cs" />
     <Compile Include="AppModels\TipoContatoAppModel.cs" />
     <Compile Include="AppModels\TipoTelhadoAppModel.cs" />
     <Compile Include="Extensoes\AuditoriaExtensao.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="Extensoes\ContratoExtensao.cs" />
     <Compile Include="Extensoes\EstadoCivilExtensao.cs" />
     <Compile Include="Extensoes\EstadoExtensao.cs" />
+    <Compile Include="Extensoes\PagamentoExtensao.cs" />
     <Compile Include="Extensoes\TIpoContatoExtensao.cs" />
     <Compile Include="Extensoes\TipoTelhadoExtensao.cs" />
     <Compile Include="Implementacao\AppServicoAuditoriaBase.cs" />
@@ -64,6 +66,7 @@
     <Compile Include="Implementacao\DocumentoAppServico.cs" />
     <Compile Include="Implementacao\EstadoAppServico.cs" />
     <Compile Include="Implementacao\EstadoCivilAppServico.cs" />
+    <Compile Include="Implementacao\PagamentoAppServico.cs" />
     <Compile Include="Implementacao\TipoContatoAppServico.cs" />
     <Compile Include="Implementacao\TipoTelhadoAppServico.cs" />
     <Compile Include="Interfaces\IAppServicoBase.cs" />
@@ -74,6 +77,7 @@
     <Compile Include="Interfaces\IDocumentoAppServico.cs" />
     <Compile Include="Interfaces\IEstadoAppServico.cs" />
     <Compile Include="Interfaces\IEstadoCivilAppServico.cs" />
+    <Compile Include="Interfaces\IPagamentoAppServico.cs" />
     <Compile Include="Interfaces\ITipoContatoAppServico.cs" />
     <Compile Include="Interfaces\ITipoTelhadoAppServico.cs" />
     <Compile Include="Mapeamento\AuditoriaMapeamento.cs" />

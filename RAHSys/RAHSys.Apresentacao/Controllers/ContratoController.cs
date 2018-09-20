@@ -336,6 +336,29 @@ namespace RAHSys.Apresentacao.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult VisualizarPagamentos(int id)
+        {
+            ViewBag.SubTitle = "Visualizar Pagamentos";
+            var contratoModel = new ContratoAppModel();
+            try
+            {
+                contratoModel = _contratoAppServico.ObterPorId(id);
+                if (contratoModel == null)
+                {
+                    MensagemErro("Contrato não encontrado");
+                    return RedirectToAction("Index");
+                }
+
+                return View(contratoModel);
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+                return RedirectToAction("Index");
+            }
+        }
+
         #region Métodos Aux
 
         private ContratoAdicionarModel MontarContratoAdicionar(int? idEstado = null)

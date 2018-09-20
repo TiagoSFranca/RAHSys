@@ -230,6 +230,7 @@
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PagamentoController.cs" />
     <Compile Include="Controllers\TipoContatoController.cs" />
     <Compile Include="Controllers\TipoTelhadoController.cs" />
     <Compile Include="Global.asax.cs">
@@ -240,6 +241,7 @@
     <Compile Include="Models\ContratoApresentacaoModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PagamentoApresentacaoModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Content\assets\pages\css\error.css" />
     <Content Include="Content\assets\pages\css\error.min.css" />
@@ -1105,6 +1107,10 @@
     <Content Include="Views\Contrato\Excluir.cshtml" />
     <Content Include="Views\Contrato\AdicionarAnaliseInvestimento.cshtml" />
     <Content Include="Views\Contrato\AdicionarFichaCliente.cshtml" />
+    <Content Include="Views\Contrato\VisualizarPagamentos.cshtml" />
+    <Content Include="Views\Pagamento\Index.cshtml" />
+    <Content Include="Views\Shared\_ContratoInfo.cshtml" />
+    <Content Include="Views\Pagamento\Adicionar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

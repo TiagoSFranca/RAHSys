@@ -4,7 +4,7 @@ using RAHSys.Entidades.Entidades;
 
 namespace RAHSys.Aplicacao.Extensoes
 {
-    internal static class ContratoExtension
+    internal static class ContratoExtensao
     {
         public static ContratoModel MapearParaDominio(this ContratoAppModel obj)
         {

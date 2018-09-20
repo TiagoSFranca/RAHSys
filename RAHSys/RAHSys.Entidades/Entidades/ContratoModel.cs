@@ -14,5 +14,6 @@ namespace RAHSys.Entidades.Entidades
         public virtual AnaliseInvestimentoModel AnaliseInvestimento { get; set; }
 
         public virtual ICollection<DocumentoModel> Documentos { get; set; }
+        public virtual ICollection<PagamentoModel> Pagamentos { get; set; }
     }
 }

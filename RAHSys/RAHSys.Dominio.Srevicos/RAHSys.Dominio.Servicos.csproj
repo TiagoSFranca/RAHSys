@@ -43,6 +43,7 @@
     <Compile Include="Interfaces\Repositorios\IAuditoriaRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IAnaliseInvestimentoRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\ICameraRepositorio.cs" />
+    <Compile Include="Interfaces\Repositorios\IPagamentoRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioAuditoriaBase.cs" />
     <Compile Include="Interfaces\Repositorios\ICidadeRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IClienteRepositorio.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Interfaces\Servicos\IAuditoriaServico.cs" />
     <Compile Include="Interfaces\Servicos\ICameraServico.cs" />
     <Compile Include="Interfaces\Servicos\IDocumentoServico.cs" />
+    <Compile Include="Interfaces\Servicos\IPagamentoServico.cs" />
     <Compile Include="Interfaces\Servicos\IServicoAuditoriaBase.cs" />
     <Compile Include="Interfaces\Servicos\ICidadeServico.cs" />
     <Compile Include="Interfaces\Servicos\IContratoServico.cs" />
@@ -70,6 +72,7 @@
     <Compile Include="Servicos\AuditoriaServico.cs" />
     <Compile Include="Servicos\CameraServico.cs" />
     <Compile Include="Servicos\DocumentoServico.cs" />
+    <Compile Include="Servicos\PagamentoServico.cs" />
     <Compile Include="Servicos\ServicoAuditoriaBase.cs" />
     <Compile Include="Servicos\CidadeServico.cs" />
     <Compile Include="Servicos\ContratoServico.cs" />

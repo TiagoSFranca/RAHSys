@@ -17,6 +17,7 @@ namespace RAHSys.Infra.CrossCutting.IoC.Registradores
             container.Register<ICidadeServico, CidadeServico>(Lifestyle.Scoped);
             container.Register<IEstadoCivilServico, EstadoCivilServico>(Lifestyle.Scoped);
             container.Register<IDocumentoServico, DocumentoServico>(Lifestyle.Scoped);
+            container.Register<IPagamentoServico, PagamentoServico>(Lifestyle.Scoped);
         }
     }
 }

@@ -17,6 +17,7 @@ namespace RAHSys.Aplicacao.Mapeamento
             CreateMap<ClienteModel, ClienteAppModel>().ReverseMap();
             CreateMap<DocumentoModel, DocumentoAppModel>().ReverseMap();
             CreateMap<ArquivoAppModel, ArquivoModel>();
+            CreateMap<PagamentoModel, PagamentoAppModel>().ReverseMap();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using PagedList;
 using RAHSys.Aplicacao.AppModels;
 using RAHSys.Aplicacao.Interfaces;
+using RAHSys.Apresentacao.Attributes;
 using RAHSys.Apresentacao.Models;
 using RAHSys.Extras;
 using RAHSys.Infra.CrossCutting.Exceptions;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 
 namespace RAHSys.Apresentacao.Controllers
 {
+    [RAHAudit]
     public class PagamentoController : ControllerBase
     {
         private readonly IContratoAppServico _contratoAppServico;
@@ -53,6 +55,7 @@ namespace RAHSys.Apresentacao.Controllers
         }
 
         [HttpGet]
+        [RAHAuthorize(Roles = "Comercial")]
         public ActionResult Adicionar(int id)
         {
             ViewBag.SubTitle = "Adicionar novo Pagamento";
@@ -67,6 +70,7 @@ namespace RAHSys.Apresentacao.Controllers
         }
 
         [HttpPost]
+        [RAHAuthorize(Roles = "Comercial")]
         public ActionResult Adicionar(PagamentoAdicionarModel contratoAdicionarModel)
         {
             bool error = false;
@@ -94,6 +98,7 @@ namespace RAHSys.Apresentacao.Controllers
         }
 
         [HttpGet]
+        [RAHAuthorize(Roles = "Comercial")]
         public ActionResult Excluir(int idContrato, int idPagamento)
         {
             ViewBag.SubTitle = "Excluir Pagamento";
@@ -116,6 +121,7 @@ namespace RAHSys.Apresentacao.Controllers
         }
 
         [HttpPost]
+        [RAHAuthorize(Roles = "Comercial")]
         public ActionResult Excluir(PagamentoAppModel pagamentoAppModel)
         {
             try

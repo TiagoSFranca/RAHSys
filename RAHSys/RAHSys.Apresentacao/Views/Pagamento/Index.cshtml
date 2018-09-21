@@ -43,6 +43,12 @@
                         </div>
                         <div class="col-md-2">
                             <div class="form-group form-md-line-input has-success">
+                                @Html.Editor("data", new { htmlAttributes = new { @class = "form-control dataPagamento", @placeholder = "Data de Pagamento" } })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group form-md-line-input has-success">
                                 @Html.DropDownList("itensPagina", EnumHelper.GetSelectList(typeof(ItensPorPaginaEnum)), "Itens Por Página", new { @class = "form-control" })
                                 <div class="form-control-focus"> </div>
                             </div>
@@ -52,7 +58,7 @@
                         <div class="col-md-3">
                             <div class="form-group form-md-line-input ">
                                 <button type="submit" class="btn blue btn-circle">Buscar</button>
-                                @Html.ActionLink("Limpar", "Index", "Contrato", null, new { @class = "btn btn-white btn-outline btn-circle btn-md" })
+                                @Html.ActionLink("Limpar", "Index", "Pagamento", new { id = Model.Contrato.IdContrato }, new { @class = "btn btn-white btn-outline btn-circle btn-md" })
                             </div>
                         </div>
                     </div>
@@ -101,7 +107,10 @@
                                             @item.IdPagamento
                                         </td>
                                         <td>
-                                            @item.DataPagamento.ToString("MM/yyyy")
+                                            @{
+                                                DateTime data = item.DataPagamento != null ? (DateTime)item.DataPagamento : DateTime.Now;
+                                            }
+                                            @data.ToString("MM/yyyy")
                                         </td>
                                         <td>
                                             <label class="btn blue btn-outline btn-circle btn-md tooltips" data-container="body" data-placement="top" data-original-title="@item.Observacao">
@@ -109,10 +118,10 @@
                                             </label>
                                         </td>
                                         <td class="text-right">
-                                            @Html.ActionLink("Excluir", "Excluir", "Pagamento", new { id = item.IdPagamento }, new { @class = "btn red-flamingo btn-circle btn-md abrirModal" })
+                                            @Html.ActionLink("Excluir", "Excluir", "Pagamento", new { idContrato = Model.Contrato.IdContrato, idPagamento = item.IdPagamento }, new { @class = "btn red-flamingo btn-circle btn-md abrirModal" })
                                         </td>
                                     </tr>
-                                }
+                                                }
                             </tbody>
                         </table>
                     </div>
@@ -129,6 +138,7 @@
                                    id = Model.Contrato.IdContrato,
                                    pagina,
                                    codigo = ViewBag.Codigo,
+                                   data = ViewBag.DataPagamento,
                                    itensPagina = ViewBag.ItensPagina,
                                    ordenacao = ViewBag.Ordenacao,
                                    crescente = ViewBag.Crescente
@@ -136,19 +146,19 @@
                             </div>
                         </div>
                     </div>
-                }
-                else
-                {
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-info">
-                                <h5 class="text-center">
-                                    Não foram encontrados resultados
-                                </h5>
-                            </div>
-                        </div>
-                    </div>
-                }
+                                                }
+                                                else
+                                                {
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="alert alert-info">
+                                                                <h5 class="text-center">
+                                                                    Não foram encontrados resultados
+                                                                </h5>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
             </div>
         </div>
     </div>
@@ -157,4 +167,5 @@
 @section scripts{
     @Scripts.Render("~/Ordenacao/js")
     @Scripts.Render("~/Modal/js")
+    @Scripts.Render("~/Pagamento/js")
 }

@@ -42,7 +42,7 @@ namespace RAHSys.Aplicacao.AppModels
         {
             if (Pagamentos?.Count > 0)
             {
-                if (Pagamentos?.FirstOrDefault(e => e.DataPagamento.Month == DateTime.Now.Month && e.DataPagamento.Year == DateTime.Now.Year) != null)
+                if (Pagamentos?.FirstOrDefault(e => e.DataPagamento?.Month == DateTime.Now.Month && e.DataPagamento?.Year == DateTime.Now.Year) != null)
                     return SituacaoPagamentoEnum.Pago;
                 else
                     return SituacaoPagamentoEnum.NaoPago;

@@ -11,7 +11,7 @@ namespace RAHSys.Aplicacao.AppModels
 
         [Required]
         [Display(Name = "Data de Pagamento")]
-        public DateTime DataPagamento { get; set; }
+        public DateTime? DataPagamento { get; set; }
 
         [MaxLength(256)]
         [Display(Name = "Observação")]

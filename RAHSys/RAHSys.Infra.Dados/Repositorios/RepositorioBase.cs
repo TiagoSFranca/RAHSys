@@ -26,9 +26,10 @@ namespace RAHSys.Infra.Dados.Repositorios
             _context.Dispose();
         }
 
-        public TEntity ObterPorId(int id, bool detached = false)
+        public TEntity ObterPorId(int id, bool detached = false, bool novoContexto = false)
         {
-            var _context = new RAHSysContexto();
+            if (novoContexto)
+                _context = new RAHSysContexto();
 
             var element = _context.Set<TEntity>().Find(id);
 

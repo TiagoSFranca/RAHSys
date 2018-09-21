@@ -12,14 +12,17 @@ namespace RAHSys.Dominio.Servicos.Servicos
 {
     public class PagamentoServico : ServicoBase<PagamentoModel>, IPagamentoServico
     {
+        private readonly IContratoRepositorio _contratoRepositorio;
         private readonly IPagamentoRepositorio _pagamentoRepositorio;
 
-        public PagamentoServico(IPagamentoRepositorio PagamentoRepositorio) : base(PagamentoRepositorio)
+        public PagamentoServico(IPagamentoRepositorio pagamentoRepositorio, IContratoRepositorio contratoRepositorio) : base(pagamentoRepositorio)
         {
-            _pagamentoRepositorio = PagamentoRepositorio;
+            _pagamentoRepositorio = pagamentoRepositorio;
+            _contratoRepositorio = contratoRepositorio;
         }
 
-        public ConsultaModel<PagamentoModel> Consultar(int idContrato, IEnumerable<int> idList, string ordenacao, bool crescente, int pagina, int quantidade)
+        public ConsultaModel<PagamentoModel> Consultar(int idContrato, IEnumerable<int> idList, string dataPagamento,
+            string ordenacao, bool crescente, int pagina, int quantidade)
         {
             var consultaModel = new ConsultaModel<PagamentoModel>(pagina, quantidade);
 
@@ -27,6 +30,16 @@ namespace RAHSys.Dominio.Servicos.Servicos
 
             if (idList?.Count() > 0)
                 query = query.Where(c => idList.Contains(c.IdPagamento));
+
+            if (!string.IsNullOrEmpty(dataPagamento))
+            {
+                int mes = 0;
+                int ano = 0;
+
+                ValidarDataPagamento(dataPagamento, ref mes, ref ano);
+
+                query = query.Where(e => e.DataPagamento.Month == mes && e.DataPagamento.Year == ano);
+            }
 
             switch ((ordenacao ?? string.Empty).ToLower())
             {
@@ -45,6 +58,36 @@ namespace RAHSys.Dominio.Servicos.Servicos
             return consultaModel;
         }
 
+        public void Adicionar(PagamentoModel obj)
+        {
+            ValidarContrato(obj.IdContrato);
+
+            var menorData = DateTime.Parse("01/01/1901", new CultureInfo("pt-BR"), DateTimeStyles.None);
+            obj.DataCriacao = DateTime.Now;
+            if (VerificarExistenciaPagamento(obj))
+                throw new CustomBaseException(new Exception(), string.Format("Pagamento já realizado para o mês [{0}/{1}]", obj.DataPagamento.Month, obj.DataPagamento.Year));
+            if (obj.DataPagamento < menorData)
+                throw new CustomBaseException(new Exception(), string.Format("Data [{0}/{1}] inválida", obj.DataPagamento.Month, obj.DataPagamento.Year));
+
+            _pagamentoRepositorio.Adicionar(obj);
+        }
+
+        private void ValidarDataPagamento(string dataPagamento, ref int mes, ref int ano)
+        {
+            string erroDataInvalida = string.Format("Data [{0}] inválida", dataPagamento);
+            var datas = dataPagamento.Split('/');
+
+            if (datas.Count() != 2)
+                throw new CustomBaseException(new Exception(), erroDataInvalida);
+
+            if (!Int32.TryParse(datas[0], out mes))
+                throw new CustomBaseException(new Exception(), erroDataInvalida);
+
+            if (!Int32.TryParse(datas[1], out ano))
+                throw new CustomBaseException(new Exception(), erroDataInvalida);
+
+        }
+
         private bool VerificarExistenciaPagamento(PagamentoModel obj)
         {
             var query = _pagamentoRepositorio.Consultar()
@@ -56,16 +99,13 @@ namespace RAHSys.Dominio.Servicos.Servicos
             return query.Count() > 0;
         }
 
-        public void Adicionar(PagamentoModel obj)
+        private void ValidarContrato(int idContrato)
         {
-            var menorData = DateTime.Parse("01/01/1901", new CultureInfo("pt-BR"), DateTimeStyles.None);
-            obj.DataCriacao = DateTime.Now;
-            if (VerificarExistenciaPagamento(obj))
-                throw new CustomBaseException(new Exception(), string.Format("Pagamento já realizado para o mês [{0}/{1}]", obj.DataPagamento.Month, obj.DataPagamento.Year));
-            if (obj.DataPagamento < menorData)
-                throw new CustomBaseException(new Exception(), string.Format("Data [{0}] inválida", obj.DataPagamento.ToShortDateString()));
-
-            _pagamentoRepositorio.Adicionar(obj);
+            var contrato = _contratoRepositorio.ObterPorId(idContrato);
+            if (contrato == null)
+                throw new CustomBaseException(new Exception(), string.Format("Contrato de código [{0}] inválido", idContrato));
+            if(contrato.AnaliseInvestimento?.Cliente == null)
+                throw new CustomBaseException(new Exception(), string.Format("Contrato de código [{0}] ainda não foi assinado", idContrato));
         }
     }
 }

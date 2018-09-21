@@ -1050,6 +1050,7 @@
     <Content Include="Scripts\modal.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\ordenacao.js" />
+    <Content Include="Scripts\pagamento.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
     <Content Include="Web.config">
@@ -1111,6 +1112,7 @@
     <Content Include="Views\Pagamento\Index.cshtml" />
     <Content Include="Views\Shared\_ContratoInfo.cshtml" />
     <Content Include="Views\Pagamento\Adicionar.cshtml" />
+    <Content Include="Views\Pagamento\Excluir.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -147,7 +147,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
 
         public ContratoModel ObterPorId(int id)
         {
-            var contrato = _contratoRepositorio.ObterPorId(id);
+            var contrato = _contratoRepositorio.ObterPorId(id, false, true);
             if (contrato?.Excluido == true)
                 return null;
             return contrato;

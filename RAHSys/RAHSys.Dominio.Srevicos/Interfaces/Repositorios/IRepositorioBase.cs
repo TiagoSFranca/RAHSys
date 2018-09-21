@@ -9,7 +9,7 @@ namespace RAHSys.Dominio.Servicos.Interfaces.Repositorios
 
         void Atualizar(TEntity obj);
 
-        TEntity ObterPorId(int id, bool detached = false);
+        TEntity ObterPorId(int id, bool detached = false, bool novoContexto = false);
 
         void Remover(TEntity obj);
 

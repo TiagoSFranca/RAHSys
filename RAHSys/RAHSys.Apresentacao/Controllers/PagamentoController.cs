@@ -9,9 +9,6 @@ using System.Web.Mvc;
 
 namespace RAHSys.Apresentacao.Controllers
 {
-    //TODO: EXCLUSÃO
-    //TODO: ADICIONAR DATEPICKER NA TELA DE CADASTRO
-    //TODO: ADICIONAR DATA NA CONSULTA
     public class PagamentoController : ControllerBase
     {
         private readonly IContratoAppServico _contratoAppServico;
@@ -24,7 +21,7 @@ namespace RAHSys.Apresentacao.Controllers
             ViewBag.Title = "Pagamentos";
         }
 
-        public ActionResult Index(int id, int? codigo, string ordenacao, bool? crescente, int? pagina, int? itensPagina)
+        public ActionResult Index(int id, int? codigo, string data, string ordenacao, bool? crescente, int? pagina, int? itensPagina)
         {
             var contratoModel = new ContratoAppModel();
 
@@ -37,12 +34,13 @@ namespace RAHSys.Apresentacao.Controllers
             var viewIndex = new PagamentoIndexModel(contratoModel, new StaticPagedList<PagamentoAppModel>(new List<PagamentoAppModel>(), 1, 1, 0));
 
             ViewBag.Codigo = codigo;
+            ViewBag.DataPagamento = data;
             ViewBag.Ordenacao = ordenacao;
             ViewBag.Crescente = crescente ?? true;
             ViewBag.ItensPagina = itensPagina;
             try
             {
-                var consulta = _pagamentoAppServico.Consultar(id, codigo != null ? new int[] { (int)codigo } : null, ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? 40);
+                var consulta = _pagamentoAppServico.Consultar(id, codigo != null ? new int[] { (int)codigo } : null, data, ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? 40);
                 viewIndex.Pagamentos = new StaticPagedList<PagamentoAppModel>(consulta.Resultado, consulta.PaginaAtual, consulta.ItensPorPagina, consulta.TotalItens);
 
                 return View(viewIndex);
@@ -93,6 +91,43 @@ namespace RAHSys.Apresentacao.Controllers
                 }
             }
             return View(contratoRetorno);
+        }
+
+        [HttpGet]
+        public ActionResult Excluir(int idContrato, int idPagamento)
+        {
+            ViewBag.SubTitle = "Excluir Pagamento";
+            var pagamentoModel = new PagamentoAppModel();
+            try
+            {
+                pagamentoModel = _pagamentoAppServico.ObterPorId(idPagamento);
+                if (pagamentoModel == null)
+                {
+                    MensagemErro("Pagamento não encontrado");
+                    return RedirectToAction("Index", new { idContrato });
+                }
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+                return RedirectToAction("Index", new { idContrato });
+            }
+            return View(pagamentoModel);
+        }
+
+        [HttpPost]
+        public ActionResult Excluir(PagamentoAppModel pagamentoAppModel)
+        {
+            try
+            {
+                _pagamentoAppServico.Remover(pagamentoAppModel.IdPagamento);
+                MensagemSucesso(MensagensPadrao.ExclusaoSucesso);
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+            }
+            return RedirectToAction("Index", new { id = pagamentoAppModel.IdContrato });
         }
 
         #region Métodos Aux

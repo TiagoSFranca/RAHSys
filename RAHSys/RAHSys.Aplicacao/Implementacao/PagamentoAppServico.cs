@@ -91,13 +91,14 @@ namespace RAHSys.Aplicacao.Implementacao
             }
         }
 
-        public ConsultaAppModel<PagamentoAppModel> Consultar(int idContrato, IEnumerable<int> idList, string ordenacao, bool crescente, int pagina, int quantidade)
+        public ConsultaAppModel<PagamentoAppModel> Consultar(int idContrato, IEnumerable<int> idList, string dataPagamento, 
+            string ordenacao, bool crescente, int pagina, int quantidade)
         {
             try
             {
                 var consulta = new ConsultaAppModel<PagamentoAppModel>();
 
-                var resultado = _pagamentoServico.Consultar(idContrato, idList, ordenacao, crescente, pagina, quantidade);
+                var resultado = _pagamentoServico.Consultar(idContrato, idList, dataPagamento, ordenacao, crescente, pagina, quantidade);
 
                 consulta.ItensPorPagina = resultado.ItensPorPagina;
                 consulta.PaginaAtual = resultado.PaginaAtual;

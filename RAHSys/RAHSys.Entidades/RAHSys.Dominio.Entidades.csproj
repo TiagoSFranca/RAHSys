@@ -51,14 +51,19 @@
     <Compile Include="Entidades\ContratoModel.cs" />
     <Compile Include="Entidades\DocumentoModel.cs" />
     <Compile Include="Entidades\EnderecoModel.cs" />
+    <Compile Include="Entidades\EquipeModel.cs" />
+    <Compile Include="Entidades\EquipeUsuarioModel.cs" />
     <Compile Include="Entidades\EstadoCivilModel.cs" />
     <Compile Include="Entidades\EstadoModel.cs" />
     <Compile Include="Entidades\FiadorEnderecoModel.cs" />
     <Compile Include="Entidades\FiadorModel.cs" />
     <Compile Include="Entidades\LogErrorModel.cs" />
     <Compile Include="Entidades\PagamentoModel.cs" />
+    <Compile Include="Entidades\PerfilModel.cs" />
     <Compile Include="Entidades\TipoContatoModel.cs" />
     <Compile Include="Entidades\TipoTelhadoModel.cs" />
+    <Compile Include="Entidades\UsuarioModel.cs" />
+    <Compile Include="Entidades\UsuarioPerfilModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Seeds\EstadoCivilSeed.cs" />
   </ItemGroup>

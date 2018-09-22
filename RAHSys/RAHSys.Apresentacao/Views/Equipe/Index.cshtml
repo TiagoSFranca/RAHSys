@@ -2,7 +2,7 @@
 @using RAHSys.Extras.Enums;
 @using PagedList.Mvc;
 
-@model PagedList.StaticPagedList<ContratoAppModel>
+@model PagedList.StaticPagedList<EquipeAppModel>
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="portlet light ">
@@ -12,11 +12,11 @@
                     <span class="caption-subject font-green-steel uppercase bold">Buscar</span>
                 </div>
                 <div class="actions">
-                    @Html.ActionLink("Adicionar", "Adicionar", "Contrato", null, new { @class = "btn btn-no-border green btn-outline btn-circle btn-md" })
+                    @Html.ActionLink("Adicionar", "Adicionar", "Equipe", null, new { @class = "btn btn-no-border green btn-outline btn-circle btn-md" })
                 </div>
             </div>
             <div class="portlet-body">
-                @using (Html.BeginForm("Index", "Contrato", FormMethod.Get, new { @id = "form-busca" }))
+                @using (Html.BeginForm("Index", "Equipe", FormMethod.Get, new { @id = "form-busca" }))
                 {
                     <div class="row">
                         <div class="col-md-1">
@@ -25,15 +25,9 @@
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group form-md-line-input has-success">
-                                @Html.Editor("nomeEmpresa", new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome da Empresa" } })
-                                <div class="form-control-focus"> </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group form-md-line-input has-success">
-                                @Html.Editor("cidade", new { htmlAttributes = new { @class = "form-control", @placeholder = "Cidade" } })
+                                @Html.Editor("email", new { htmlAttributes = new { @class = "form-control", @placeholder = "Email" } })
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -48,7 +42,7 @@
                         <div class="col-md-3">
                             <div class="form-group form-md-line-input ">
                                 <button type="submit" class="btn blue btn-circle">Buscar</button>
-                                @Html.ActionLink("Limpar", "Index", "Contrato", null, new { @class = "btn btn-white btn-outline btn-circle btn-md" })
+                                @Html.ActionLink("Limpar", "Index", "Equipe", null, new { @class = "btn btn-white btn-outline btn-circle btn-md" })
                             </div>
                         </div>
                     </div>
@@ -78,21 +72,13 @@
                                             #
                                         </a>
                                     </th>
-                                    <th onclick="ordenar('NomeEmpresa')">
+                                    <th onclick="ordenar('lider')">
                                         <a>
-                                            Nome da Empresa
-                                        </a>
-                                    </th>
-                                    <th onclick="ordenar('Cidade')">
-                                        <a>
-                                            Cidade
+                                            Líder
                                         </a>
                                     </th>
                                     <th>
-                                        Status
-                                    </th>
-                                    <th>
-                                        Pagamento
+                                        Equipe
                                     </th>
                                     <th></th>
                                 </tr>
@@ -102,37 +88,20 @@
                                 {
                                     <tr>
                                         <td>
-                                            @item.IdContrato
+                                            @item.IdEquipe
                                         </td>
                                         <td>
-                                            @item.NomeEmpresa
+                                            @item.Lider.EmailEUserName
                                         </td>
                                         <td>
-                                            @item.ContratoEndereco.Endereco.Cidade.Nome/@item.ContratoEndereco.Endereco.Cidade.Estado.Sigla
-                                        </td>
-                                        <td>
-                                            @{
-                                                var situacao = item.ObterSituacaoContrato();
-                                            }
-                                            <span class="@situacao.Classe">
-                                                <strong>@situacao.Nome.ToUpper()</strong>
-                                            </span>
-                                        </td>
-                                        <td>
-                                            @{
-                                                var situacaoPagamento = item.ObterSituacaoPagamento();
-                                            }
-                                            <label class="btn @situacaoPagamento.Classe btn-circle btn-md tooltips" data-container="body" data-placement="top" data-original-title="@situacaoPagamento.Nome">
-                                                <i></i>
-                                            </label>
-                                            @Html.ActionLink("Visualizar", "Index", "Pagamento", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
+                                            @Html.Raw(item.OnterEquipe())
                                         </td>
                                         <td class="text-right">
-                                            @Html.ActionLink("Alterar", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
-                                            @Html.ActionLink("Excluir", "Excluir", "Contrato", new { id = item.IdContrato }, new { @class = "btn red-flamingo btn-circle btn-md abrirModal" })
+                                            @Html.ActionLink("Alterar", "Editar", "Equipe", new { id = item.IdEquipe }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
+                                            @Html.ActionLink("Excluir", "Excluir", "Equipe", new { id = item.IdEquipe }, new { @class = "btn red-flamingo btn-circle btn-md abrirModal" })
                                         </td>
                                     </tr>
-                                                }
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -144,12 +113,10 @@
                             </span>
                             <div class="text-center">
                                 @Html.PagedListPager(Model,
-                               pagina => Url.Action("Index", "Contrato", new
+                               pagina => Url.Action("Index", "Equipe", new
                                {
                                    pagina,
                                    codigo = ViewBag.Codigo,
-                                   nomeEmpresa = ViewBag.NomeEmpresa,
-                                   cidade = ViewBag.Cidade,
                                    itensPagina = ViewBag.ItensPagina,
                                    ordenacao = ViewBag.Ordenacao,
                                    crescente = ViewBag.Crescente
@@ -157,19 +124,19 @@
                             </div>
                         </div>
                     </div>
-                                                }
-                                                else
-                                                {
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <div class="alert alert-info">
-                                                                <h5 class="text-center">
-                                                                    Não foram encontrados resultados
-                                                                </h5>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                }
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-info">
+                                <h5 class="text-center">
+                                    Não foram encontrados resultados
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>

@@ -49,7 +49,8 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
                     "~/Content/assets/pages/css/error.min.css"
                     ));
 
-            bundles.Add(new StyleBundle("~/DatePicker/css").Include(
+            bundles.Add(new StyleBundle("~/MultiSelect/css").Include(
+                "~/Content/assets/global/plugins/jquery-multi-select/css/multi-select.css"
                 ));
         }
     }

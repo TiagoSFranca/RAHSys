@@ -85,6 +85,14 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
             bundles.Add(new ScriptBundle("~/Pagamento/js").Include(
                 "~/Scripts/pagamento.js"
                 ));
+
+            bundles.Add(new ScriptBundle("~/MultiSelect/js").Include(
+                "~/Content/assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/Integrantes/js").Include(
+                "~/Scripts/integrantes.js"
+                ));
         }
     }
 }

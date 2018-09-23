@@ -5,6 +5,16 @@
     exibirBotaoAdicionarContrato(false);
 });
 
+$("#ddlEquipe").change(function () {
+    var id = $(this).val();
+    var equipe = "";
+    if (id) {
+        equipe = $("#equipe_" + id).val();
+    }
+    $("#nomeEquipe")
+        .attr('data-original-title', equipe);
+});
+
 function removerConjugeBody() {
     if ($("#conjugeBody").val() == "") {
         $("#conjugeBody").val($(".conjuge-body").html());

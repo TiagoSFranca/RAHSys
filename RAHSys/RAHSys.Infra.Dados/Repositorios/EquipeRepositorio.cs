@@ -35,6 +35,17 @@ namespace RAHSys.Infra.Dados.Repositorios
             _context.SaveChanges();
         }
 
+        public void Remover(EquipeModel obj)
+        {
+            var clientes = _context.Cliente.Where(e => e.IdEquipe == obj.IdEquipe).ToList();
+            foreach (var item in clientes)
+            {
+                item.IdEquipe = null;
+                _context.Entry(item).State = EntityState.Modified;
+            }
+            _context.Equipe.Remove(obj);
+            _context.SaveChanges();
+        }
 
         private void AdicionarOuRemoverUsuarios(EquipeModel obj)
         {

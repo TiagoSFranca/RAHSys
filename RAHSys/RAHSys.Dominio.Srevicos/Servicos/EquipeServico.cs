@@ -61,15 +61,35 @@ namespace RAHSys.Dominio.Servicos.Servicos
             _equipeRepositorio.Atualizar(obj);
         }
 
+        public void Remover(EquipeModel obj)
+        {
+            if (VerificarContratos(obj))
+                throw new CustomBaseException(new Exception(), "Não foi possível excluir pois a equipe está associada à contratos");
+
+            _equipeRepositorio.Remover(obj);
+        }
+
+        private bool VerificarContratos(EquipeModel obj)
+        {
+            var query = _equipeRepositorio.Consultar().Where(e => e.IdEquipe == obj.IdEquipe && e.Clientes.Where(f => !f.AnaliseInvestimento.Contrato.Excluido).Count() > 0);
+
+            return query.Count() > 0;
+        }
+
         private void ValidarUsuario(EquipeModel equipe)
         {
             if (equipe.EquipeUsuarios?.Count > 0)
                 foreach (var equipeUsuario in equipe.EquipeUsuarios)
                 {
                     var usuario = _usuarioServico.ObterPorId(equipeUsuario.IdUsuario);
-                    if(usuario == null)
+                    if (usuario == null)
                         throw new CustomBaseException(new Exception(), "Usuário não encontrato");
                 }
+        }
+
+        public IEnumerable<EquipeModel> ListarTodos()
+        {
+            return _equipeRepositorio.Consultar().OrderBy(e => e.Lider.Email).ToList();
         }
     }
 }

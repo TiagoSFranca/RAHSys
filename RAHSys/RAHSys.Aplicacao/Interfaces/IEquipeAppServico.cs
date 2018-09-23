@@ -7,5 +7,6 @@ namespace RAHSys.Aplicacao.Interfaces
     {
         ConsultaAppModel<EquipeAppModel> Consultar(IEnumerable<int> idList, string email,
             string ordenacao, bool crescente, int pagina, int quantidade);
+        List<EquipeAppModel> ListarTodos();
     }
 }

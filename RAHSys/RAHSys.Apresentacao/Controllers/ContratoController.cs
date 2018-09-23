@@ -22,10 +22,11 @@ namespace RAHSys.Apresentacao.Controllers
         private readonly ITipoTelhadoAppServico _tipoTelhadoAppServico;
         private readonly IEstadoCivilAppServico _estadoCivilAppServico;
         private readonly IDocumentoAppServico _documentoAppServico;
+        private readonly IEquipeAppServico _equipeAppServico;
 
         public ContratoController(IContratoAppServico contratoAppServico, IEstadoAppServico estadoAppServico,
             ICidadeAppServico cidadeAppServico, ITipoTelhadoAppServico tipoTelhadoAppServico, IEstadoCivilAppServico estadoCivilAppServico,
-            IDocumentoAppServico documentoAppServico)
+            IDocumentoAppServico documentoAppServico, IEquipeAppServico equipeAppServico)
         {
             _contratoAppServico = contratoAppServico;
             _estadoAppServico = estadoAppServico;
@@ -33,6 +34,7 @@ namespace RAHSys.Apresentacao.Controllers
             _tipoTelhadoAppServico = tipoTelhadoAppServico;
             _estadoCivilAppServico = estadoCivilAppServico;
             _documentoAppServico = documentoAppServico;
+            _equipeAppServico = equipeAppServico;
             ViewBag.Title = "Clientes/Contratos";
         }
 
@@ -385,7 +387,7 @@ namespace RAHSys.Apresentacao.Controllers
 
             retorno.Estados = _estadoAppServico.ListarTodos();
             retorno.EstadosCivis = _estadoCivilAppServico.ListarTodos();
-
+            retorno.Equipes = _equipeAppServico.ListarTodos();
             if (idEstado != null)
                 retorno.CidadesFiador = _cidadeAppServico.ObterCidadesPorEstado((int)idEstado);
 

@@ -14,7 +14,7 @@ namespace RAHSys.Aplicacao.AppModels
         {
             get
             {
-                return string.Format("{0} | {1}", this.UserName, this.Email);
+                return string.Format("{0}[{1}]", this.UserName, this.Email);
             }
         }
     }

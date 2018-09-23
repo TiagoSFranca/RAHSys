@@ -8,5 +8,7 @@ namespace RAHSys.Dominio.Servicos.Interfaces.Servicos
     {
         ConsultaModel<EquipeModel> Consultar(IEnumerable<int> idList, string email,
             string ordenacao, bool crescente, int pagina, int quantidade);
+
+        IEnumerable<EquipeModel> ListarTodos();
     }
 }

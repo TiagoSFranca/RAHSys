@@ -26,6 +26,10 @@ namespace RAHSys.Infra.Dados.EntityConfig
                 .WithRequired(s => s.Equipe)
                 .HasForeignKey(s => s.IdEquipe)
                 .WillCascadeOnDelete(true);
+
+            HasMany(pt => pt.Clientes)
+                .WithOptional(s => s.Equipe)
+                .HasForeignKey(s => s.IdEquipe);
         }
     }
 }

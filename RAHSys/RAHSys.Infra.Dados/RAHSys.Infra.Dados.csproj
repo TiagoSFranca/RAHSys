@@ -103,6 +103,10 @@
     <Compile Include="Migrations\201809231147406_Adicionado Equipe e EquipeUsuario.Designer.cs">
       <DependentUpon>201809231147406_Adicionado Equipe e EquipeUsuario.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809231403517_Adicionado IdEquipe a Cliente.cs" />
+    <Compile Include="Migrations\201809231403517_Adicionado IdEquipe a Cliente.Designer.cs">
+      <DependentUpon>201809231403517_Adicionado IdEquipe a Cliente.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.cs" />
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.Designer.cs">
       <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>
@@ -192,6 +196,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809231147406_Adicionado Equipe e EquipeUsuario.resx">
       <DependentUpon>201809231147406_Adicionado Equipe e EquipeUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809231403517_Adicionado IdEquipe a Cliente.resx">
+      <DependentUpon>201809231403517_Adicionado IdEquipe a Cliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\Audit\201808101838532_CriacaoDBAudit.resx">
       <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>

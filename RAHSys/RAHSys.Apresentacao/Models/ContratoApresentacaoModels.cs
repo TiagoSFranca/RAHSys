@@ -36,6 +36,7 @@ namespace RAHSys.Apresentacao.Models
         public List<CidadeAppModel> CidadesFiadorConjuge { get; set; }
         public List<EstadoAppModel> Estados { get; set; }
         public List<EstadoCivilAppModel> EstadosCivis { get; set; }
+        public List<EquipeAppModel> Equipes { get; set; }
 
         public FichaClienteAdicionar()
         {
@@ -43,6 +44,7 @@ namespace RAHSys.Apresentacao.Models
             CidadesFiadorConjuge = new List<CidadeAppModel>();
             Estados = new List<EstadoAppModel>();
             EstadosCivis = new List<EstadoCivilAppModel>();
+            Equipes = new List<EquipeAppModel>();
         }
     }
 }

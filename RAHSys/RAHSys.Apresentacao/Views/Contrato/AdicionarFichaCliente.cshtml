@@ -95,7 +95,28 @@
                         <div class="col-md-2 control-label">
                             <div class="caption caption-md">
                                 <i class="icon-bar-chart font-dark hide"></i>
-                                <span class="caption-subject font-green-steel uppercase bold"></span>
+                                <span class="caption-subject font-green-steel uppercase bold">Equipe</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.Cliente.IdEquipe, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.Cliente.IdEquipe, new SelectList(Model.Equipes, "IdEquipe", "ObterLider"), "Selecione", new { @class = "form-control", @placeholder = "Equipes", @required = "required", @id = "ddlEquipe" })
+                            @Html.ValidationMessageFor(model => model.Cliente.IdEquipe, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                        <div class="col-md-1">
+                            <label class="btn blue btn-outline btn-circle btn-md tooltips" id="nomeEquipe" data-container="body" data-placement="top" data-html="true" data-original-title="">
+                                <i class="fa fa-eye"></i>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        <div class="col-md-2 control-label">
+                            <div class="caption caption-md">
+                                <i class="icon-bar-chart font-dark hide"></i>
+                                <span class="caption-subject font-green-steel uppercase bold">Consumo</span>
                             </div>
                         </div>
                     </div>
@@ -381,6 +402,10 @@
             </div>
         </div>
     </div>
+    foreach (var item in Model.Equipes)
+    {
+        <input type="hidden" value="@item.ObterEquipeFormatada()" id="equipe_@item.IdEquipe" />
+    }
 }
 <input type="hidden" value="@Url.Action("ObterCidadesPorEstado", "Contrato")" id="consultaCidades" />
 <input type="hidden" value="@RAHSys.Entidades.Seeds.EstadoCivilSeed.Casado.IdEstadoCivil" id="idCasado" />

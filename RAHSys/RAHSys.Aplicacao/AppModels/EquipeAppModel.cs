@@ -19,7 +19,7 @@ namespace RAHSys.Aplicacao.AppModels
 
         public virtual List<EquipeUsuarioAppModel> EquipeUsuarios { get; set; }
 
-        public virtual string OnterEquipe()
+        public virtual string ObterEquipe()
         {
             var equipe = string.Empty;
 
@@ -30,5 +30,25 @@ namespace RAHSys.Aplicacao.AppModels
 
             return equipe;
         }
+
+        public virtual string ObterLider
+        {
+            get
+            {
+                return Lider.EmailEUserName;
+            }
+        }
+
+        public virtual string ObterEquipeFormatada()
+        {
+            string equipe = string.Empty;
+
+            equipe += "<strong>Líder:</strong><br>" + ObterLider +"<br/>";
+            if (EquipeUsuarios?.Count > 0)
+                equipe += "<strong>Integrantes:</strong><br>" + ObterEquipe();
+
+            return equipe;
+        }
+
     }
 }

@@ -99,9 +99,9 @@
     <Compile Include="Migrations\201809221412147_Adicionado Usuario, Perfil e UsuarioPerfil do Identity.Designer.cs">
       <DependentUpon>201809221412147_Adicionado Usuario, Perfil e UsuarioPerfil do Identity.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201809222038411_Adicionado Equipe e EquipeUsuario.cs" />
-    <Compile Include="Migrations\201809222038411_Adicionado Equipe e EquipeUsuario.Designer.cs">
-      <DependentUpon>201809222038411_Adicionado Equipe e EquipeUsuario.cs</DependentUpon>
+    <Compile Include="Migrations\201809231147406_Adicionado Equipe e EquipeUsuario.cs" />
+    <Compile Include="Migrations\201809231147406_Adicionado Equipe e EquipeUsuario.Designer.cs">
+      <DependentUpon>201809231147406_Adicionado Equipe e EquipeUsuario.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.cs" />
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.Designer.cs">
@@ -190,8 +190,8 @@
     <EmbeddedResource Include="Migrations\201809221412147_Adicionado Usuario, Perfil e UsuarioPerfil do Identity.resx">
       <DependentUpon>201809221412147_Adicionado Usuario, Perfil e UsuarioPerfil do Identity.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201809222038411_Adicionado Equipe e EquipeUsuario.resx">
-      <DependentUpon>201809222038411_Adicionado Equipe e EquipeUsuario.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201809231147406_Adicionado Equipe e EquipeUsuario.resx">
+      <DependentUpon>201809231147406_Adicionado Equipe e EquipeUsuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\Audit\201808101838532_CriacaoDBAudit.resx">
       <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>

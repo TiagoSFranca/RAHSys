@@ -49,15 +49,15 @@ namespace RAHSys.Apresentacao.Controllers
         public ActionResult Adicionar()
         {
             ViewBag.SubTitle = "Adicionar Nova Equipe";
-            var equipeAdicionar = MontarEquipeAdicionarModel();
+            var equipeAdicionar = MontarEquipeAdicionarEditarModel();
 
             return View(equipeAdicionar);
         }
 
         [HttpPost]
-        public ActionResult Adicionar(EquipeAdicionarModel equipeAdicionarModel)
+        public ActionResult Adicionar(EquipeAdicionarEditarModel equipeAdicionarModel)
         {
-            var equipeRetorno = MontarEquipeAdicionarModel(equipeAdicionarModel.Equipe?.IdLider);
+            var equipeRetorno = MontarEquipeAdicionarEditarModel(equipeAdicionarModel.Equipe?.IdLider);
             equipeRetorno.Equipe = equipeAdicionarModel.Equipe;
             equipeRetorno.IdIntegrantes = equipeAdicionarModel.IdIntegrantes;
             if (ModelState.IsValid)
@@ -80,6 +80,56 @@ namespace RAHSys.Apresentacao.Controllers
             return View(equipeRetorno);
         }
 
+        [HttpGet]
+        public ActionResult Editar(int id)
+        {
+            ViewBag.SubTitle = "Editar Equipe";
+            EquipeAdicionarEditarModel equipeEditar = new EquipeAdicionarEditarModel();
+            try
+            {
+                var equipeModel = _equipeAppServico.ObterPorId(id);
+                if (equipeModel == null)
+                {
+                    MensagemErro("Equipe não encontrada");
+                    return RedirectToAction("Index");
+                }
+                equipeEditar = MontarEquipeAdicionarEditarModel(equipeModel.IdLider);
+                equipeEditar.Equipe = equipeModel;
+                equipeEditar.IdIntegrantes = equipeModel.EquipeUsuarios.Select(e => e.IdUsuario).ToList();
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+                return RedirectToAction("Index");
+            }
+            return View(equipeEditar);
+        }
+
+        [HttpPost]
+        public ActionResult Editar(EquipeAdicionarEditarModel equipeAdicionarModel)
+        {
+            var equipeRetorno = MontarEquipeAdicionarEditarModel(equipeAdicionarModel.Equipe?.IdLider);
+            equipeRetorno.Equipe = equipeAdicionarModel.Equipe;
+            equipeRetorno.IdIntegrantes = equipeAdicionarModel.IdIntegrantes;
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var equipe = equipeAdicionarModel.Equipe;
+                    equipe.EquipeUsuarios = equipeAdicionarModel.IdIntegrantes?.Select(e => new EquipeUsuarioAppModel() { IdUsuario = e, IdEquipe = equipeAdicionarModel.Equipe.IdEquipe }).ToList();
+
+                    _equipeAppServico.Atualizar(equipe);
+                    MensagemSucesso(MensagensPadrao.CadastroSucesso);
+                    return RedirectToAction("Index", "Equipe");
+                }
+                catch (CustomBaseException ex)
+                {
+                    MensagemErro(ex.Mensagem);
+                    return View(equipeRetorno);
+                }
+            }
+            return View(equipeRetorno);
+        }
 
         [HttpGet]
         public ActionResult Excluir(int id)
@@ -118,19 +168,19 @@ namespace RAHSys.Apresentacao.Controllers
             return RedirectToAction("Index", "Equipe");
         }
 
-        private EquipeAdicionarModel MontarEquipeAdicionarModel(string idLider = null)
+        private EquipeAdicionarEditarModel MontarEquipeAdicionarEditarModel(string idLider = null)
         {
-            var equipeAdicionar = new EquipeAdicionarModel();
+            var equipeAdicionarEditar = new EquipeAdicionarEditarModel();
             var usuarios = _usuarioAppServico.ListarTodos(null);
-            equipeAdicionar.Equipe = new EquipeAppModel();
-            equipeAdicionar.Lideres = usuarios;
+            equipeAdicionarEditar.Equipe = new EquipeAppModel();
+            equipeAdicionarEditar.Lideres = usuarios;
             if (!string.IsNullOrEmpty(idLider))
             {
                 var integrantes = usuarios.Where(e => !e.IdUsuario.ToLower().Equals(idLider.ToLower())).ToList();
-                equipeAdicionar.Integrantes = integrantes.GroupBy(e => e.UsuarioPerfis.FirstOrDefault().Perfil.Nome).Select(e => e.ToList()).ToList();
+                equipeAdicionarEditar.Integrantes = integrantes.GroupBy(e => e.UsuarioPerfis.FirstOrDefault().Perfil.Nome).Select(e => e.ToList()).ToList();
             }
 
-            return equipeAdicionar;
+            return equipeAdicionarEditar;
         }
 
         [HttpGet]

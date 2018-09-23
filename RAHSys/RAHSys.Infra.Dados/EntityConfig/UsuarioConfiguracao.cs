@@ -31,12 +31,12 @@ namespace RAHSys.Infra.Dados.EntityConfig
 
             HasMany(pt => pt.Equipes)
                 .WithRequired(s => s.Lider)
-                .HasForeignKey(s => s.IdLider)
-                .WillCascadeOnDelete(true);
+                .HasForeignKey(s => s.IdLider);
 
             HasMany(pt => pt.EquipeUsuarios)
                 .WithRequired(s => s.Usuario)
-                .HasForeignKey(s => s.IdUsuario);
+                .HasForeignKey(s => s.IdUsuario)
+                .WillCascadeOnDelete(true);
         }
     }
 }

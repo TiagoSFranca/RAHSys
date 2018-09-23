@@ -16,9 +16,10 @@
                 </div>
             </div>
             <div class="portlet-body">
-                @using (Html.BeginForm("Adicionar", "Equipe", FormMethod.Post, new { @class = "form-horizontal margin-bottom-40" }))
+                @using (Html.BeginForm("Editar", "Equipe", FormMethod.Post, new { @class = "form-horizontal margin-bottom-40" }))
                 {
                     @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.Equipe.IdEquipe)
                     <div class="form-group form-md-line-input">
                         @Html.LabelFor(m => m.Equipe.IdLider, new { @class = "col-md-2 control-label" })
                         <div class="col-md-9">
@@ -64,7 +65,7 @@
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
                             <button type="submit" class="btn blue btn-circle">Salvar</button>
-                            @Html.ActionLink("Limpar", "Adicionar", "Equipe", null, new { @class = "btn btn-white btn-outline btn-circle btn-md" })
+                            @Html.ActionLink("Limpar", "Editar", "Equipe", new { id = Model.Equipe.IdEquipe }, new { @class = "btn btn-white btn-outline btn-circle btn-md" })
                             @Html.ActionLink("Cancelar", "Index", "Equipe", null, new { @class = "btn yellow-haze btn-outline btn-circle btn-md" })
                         </div>
                     </div>

@@ -1119,6 +1119,7 @@
     <Content Include="Views\Equipe\Index.cshtml" />
     <Content Include="Views\Equipe\Adicionar.cshtml" />
     <Content Include="Views\Equipe\Excluir.cshtml" />
+    <Content Include="Views\Equipe\Editar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

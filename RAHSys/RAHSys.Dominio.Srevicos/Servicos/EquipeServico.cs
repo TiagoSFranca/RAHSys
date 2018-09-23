@@ -55,6 +55,12 @@ namespace RAHSys.Dominio.Servicos.Servicos
             _equipeRepositorio.Adicionar(obj);
         }
 
+        public void Atualizar(EquipeModel obj)
+        {
+            ValidarUsuario(obj);
+            _equipeRepositorio.Atualizar(obj);
+        }
+
         private void ValidarUsuario(EquipeModel equipe)
         {
             if (equipe.EquipeUsuarios?.Count > 0)

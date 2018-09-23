@@ -13,7 +13,7 @@ namespace RAHSys.Infra.Dados.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201809222038411_Adicionado Equipe e EquipeUsuario"; }
+            get { return "201809231147406_Adicionado Equipe e EquipeUsuario"; }
         }
         
         string IMigrationMetadata.Source

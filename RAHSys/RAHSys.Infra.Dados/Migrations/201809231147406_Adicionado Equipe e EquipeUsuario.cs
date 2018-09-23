@@ -16,7 +16,7 @@ namespace RAHSys.Infra.Dados.Migrations
                         Descricao = c.String(maxLength: 256, unicode: false),
                     })
                 .PrimaryKey(t => t.IdEquipe)
-                .ForeignKey("dbo.AspNetUsers", t => t.IdLider, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetUsers", t => t.IdLider)
                 .Index(t => t.IdLider);
             
             CreateTable(
@@ -27,11 +27,10 @@ namespace RAHSys.Infra.Dados.Migrations
                         IdUsuario = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => new { t.IdEquipe, t.IdUsuario })
-                .ForeignKey("dbo.AspNetUsers", t => t.IdUsuario)
+                .ForeignKey("dbo.AspNetUsers", t => t.IdUsuario, cascadeDelete: true)
                 .ForeignKey("dbo.Equipe", t => t.IdEquipe, cascadeDelete: true)
                 .Index(t => t.IdUsuario)
                 .Index(t => t.IdEquipe);
-            
         }
         
         public override void Down()

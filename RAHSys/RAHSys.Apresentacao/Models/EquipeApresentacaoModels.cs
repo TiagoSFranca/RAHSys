@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RAHSys.Apresentacao.Models
 {
-    public class EquipeAdicionarModel
+    public class EquipeAdicionarEditarModel
     {
         public EquipeAppModel Equipe { get; set; }
         public List<UsuarioAppModel> Lideres { get; set; }

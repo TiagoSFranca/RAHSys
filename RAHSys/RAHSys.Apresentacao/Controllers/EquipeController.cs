@@ -1,17 +1,17 @@
 ﻿using PagedList;
 using RAHSys.Aplicacao.AppModels;
 using RAHSys.Aplicacao.Interfaces;
+using RAHSys.Apresentacao.Attributes;
 using RAHSys.Apresentacao.Models;
 using RAHSys.Extras;
 using RAHSys.Infra.CrossCutting.Exceptions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace RAHSys.Apresentacao.Controllers
 {
+    [RAHAudit]
     public class EquipeController : ControllerBase
     {
         private readonly IEquipeAppServico _equipeAppServico;
@@ -46,6 +46,7 @@ namespace RAHSys.Apresentacao.Controllers
         }
 
         [HttpGet]
+        [RAHAuthorize(Roles = "Admin")]
         public ActionResult Adicionar()
         {
             ViewBag.SubTitle = "Adicionar Nova Equipe";
@@ -55,6 +56,7 @@ namespace RAHSys.Apresentacao.Controllers
         }
 
         [HttpPost]
+        [RAHAuthorize(Roles = "Admin")]
         public ActionResult Adicionar(EquipeAdicionarEditarModel equipeAdicionarModel)
         {
             var equipeRetorno = MontarEquipeAdicionarEditarModel(equipeAdicionarModel.Equipe?.IdLider);
@@ -81,6 +83,7 @@ namespace RAHSys.Apresentacao.Controllers
         }
 
         [HttpGet]
+        [RAHAuthorize(Roles = "Admin")]
         public ActionResult Editar(int id)
         {
             ViewBag.SubTitle = "Editar Equipe";
@@ -106,6 +109,7 @@ namespace RAHSys.Apresentacao.Controllers
         }
 
         [HttpPost]
+        [RAHAuthorize(Roles = "Admin")]
         public ActionResult Editar(EquipeAdicionarEditarModel equipeAdicionarModel)
         {
             var equipeRetorno = MontarEquipeAdicionarEditarModel(equipeAdicionarModel.Equipe?.IdLider);
@@ -132,6 +136,7 @@ namespace RAHSys.Apresentacao.Controllers
         }
 
         [HttpGet]
+        [RAHAuthorize(Roles = "Admin")]
         public ActionResult Excluir(int id)
         {
             ViewBag.SubTitle = "Excluir Equipe";
@@ -154,6 +159,7 @@ namespace RAHSys.Apresentacao.Controllers
         }
 
         [HttpPost]
+        [RAHAuthorize(Roles = "Admin")]
         public ActionResult Excluir(EquipeAppModel equipeAppModel)
         {
             try
@@ -167,6 +173,8 @@ namespace RAHSys.Apresentacao.Controllers
             }
             return RedirectToAction("Index", "Equipe");
         }
+
+        #region Métodos Aux
 
         private EquipeAdicionarEditarModel MontarEquipeAdicionarEditarModel(string idLider = null)
         {
@@ -212,5 +220,7 @@ namespace RAHSys.Apresentacao.Controllers
 
             return retorno;
         }
+
+        #endregion
     }
 }

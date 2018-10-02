@@ -43,7 +43,7 @@ namespace RAHSys.Aplicacao.AppModels
         public int QtdInversores { get; set; }
 
         [Required]
-        [Display(Name = "Placas(Tipo)")]
+        [Display(Name = "Inversores(Tipo)")]
         [MaxLength(256)]
         public string TipoInversores { get; set; }
 

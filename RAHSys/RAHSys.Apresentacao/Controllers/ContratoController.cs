@@ -38,8 +38,9 @@ namespace RAHSys.Apresentacao.Controllers
             ViewBag.Title = "Clientes/Contratos";
         }
 
-        public ActionResult Index(int? codigo, string nomeEmpresa, string cidade, string ordenacao, bool? crescente, int? pagina, int? itensPagina)
+        public ActionResult Index(int? codigo, int? estado, string nomeEmpresa, string cidade, string ordenacao, bool? crescente, int? pagina, int? itensPagina)
         {
+            var contratoIndex = new ContratoIndexModel();
             ViewBag.SubTitle = "Consultar";
             ViewBag.Codigo = codigo;
             ViewBag.NomeEmpresa = nomeEmpresa;
@@ -47,16 +48,19 @@ namespace RAHSys.Apresentacao.Controllers
             ViewBag.Ordenacao = ordenacao;
             ViewBag.Crescente = crescente ?? true;
             ViewBag.ItensPagina = itensPagina;
+            ViewBag.Estado = estado;
+            var estados = _estadoAppServico.ListarTodos();
+            contratoIndex.Estados = estados;
             try
             {
-                var consulta = _contratoAppServico.Consultar(codigo != null ? new int[] { (int)codigo } : null, nomeEmpresa, cidade, ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? 40);
-                var resultado = new StaticPagedList<ContratoAppModel>(consulta.Resultado, consulta.PaginaAtual, consulta.ItensPorPagina, consulta.TotalItens);
-                return View(resultado);
+                var consulta = _contratoAppServico.Consultar(codigo != null ? new int[] { (int)codigo } : null, estado != null ? new int[] { (int)estado } : null, nomeEmpresa, cidade, ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? 40);
+                contratoIndex.Dados = new StaticPagedList<ContratoAppModel>(consulta.Resultado, consulta.PaginaAtual, consulta.ItensPorPagina, consulta.TotalItens);
+                return View(contratoIndex);
             }
             catch (CustomBaseException ex)
             {
                 MensagemErro(ex.Mensagem);
-                return View(new StaticPagedList<ContratoAppModel>(new List<ContratoAppModel>(), 1, 1, 0));
+                return View(contratoIndex);
             }
         }
 
@@ -98,10 +102,10 @@ namespace RAHSys.Apresentacao.Controllers
         {
             ViewBag.SubTitle = "Editar Contrato";
             ViewBag.SubSubTitle = "Ficha do Cliente (Análise de Investimento/Receita)";
-
+            ContratoAppModel contratoModel = null;
             try
             {
-                var contratoModel = _contratoAppServico.ObterPorId(id);
+                contratoModel = _contratoAppServico.ObterPorId(id);
                 if (contratoModel == null)
                 {
                     MensagemErro("Contrato não encontrado");
@@ -120,7 +124,7 @@ namespace RAHSys.Apresentacao.Controllers
             }
 
             var retorno = MontarAnaliseInvestimento();
-            retorno.AnaliseInvestimento = new AnaliseInvestimentoAppModel() { IdContrato = id };
+            retorno.AnaliseInvestimento = new AnaliseInvestimentoAppModel() { IdContrato = id, NomeCliente = contratoModel.NomeEmpresa };
 
             return View(retorno);
         }

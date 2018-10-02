@@ -11,9 +11,6 @@ namespace RAHSys.Infra.Dados.EntityConfig
             ToTable("Cidade");
 
             HasKey(c => c.IdCidade);
-                
-            Property(c => c.IdCidade)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
             Property(c => c.Nome)
                 .IsRequired()
@@ -30,6 +27,9 @@ namespace RAHSys.Infra.Dados.EntityConfig
             HasRequired(e => e.Estado)
                 .WithMany(es => es.Cidades)
                 .HasForeignKey(e => e.IdEstado);
+
+            Property(c => c.IdCidade)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
         }
     }
 }

@@ -17,6 +17,7 @@
                 {
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(model => model.AnaliseInvestimento.IdContrato)
+                    @Html.HiddenFor(model => model.AnaliseInvestimento.NomeCliente)
                     <div class="form-group form-md-line-input">
                         @Html.LabelFor(model => model.AnaliseInvestimento.IdContrato, new { @class = "col-md-2 control-label" })
                         <div class="col-md-9">
@@ -27,12 +28,10 @@
                     <div class="form-group form-md-line-input">
                         @Html.LabelFor(model => model.AnaliseInvestimento.NomeCliente, new { @class = "col-md-2 control-label" })
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.AnaliseInvestimento.NomeCliente, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome do Cliente", @required = "required" } })
-                            @Html.ValidationMessageFor(model => model.AnaliseInvestimento.NomeCliente, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.AnaliseInvestimento.NomeCliente, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome do Cliente", @required = "required", @disabled = "disabled" } })
                             <div class="form-control-focus"> </div>
                         </div>
                     </div>
-
                     <div class="form-group form-md-line-input">
                         @Html.LabelFor(m => m.AnaliseInvestimento.IdTipoTelhado, new { @class = "col-md-2 control-label" })
                         <div class="col-md-4">
@@ -86,7 +85,7 @@
                             @Html.ValidationMessageFor(model => model.AnaliseInvestimento.QtdInversores, "", new { @class = "text-danger" })
                             <div class="form-control-focus"> </div>
                         </div>
-                        @Html.LabelFor(m => m.AnaliseInvestimento.TipoPlacas, new { @class = "col-md-2 control-label" })
+                        @Html.LabelFor(m => m.AnaliseInvestimento.TipoInversores, new { @class = "col-md-2 control-label" })
                         <div class="col-md-4">
                             @Html.EditorFor(model => model.AnaliseInvestimento.TipoInversores, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tipo de Inversores", @required = "required" } })
                             @Html.ValidationMessageFor(model => model.AnaliseInvestimento.TipoInversores, "", new { @class = "text-danger" })

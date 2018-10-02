@@ -107,6 +107,10 @@
     <Compile Include="Migrations\201809231403517_Adicionado IdEquipe a Cliente.Designer.cs">
       <DependentUpon>201809231403517_Adicionado IdEquipe a Cliente.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810021529301_Removido NomeCliente de AnaliseInvestimento.cs" />
+    <Compile Include="Migrations\201810021529301_Removido NomeCliente de AnaliseInvestimento.Designer.cs">
+      <DependentUpon>201810021529301_Removido NomeCliente de AnaliseInvestimento.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.cs" />
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.Designer.cs">
       <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>
@@ -199,6 +203,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809231403517_Adicionado IdEquipe a Cliente.resx">
       <DependentUpon>201809231403517_Adicionado IdEquipe a Cliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810021529301_Removido NomeCliente de AnaliseInvestimento.resx">
+      <DependentUpon>201810021529301_Removido NomeCliente de AnaliseInvestimento.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\Audit\201808101838532_CriacaoDBAudit.resx">
       <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>

@@ -4,7 +4,6 @@
     {
         public int IdContrato { get; set; }
         public int IdTipoTelhado { get; set; }
-        public string NomeCliente { get; set; }
         public decimal Potencia { get; set; }
         public decimal Investimento { get; set; }
         public decimal ConsumoTotal { get; set; }

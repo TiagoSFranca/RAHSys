@@ -1,8 +1,7 @@
-﻿@using RAHSys.Aplicacao.AppModels;
-@using RAHSys.Extras.Enums;
+﻿@using RAHSys.Extras.Enums;
 @using PagedList.Mvc;
 
-@model PagedList.StaticPagedList<ContratoAppModel>
+@model RAHSys.Apresentacao.Models.ContratoIndexModel
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="portlet light ">
@@ -39,6 +38,12 @@
                         </div>
                         <div class="col-md-2">
                             <div class="form-group form-md-line-input has-success">
+                                @Html.DropDownList("estado", new SelectList(Model.Estados, "IdEstado", "Sigla"), "Estado", new { @class = "form-control" })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group form-md-line-input has-success">
                                 @Html.DropDownList("itensPagina", EnumHelper.GetSelectList(typeof(ItensPorPaginaEnum)), "Itens Por Página", new { @class = "form-control" })
                                 <div class="form-control-focus"> </div>
                             </div>
@@ -67,7 +72,7 @@
                 </div>
             </div>
             <div class="portlet-body">
-                @if (Model.Count > 0)
+                @if (Model.Dados.Count > 0)
                 {
                     <div class="table-scrollable">
                         <table class="table table-hover table-light">
@@ -98,7 +103,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in Model)
+                                @foreach (var item in Model.Dados)
                                 {
                                     <tr>
                                         <td>
@@ -140,16 +145,17 @@
                     <div class="row">
                         <div class="col-md-12">
                             <span class="italic bold">
-                                @Model.FirstItemOnPage a @Model.LastItemOnPage de @Model.TotalItemCount registros
+                                @Model.Dados.FirstItemOnPage a @Model.Dados.LastItemOnPage de @Model.Dados.TotalItemCount registros
                             </span>
                             <div class="text-center">
-                                @Html.PagedListPager(Model,
+                                @Html.PagedListPager(Model.Dados,
                                pagina => Url.Action("Index", "Contrato", new
                                {
                                    pagina,
                                    codigo = ViewBag.Codigo,
                                    nomeEmpresa = ViewBag.NomeEmpresa,
                                    cidade = ViewBag.Cidade,
+                                   estado = ViewBag.Estado,
                                    itensPagina = ViewBag.ItensPagina,
                                    ordenacao = ViewBag.Ordenacao,
                                    crescente = ViewBag.Crescente

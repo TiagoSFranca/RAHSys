@@ -1,8 +1,20 @@
-﻿using RAHSys.Aplicacao.AppModels;
+﻿using PagedList;
+using RAHSys.Aplicacao.AppModels;
 using System.Collections.Generic;
 
 namespace RAHSys.Apresentacao.Models
 {
+    public class ContratoIndexModel
+    {
+        public List<EstadoAppModel> Estados { get; set; }
+        public StaticPagedList<ContratoAppModel> Dados { get; set; }
+
+        public ContratoIndexModel()
+        {
+            Dados = new StaticPagedList<ContratoAppModel>(new List<ContratoAppModel>(), 1, 1, 0);
+        }
+    }
+
     public class ContratoAdicionarModel
     {
         public ContratoAppModel Contrato { get; set; }

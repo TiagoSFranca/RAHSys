@@ -55,13 +55,17 @@ namespace RAHSys.Dominio.Servicos.Servicos
             _analiseInvestimentoRepositorio.Adicionar(analiseInvestimentoModel);
         }
 
-        public ConsultaModel<ContratoModel> Consultar(IEnumerable<int> idList, string nomeEmpresa, string cidade, string ordenacao, bool crescente, int pagina, int quantidade)
+        public ConsultaModel<ContratoModel> Consultar(IEnumerable<int> idList, IEnumerable<int> idEstadoList, string nomeEmpresa, string cidade,
+            string ordenacao, bool crescente, int pagina, int quantidade)
         {
             var consultaModel = new ConsultaModel<ContratoModel>(pagina, quantidade);
 
             var query = _contratoRepositorio.Consultar().Where(e => !e.Excluido);
             if (idList?.Count() > 0)
                 query = query.Where(c => idList.Contains(c.IdContrato));
+
+            if (idEstadoList?.Count() > 0)
+                query = query.Where(c => idEstadoList.Contains(c.ContratoEndereco.Endereco.Cidade.IdEstado));
 
             if (!string.IsNullOrEmpty(nomeEmpresa))
                 query = query.Where(c => c.NomeEmpresa.ToLower().Contains(nomeEmpresa.ToLower()));

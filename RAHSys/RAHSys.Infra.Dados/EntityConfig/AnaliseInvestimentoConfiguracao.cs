@@ -14,11 +14,7 @@ namespace RAHSys.Infra.Dados.EntityConfig
 
             Property(c => c.Investimento)
                 .IsRequired();
-
-            Property(c => c.NomeCliente)
-                .IsRequired()
-                .HasMaxLength(256);
-
+            
             Property(c => c.NumeroPlacas)
                 .IsRequired();
 

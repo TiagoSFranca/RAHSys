@@ -7,6 +7,7 @@
         public decimal Potencia { get; set; }
         public decimal Investimento { get; set; }
         public decimal ConsumoTotal { get; set; }
+        public decimal Tarifa { get; set; }
         public int NumeroPlacas { get; set; }
         public string TipoPlacas { get; set; }
         public int QtdInversores { get; set; }

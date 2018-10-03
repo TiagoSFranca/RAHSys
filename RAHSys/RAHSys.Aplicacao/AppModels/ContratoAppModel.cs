@@ -49,5 +49,12 @@ namespace RAHSys.Aplicacao.AppModels
             }
             return SituacaoPagamentoEnum.NenhumPagamento;
         }
+
+        public decimal CalcularReceita()
+        {
+            if (AnaliseInvestimento != null)
+                return AnaliseInvestimento.ConsumoTotal * AnaliseInvestimento.Tarifa;
+            return 0;
+        }
     }
 }

@@ -55,7 +55,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
             _analiseInvestimentoRepositorio.Adicionar(analiseInvestimentoModel);
         }
 
-        public ConsultaModel<ContratoModel> Consultar(IEnumerable<int> idList, IEnumerable<int> idEstadoList, string nomeEmpresa, string cidade,
+        public ConsultaModel<ContratoModel> Consultar(IEnumerable<int> idList, IEnumerable<int> idEstadoList, string nomeEmpresa, decimal? receita, string cidade,
             string ordenacao, bool crescente, int pagina, int quantidade)
         {
             var consultaModel = new ConsultaModel<ContratoModel>(pagina, quantidade);
@@ -73,10 +73,17 @@ namespace RAHSys.Dominio.Servicos.Servicos
             if (!string.IsNullOrEmpty(cidade))
                 query = query.Where(c => c.ContratoEndereco.Endereco.Cidade.Nome.ToLower().Contains(cidade.ToLower()));
 
+            if (receita != null)
+                query = query.Where(e => (e.AnaliseInvestimento.ConsumoTotal * e.AnaliseInvestimento.Tarifa) == (decimal)receita);
+
             switch ((ordenacao ?? string.Empty).ToLower())
             {
                 case "nomeempresa":
                     query = crescente ? query.OrderBy(c => c.NomeEmpresa) : query.OrderByDescending(c => c.NomeEmpresa);
+                    break;
+                case "receita":
+                    query = crescente ? query.OrderBy(e => (e.AnaliseInvestimento.ConsumoTotal * e.AnaliseInvestimento.Tarifa)) 
+                        : query.OrderByDescending(e => (e.AnaliseInvestimento.ConsumoTotal * e.AnaliseInvestimento.Tarifa));
                     break;
                 case "cidade":
                     query = crescente ? query.OrderBy(c => c.ContratoEndereco.Endereco.Cidade.Nome) : query.OrderByDescending(c => c.ContratoEndereco.Endereco.Cidade.Nome);

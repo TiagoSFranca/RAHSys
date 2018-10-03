@@ -38,14 +38,14 @@ namespace RAHSys.Aplicacao.Implementacao
             }
         }
 
-        public ConsultaAppModel<ContratoAppModel> Consultar(IEnumerable<int> idList, IEnumerable<int> idEstadoList, string nomeEmpresa, string cidade, 
+        public ConsultaAppModel<ContratoAppModel> Consultar(IEnumerable<int> idList, IEnumerable<int> idEstadoList, string nomeEmpresa, decimal? receita, string cidade, 
             string ordenacao, bool crescente, int pagina, int quantidade)
         {
             try
             {
                 var consulta = new ConsultaAppModel<ContratoAppModel>();
 
-                var resultado = _contratoServico.Consultar(idList, idEstadoList, nomeEmpresa, cidade, ordenacao, crescente, pagina, quantidade);
+                var resultado = _contratoServico.Consultar(idList, idEstadoList, nomeEmpresa, receita, cidade, ordenacao, crescente, pagina, quantidade);
 
                 consulta.ItensPorPagina = resultado.ItensPorPagina;
                 consulta.PaginaAtual = resultado.PaginaAtual;

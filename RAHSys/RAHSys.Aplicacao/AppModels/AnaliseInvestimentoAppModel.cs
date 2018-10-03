@@ -30,6 +30,11 @@ namespace RAHSys.Aplicacao.AppModels
         public decimal ConsumoTotal { get; set; }
 
         [Required]
+        [Display(Name = "Tarifa")]
+        [RegularExpression(@"\d+(\,\d{0,6})?", ErrorMessage = "Tarifa pode possuir até 6 casas decimais")]
+        public decimal Tarifa { get; set; }
+
+        [Required]
         [Display(Name = "Placas(Qt)")]
         public int NumeroPlacas { get; set; }
 

@@ -14,7 +14,7 @@ namespace RAHSys.Infra.Dados.EntityConfig
 
             Property(c => c.Investimento)
                 .IsRequired();
-            
+
             Property(c => c.NumeroPlacas)
                 .IsRequired();
 
@@ -22,6 +22,10 @@ namespace RAHSys.Infra.Dados.EntityConfig
                 .IsRequired();
 
             Property(c => c.QtdInversores)
+                .IsRequired();
+
+            Property(c => c.Tarifa)
+                .HasPrecision(9, 6)
                 .IsRequired();
 
             Property(c => c.TipoInversores)

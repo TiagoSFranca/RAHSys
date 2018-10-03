@@ -20,13 +20,19 @@
                     <div class="row">
                         <div class="col-md-1">
                             <div class="form-group form-md-line-input has-success">
-                                @Html.Editor("codigo", new { htmlAttributes = new { @class = "form-control", @placeholder = "Código" } })
+                                @Html.Editor("codigo", new { htmlAttributes = new { @class = "form-control", @placeholder = "Código", @type = "number" } })
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group form-md-line-input has-success">
                                 @Html.Editor("nomeEmpresa", new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome da Empresa" } })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.Editor("receita", new { htmlAttributes = new { @class = "form-control", @placeholder = "Receita", @type = "number", @min = "0", @step = "0.000001" } })
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
@@ -88,6 +94,11 @@
                                             Nome da Empresa
                                         </a>
                                     </th>
+                                    <th onclick="ordenar('Receita')">
+                                        <a>
+                                            Receita
+                                        </a>
+                                    </th>
                                     <th onclick="ordenar('Cidade')">
                                         <a>
                                             Cidade
@@ -111,6 +122,9 @@
                                         </td>
                                         <td>
                                             @item.NomeEmpresa
+                                        </td>
+                                        <td>
+                                            @item.CalcularReceita().ToString("0.######")
                                         </td>
                                         <td>
                                             @item.ContratoEndereco.Endereco.Cidade.Nome/@item.ContratoEndereco.Endereco.Cidade.Estado.Sigla
@@ -154,6 +168,7 @@
                                    pagina,
                                    codigo = ViewBag.Codigo,
                                    nomeEmpresa = ViewBag.NomeEmpresa,
+                                   receita = ViewBag.Receita,
                                    cidade = ViewBag.Cidade,
                                    estado = ViewBag.Estado,
                                    itensPagina = ViewBag.ItensPagina,

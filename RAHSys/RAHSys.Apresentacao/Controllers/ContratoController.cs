@@ -38,12 +38,13 @@ namespace RAHSys.Apresentacao.Controllers
             ViewBag.Title = "Clientes/Contratos";
         }
 
-        public ActionResult Index(int? codigo, int? estado, string nomeEmpresa, string cidade, string ordenacao, bool? crescente, int? pagina, int? itensPagina)
+        public ActionResult Index(int? codigo, int? estado, string nomeEmpresa, decimal? receita, string cidade, string ordenacao, bool? crescente, int? pagina, int? itensPagina)
         {
             var contratoIndex = new ContratoIndexModel();
             ViewBag.SubTitle = "Consultar";
             ViewBag.Codigo = codigo;
             ViewBag.NomeEmpresa = nomeEmpresa;
+            ViewBag.Receita = receita;
             ViewBag.Cidade = cidade;
             ViewBag.Ordenacao = ordenacao;
             ViewBag.Crescente = crescente ?? true;
@@ -53,7 +54,7 @@ namespace RAHSys.Apresentacao.Controllers
             contratoIndex.Estados = estados;
             try
             {
-                var consulta = _contratoAppServico.Consultar(codigo != null ? new int[] { (int)codigo } : null, estado != null ? new int[] { (int)estado } : null, nomeEmpresa, cidade, ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? 40);
+                var consulta = _contratoAppServico.Consultar(codigo != null ? new int[] { (int)codigo } : null, estado != null ? new int[] { (int)estado } : null, nomeEmpresa, receita, cidade, ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? 40);
                 contratoIndex.Dados = new StaticPagedList<ContratoAppModel>(consulta.Resultado, consulta.PaginaAtual, consulta.ItensPorPagina, consulta.TotalItens);
                 return View(contratoIndex);
             }

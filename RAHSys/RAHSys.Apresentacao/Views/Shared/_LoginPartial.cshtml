@@ -19,37 +19,55 @@
                     </li>
                     <li>
                         <a href="app_calendar.html">
-                            <i class="icon-calendar"></i> My Calendar
+                            <i class="icon-calendar"></i> Meu Calendário
                         </a>
                     </li>
-                    <li>
+                    @*<li>
                         <a href="app_inbox.html">
                             <i class="icon-envelope-open"></i> My Inbox
                             <span class="badge badge-danger"> 3 </span>
                         </a>
-                    </li>
+                    </li>*@
                     <li>
                         <a href="app_todo_2.html">
-                            <i class="icon-rocket"></i> My Tasks
+                            <i class="icon-rocket"></i> Minhas Atividades
                             <span class="badge badge-success"> 7 </span>
                         </a>
                     </li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="divider"> </li>
+                        <li>
+                            <a href="@Url.Action("RegisterRole", "Account")">
+                                <i class="icon-user"></i> Criar Perfil
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Register", "Account")">
+                                <i class="icon-user"></i> Criar Usuário
+                            </a>
+                        </li>
+                    }
                     <li class="divider"> </li>
-                    <li>
-                        <a href="page_user_lock_1.html">
-                            <i class="icon-lock"></i> Lock Screen
-                        </a>
-                    </li>
+                    @*<li>
+            <a href="page_user_lock_1.html">
+                <i class="icon-lock"></i> Lock Screen
+            </a>
+        </li>*@
                     <li>
                         <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
                     </li>
                 </ul>
             </li>
         }
+        @*if (User.IsInRole("Admin"))
+        {
+            <li>@Html.ActionLink("Cadastrar Usuário", "Register", "Account")</li>
+            <li>@Html.ActionLink("Cadastrar Perfil", "RegisterRole", "Account")</li>
+        }*@
     }
     else
     {
-        <li>@Html.ActionLink("Registrar", "Register", "Account")</li>
         <li>@Html.ActionLink("Entrar", "Login", "Account")</li>
     }
 </ul>

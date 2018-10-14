@@ -115,6 +115,10 @@
     <Compile Include="Migrations\201810031615348_Adicionado Tarifa a AnaliseInvestimento.Designer.cs">
       <DependentUpon>201810031615348_Adicionado Tarifa a AnaliseInvestimento.cs</DependentUpon>
     </Compile>
+	<Compile Include="Migrations\201810012043256_AtualizacaoAuditoria.cs" />
+    <Compile Include="Migrations\201810012043256_AtualizacaoAuditoria.Designer.cs">
+      <DependentUpon>201810012043256_AtualizacaoAuditoria.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.cs" />
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.Designer.cs">
       <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>
@@ -213,6 +217,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810031615348_Adicionado Tarifa a AnaliseInvestimento.resx">
       <DependentUpon>201810031615348_Adicionado Tarifa a AnaliseInvestimento.cs</DependentUpon>
+    </EmbeddedResource>
+	<EmbeddedResource Include="Migrations\201810012043256_AtualizacaoAuditoria.resx">
+      <DependentUpon>201810012043256_AtualizacaoAuditoria.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\Audit\201808101838532_CriacaoDBAudit.resx">
       <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>

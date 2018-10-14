@@ -1,5 +1,7 @@
 ﻿@model RAHSys.Apresentacao.Models.RegisterViewModel
 @{
+    /*O Cadastro de Funcionário já atrela a um perfil.*/
+
     ViewBag.Title = "Cadastrar Usuário";
 }
 
@@ -12,9 +14,21 @@
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
+        @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Roles, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.ListBoxFor(m => m.SelectedRoles, Model.Roles, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">

@@ -24,90 +24,85 @@ namespace RAHSys.Apresentacao
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
-            // Criar o perfil Admin
-            if (!roleManager.RoleExists("Admin"))
-            {
-                // Criando o papel Admin   
-                var role = new IdentityRole();
-                role.Name = "Admin";
-                roleManager.Create(role);
-            }
+            // Criando o perfil Admin
+            CriarPerfil(roleManager, "Admin");
 
             // Busca o nome e o email do Admin principal configurado na Aplicação
             string emailAdmin = ConfigurationManager.AppSettings["EmailAdmin"];
+            string nameAdmin = ConfigurationManager.AppSettings["NameAdmin"];
 
-            // Se não encontrar o super usuário, cria-o agora com perfil Admin
-            if (userManager.FindByEmail(emailAdmin) == null)
-            {
-                string nameAdmin = ConfigurationManager.AppSettings["NameAdmin"];
-
-                //Criando um SuperUsuário admin
-                var user = new ApplicationUser();
-                user.UserName = nameAdmin;
-                user.Email = emailAdmin;
-
-                string userPWD = "rahsys@123";
-
-                var chkUser = userManager.Create(user, userPWD);
-
-                //Adciona rahsys@gmail.com ao Admin   
-                if (chkUser.Succeeded)
-                {
-                    var result1 = userManager.AddToRole(user.Id, "Admin");
-                }
-            }
+            CriarUsuario(userManager, emailAdmin, nameAdmin, "rasys@123", "Admin");
 
             // Criando perfil Comercial    
-            if (!roleManager.RoleExists("Comercial"))
-            {
-                var role = new IdentityRole();
-                role.Name = "Comercial";
-                roleManager.Create(role);
-            }
+            CriarPerfil(roleManager, "Comercial");
 
-            // Se não encontrar o usuário padrão do comercial, cria-o agora com perfil Comercial
-            if (userManager.FindByEmail("comercialrahsys@gmail.com") == null)
-            {
-                //Criando um SuperUsuário admin
-                var user = new ApplicationUser();
-                user.UserName = "Comercial";
-                user.Email = "comercialrahsys@gmail.com";
-
-                string userPWD = "rahsys@123";
-
-                var chkUser = userManager.Create(user, userPWD);
-
-                //Adciona rahsys@gmail.com ao Admin   
-                if (chkUser.Succeeded)
-                {
-                    var result1 = userManager.AddToRole(user.Id, "Comercial");
-                }
-            }
+            // Criando usuário exemplo Comercial
+            CriarUsuario(userManager, "comercialrahsys@gmail.com", "Comercial", "rasys@123", "Comercial");
 
             // Criando perfil Engenharia
-            if (!roleManager.RoleExists("Engenharia"))
+            CriarPerfil(roleManager, "Engenharia");
+
+            // Criando usuário exemplo Engenharia
+            CriarUsuario(userManager, "engenhariarahsys@gmail.com", "Engenheiro", "rasys@123", "Engenharia");
+
+            //// Se não encontrar o usuário padrão do engenharia, cria-o agora com perfil Engenharia
+            //if (userManager.FindByEmail("engenhariarahsys@gmail.com") == null)
+            //{
+            //    //Criando um SuperUsuário admin
+            //    var user = new ApplicationUser();
+            //    user.UserName = "Engenheiro";
+            //    user.Email = "engenhariarahsys@gmail.com";
+
+            //    string userPWD = "rahsys@123";
+
+            //    var chkUser = userManager.Create(user, userPWD);
+
+            //    //Adciona rahsys@gmail.com ao Admin   
+            //    if (chkUser.Succeeded)
+            //    {
+            //        var result1 = userManager.AddToRole(user.Id, "Engenharia");
+            //    }
+            //}
+
+            // Criando perfil Financeiro
+            CriarPerfil(roleManager, "Financeiro");
+
+            CriarUsuario(userManager, "giuliabfsantos@gmail.com", "Giulia", "rasys@123", "Engenharia");
+            CriarUsuario(userManager, "irisbf@gmail.com", "Iris", "rasys@123", "Engenharia");
+            CriarUsuario(userManager, "janainabf@gmail.com", "Janaina", "rasys@123", "Financeiro");
+        }
+
+        private static void CriarPerfil(RoleManager<IdentityRole> roleManager, string roleName)
+        {
+            if (!roleManager.RoleExists(roleName))
             {
+                // Criando o papel
                 var role = new IdentityRole();
-                role.Name = "Engenharia";
+                role.Name = roleName;
                 roleManager.Create(role);
             }
+        }
 
-            // Se não encontrar o usuário padrão do engenharia, cria-o agora com perfil Engenharia
-            if (userManager.FindByEmail("engenhariarahsys@gmail.com") == null)
+        private static void CriarUsuario(UserManager<ApplicationUser> userManager, string email, string n, string pwd, string roleName)
+        {
+            // Se não encontrar o usuário, cria-o agora
+            if (userManager.FindByEmail(email) == null)
             {
-                //Criando um SuperUsuário admin
-                var user = new ApplicationUser();
-                user.UserName = "Engenheiro";
-                user.Email = "engenhariarahsys@gmail.com";
+                string name = n;
 
-                string userPWD = "rahsys@123";
+                //Criando um usuário
+                var user = new ApplicationUser();
+                user.UserName = name;  
+                user.Email = email;
+
+                string userPWD = pwd; 
 
                 var chkUser = userManager.Create(user, userPWD);
 
-                //Adciona rahsys@gmail.com ao Admin   
+                //Adiciona o usuário ao perfil desejado   
                 if (chkUser.Succeeded)
                 {
-                    var result1 = userManager.AddToRole(user.Id, "Engenharia");
+                    var result1 = userManager.AddToRole(user.Id, roleName);
                 }
             }
         }

@@ -10,7 +10,8 @@ using System.Web.Mvc;
 
 namespace RAHSys.Apresentacao.Controllers
 {
-    [RAHAudit]
+    //[RAHAudit]
+    [RAHAuthorize(Roles = "Financeiro")]
     public class PagamentoController : ControllerBase
     {
         private readonly IContratoAppServico _contratoAppServico;

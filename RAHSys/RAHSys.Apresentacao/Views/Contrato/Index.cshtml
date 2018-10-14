@@ -147,7 +147,22 @@
                                             @Html.ActionLink("Visualizar", "Index", "Pagamento", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
                                         </td>
                                         <td class="text-right">
-                                            @Html.ActionLink("Alterar", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
+                                            @*@Html.ActionLink("Alterar", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })*@
+                                            @{
+                                                // Exibe o texto do botão alterar de acordo com o status atual
+                                                if (situacao.Nome.ToUpper().Contains("NOVO"))
+                                                {
+                                                    @Html.ActionLink("Efetuar Análise", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
+                                                }
+                                                else if (situacao.Nome.ToUpper().Contains("EM ANÁLISE"))
+                                                {
+                                                    @Html.ActionLink("Efetivar Contrato", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
+                                                }
+                                                else
+                                                {
+                                                    @Html.ActionLink("Alterar", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
+                                                }
+                                            }
                                             @Html.ActionLink("Excluir", "Excluir", "Contrato", new { id = item.IdContrato }, new { @class = "btn red-flamingo btn-circle btn-md abrirModal" })
                                         </td>
                                     </tr>

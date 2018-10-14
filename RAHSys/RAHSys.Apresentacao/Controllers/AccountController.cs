@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using RAHSys.Apresentacao.Models;
@@ -151,12 +153,73 @@ namespace RAHSys.Apresentacao.Controllers
             }
         }
 
+        public ActionResult RegisterRole()
+        {
+            return View("RegisterRole");
+        }
+
+        //
+        // POST: /Account/RegisterRole
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RegisterRole(RegisterRoleViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                ApplicationDbContext context = new ApplicationDbContext();
+
+                var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+                
+                if (!roleManager.RoleExists(model.Name))
+                {
+                    var role = new IdentityRole();
+                    role.Name = model.Name;
+                    var result = await roleManager.CreateAsync(role);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    AddErrors(result);
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
         //
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            // Busca os perfis para exibir no List
+            List<SelectListItem> roles = BuscarPerfis();
+            RegisterViewModel model = new RegisterViewModel();
+            model.Roles = roles;
+            // ==============================================
+
+            return View(model);
+        }
+
+        private static List<SelectListItem> BuscarPerfis()
+        {
+            ApplicationDbContext context = new ApplicationDbContext();
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            var rolesOrdered = roleManager.Roles.OrderBy(p => p.Name).ToList();
+            List<SelectListItem> roles = new List<SelectListItem>();
+            foreach (IdentityRole role in rolesOrdered)
+            {
+                SelectListItem item = new SelectListItem
+                {
+                    Text = role.Name,
+                    Value = role.Name,
+                    Selected = false,
+                };
+                roles.Add(item);
+            }
+
+            return roles;
         }
 
         //
@@ -168,24 +231,45 @@ namespace RAHSys.Apresentacao.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                // Não cria um usuário caso não escolha pelo menos um perfil
+                if (model.SelectedRoles.Count() > 0)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
+                    IdentityResult result;
+                    // Se usuário ainda não foi criado...
+                    IdentityUser usuarioExistente = UserManager.FindByEmail(model.Email);
+                    if (usuarioExistente == null)
+                    {
+                        result = await UserManager.CreateAsync(user, model.Password);
+                        if (result.Succeeded)
+                        {
+                            // Vincula o usuário aos perfis selecionados
+                            foreach (string roleName in model.SelectedRoles)
+                            {
+                                UserManager.AddToRole(user.Id, roleName);
+                            }
+                            // =============================
 
-                    return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Index", "Home");
+                        }
+                        AddErrors(result);
+                    }
+                    else
+                    {
+                        // Vincula o usuário aos perfis selecionados
+                        foreach (String roleName in model.SelectedRoles)
+                        {
+                            UserManager.AddToRole(usuarioExistente.Id, roleName);
+                        }
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
-                AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
+            // Busca os perfis para exibir no List
+            List<SelectListItem> roles = BuscarPerfis();
+            model.Roles = roles;
             return View(model);
         }
 

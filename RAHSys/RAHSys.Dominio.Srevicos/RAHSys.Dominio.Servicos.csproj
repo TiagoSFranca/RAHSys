@@ -55,6 +55,7 @@
     <Compile Include="Interfaces\Repositorios\IEstadoCivilRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IEstadoRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioBase.cs" />
+    <Compile Include="Interfaces\Repositorios\ITipoAtividadeRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\ITipoContatoRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\ITipoTelhadoRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IUsuarioRepositorio.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Interfaces\Servicos\IEstadoCivilServico.cs" />
     <Compile Include="Interfaces\Servicos\IEstadoServico.cs" />
     <Compile Include="Interfaces\Servicos\IServicoBase.cs" />
+    <Compile Include="Interfaces\Servicos\ITipoAtividadeServico.cs" />
     <Compile Include="Interfaces\Servicos\ITipoContatoServico.cs" />
     <Compile Include="Interfaces\Servicos\ITipoTelhadoServico.cs" />
     <Compile Include="Interfaces\Servicos\IUsuarioServico.cs" />
@@ -84,6 +86,7 @@
     <Compile Include="Servicos\EstadoCivilServico.cs" />
     <Compile Include="Servicos\EstadoServico.cs" />
     <Compile Include="Servicos\ServicoBase.cs" />
+    <Compile Include="Servicos\TipoAtividadeServico.cs" />
     <Compile Include="Servicos\TipoContatoServico.cs" />
     <Compile Include="Servicos\TipoTelhadoServico.cs" />
     <Compile Include="Servicos\UsuarioServico.cs" />

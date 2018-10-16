@@ -32,6 +32,8 @@ namespace RAHSys.Apresentacao.AutoMapper
                 x.AddProfile(new UsuarioMapeamento());
 
                 x.AddProfile(new EquipeMapeamento());
+
+                x.AddProfile(new TipoAtividadeMapeamento());
             });
         }
     }

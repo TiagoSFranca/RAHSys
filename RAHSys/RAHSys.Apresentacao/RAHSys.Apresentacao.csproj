@@ -232,6 +232,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PagamentoController.cs" />
+    <Compile Include="Controllers\TipoAtividadeController.cs" />
     <Compile Include="Controllers\TipoContatoController.cs" />
     <Compile Include="Controllers\TipoTelhadoController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1121,6 +1122,10 @@
     <Content Include="Views\Equipe\Excluir.cshtml" />
     <Content Include="Views\Equipe\Editar.cshtml" />
     <Content Include="Views\Account\RegisterRole.cshtml" />
+    <Content Include="Views\TipoAtividade\Adicionar.cshtml" />
+    <Content Include="Views\TipoAtividade\Editar.cshtml" />
+    <Content Include="Views\TipoAtividade\Excluir.cshtml" />
+    <Content Include="Views\TipoAtividade\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

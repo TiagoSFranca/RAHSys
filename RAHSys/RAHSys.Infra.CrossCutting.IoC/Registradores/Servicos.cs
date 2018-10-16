@@ -20,6 +20,7 @@ namespace RAHSys.Infra.CrossCutting.IoC.Registradores
             container.Register<IPagamentoServico, PagamentoServico>(Lifestyle.Scoped);
             container.Register<IUsuarioServico, UsuarioServico>(Lifestyle.Scoped);
             container.Register<IEquipeServico, EquipeServico>(Lifestyle.Scoped);
+            container.Register<ITipoAtividadeServico, TipoAtividadeServico>(Lifestyle.Scoped);
         }
     }
 }

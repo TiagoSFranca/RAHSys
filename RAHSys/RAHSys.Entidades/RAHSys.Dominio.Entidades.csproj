@@ -60,6 +60,7 @@
     <Compile Include="Entidades\LogErrorModel.cs" />
     <Compile Include="Entidades\PagamentoModel.cs" />
     <Compile Include="Entidades\PerfilModel.cs" />
+    <Compile Include="Entidades\TipoAtividadeModel.cs" />
     <Compile Include="Entidades\TipoContatoModel.cs" />
     <Compile Include="Entidades\TipoTelhadoModel.cs" />
     <Compile Include="Entidades\UsuarioModel.cs" />

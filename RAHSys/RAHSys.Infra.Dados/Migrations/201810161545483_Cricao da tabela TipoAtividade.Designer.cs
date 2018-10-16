@@ -7,13 +7,13 @@ namespace RAHSys.Infra.Dados.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.0.0-20911")]
-    public sealed partial class AutoincrementoTabelaCidade : IMigrationMetadata
+    public sealed partial class CricaodatabelaTipoAtividade : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AutoincrementoTabelaCidade));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CricaodatabelaTipoAtividade));
         
         string IMigrationMetadata.Id
         {
-            get { return "201808161333496_Auto incremento Tabela Cidade"; }
+            get { return "201810161545483_Cricao da tabela TipoAtividade"; }
         }
         
         string IMigrationMetadata.Source

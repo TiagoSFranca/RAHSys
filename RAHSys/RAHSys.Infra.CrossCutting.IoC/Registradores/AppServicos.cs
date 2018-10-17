@@ -20,7 +20,7 @@ namespace RAHSys.Infra.CrossCutting.IoC.Registradores
             container.Register<IPagamentoAppServico, PagamentoAppServico>(Lifestyle.Scoped);
             container.Register<IUsuarioAppServico, UsuarioAppServico>(Lifestyle.Scoped);
             container.Register<IEquipeAppServico, EquipeAppServico>(Lifestyle.Scoped);
-            container.Register<ITipoAtividadeAppServico, TipoAtividadeAppServico>(Lifestyle.Scoped);
+            container.Register<IAtividadeAppServico, AtividadeAppServico>(Lifestyle.Scoped);
         }
     }
 }

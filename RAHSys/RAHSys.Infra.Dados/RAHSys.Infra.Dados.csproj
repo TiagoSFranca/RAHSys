@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Contexto\RAHSysAuditContexto.cs" />
     <Compile Include="Contexto\RAHSysContexto.cs" />
+    <Compile Include="EntityConfig\AtividadeConfiguracao.cs" />
     <Compile Include="EntityConfig\AuditoriaConfiguracao.cs" />
     <Compile Include="EntityConfig\AnaliseInvestimentoConfiguracao.cs" />
     <Compile Include="EntityConfig\CameraConfiguracao.cs" />
@@ -124,6 +125,10 @@
     <Compile Include="Migrations\201810161545483_Cricao da tabela TipoAtividade.Designer.cs">
       <DependentUpon>201810161545483_Cricao da tabela TipoAtividade.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810171242070_Cricao da tabela Atividade.cs" />
+    <Compile Include="Migrations\201810171242070_Cricao da tabela Atividade.Designer.cs">
+      <DependentUpon>201810171242070_Cricao da tabela Atividade.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.cs" />
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.Designer.cs">
       <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>
@@ -151,6 +156,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\AtividadeRepositorio.cs" />
     <Compile Include="Repositorios\AuditoriaRepositorio.cs" />
     <Compile Include="Repositorios\AnaliseInvestimentoRepositorio.cs" />
     <Compile Include="Repositorios\CameraRepositorio.cs" />
@@ -229,6 +235,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810161545483_Cricao da tabela TipoAtividade.resx">
       <DependentUpon>201810161545483_Cricao da tabela TipoAtividade.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810171242070_Cricao da tabela Atividade.resx">
+      <DependentUpon>201810171242070_Cricao da tabela Atividade.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\Audit\201808101838532_CriacaoDBAudit.resx">
       <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>

@@ -30,6 +30,11 @@ namespace RAHSys.Infra.Dados.EntityConfig
             HasMany(pt => pt.Clientes)
                 .WithOptional(s => s.Equipe)
                 .HasForeignKey(s => s.IdEquipe);
+
+            HasMany(pt => pt.Atividades)
+                .WithRequired(s => s.Equipe)
+                .HasForeignKey(s => s.IdEquipe)
+                .WillCascadeOnDelete(true);
         }
     }
 }

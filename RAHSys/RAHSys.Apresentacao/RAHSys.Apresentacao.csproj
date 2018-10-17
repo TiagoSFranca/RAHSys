@@ -224,6 +224,7 @@
     <Compile Include="AutoMapper\ArquivoMapeamento.cs" />
     <Compile Include="AutoMapper\AutoMapperConfiguracao.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AtividadeController.cs" />
     <Compile Include="Controllers\AuditoriaController.cs" />
     <Compile Include="Controllers\CameraController.cs" />
     <Compile Include="Controllers\ContratoController.cs" />
@@ -1129,6 +1130,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Atividade\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

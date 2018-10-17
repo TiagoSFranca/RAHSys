@@ -9,7 +9,6 @@ using System;
 
 namespace RAHSys.Dominio.Servicos.Servicos
 {
-    //TODO: Validar exclusão
     public class TipoAtividadeServico : ServicoBase<TipoAtividadeModel>, ITipoAtividadeServico
     {
         private readonly ITipoAtividadeRepositorio _tipoAtividadeRepositorio;
@@ -59,6 +58,19 @@ namespace RAHSys.Dominio.Servicos.Servicos
             if (ExisteTipoAtividade(obj))
                 throw new CustomBaseException(new Exception(), string.Format("Já existe um tipo de atividade com a descrição [{0}]", obj.Descricao));
             _tipoAtividadeRepositorio.Atualizar(obj);
+        }
+
+        public void Remover(TipoAtividadeModel obj)
+        {
+            if (PossuiAtividades(obj))
+                throw new CustomBaseException(new Exception(), string.Format("Não é possível excluir o tipo de atividade [{0}], pois já possui atividades associadas", obj.Descricao));
+
+            _tipoAtividadeRepositorio.Remover(obj);
+        }
+
+        private bool PossuiAtividades(TipoAtividadeModel obj)
+        {
+            return obj.Atividades?.Count > 0;
         }
 
         private bool ExisteTipoAtividade(TipoAtividadeModel obj)

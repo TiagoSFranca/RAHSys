@@ -12,5 +12,6 @@ namespace RAHSys.Entidades.Entidades
 
         public virtual ICollection<EquipeUsuarioModel> EquipeUsuarios { get; set; }
         public virtual ICollection<ClienteModel> Clientes { get; set; }
+        public virtual ICollection<AtividadeModel> Atividades { get; set; }
     }
 }

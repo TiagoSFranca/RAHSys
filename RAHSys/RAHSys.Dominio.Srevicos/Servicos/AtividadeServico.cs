@@ -5,6 +5,7 @@ using RAHSys.Entidades.Entidades;
 using System.Linq;
 using RAHSys.Entidades;
 using System;
+using System.Globalization;
 
 namespace RAHSys.Dominio.Servicos.Servicos
 {
@@ -17,7 +18,6 @@ namespace RAHSys.Dominio.Servicos.Servicos
             _atividadeRepositorio = atividadeRepositorio;
         }
 
-        //TODO: Converter string para data
         public ConsultaModel<AtividadeModel> Consultar(IEnumerable<int> idList, IEnumerable<int> idTipoAtividadeList, IEnumerable<int> idEquipeList,
             IEnumerable<int> idContratoList, IEnumerable<string> idUsuarioList, bool? realizada, string dataRealizacaoInicio, string dataRealizacaoFim,
             string dataPrevistaInicio, string dataPrevistaFim,
@@ -25,10 +25,10 @@ namespace RAHSys.Dominio.Servicos.Servicos
         {
             var consultaModel = new ConsultaModel<AtividadeModel>(pagina, quantidade);
 
-            DateTime? dtRealizacaoInicio = null;
-            DateTime? dtRealizacaoFim = null;
-            DateTime? dtPrevistaInicio = null;
-            DateTime? dtPrevistaFim = null;
+            DateTime? dtRealizacaoInicio = ConvertStringToDate(dataRealizacaoInicio);
+            DateTime? dtRealizacaoFim = ConvertStringToDate(dataRealizacaoFim);
+            DateTime? dtPrevistaInicio = ConvertStringToDate(dataPrevistaInicio);
+            DateTime? dtPrevistaFim = ConvertStringToDate(dataPrevistaFim);
 
             var query = _atividadeRepositorio.Consultar();
             if (idList?.Count() > 0)
@@ -78,8 +78,12 @@ namespace RAHSys.Dominio.Servicos.Servicos
             return consultaModel;
         }
 
-        private DateTime? ConvertStringToDate(string date)
+        private DateTime? ConvertStringToDate(string data)
         {
+            if (DateTime.TryParseExact(data, "d/M/yyyy", new CultureInfo("pt-BR"), DateTimeStyles.None, out DateTime dataConvertida))
+            {
+                return dataConvertida;
+            }
             return null;
         }
     }

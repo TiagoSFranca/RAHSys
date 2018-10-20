@@ -1127,10 +1127,10 @@
     <Content Include="Views\TipoAtividade\Editar.cshtml" />
     <Content Include="Views\TipoAtividade\Excluir.cshtml" />
     <Content Include="Views\TipoAtividade\Index.cshtml" />
+    <Content Include="Views\Atividade\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Atividade\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -30,15 +30,12 @@ namespace RAHSys.Dominio.Servicos.Servicos
             DateTime? dtPrevistaInicio = ConvertStringToDate(dataPrevistaInicio);
             DateTime? dtPrevistaFim = ConvertStringToDate(dataPrevistaFim);
 
-            var query = _atividadeRepositorio.Consultar();
+            var query = _atividadeRepositorio.Consultar().Where(c => !c.Contrato.Excluido);
             if (idList?.Count() > 0)
                 query = query.Where(c => idList.Contains(c.IdAtividade));
 
             if (idTipoAtividadeList?.Count() > 0)
                 query = query.Where(c => idTipoAtividadeList.Contains(c.IdTipoAtividade));
-
-            if (idEquipeList?.Count() > 0)
-                query = query.Where(c => idEquipeList.Contains(c.IdEquipe));
 
             if (idEquipeList?.Count() > 0)
                 query = query.Where(c => idEquipeList.Contains(c.IdEquipe));
@@ -66,6 +63,21 @@ namespace RAHSys.Dominio.Servicos.Servicos
 
             switch ((ordenacao ?? string.Empty).ToLower())
             {
+                case "tipoatividade":
+                    query = crescente ? query.OrderBy(c => c.TipoAtividade.Descricao) : query.OrderByDescending(c => c.TipoAtividade.Descricao);
+                    break;
+                case "atribuidopara":
+                    query = crescente ? query.OrderBy(c => c.Usuario.UserName) : query.OrderByDescending(c => c.Usuario.UserName);
+                    break;
+                case "datarealizacaoprevista":
+                    query = crescente ? query.OrderBy(c => c.DataPrevista) : query.OrderByDescending(c => c.DataPrevista);
+                    break;
+                case "DataRealizacao":
+                    query = crescente ? query.OrderBy(c => c.DataRealizacao) : query.OrderByDescending(c => c.DataRealizacao);
+                    break;
+                case "Realizada":
+                    query = crescente ? query.OrderBy(c => c.Realizada) : query.OrderByDescending(c => c.Realizada);
+                    break;
                 default:
                     query = crescente ? query.OrderBy(c => c.IdAtividade) : query.OrderByDescending(c => c.IdAtividade);
                     break;

@@ -80,5 +80,10 @@ namespace RAHSys.Dominio.Servicos.Servicos
 
             return query.Count() > 0;
         }
+
+        public IEnumerable<TipoAtividadeModel> ListarTodos()
+        {
+            return _tipoAtividadeRepositorio.Consultar().OrderBy(e => e.Descricao).ToList();
+        }
     }
 }

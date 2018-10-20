@@ -11,12 +11,7 @@ namespace RAHSys.Aplicacao.AppModels
         [Required]
         [Display(Name = "Tipo de Telhado")]
         public int IdTipoTelhado { get; set; }
-
-        [Required]
-        [Display(Name = "Nome do Cliente")]
-        [MaxLength(256)]
-        public string NomeCliente { get; set; }
-
+        
         [Required]
         [Display(Name = "Potência")]
         public decimal Potencia { get; set; }

@@ -116,5 +116,23 @@ namespace RAHSys.Aplicacao.Implementacao
             }
         }
 
+        public List<TipoAtividadeAppModel> ListarTodos()
+        {
+            try
+            {
+                return _tipoAtividadeServico.ListarTodos().Select(e => e.MapearParaAplicacao()).ToList();
+            }
+            catch (CustomBaseException ex)
+            {
+                LogExceptions(ex);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                var nex = new CustomBaseException(ex);
+                LogExceptions(nex);
+                throw nex;
+            }
+        }
     }
 }

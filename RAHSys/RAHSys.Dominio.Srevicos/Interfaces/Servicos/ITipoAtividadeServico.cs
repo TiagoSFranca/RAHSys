@@ -7,5 +7,6 @@ namespace RAHSys.Dominio.Servicos.Interfaces.Servicos
     public interface ITipoAtividadeServico : IServicoBase<TipoAtividadeModel>
     {
         ConsultaModel<TipoAtividadeModel> Consultar(IEnumerable<int> idList, string descricao, string ordenacao, bool crescente, int pagina, int quantidade);
+        IEnumerable<TipoAtividadeModel> ListarTodos();
     }
 }

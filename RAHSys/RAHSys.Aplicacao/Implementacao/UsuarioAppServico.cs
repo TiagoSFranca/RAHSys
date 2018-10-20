@@ -108,5 +108,30 @@ namespace RAHSys.Aplicacao.Implementacao
                 throw nex;
             }
         }
+
+        public ConsultaAppModel<UsuarioAppModel> Consultar(IEnumerable<string> idList, string email, string username, string ordenacao, bool crescente, int pagina, int quantidade)
+        {
+            try
+            {
+                var consulta = new ConsultaAppModel<UsuarioAppModel>();
+
+                var resultado = _usuarioServico.Consultar(idList, email, username, ordenacao, crescente, pagina, quantidade);
+
+                consulta.ItensPorPagina = resultado.ItensPorPagina;
+                consulta.PaginaAtual = resultado.PaginaAtual;
+                consulta.TotalPaginas = resultado.TotalPaginas;
+                consulta.TotalItens = resultado.TotalItens;
+
+                consulta.Resultado = resultado.Resultado.Select(r => r.MapearParaAplicacao()).ToList();
+
+                return consulta;
+            }
+            catch (Exception ex)
+            {
+                var nex = new CustomBaseException(ex);
+                LogExceptions(nex);
+                throw nex;
+            }
+        }
     }
 }

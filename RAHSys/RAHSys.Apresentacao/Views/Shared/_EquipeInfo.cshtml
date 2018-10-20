@@ -1,0 +1,25 @@
+﻿@model  RAHSys.Aplicacao.AppModels.EquipeAppModel
+
+<div class="form-group form-md-line-input">
+    @Html.LabelFor(model => model.IdEquipe, new { @class = "col-md-2 control-label" })
+    <div class="col-md-3">
+        @Html.EditorFor(model => model.IdEquipe, new { htmlAttributes = new { @class = "form-control", @placeholder = "Código", @required = "required", @disabled = "disabled" } })
+        <div class="form-control-focus"> </div>
+    </div>
+    @Html.LabelFor(model => model.IdLider, new { @class = "col-md-2 control-label" })
+    <div class="col-md-4">
+        @Html.EditorFor(model => model.Lider.EmailEUserName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome do Cliente", @required = "required", @disabled = "disabled" } })
+        <div class="form-control-focus"></div>
+    </div>
+</div>
+<div class="form-group form-md-line-input">
+    @Html.Label("Membros", new { @class = "col-md-2 control-label" })
+</div>
+@foreach (var item in Model.EquipeUsuarios)
+{
+    <div class="form-group form-md-line-input">
+        <div class="col-md-offset-2 col-md-9">
+            @Html.Editor("Usuario", new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome do Cliente", @required = "required", @disabled = "disabled", @Value = item.Usuario.EmailEUserName } })
+        </div>
+    </div>
+}

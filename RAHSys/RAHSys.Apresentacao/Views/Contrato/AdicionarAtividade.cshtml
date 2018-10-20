@@ -1,0 +1,135 @@
+﻿
+@model  RAHSys.Apresentacao.Models.AtividadeContratoAdicionarEditarModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart font-dark hide"></i>
+                    <span class="caption-subject font-green-steel uppercase bold">Contrato</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="expand"> </a>
+                </div>
+            </div>
+            <div class="portlet-body portlet-collapsed">
+                @{Html.RenderPartial("_ContratoInfo", Model.Contrato);}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart font-dark hide"></i>
+                    <span class="caption-subject font-green-steel uppercase bold">Equipe</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="expand"> </a>
+                </div>
+            </div>
+            <div class="portlet-body portlet-collapsed">
+                @{Html.RenderPartial("_EquipeInfo", Model.Equipe);}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart font-dark hide"></i>
+                    <span class="caption-subject font-green-steel uppercase bold">@ViewBag.SubTitle</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                @using (Html.BeginForm("AdicionarAtividade", "Contrato", FormMethod.Post, new { @class = "form-horizontal margin-bottom-40" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.Atividade.IdEquipe)
+                    @Html.HiddenFor(model => model.Atividade.IdContrato)
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.Atividade.IdTipoAtividade, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-3">
+                            @Html.DropDownListFor(model => model.Atividade.IdTipoAtividade, new SelectList(Model.TipoAtividades, "IdTipoAtividade", "Descricao"), "Selecione", new { @class = "form-control", @placeholder = "Tipo de Atividade", @required = "required" })
+                            @Html.ValidationMessageFor(model => model.Atividade.IdTipoAtividade, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                        @Html.LabelFor(m => m.Atividade.IdUsuario, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(model => model.Atividade.IdUsuario, new SelectList(Model.Equipe.EquipeUsuarios, "IdUsuario", "Usuario.EmailEUserName"), "Selecione", new { @class = "form-control", @placeholder = "Atribuido Para" })
+                            @Html.ValidationMessageFor(model => model.Atividade.IdUsuario, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.Atividade.DataPrevista, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Atividade.DataPrevista, new { htmlAttributes = new { @class = "form-control dataAtividade", @placeholder = "Data de Realização Prevista", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.Atividade.DataPrevista, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.Atividade.Descricao, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.TextAreaFor(model => model.Atividade.Descricao, new { @class = "form-control", @placeholder = "Descrição" })
+                            @Html.ValidationMessageFor(model => model.Atividade.Descricao, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        <div class="col-md-9 col-md-offset-2">
+                            <div class="md-checkbox-inline">
+                                <div class="md-checkbox">
+                                    @Html.CheckBoxFor(model => model.Atividade.Realizada, new { @class = "md-check", @id = "chkRealizada" })
+                                    <label for="chkRealizada">
+                                        <span></span>
+                                        <span class="check"></span>
+                                        <span class="box"></span> Atividade Realizada
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input atividadeRealizada">
+                        @Html.LabelFor(m => m.Atividade.DataRealizacao, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Atividade.DataRealizacao, new { htmlAttributes = new { @class = "form-control dataAtividade", @placeholder = "Data de Realização", @id = "dataRealizacao" } })
+                            @Html.ValidationMessageFor(model => model.Atividade.DataRealizacao, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input atividadeRealizada">
+                        @Html.LabelFor(m => m.Atividade.Observacao, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.TextAreaFor(model => model.Atividade.Observacao, new { @class = "form-control", @placeholder = "Observações" })
+                            @Html.ValidationMessageFor(model => model.Atividade.Observacao, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" class="btn blue btn-circle">Salvar</button>
+                            @Html.ActionLink("Limpar", "AdicionarAtividade", "Contrato", new { id = Model.Atividade.IdContrato }, new { @class = "btn btn-white btn-outline btn-circle btn-md" })
+                            @Html.ActionLink("Cancelar", "Contrato", "Atividade", new { id = Model.Atividade.IdContrato }, new { @class = "btn yellow-haze btn-outline btn-circle btn-md" })
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/Ordenacao/js")
+    @Scripts.Render("~/Modal/js")
+    @Scripts.Render("~/Atividade/js")
+}

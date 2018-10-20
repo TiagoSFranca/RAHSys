@@ -441,6 +441,11 @@
             if ($('#error').val()) {
                 displayMessage($('#error').val(), 'error');
             }
+
+            $(".dataAtividade").datepicker({
+                format: 'dd/mm/yyyy',
+                language: 'pt-BR'
+            });
         });
     </script>
 </body>

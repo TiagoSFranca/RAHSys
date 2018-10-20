@@ -14,8 +14,9 @@ namespace RAHSys.Aplicacao.AppModels
         [Display(Name = "Consumo Total")]
         public decimal ConsumoTotal { get; set; }
 
+        [Required]
         [Display(Name = "Equipe")]
-        public int IdEquipe { get; set; }
+        public int? IdEquipe { get; set; }
 
         public virtual List<FiadorAppModel> Fiadores { get; set; }
     }

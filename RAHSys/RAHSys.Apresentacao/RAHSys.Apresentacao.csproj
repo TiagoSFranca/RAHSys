@@ -240,6 +240,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AtividadeApresentacaoModels.cs" />
     <Compile Include="Models\AuditoriaModel.cs" />
     <Compile Include="Models\ContratoApresentacaoModels.cs" />
     <Compile Include="Models\EquipeApresentacaoModels.cs" />
@@ -1041,6 +1042,7 @@
     <Content Include="Content\toastr.less" />
     <Content Include="Content\toastr.scss" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\atividade.js" />
     <Content Include="Scripts\fichaCliente.js" />
     <Content Include="Scripts\integrantes.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -1113,7 +1115,6 @@
     <Content Include="Views\Contrato\Excluir.cshtml" />
     <Content Include="Views\Contrato\AdicionarAnaliseInvestimento.cshtml" />
     <Content Include="Views\Contrato\AdicionarFichaCliente.cshtml" />
-    <Content Include="Views\Contrato\VisualizarPagamentos.cshtml" />
     <Content Include="Views\Pagamento\Index.cshtml" />
     <Content Include="Views\Shared\_ContratoInfo.cshtml" />
     <Content Include="Views\Pagamento\Adicionar.cshtml" />
@@ -1128,6 +1129,10 @@
     <Content Include="Views\TipoAtividade\Excluir.cshtml" />
     <Content Include="Views\TipoAtividade\Index.cshtml" />
     <Content Include="Views\Atividade\Index.cshtml" />
+    <Content Include="Views\Atividade\Contrato.cshtml" />
+    <Content Include="Views\Shared\_EquipeInfo.cshtml" />
+    <Content Include="Views\Contrato\AdicionarAtividade.cshtml" />
+    <Content Include="Views\Contrato\EditarAtividade.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

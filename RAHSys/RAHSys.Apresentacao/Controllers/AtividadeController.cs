@@ -16,14 +16,16 @@ namespace RAHSys.Apresentacao.Controllers
         private readonly ITipoAtividadeAppServico _tipoAtividadeAppServico;
         private readonly IContratoAppServico _contratoAppServico;
         private readonly IEquipeAppServico _equipeAppServico;
+        private readonly IUsuarioAppServico _usuarioAppServico;
 
         public AtividadeController(IAtividadeAppServico atividadeAppServico, ITipoAtividadeAppServico tipoAtividadeAppServico,
-            IContratoAppServico contratoAppServico, IEquipeAppServico equipeAppServico)
+            IContratoAppServico contratoAppServico, IEquipeAppServico equipeAppServico, IUsuarioAppServico usuarioAppServico)
         {
             _atividadeAppServico = atividadeAppServico;
             _tipoAtividadeAppServico = tipoAtividadeAppServico;
             _contratoAppServico = contratoAppServico;
             _equipeAppServico = equipeAppServico;
+            _usuarioAppServico = usuarioAppServico;
             ViewBag.Title = "Atividades";
         }
 
@@ -51,11 +53,12 @@ namespace RAHSys.Apresentacao.Controllers
                 var listaContratos = ObterIdsContrato(contrato);
                 var listaEquipes = ObterIdsEquipe(equipe);
                 var resultadoRealidada = ObterRealizada(realizada);
+                var listaUsuarios = ObterIdsUsuario(usuario);
                 var consulta = _atividadeAppServico.Consultar(codigo != null ? new int[] { (int)codigo } : null,
                     listaTiposAtividade,
                     listaEquipes,
                     listaContratos,
-                    !string.IsNullOrEmpty(usuario) ? new string[] { usuario } : null,
+                    listaUsuarios,
                     resultadoRealidada, dataRealizacaoInicio, dataRealizacaoFim, dataPrevistaInicio, dataPrevistaFim,
                     ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? 40);
                 var resultado = new StaticPagedList<AtividadeAppModel>(consulta.Resultado, consulta.PaginaAtual, consulta.ItensPorPagina, consulta.TotalItens);
@@ -64,13 +67,71 @@ namespace RAHSys.Apresentacao.Controllers
             catch (CustomBaseException ex)
             {
                 MensagemErro(ex.Mensagem);
-                return View(new StaticPagedList<AtividadeAppModel>(new List<AtividadeAppModel>(), 1, 0, 0));
+                return View(new StaticPagedList<AtividadeAppModel>(new List<AtividadeAppModel>(), 1, 1, 0));
             }
         }
 
-        public ActionResult Adicionar()
+        public ActionResult Contrato(int id, int? codigo, string tipoAtividade, string usuario, string dataRealizacaoInicio,
+            string dataRealizacaoFim, string dataPrevistaInicio, string dataPrevistaFim, string realizada,
+            string ordenacao, bool? crescente, int? pagina, int? itensPagina)
         {
-            return View();
+            ViewBag.SubTitle = "Contrato";
+            ViewBag.SubSubTitle = "Atividades";
+            ViewBag.TipoAtividade = tipoAtividade;
+            ViewBag.DataRealizacaoInicio = dataRealizacaoInicio;
+            ViewBag.DataRealizacaoFim = dataRealizacaoFim;
+            ViewBag.DataPrevistaInicio = dataPrevistaInicio;
+            ViewBag.DataPrevistaFim = dataPrevistaFim;
+            ViewBag.Realizada = realizada;
+            ViewBag.Ordenacao = ordenacao;
+            ViewBag.Crescente = crescente ?? true;
+            ViewBag.ItensPagina = itensPagina;
+            AtividadeContratoModel atividadeContratoModel = new AtividadeContratoModel();
+            try
+            {
+                var contratoModel = _contratoAppServico.ObterPorId(id);
+                if (contratoModel == null)
+                {
+                    MensagemErro("Contrato não encontrado");
+                    return RedirectToAction("Index", "Contrato");
+                }
+                if (contratoModel.AnaliseInvestimento?.Cliente == null)
+                {
+                    MensagemErro("O contrato precisa estar assinado");
+                    return RedirectToAction("Index", "Contrato");
+                }
+                if (contratoModel.AnaliseInvestimento?.Cliente?.IdEquipe == null)
+                {
+                    MensagemErro("O contrato não possui equipe associada");
+                    return RedirectToAction("Index", "Contrato");
+                }
+
+                atividadeContratoModel.Contrato = contratoModel;
+                int idEquipe = (int)contratoModel.AnaliseInvestimento.Cliente.IdEquipe;
+                atividadeContratoModel.Equipe = _equipeAppServico.ObterPorId(idEquipe);
+
+                var listaTiposAtividade = ObterIdsTipoAtividade(tipoAtividade);
+                var resultadoRealidada = ObterRealizada(realizada);
+                var listaUsuarios = ObterIdsUsuario(usuario);
+                var consulta = _atividadeAppServico.Consultar(codigo != null ? new int[] { (int)codigo } : null,
+                    listaTiposAtividade,
+                    new[] { idEquipe },
+                    new[] { contratoModel.IdContrato },
+                    listaUsuarios,
+                    resultadoRealidada, dataRealizacaoInicio, dataRealizacaoFim, dataPrevistaInicio, dataPrevistaFim,
+                    ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? 40);
+
+                var resultado = new StaticPagedList<AtividadeAppModel>(consulta.Resultado, consulta.PaginaAtual, consulta.ItensPorPagina, consulta.TotalItens);
+
+                atividadeContratoModel.Atividades = resultado;
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+                return RedirectToAction("Index", "Contrato");
+            }
+
+            return View(atividadeContratoModel);
         }
 
         #region Métodos Auxiliares
@@ -104,6 +165,14 @@ namespace RAHSys.Apresentacao.Controllers
                 return new List<int>();
             var equipes = _equipeAppServico.Consultar(null, usuario, null, true, 1, Int32.MaxValue);
             return equipes.Resultado.Select(e => e.IdEquipe).ToList();
+        }
+
+        private List<string> ObterIdsUsuario(string usuario)
+        {
+            if (string.IsNullOrEmpty(usuario))
+                return new List<string>();
+            var usuarios = _usuarioAppServico.Consultar(null, usuario, usuario, null, true, 1, Int32.MaxValue);
+            return usuarios.Resultado.Select(e => e.IdUsuario).ToList();
         }
 
         #endregion

@@ -1,4 +1,4 @@
-﻿@model  RAHSys.Apresentacao.Models.FichaClienteAdicionar
+﻿@model  RAHSys.Apresentacao.Models.FichaClienteAdicionarModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -27,23 +27,16 @@
                             @Html.EditorFor(model => model.Cliente.IdAnaliseInvestimento, new { htmlAttributes = new { @class = "form-control", @placeholder = "Código", @required = "required", @disabled = "disabled" } })
                             <div class="form-control-focus"> </div>
                         </div>
+                        @Html.LabelFor(model => model.Contrato.ContatoInicial, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.Contrato.ContatoInicial, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome do Cliente", @required = "required", @disabled = "disabled" } })
+                            <div class="form-control-focus"></div>
+                        </div>
                     </div>
                     <div class="form-group form-md-line-input">
                         @Html.LabelFor(model => model.Contrato.NomeEmpresa, new { @class = "col-md-2 control-label" })
                         <div class="col-md-9">
                             @Html.EditorFor(model => model.Contrato.NomeEmpresa, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome do Cliente", @required = "required", @disabled = "disabled" } })
-                            <div class="form-control-focus"></div>
-                        </div>
-                    </div>
-                    <div class="form-group form-md-line-input">
-                        @Html.LabelFor(model => model.Contrato.AnaliseInvestimento.NomeCliente, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-4">
-                            @Html.EditorFor(model => model.Contrato.AnaliseInvestimento.NomeCliente, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome do Cliente", @required = "required", @disabled = "disabled" } })
-                            <div class="form-control-focus"></div>
-                        </div>
-                        @Html.LabelFor(model => model.Contrato.ContatoInicial, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-3">
-                            @Html.EditorFor(model => model.Contrato.ContatoInicial, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome do Cliente", @required = "required", @disabled = "disabled" } })
                             <div class="form-control-focus"></div>
                         </div>
                     </div>
@@ -80,14 +73,14 @@
                         </div>
                     </div>
                     <div class="form-group form-md-line-input">
-                        @Html.LabelFor(m => m.Contrato.ContratoEndereco.Endereco.IdCidade, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-4">
-                            @Html.EditorFor(model => model.Contrato.ContratoEndereco.Endereco.Cidade.Nome, new { htmlAttributes = new { @class = "form-control", @placeholder = "Cidade", @required = "required", @disabled = "disabled" } })
-                            <div class="form-control-focus"> </div>
-                        </div>
                         @Html.Label("Estado", new { @class = "col-md-2 control-label" })
                         <div class="col-md-3">
                             @Html.EditorFor(m => m.Contrato.ContratoEndereco.Endereco.Cidade.Estado.Descricao, new { htmlAttributes = new { @class = "form-control", @placeholder = "Estado", @disabled = "disabled" } })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                        @Html.LabelFor(m => m.Contrato.ContratoEndereco.Endereco.IdCidade, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.Contrato.ContratoEndereco.Endereco.Cidade.Nome, new { htmlAttributes = new { @class = "form-control", @placeholder = "Cidade", @required = "required", @disabled = "disabled" } })
                             <div class="form-control-focus"> </div>
                         </div>
                     </div>
@@ -287,15 +280,15 @@
                         </div>
                     </div>
                     <div class="form-group form-md-line-input">
+                        @Html.Label("Estado", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-3">
+                            @Html.DropDownListFor(m => m.Cliente.Fiadores[0].FiadorEndereco.Endereco.Cidade.IdEstado, new SelectList(Model.Estados, "IdEstado", "Descricao"), "Selecione", new { @class = "form-control", @placeholder = "Estado", @onchange = "buscarCidades(this.value,\"ddlCidadesFiador\")" })
+                            <div class="form-control-focus"> </div>
+                        </div>
                         @Html.LabelFor(m => m.Cliente.Fiadores[0].FiadorEndereco.Endereco.IdCidade, new { @class = "col-md-2 control-label" })
                         <div class="col-md-4">
                             @Html.DropDownListFor(model => model.Cliente.Fiadores[0].FiadorEndereco.Endereco.IdCidade, new SelectList(Model.CidadesFiador, "IdCidade", "Nome"), new { @class = "form-control", @placeholder = "Cidade", @required = "required", @id = "ddlCidadesFiador" })
                             @Html.ValidationMessageFor(model => model.Cliente.Fiadores[0].FiadorEndereco.Endereco.IdCidade, "", new { @class = "text-danger" })
-                            <div class="form-control-focus"> </div>
-                        </div>
-                        @Html.Label("Estado", new { @class = "col-md-2 control-label" })
-                        <div class="col-md-3">
-                            @Html.DropDownListFor(m => m.Cliente.Fiadores[0].FiadorEndereco.Endereco.Cidade.IdEstado, new SelectList(Model.Estados, "IdEstado", "Descricao"), "Selecione", new { @class = "form-control", @placeholder = "Estado", @onchange = "buscarCidades(this.value,\"ddlCidadesFiador\")" })
                             <div class="form-control-focus"> </div>
                         </div>
                     </div>
@@ -380,15 +373,15 @@
                         </div>
                     </div>
                     <div class="form-group form-md-line-input">
+                        @Html.Label("Estado", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-3">
+                            @Html.DropDownListFor(m => m.Cliente.Fiadores[1].FiadorEndereco.Endereco.Cidade.IdEstado, new SelectList(Model.Estados, "IdEstado", "Descricao"), "Selecione", new { @class = "form-control", @placeholder = "Estado", @onchange = "buscarCidades(this.value,\"ddlCidadesFiadorConjuge\")" })
+                            <div class="form-control-focus"> </div>
+                        </div>
                         @Html.LabelFor(m => m.Cliente.Fiadores[1].FiadorEndereco.Endereco.IdCidade, new { @class = "col-md-2 control-label" })
                         <div class="col-md-4">
                             @Html.DropDownListFor(model => model.Cliente.Fiadores[1].FiadorEndereco.Endereco.IdCidade, new SelectList(Model.CidadesFiadorConjuge, "IdCidade", "Nome"), new { @class = "form-control", @placeholder = "Cidade", @required = "required", @id = "ddlCidadesFiadorConjuge" })
                             @Html.ValidationMessageFor(model => model.Cliente.Fiadores[1].FiadorEndereco.Endereco.IdCidade, "", new { @class = "text-danger" })
-                            <div class="form-control-focus"> </div>
-                        </div>
-                        @Html.Label("Estado", new { @class = "col-md-2 control-label" })
-                        <div class="col-md-3">
-                            @Html.DropDownListFor(m => m.Cliente.Fiadores[1].FiadorEndereco.Endereco.Cidade.IdEstado, new SelectList(Model.Estados, "IdEstado", "Descricao"), "Selecione", new { @class = "form-control", @placeholder = "Estado", @onchange = "buscarCidades(this.value,\"ddlCidadesFiadorConjuge\")" })
                             <div class="form-control-focus"> </div>
                         </div>
                     </div>

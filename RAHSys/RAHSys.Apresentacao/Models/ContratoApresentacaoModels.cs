@@ -28,18 +28,18 @@ namespace RAHSys.Apresentacao.Models
         }
     }
 
-    public class AnaliseInvestimentoAdicionar
+    public class AnaliseInvestimentoAdicionarModel
     {
         public AnaliseInvestimentoAppModel AnaliseInvestimento { get; set; }
         public List<TipoTelhadoAppModel> TipoTelhados { get; set; }
 
-        public AnaliseInvestimentoAdicionar()
+        public AnaliseInvestimentoAdicionarModel()
         {
             TipoTelhados = new List<TipoTelhadoAppModel>();
         }
     }
 
-    public class FichaClienteAdicionar
+    public class FichaClienteAdicionarModel
     {
         public ContratoAppModel Contrato { get; set; }
         public ClienteAppModel Cliente { get; set; }
@@ -50,7 +50,7 @@ namespace RAHSys.Apresentacao.Models
         public List<EstadoCivilAppModel> EstadosCivis { get; set; }
         public List<EquipeAppModel> Equipes { get; set; }
 
-        public FichaClienteAdicionar()
+        public FichaClienteAdicionarModel()
         {
             CidadesFiador = new List<CidadeAppModel>();
             CidadesFiadorConjuge = new List<CidadeAppModel>();

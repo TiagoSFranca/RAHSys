@@ -38,7 +38,7 @@ namespace RAHSys.Aplicacao.Implementacao
             }
         }
 
-        public ConsultaAppModel<ContratoAppModel> Consultar(IEnumerable<int> idList, IEnumerable<int> idEstadoList, string nomeEmpresa, decimal? receita, string cidade, 
+        public ConsultaAppModel<ContratoAppModel> Consultar(IEnumerable<int> idList, IEnumerable<int> idEstadoList, string nomeEmpresa, decimal? receita, string cidade,
             string ordenacao, bool crescente, int pagina, int quantidade)
         {
             try

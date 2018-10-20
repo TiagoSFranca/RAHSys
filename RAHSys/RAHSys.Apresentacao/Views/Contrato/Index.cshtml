@@ -144,10 +144,8 @@
                                             <label class="btn @situacaoPagamento.Classe btn-circle btn-md tooltips" data-container="body" data-placement="top" data-original-title="@situacaoPagamento.Nome">
                                                 <i></i>
                                             </label>
-                                            @Html.ActionLink("Visualizar", "Index", "Pagamento", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
                                         </td>
                                         <td class="text-right">
-                                            @*@Html.ActionLink("Alterar", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })*@
                                             @{
                                                 // Exibe o texto do botão alterar de acordo com o status atual
                                                 if (situacao.Nome.ToUpper().Contains("NOVO"))
@@ -163,10 +161,12 @@
                                                     @Html.ActionLink("Alterar", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
                                                 }
                                             }
+                                            @Html.ActionLink("Pagamentos", "Index", "Pagamento", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
+                                            @Html.ActionLink("Atividades", "Contrato", "Atividade", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
                                             @Html.ActionLink("Excluir", "Excluir", "Contrato", new { id = item.IdContrato }, new { @class = "btn red-flamingo btn-circle btn-md abrirModal" })
                                         </td>
                                     </tr>
-                                                }
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -193,19 +193,19 @@
                             </div>
                         </div>
                     </div>
-                                                }
-                                                else
-                                                {
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <div class="alert alert-info">
-                                                                <h5 class="text-center">
-                                                                    Não foram encontrados resultados
-                                                                </h5>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                }
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-info">
+                                <h5 class="text-center">
+                                    Não foram encontrados resultados
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>

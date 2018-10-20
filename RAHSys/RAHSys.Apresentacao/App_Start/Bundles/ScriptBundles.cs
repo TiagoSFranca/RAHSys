@@ -93,6 +93,10 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
             bundles.Add(new ScriptBundle("~/Integrantes/js").Include(
                 "~/Scripts/integrantes.js"
                 ));
+
+            bundles.Add(new ScriptBundle("~/Atividade/js").Include(
+                "~/Scripts/atividade.js"
+                ));
         }
     }
 }

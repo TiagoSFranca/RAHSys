@@ -27,6 +27,61 @@ namespace RAHSys.Apresentacao.Controllers
             ViewBag.Title = "Atividades";
         }
 
+        public ActionResult Index(int? codigo, string tipoAtividade, string contrato, string equipe, string usuario, string dataRealizacaoInicio,
+            string dataRealizacaoFim, string dataPrevistaInicio, string dataPrevistaFim, string realizada,
+            string ordenacao, bool? crescente, int? pagina, int? itensPagina)
+        {
+            ViewBag.SubTitle = "Consultar";
+            ViewBag.Codigo = codigo;
+            ViewBag.TipoAtividade = tipoAtividade;
+            ViewBag.Contrato = contrato;
+            ViewBag.Equipe = equipe;
+            ViewBag.DataRealizacaoInicio = dataRealizacaoInicio;
+            ViewBag.DataRealizacaoFim = dataRealizacaoFim;
+            ViewBag.DataPrevistaInicio = dataPrevistaInicio;
+            ViewBag.DataPrevistaFim = dataPrevistaFim;
+            ViewBag.Realizada = realizada;
+            ViewBag.Ordenacao = ordenacao;
+            ViewBag.Crescente = crescente ?? true;
+            ViewBag.ItensPagina = itensPagina;
+
+            try
+            {
+                var listaTiposAtividade = ObterIdsTipoAtividade(tipoAtividade);
+                var listaContratos = ObterIdsContrato(contrato);
+                var listaEquipes = ObterIdsEquipe(equipe);
+                var resultadoRealidada = ObterRealizada(realizada);
+                var consulta = _atividadeAppServico.Consultar(codigo != null ? new int[] { (int)codigo } : null,
+                    listaTiposAtividade,
+                    listaEquipes,
+                    listaContratos,
+                    !string.IsNullOrEmpty(usuario) ? new string[] { usuario } : null,
+                    resultadoRealidada, dataRealizacaoInicio, dataRealizacaoFim, dataPrevistaInicio, dataPrevistaFim,
+                    ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? 40);
+                var resultado = new StaticPagedList<AtividadeAppModel>(consulta.Resultado, consulta.PaginaAtual, consulta.ItensPorPagina, consulta.TotalItens);
+                return View(resultado);
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+                return View(new StaticPagedList<AtividadeAppModel>(new List<AtividadeAppModel>(), 1, 0, 0));
+            }
+        }
+
+        public ActionResult Adicionar()
+        {
+            return View();
+        }
+
+        #region Métodos Auxiliares
+
+        private bool? ObterRealizada(string realizada)
+        {
+            if (string.IsNullOrEmpty(realizada))
+                return null;
+            return realizada == "1";
+        }
+
         private List<int> ObterIdsTipoAtividade(string descricao)
         {
             if (string.IsNullOrEmpty(descricao))
@@ -51,44 +106,6 @@ namespace RAHSys.Apresentacao.Controllers
             return equipes.Resultado.Select(e => e.IdEquipe).ToList();
         }
 
-        public ActionResult Index(int? codigo, string tipoAtividade, string contrato, string equipe, string usuario, string dataRealizacaoInicio,
-            string dataRealizacaoFim, string dataPrevistaInicio, string dataPrevistaFim, bool? realizada,
-            string ordenacao, bool? crescente, int? pagina, int? itensPagina)
-        {
-            ViewBag.SubTitle = "Consultar";
-            ViewBag.Codigo = codigo;
-            ViewBag.TipoAtividade = tipoAtividade;
-            ViewBag.Contrato = contrato;
-            ViewBag.Equipe = equipe;
-            ViewBag.DataRealizacaoInicio = dataRealizacaoInicio;
-            ViewBag.DataRealizacaoFim = dataRealizacaoFim;
-            ViewBag.DataPrevistaInicio = dataPrevistaInicio;
-            ViewBag.DataPrevistaFim = dataPrevistaFim;
-            ViewBag.Realizada = realizada;
-            ViewBag.Ordenacao = ordenacao;
-            ViewBag.Crescente = crescente ?? true;
-            ViewBag.ItensPagina = itensPagina;
-            
-            try
-            {
-                var listaTiposAtividade = ObterIdsTipoAtividade(tipoAtividade);
-                var listaContratos = ObterIdsContrato(contrato);
-                var listaEquipes = ObterIdsEquipe(equipe);
-                var consulta = _atividadeAppServico.Consultar(codigo != null ? new int[] { (int)codigo } : null,
-                    listaTiposAtividade,
-                    listaEquipes,
-                    listaContratos,
-                    !string.IsNullOrEmpty(usuario) ? new string[] { usuario } : null,
-                    realizada, dataRealizacaoInicio, dataRealizacaoFim, dataPrevistaInicio, dataPrevistaFim,
-                    ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? 40);
-                var resultado = new StaticPagedList<AtividadeAppModel>(consulta.Resultado, consulta.PaginaAtual, consulta.ItensPorPagina, consulta.TotalItens);
-                return View(resultado);
-            }
-            catch (CustomBaseException ex)
-            {
-                MensagemErro(ex.Mensagem);
-                return View(new StaticPagedList<AtividadeAppModel>(new List<AtividadeAppModel>(), 1, 0, 0));
-            }
-        }
+        #endregion
     }
 }

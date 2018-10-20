@@ -11,9 +11,6 @@
                     <i class="icon-bar-chart font-dark hide"></i>
                     <span class="caption-subject font-green-steel uppercase bold">Buscar</span>
                 </div>
-                <div class="actions">
-                    @Html.ActionLink("Adicionar", "Adicionar", "Atividade", null, new { @class = "btn btn-no-border green btn-outline btn-circle btn-md" })
-                </div>
             </div>
             <div class="portlet-body">
                 @using (Html.BeginForm("Index", "Atividade", FormMethod.Get, new { @id = "form-busca" }))
@@ -31,7 +28,7 @@
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group form-md-line-input has-success">
                                 @Html.Editor("equipe", new { htmlAttributes = new { @class = "form-control", @placeholder = "Email Equipe" } })
                                 <div class="form-control-focus"> </div>
@@ -43,9 +40,15 @@
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group form-md-line-input has-success">
                                 @Html.Editor("usuario", new { htmlAttributes = new { @class = "form-control", @placeholder = "Atribuido Para" } })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.DropDownList("realizada", EnumHelper.GetSelectList(typeof(SimOuNaoEnum)), "Realizada", new { @class = "form-control" })
                                 <div class="form-control-focus"> </div>
                             </div>
                         </div>

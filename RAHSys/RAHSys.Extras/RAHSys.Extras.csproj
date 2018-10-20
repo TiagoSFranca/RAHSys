@@ -32,6 +32,7 @@
   <ItemGroup>
     <Compile Include="ContentTypeHelper.cs" />
     <Compile Include="Enums\ItensPorPaginaEnum.cs" />
+    <Compile Include="Enums\SimOuNaoEnum.cs" />
     <Compile Include="Enums\SituacaoContratoEnum.cs" />
     <Compile Include="Enums\SituacaoPagamentoEnum.cs" />
     <Compile Include="MensagensPadrao.cs" />

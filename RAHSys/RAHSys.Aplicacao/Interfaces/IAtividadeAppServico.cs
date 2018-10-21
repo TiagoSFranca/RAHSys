@@ -10,5 +10,6 @@ namespace RAHSys.Aplicacao.Interfaces
             IEnumerable<int> idContratoList, IEnumerable<string> idUsuarioList, bool? realizada, string dataRealizacaoInicio, string dataRealizacaoFim,
             string dataPrevistaInicio, string dataPrevistaFim,
             string ordenacao, bool crescente, int pagina, int quantidade);
+        void FinalizarAtividade(int idAtividade, DateTime? dataRealizacao, string observacao);
     }
 }

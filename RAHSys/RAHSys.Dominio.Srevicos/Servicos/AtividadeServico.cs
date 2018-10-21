@@ -90,6 +90,15 @@ namespace RAHSys.Dominio.Servicos.Servicos
             return consultaModel;
         }
 
+        public void FinalizarAtividade(int idAtividade, DateTime? dataRealizacao, string observacao)
+        {
+            var atividade = _atividadeRepositorio.ObterPorId(idAtividade, true);
+            atividade.DataRealizacao = dataRealizacao;
+            atividade.Observacao = observacao;
+            atividade.Realizada = true;
+            _atividadeRepositorio.Atualizar(atividade);
+        }
+
         private DateTime? ConvertStringToDate(string data)
         {
             if (DateTime.TryParseExact(data, "d/M/yyyy", new CultureInfo("pt-BR"), DateTimeStyles.None, out DateTime dataConvertida))

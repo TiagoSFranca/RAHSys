@@ -22,8 +22,7 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
             bundles.Add(new StyleBundle("~/PageLevelPlugins/css").Include(
                 "~/Content/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css",
                 "~/Content/assets/global/plugins/morris/morris.css",
-                "~/Content/assets/global/plugins/fullcalendar/fullcalendar.min.css",
-                "~/Content/assets/global/plugins/jqvmap/jqvmap/jqvmap.css"
+                "~/Content/assets/global/plugins/fullcalendar/fullcalendar.min.css"
                 ));
 
             bundles.Add(new StyleBundle("~/Global/css").Include(

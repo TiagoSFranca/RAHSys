@@ -513,7 +513,7 @@ namespace RAHSys.Apresentacao.Controllers
             ViewBag.SubTitle = "Adicionar nova Atividade";
             var atividadeRetornoModel = MontarAtividadeContratoAdicionar();
             atividadeRetornoModel.Atividade = atividadePostModel.Atividade;
-            var atividade = _atividadeAppServico.ObterPorId(atividadePostModel.Atividade.IdAtividade);
+            var atividade = atividadePostModel.Atividade;
             int idContrato = atividadePostModel.Atividade.IdContrato;
             if (atividade == null)
             {

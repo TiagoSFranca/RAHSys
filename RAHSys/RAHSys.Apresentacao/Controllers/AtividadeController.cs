@@ -1,7 +1,9 @@
-﻿using PagedList;
+﻿using Newtonsoft.Json;
+using PagedList;
 using RAHSys.Aplicacao.AppModels;
 using RAHSys.Aplicacao.Interfaces;
 using RAHSys.Apresentacao.Models;
+using RAHSys.Extras;
 using RAHSys.Infra.CrossCutting.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -89,6 +91,7 @@ namespace RAHSys.Apresentacao.Controllers
             AtividadeContratoModel atividadeContratoModel = new AtividadeContratoModel();
             try
             {
+                atividadeContratoModel.TodasAtividadesSerializadas = ObterAtividadesContrato(id);
                 var contratoModel = _contratoAppServico.ObterPorId(id);
                 if (contratoModel == null)
                 {
@@ -134,6 +137,23 @@ namespace RAHSys.Apresentacao.Controllers
             return View(atividadeContratoModel);
         }
 
+        [HttpPost]
+        public ActionResult FinalizarAtividadeContrato(AtividadeAppModel atividadeApp)
+        {
+            var atividade = _atividadeAppServico.ObterPorId(atividadeApp.IdAtividade);
+            try
+            {
+                _atividadeAppServico.FinalizarAtividade(atividadeApp.IdAtividade, atividadeApp.DataRealizacao, atividadeApp.Observacao);
+                MensagemSucesso();
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+            }
+
+            return RedirectToAction("Contrato", new { id = atividade.IdContrato });
+        }
+
         #region Métodos Auxiliares
 
         private bool? ObterRealizada(string realizada)
@@ -173,6 +193,22 @@ namespace RAHSys.Apresentacao.Controllers
                 return new List<string>();
             var usuarios = _usuarioAppServico.Consultar(null, usuario, usuario, null, true, 1, Int32.MaxValue);
             return usuarios.Resultado.Select(e => e.IdUsuario).ToList();
+        }
+
+        public string ObterAtividadesContrato(int id)
+        {
+            var consulta = _atividadeAppServico.Consultar(null, null, null,
+                new[] { id },
+                null, null, null, null,
+                null, null,
+                null, true, 1, Int32.MaxValue);
+            List<AtividadeAppModel> lista = consulta.Resultado.ToList();
+            lista.ForEach(item =>
+            {
+                item.Contrato = null;
+                item.Equipe = null;
+            });
+            return JsonConvert.SerializeObject(lista);
         }
 
         #endregion

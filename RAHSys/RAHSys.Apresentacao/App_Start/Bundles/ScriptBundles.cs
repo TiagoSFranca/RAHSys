@@ -34,6 +34,8 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
                 "~/Content/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js",
                 "~/Content/assets/global/plugins/morris/morris.min.js",
                 "~/Content/assets/global/plugins/morris/raphael-min.js",
+                "~/Content/assets/global/plugins/fullcalendar/fullcalendar.min.js",
+                "~/Content/assets/global/plugins/fullcalendar/lang-all.js",
                 "~/Content/assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js"
                 ));
 

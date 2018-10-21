@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RAHSys.Extras.Enums;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace RAHSys.Aplicacao.AppModels
@@ -39,5 +40,21 @@ namespace RAHSys.Aplicacao.AppModels
         public virtual EquipeAppModel Equipe { get; set; }
         public virtual ContratoAppModel Contrato { get; set; }
         public virtual UsuarioAppModel Usuario { get; set; }
+
+        public virtual SituacaoAtividade SituacaoAtividade
+        {
+            get
+            {
+                if (Realizada)
+                    return SituacaoAtividadeEnum.AtividadeRealizada;
+                else
+                {
+                    if (DataPrevista < DateTime.Now)
+                        return SituacaoAtividadeEnum.AtividadeAtrasada;
+                    else
+                        return SituacaoAtividadeEnum.AtividadeNaoRealizada;
+                }
+            }
+        }
     }
 }

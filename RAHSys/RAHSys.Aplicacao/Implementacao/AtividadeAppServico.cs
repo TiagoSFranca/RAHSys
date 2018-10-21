@@ -120,5 +120,24 @@ namespace RAHSys.Aplicacao.Implementacao
                 throw nex;
             }
         }
+
+        public void FinalizarAtividade(int idAtividade, DateTime? dataRealizacao, string observacao)
+        {
+            try
+            {
+                _atividadeServico.FinalizarAtividade(idAtividade, dataRealizacao, observacao);
+            }
+            catch (CustomBaseException ex)
+            {
+                LogExceptions(ex);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                var nex = new CustomBaseException(ex);
+                LogExceptions(nex);
+                throw nex;
+            }
+        }
     }
 }

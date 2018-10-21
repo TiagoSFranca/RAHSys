@@ -26,7 +26,7 @@ namespace RAHSys.Apresentacao.Models
         public string Funcao { get; set; }
 
         [Required]
-        [MaxLength(10)]
+        [MaxLength(100)]
         public string Acao { get; set; }
 
         [DataType(DataType.DateTime)]

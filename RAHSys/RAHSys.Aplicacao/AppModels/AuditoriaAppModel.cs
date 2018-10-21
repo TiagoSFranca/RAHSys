@@ -19,7 +19,7 @@ namespace RAHSys.Aplicacao.AppModels
         public string Funcao { get; set; }
 
         [Required]
-        [MaxLength(10)]
+        [MaxLength(100)]
         [Display(Name = "Ação")]
         public string Acao { get; set; }
 

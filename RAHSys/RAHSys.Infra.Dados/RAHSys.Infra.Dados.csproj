@@ -115,13 +115,17 @@
     <Compile Include="Migrations\201810031615348_Adicionado Tarifa a AnaliseInvestimento.Designer.cs">
       <DependentUpon>201810031615348_Adicionado Tarifa a AnaliseInvestimento.cs</DependentUpon>
     </Compile>
-	<Compile Include="Migrations\201810012043256_AtualizacaoAuditoria.cs" />
+    <Compile Include="Migrations\201810012043256_AtualizacaoAuditoria.cs" />
     <Compile Include="Migrations\201810012043256_AtualizacaoAuditoria.Designer.cs">
       <DependentUpon>201810012043256_AtualizacaoAuditoria.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.cs" />
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.Designer.cs">
       <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Audit\201810150109071_AlterarCampoAcaoDeAuditoria.cs" />
+    <Compile Include="Migrations\Audit\201810150109071_AlterarCampoAcaoDeAuditoria.Designer.cs">
+      <DependentUpon>201810150109071_AlterarCampoAcaoDeAuditoria.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Audit\Configuration.cs" />
     <Compile Include="Migrations\201808092205177_Criacao das tabelas endereco, cidade, estado, contrato e contratoEndereco.cs" />
@@ -218,7 +222,7 @@
     <EmbeddedResource Include="Migrations\201810031615348_Adicionado Tarifa a AnaliseInvestimento.resx">
       <DependentUpon>201810031615348_Adicionado Tarifa a AnaliseInvestimento.cs</DependentUpon>
     </EmbeddedResource>
-	<EmbeddedResource Include="Migrations\201810012043256_AtualizacaoAuditoria.resx">
+    <EmbeddedResource Include="Migrations\201810012043256_AtualizacaoAuditoria.resx">
       <DependentUpon>201810012043256_AtualizacaoAuditoria.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\Audit\201808101838532_CriacaoDBAudit.resx">
@@ -238,6 +242,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808131855104_Criacao da tabela EstadoCivil.resx">
       <DependentUpon>201808131855104_Criacao da tabela EstadoCivil.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\Audit\201810150109071_AlterarCampoAcaoDeAuditoria.resx">
+      <DependentUpon>201810150109071_AlterarCampoAcaoDeAuditoria.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

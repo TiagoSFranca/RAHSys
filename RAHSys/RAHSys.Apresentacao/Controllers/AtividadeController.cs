@@ -73,72 +73,8 @@ namespace RAHSys.Apresentacao.Controllers
             }
         }
 
-        public ActionResult Contrato(int id, int? codigo, string tipoAtividade, string usuario, string dataRealizacaoInicio,
-            string dataRealizacaoFim, string dataPrevistaInicio, string dataPrevistaFim, string realizada,
-            string ordenacao, bool? crescente, int? pagina, int? itensPagina)
-        {
-            ViewBag.SubTitle = "Contrato";
-            ViewBag.SubSubTitle = "Atividades";
-            ViewBag.TipoAtividade = tipoAtividade;
-            ViewBag.DataRealizacaoInicio = dataRealizacaoInicio;
-            ViewBag.DataRealizacaoFim = dataRealizacaoFim;
-            ViewBag.DataPrevistaInicio = dataPrevistaInicio;
-            ViewBag.DataPrevistaFim = dataPrevistaFim;
-            ViewBag.Realizada = realizada;
-            ViewBag.Ordenacao = ordenacao;
-            ViewBag.Crescente = crescente ?? true;
-            ViewBag.ItensPagina = itensPagina;
-            AtividadeContratoModel atividadeContratoModel = new AtividadeContratoModel();
-            try
-            {
-                atividadeContratoModel.TodasAtividadesSerializadas = ObterAtividadesContrato(id);
-                var contratoModel = _contratoAppServico.ObterPorId(id);
-                if (contratoModel == null)
-                {
-                    MensagemErro("Contrato não encontrado");
-                    return RedirectToAction("Index", "Contrato");
-                }
-                if (contratoModel.AnaliseInvestimento?.Cliente == null)
-                {
-                    MensagemErro("O contrato precisa estar assinado");
-                    return RedirectToAction("Index", "Contrato");
-                }
-                if (contratoModel.AnaliseInvestimento?.Cliente?.IdEquipe == null)
-                {
-                    MensagemErro("O contrato não possui equipe associada");
-                    return RedirectToAction("Index", "Contrato");
-                }
-
-                atividadeContratoModel.Contrato = contratoModel;
-                int idEquipe = (int)contratoModel.AnaliseInvestimento.Cliente.IdEquipe;
-                atividadeContratoModel.Equipe = _equipeAppServico.ObterPorId(idEquipe);
-
-                var listaTiposAtividade = ObterIdsTipoAtividade(tipoAtividade);
-                var resultadoRealidada = ObterRealizada(realizada);
-                var listaUsuarios = ObterIdsUsuario(usuario);
-                var consulta = _atividadeAppServico.Consultar(codigo != null ? new int[] { (int)codigo } : null,
-                    listaTiposAtividade,
-                    new[] { idEquipe },
-                    new[] { contratoModel.IdContrato },
-                    listaUsuarios,
-                    resultadoRealidada, dataRealizacaoInicio, dataRealizacaoFim, dataPrevistaInicio, dataPrevistaFim,
-                    ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? 40);
-
-                var resultado = new StaticPagedList<AtividadeAppModel>(consulta.Resultado, consulta.PaginaAtual, consulta.ItensPorPagina, consulta.TotalItens);
-
-                atividadeContratoModel.Atividades = resultado;
-            }
-            catch (CustomBaseException ex)
-            {
-                MensagemErro(ex.Mensagem);
-                return RedirectToAction("Index", "Contrato");
-            }
-
-            return View(atividadeContratoModel);
-        }
-
         [HttpPost]
-        public ActionResult FinalizarAtividadeContrato(AtividadeAppModel atividadeApp)
+        public ActionResult FinalizarAtividade(AtividadeAppModel atividadeApp, string urlRetorno)
         {
             var atividade = _atividadeAppServico.ObterPorId(atividadeApp.IdAtividade);
             try
@@ -151,12 +87,38 @@ namespace RAHSys.Apresentacao.Controllers
                 MensagemErro(ex.Mensagem);
             }
 
-            return RedirectToAction("Contrato", new { id = atividade.IdContrato });
+            return Redirect(urlRetorno);
+        }
+
+        [HttpPost]
+        public ActionResult CopiarAtividade(AtividadeAppModel atividadeApp, string urlRetorno)
+        {
+            var atividade = _atividadeAppServico.ObterPorId(atividadeApp.IdAtividade);
+            try
+            {
+                if (atividade == null)
+                    MensagemErro("Atividade não encontrada");
+                else
+                {
+                    atividadeApp.IdAtividade = 0;
+                    atividadeApp.IdTipoAtividade = atividade.IdTipoAtividade;
+                    atividadeApp.IdContrato = atividade.IdContrato;
+                    atividadeApp.IdEquipe = atividade.IdEquipe;
+                    _atividadeAppServico.Adicionar(atividadeApp);
+                    MensagemSucesso();
+                }
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+            }
+
+            return Redirect(urlRetorno);
         }
 
         #region Métodos Auxiliares
 
-        private bool? ObterRealizada(string realizada)
+        private static bool? ObterRealizada(string realizada)
         {
             if (string.IsNullOrEmpty(realizada))
                 return null;
@@ -193,22 +155,6 @@ namespace RAHSys.Apresentacao.Controllers
                 return new List<string>();
             var usuarios = _usuarioAppServico.Consultar(null, usuario, usuario, null, true, 1, Int32.MaxValue);
             return usuarios.Resultado.Select(e => e.IdUsuario).ToList();
-        }
-
-        public string ObterAtividadesContrato(int id)
-        {
-            var consulta = _atividadeAppServico.Consultar(null, null, null,
-                new[] { id },
-                null, null, null, null,
-                null, null,
-                null, true, 1, Int32.MaxValue);
-            List<AtividadeAppModel> lista = consulta.Resultado.ToList();
-            lista.ForEach(item =>
-            {
-                item.Contrato = null;
-                item.Equipe = null;
-            });
-            return JsonConvert.SerializeObject(lista);
         }
 
         #endregion

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Newtonsoft.Json;
 using PagedList;
 using RAHSys.Aplicacao.AppModels;
 using RAHSys.Aplicacao.Interfaces;
@@ -6,6 +7,7 @@ using RAHSys.Apresentacao.Attributes;
 using RAHSys.Apresentacao.Models;
 using RAHSys.Extras;
 using RAHSys.Infra.CrossCutting.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,11 +27,12 @@ namespace RAHSys.Apresentacao.Controllers
         private readonly IEquipeAppServico _equipeAppServico;
         private readonly ITipoAtividadeAppServico _tipoAtividadeAppServico;
         private readonly IAtividadeAppServico _atividadeAppServico;
+        private readonly IUsuarioAppServico _usuarioAppServico;
 
         public ContratoController(IContratoAppServico contratoAppServico, IEstadoAppServico estadoAppServico,
             ICidadeAppServico cidadeAppServico, ITipoTelhadoAppServico tipoTelhadoAppServico, IEstadoCivilAppServico estadoCivilAppServico,
             IDocumentoAppServico documentoAppServico, IEquipeAppServico equipeAppServico, ITipoAtividadeAppServico tipoAtividadeAppServico,
-            IAtividadeAppServico atividadeAppServico)
+            IAtividadeAppServico atividadeAppServico, IUsuarioAppServico usuarioAppServico)
         {
             _contratoAppServico = contratoAppServico;
             _estadoAppServico = estadoAppServico;
@@ -40,6 +43,7 @@ namespace RAHSys.Apresentacao.Controllers
             _equipeAppServico = equipeAppServico;
             _tipoAtividadeAppServico = tipoAtividadeAppServico;
             _atividadeAppServico = atividadeAppServico;
+            _usuarioAppServico = usuarioAppServico;
             ViewBag.Title = "Clientes/Contratos";
         }
 
@@ -371,6 +375,72 @@ namespace RAHSys.Apresentacao.Controllers
             }
         }
 
+        #region Atividades
+
+        public ActionResult Atividades(int id, int? codigo, string tipoAtividade, string usuario, string dataRealizacaoInicio,
+            string dataRealizacaoFim, string dataPrevistaInicio, string dataPrevistaFim, string realizada,
+            string ordenacao, bool? crescente, int? pagina, int? itensPagina)
+        {
+            ViewBag.SubTitle = "Contrato";
+            ViewBag.SubSubTitle = "Atividades";
+            ViewBag.TipoAtividade = tipoAtividade;
+            ViewBag.DataRealizacaoInicio = dataRealizacaoInicio;
+            ViewBag.DataRealizacaoFim = dataRealizacaoFim;
+            ViewBag.DataPrevistaInicio = dataPrevistaInicio;
+            ViewBag.DataPrevistaFim = dataPrevistaFim;
+            ViewBag.Realizada = realizada;
+            ViewBag.Ordenacao = ordenacao;
+            ViewBag.Crescente = crescente ?? true;
+            ViewBag.ItensPagina = itensPagina;
+            AtividadeContratoModel atividadeContratoModel = new AtividadeContratoModel();
+            try
+            {
+                atividadeContratoModel.TodasAtividadesSerializadas = ObterAtividadesContrato(id);
+                var contratoModel = _contratoAppServico.ObterPorId(id);
+                if (contratoModel == null)
+                {
+                    MensagemErro("Contrato não encontrado");
+                    return RedirectToAction("Index", "Contrato");
+                }
+                if (contratoModel.AnaliseInvestimento?.Cliente == null)
+                {
+                    MensagemErro("O contrato precisa estar assinado");
+                    return RedirectToAction("Index", "Contrato");
+                }
+                if (contratoModel.AnaliseInvestimento?.Cliente?.IdEquipe == null)
+                {
+                    MensagemErro("O contrato não possui equipe associada");
+                    return RedirectToAction("Index", "Contrato");
+                }
+
+                atividadeContratoModel.Contrato = contratoModel;
+                int idEquipe = (int)contratoModel.AnaliseInvestimento.Cliente.IdEquipe;
+                atividadeContratoModel.Equipe = _equipeAppServico.ObterPorId(idEquipe);
+
+                var listaTiposAtividade = ObterIdsTipoAtividade(tipoAtividade);
+                var resultadoRealidada = ObterRealizada(realizada);
+                var listaUsuarios = ObterIdsUsuario(usuario);
+                var consulta = _atividadeAppServico.Consultar(codigo != null ? new int[] { (int)codigo } : null,
+                    listaTiposAtividade,
+                    new[] { idEquipe },
+                    new[] { contratoModel.IdContrato },
+                    listaUsuarios,
+                    resultadoRealidada, dataRealizacaoInicio, dataRealizacaoFim, dataPrevistaInicio, dataPrevistaFim,
+                    ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? 40);
+
+                var resultado = new StaticPagedList<AtividadeAppModel>(consulta.Resultado, consulta.PaginaAtual, consulta.ItensPorPagina, consulta.TotalItens);
+
+                atividadeContratoModel.Atividades = resultado;
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+                return RedirectToAction("Index", "Contrato");
+            }
+
+            return View(atividadeContratoModel);
+        }
+
         public ActionResult AdicionarAtividade(int id)
         {
             ViewBag.SubTitle = "Adicionar nova Atividade";
@@ -445,7 +515,7 @@ namespace RAHSys.Apresentacao.Controllers
                 {
                     _atividadeAppServico.Adicionar(atividadePostModel.Atividade);
                     MensagemSucesso(MensagensPadrao.CadastroSucesso);
-                    return RedirectToAction("Contrato", "Atividade", new { id = atividadePostModel.Atividade.IdContrato });
+                    return RedirectToAction("Atividades", "Contrato", new { id = atividadePostModel.Atividade.IdContrato });
                 }
                 catch (CustomBaseException ex)
                 {
@@ -468,7 +538,7 @@ namespace RAHSys.Apresentacao.Controllers
                 if (atividade == null)
                 {
                     MensagemErro("Atividade não encontrada");
-                    return RedirectToAction("Contrato", "Atividade", new { id });
+                    return RedirectToAction("Atividades", "Contrato", new { id });
                 }
 
                 var contratoModel = _contratoAppServico.ObterPorId(id);
@@ -491,7 +561,7 @@ namespace RAHSys.Apresentacao.Controllers
                 if (atividade.IdContrato != contratoModel.IdContrato)
                 {
                     MensagemErro("Atividade não pertence ao contrato");
-                    return RedirectToAction("Contrato", "Atividade", new { id });
+                    return RedirectToAction("Atividades", "Contrato", new { id });
                 }
 
                 atividadeContratoAdicionarModel.Contrato = contratoModel;
@@ -518,7 +588,7 @@ namespace RAHSys.Apresentacao.Controllers
             if (atividade == null)
             {
                 MensagemErro("Atividade não encontrada");
-                return RedirectToAction("Contrato", "Atividade", new { id = idContrato });
+                return RedirectToAction("Atividades", "Contrato", new { id = idContrato });
             }
 
             var contratoModel = _contratoAppServico.ObterPorId(idContrato);
@@ -541,7 +611,7 @@ namespace RAHSys.Apresentacao.Controllers
             if (atividade.IdContrato != contratoModel.IdContrato)
             {
                 MensagemErro("Atividade não pertence ao contrato");
-                return RedirectToAction("Contrato", "Atividade", new { id = idContrato });
+                return RedirectToAction("Atividades", "Contrato", new { id = idContrato });
             }
 
             atividadeRetornoModel.Contrato = contratoModel;
@@ -555,7 +625,7 @@ namespace RAHSys.Apresentacao.Controllers
                 {
                     _atividadeAppServico.Atualizar(atividadePostModel.Atividade);
                     MensagemSucesso(MensagensPadrao.CadastroSucesso);
-                    return RedirectToAction("Contrato", "Atividade", new { id = idContrato });
+                    return RedirectToAction("Atividades", "Contrato", new { id = idContrato });
                 }
                 catch (CustomBaseException ex)
                 {
@@ -566,6 +636,47 @@ namespace RAHSys.Apresentacao.Controllers
 
             return View(atividadeRetornoModel);
         }
+
+        public string ObterAtividadesContrato(int id)
+        {
+            var consulta = _atividadeAppServico.Consultar(null, null, null,
+                new[] { id },
+                null, null, null, null,
+                null, null,
+                null, true, 1, Int32.MaxValue);
+            List<AtividadeAppModel> lista = consulta.Resultado.ToList();
+            lista.ForEach(item =>
+            {
+                item.Contrato = null;
+                item.Equipe = null;
+            });
+            return JsonConvert.SerializeObject(lista);
+        }
+
+        private static bool? ObterRealizada(string realizada)
+        {
+            if (string.IsNullOrEmpty(realizada))
+                return null;
+            return realizada == "1";
+        }
+
+        private List<int> ObterIdsTipoAtividade(string descricao)
+        {
+            if (string.IsNullOrEmpty(descricao))
+                return new List<int>();
+            var tipos = _tipoAtividadeAppServico.Consultar(null, descricao, null, true, 1, Int32.MaxValue);
+            return tipos.Resultado.Select(e => e.IdTipoAtividade).ToList();
+        }
+
+        private List<string> ObterIdsUsuario(string usuario)
+        {
+            if (string.IsNullOrEmpty(usuario))
+                return new List<string>();
+            var usuarios = _usuarioAppServico.Consultar(null, usuario, usuario, null, true, 1, Int32.MaxValue);
+            return usuarios.Resultado.Select(e => e.IdUsuario).ToList();
+        }
+
+        #endregion
 
         #region Métodos Aux
 

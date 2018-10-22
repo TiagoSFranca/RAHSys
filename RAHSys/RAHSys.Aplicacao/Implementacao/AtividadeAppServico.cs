@@ -23,7 +23,17 @@ namespace RAHSys.Aplicacao.Implementacao
         {
             try
             {
-                _atividadeServico.Adicionar(obj.MapearParaDominio());
+                if (obj != null && !obj.Realizada)
+                {
+                    obj.Observacao = null;
+                    obj.DataRealizacao = null;
+                }
+                var atividade = obj.MapearParaDominio();
+
+                if (string.IsNullOrEmpty(atividade.IdUsuario))
+                    atividade.IdUsuario = null;
+
+                _atividadeServico.Adicionar(atividade);
             }
             catch (CustomBaseException ex)
             {
@@ -76,7 +86,17 @@ namespace RAHSys.Aplicacao.Implementacao
         {
             try
             {
-                _atividadeServico.Atualizar(obj.MapearParaDominio());
+                if (obj != null && !obj.Realizada)
+                {
+                    obj.Observacao = null;
+                    obj.DataRealizacao = null;
+                }
+                var atividade = obj.MapearParaDominio();
+
+                if (string.IsNullOrEmpty(atividade.IdUsuario))
+                    atividade.IdUsuario = null;
+
+                _atividadeServico.Atualizar(atividade);
             }
             catch (CustomBaseException ex)
             {

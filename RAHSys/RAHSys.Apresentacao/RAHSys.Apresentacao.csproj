@@ -4043,10 +4043,10 @@
     <Content Include="Views\TipoAtividade\Excluir.cshtml" />
     <Content Include="Views\TipoAtividade\Index.cshtml" />
     <Content Include="Views\Atividade\Index.cshtml" />
-    <Content Include="Views\Atividade\Contrato.cshtml" />
     <Content Include="Views\Shared\_EquipeInfo.cshtml" />
     <Content Include="Views\Contrato\AdicionarAtividade.cshtml" />
     <Content Include="Views\Contrato\EditarAtividade.cshtml" />
+    <Content Include="Views\Contrato\Atividades.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,6 +1,6 @@
 ﻿$(function () {
-    ExibirRealizada($("#chkRealizada").prop('checked'));
-    $("#chkRealizada").change(function () {
+    ExibirRealizada($(".atividadeChkRealizada").prop('checked'));
+    $(".atividadeChkRealizada").change(function () {
         ExibirRealizada(this.checked);
     });
 });

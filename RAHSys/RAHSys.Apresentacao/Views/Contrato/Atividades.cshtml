@@ -82,13 +82,13 @@
                                             </a>
                                             <ul class="dropdown-menu pull-right">
                                                 <li>
-                                                    <a href="javascript:;" id="copiarAtividade">
+                                                    <a data-toggle="modal" href="#modalCopiarAtividade" id="copiarAtividade">
                                                         <i class="fa fa-copy"></i> Copiar
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a href="javascript:;" id="transferirAtividade">
-                                                        <i class="fa fa-exchange"></i> Transferir
+                                                        <i class="fa fa-exchange"></i> Transferir/Atribuir
                                                     </a>
                                                 </li>
                                                 <li>
@@ -186,7 +186,7 @@
                 </div>
             </div>
             <div class="portlet-body">
-                @using (Html.BeginForm("Contrato", "Atividade", FormMethod.Get, new { @id = "form-busca" }))
+                @using (Html.BeginForm("Atividades", "Contrato", FormMethod.Get, new { @id = "form-busca" }))
                 {
                     @Html.Hidden("contrato", Model.Contrato.IdContrato)
                     <div class="row">
@@ -368,9 +368,9 @@
                             </span>
                             <div class="text-center">
                                 @Html.PagedListPager(Model.Atividades,
-                               pagina => Url.Action("Contrato", "Atividade", new
+                               pagina => Url.Action("Atividades", "Contrato", new
                                {
-                                   id = Model.Contrato.IdContrato,
+                                    id = Model.Contrato.IdContrato,
                                    pagina,
                                    TipoAtividade = ViewBag.TipoAtividade,
                                    dataRealizacaoInicio = ViewBag.DataRealizacaoInicio,
@@ -411,10 +411,12 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                 <h4 class="modal-title">Finalizar Atividade</h4>
             </div>
-            @using (Html.BeginForm("FinalizarAtividadeContrato", "Atividade", FormMethod.Post, new { @class = "form-horizontal margin-bottom-40", @id = "formFinalizarAtividade" }))
+            @using (Html.BeginForm("FinalizarAtividade", "Atividade",
+                new { urlRetorno = Url.Action("Atividades", "Contrato", new { id = Model.Contrato.IdContrato }) },
+                FormMethod.Post, new { @class = "form-horizontal margin-bottom-40", @id = "formFinalizarAtividade" }))
             {
                 <div class="modal-body">
-                    @Html.Hidden("IdAtividade", null, new { @id = "idFinalizarAtividade" })
+                    @Html.Hidden("IdAtividade", null, new { @class = "idAtividade" })
                     <div class="form-group form-md-line-input atividadeRealizada">
                         @Html.Label("Data de Realizacao", new { @class = "col-md-2 control-label" })
                         <div class="col-md-9">
@@ -436,10 +438,82 @@
         </div>
     </div>
 </div>
+<div id="modalCopiarAtividade" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Copiar Atividade</h4>
+            </div>
+            @using (Html.BeginForm("CopiarAtividade", "Atividade",
+                    new { urlRetorno = Url.Action("Atividades", "Contrato", new { id = Model.Contrato.IdContrato }) },
+                    FormMethod.Post, new { @class = "form-horizontal margin-bottom-40", @id = "formCopiarAtividade" }))
+            {
+                <div class="modal-body">
+                    @Html.Hidden("IdAtividade", null, new { @class = "idAtividade" })
+                    <div class="form-group form-md-line-input">
+                        @Html.Label("Atribuido Para", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-4">
+                            @Html.DropDownList("IdUsuario", new SelectList(Model.Equipe.EquipeUsuarios, "IdUsuario", "Usuario.EmailEUserName"), "Selecione", new { @class = "form-control", @placeholder = "Atribuido Para" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.Label("Data Prevista", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.Editor("DataPrevista", new { htmlAttributes = new { @class = "form-control dataAtividade atividadeDataPrevista", @placeholder = "Data de Realização Prevista", @required = "required" } })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.Label("Descrição", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.TextArea("Descricao", new { @class = "form-control atividadeDescricao", @placeholder = "Descrição" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        <div class="col-md-9 col-md-offset-2">
+                            <div class="md-checkbox-inline">
+                                <div class="md-checkbox">
+                                    @Html.CheckBox("Realizada", new { @class = "md-check atividadeChkRealizada", @id = "chkRealizada" })
+                                    <label for="chkRealizada">
+                                        <span></span>
+                                        <span class="check"></span>
+                                        <span class="box"></span> Atividade Realizada
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input atividadeRealizada">
+                        @Html.Label("Data de Realização", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.Editor("DataRealizacao", new { htmlAttributes = new { @class = "form-control dataAtividade atividadeDataRealizacao", @placeholder = "Data de Realização", @id = "dataRealizacao" } })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input atividadeRealizada">
+                        @Html.Label("Observação", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.TextArea("Observacao", new { @class = "form-control atividadeObservacao", @placeholder = "Observações" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn yellow-haze btn-outline btn-circle btn-md">Cancelar</button>
+                    <button type="submit" class="btn blue btn-circle">Copiar</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
 <input type="hidden" value="@Model.TodasAtividadesSerializadas" id="atividades" />
 @section scripts{
     @Scripts.Render("~/Ordenacao/js")
     @Scripts.Render("~/Modal/js")
+    @Scripts.Render("~/Atividade/js")
     <script>
         function ObterSituacao(atividade) {
             $('#infoSituacao').html($("<span class=\"label label-" + atividade.SituacaoAtividade.Classe + "\"> " + atividade.SituacaoAtividade.Nome + "</span>"));
@@ -452,8 +526,15 @@
         }
 
         function ExibirAtividade(atividade) {
-            MontarFinalizarAtividade(atividade);
+            LimparFinalizarAtividadeForm(atividade);
+            LimparCopiarAtividadeForm(atividade);
+
             if (atividade != null) {
+                $('.idAtividade').val(atividade.IdAtividade)
+            }
+
+            if (atividade != null) {
+                PopularModais(atividade)
                 $('#codigoAtividade').html('#' + atividade.IdAtividade)
                 var $showInfoAtividade = $('#showInfoAtividade');
                 if ($showInfoAtividade.hasClass('expand'))
@@ -482,11 +563,26 @@
             }
         }
 
-        function MontarFinalizarAtividade(atividade) {
-            LimparForm('formFinalizarAtividade')
-            if (atividade != null) {
-                $('#idFinalizarAtividade').val(atividade.IdAtividade)
+        function PopularModais(atividade) {
+            $('.atividadeDataPrevista').val(ConverterData(atividade.DataPrevista));
+            $('.atividadeDescricao').val(atividade.Descricao);
+            SetRealizada(atividade.Realizada);
+            $('.atividadeDataRealizacao').val(ConverterData(atividade.DataRealizacao));
+            $('.atividadeObservacao').val(atividade.Observacao);
+        }
+
+        function SetRealizada(check) {
+            if (check == true && $('.atividadeChkRealizada').prop('checked') == false) {
+                $('.atividadeChkRealizada').click()
             }
+        }
+
+        function LimparFinalizarAtividadeForm(atividade) {
+            LimparForm('formFinalizarAtividade')
+        }
+
+        function LimparCopiarAtividadeForm(atividade) {
+            LimparForm('formCopiarAtividade')
         }
 
         function LimparForm(form) {

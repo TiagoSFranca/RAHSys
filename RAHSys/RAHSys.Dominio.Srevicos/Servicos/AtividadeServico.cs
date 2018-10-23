@@ -94,14 +94,22 @@ namespace RAHSys.Dominio.Servicos.Servicos
         {
             var atividade = _atividadeRepositorio.ObterPorId(idAtividade, true);
             atividade.DataRealizacao = dataRealizacao;
-            atividade.Observacao = observacao;
+            atividade.Observacao = observacao ?? string.Empty;
             atividade.Realizada = true;
+            _atividadeRepositorio.Atualizar(atividade);
+        }
+
+        public void TransferirAtividade(int idAtividade, string idUsuario)
+        {
+            var atividade = _atividadeRepositorio.ObterPorId(idAtividade, true);
+            atividade.IdUsuario = string.IsNullOrEmpty(idUsuario) ? null : idUsuario;
             _atividadeRepositorio.Atualizar(atividade);
         }
 
         private DateTime? ConvertStringToDate(string data)
         {
-            if (DateTime.TryParseExact(data, "d/M/yyyy", new CultureInfo("pt-BR"), DateTimeStyles.None, out DateTime dataConvertida))
+            DateTime dataConvertida;
+            if (DateTime.TryParseExact(data, "d/M/yyyy", new CultureInfo("pt-BR"), DateTimeStyles.None, out dataConvertida))
             {
                 return dataConvertida;
             }

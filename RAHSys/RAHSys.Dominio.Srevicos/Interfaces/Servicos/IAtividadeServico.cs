@@ -12,5 +12,6 @@ namespace RAHSys.Dominio.Servicos.Interfaces.Servicos
             string dataPrevistaInicio, string dataPrevistaFim,
             string ordenacao, bool crescente, int pagina, int quantidade);
         void FinalizarAtividade(int idAtividade, DateTime? dataRealizacao, string observacao);
+        void TransferirAtividade(int idAtividade, string idUsuario);
     }
 }

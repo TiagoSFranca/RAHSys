@@ -52,7 +52,7 @@ namespace RAHSys.Apresentacao.Attributes
                     };
 
                     contexto.Auditoria.Add(model);
-                    //contexto.SaveChanges();
+                    contexto.SaveChanges();
                 }
             }
         }

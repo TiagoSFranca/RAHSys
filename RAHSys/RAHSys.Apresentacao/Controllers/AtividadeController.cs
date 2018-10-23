@@ -79,8 +79,13 @@ namespace RAHSys.Apresentacao.Controllers
             var atividade = _atividadeAppServico.ObterPorId(atividadeApp.IdAtividade);
             try
             {
-                _atividadeAppServico.FinalizarAtividade(atividadeApp.IdAtividade, atividadeApp.DataRealizacao, atividadeApp.Observacao);
-                MensagemSucesso();
+                if (atividade == null)
+                    MensagemErro("Atividade não encontrada");
+                else
+                {
+                    _atividadeAppServico.FinalizarAtividade(atividadeApp.IdAtividade, atividadeApp.DataRealizacao, atividadeApp.Observacao);
+                    MensagemSucesso();
+                }
             }
             catch (CustomBaseException ex)
             {
@@ -105,6 +110,28 @@ namespace RAHSys.Apresentacao.Controllers
                     atividadeApp.IdContrato = atividade.IdContrato;
                     atividadeApp.IdEquipe = atividade.IdEquipe;
                     _atividadeAppServico.Adicionar(atividadeApp);
+                    MensagemSucesso();
+                }
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+            }
+
+            return Redirect(urlRetorno);
+        }
+
+        [HttpPost]
+        public ActionResult TransferirAtividade(AtividadeAppModel atividadeApp, string urlRetorno)
+        {
+            var atividade = _atividadeAppServico.ObterPorId(atividadeApp.IdAtividade);
+            try
+            {
+                if (atividade == null)
+                    MensagemErro("Atividade não encontrada");
+                else
+                {
+                    _atividadeAppServico.TransferirAtividade(atividadeApp.IdAtividade, atividadeApp.IdUsuario);
                     MensagemSucesso();
                 }
             }

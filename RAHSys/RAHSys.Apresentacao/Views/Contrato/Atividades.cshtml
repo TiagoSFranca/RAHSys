@@ -87,7 +87,7 @@
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a href="javascript:;" id="transferirAtividade">
+                                                    <a data-toggle="modal" href="#modalTransferirAtividade" id="transferirAtividade">
                                                         <i class="fa fa-exchange"></i> Transferir/Atribuir
                                                     </a>
                                                 </li>
@@ -417,13 +417,13 @@
             {
                 <div class="modal-body">
                     @Html.Hidden("IdAtividade", null, new { @class = "idAtividade" })
-                    <div class="form-group form-md-line-input atividadeRealizada">
+                    <div class="form-group form-md-line-input">
                         @Html.Label("Data de Realizacao", new { @class = "col-md-2 control-label" })
                         <div class="col-md-9">
                             @Html.Editor("DataRealizacao", new { htmlAttributes = new { @class = "form-control dataAtividade", @placeholder = "Data de Realização", @required = "required" } })
                         </div>
                     </div>
-                    <div class="form-group form-md-line-input atividadeRealizada">
+                    <div class="form-group form-md-line-input">
                         @Html.Label("Observacao", new { @class = "col-md-2 control-label" })
                         <div class="col-md-9">
                             @Html.TextArea("Observacao", new { @class = "form-control", @placeholder = "Observações" })
@@ -497,6 +497,35 @@
                         @Html.Label("Observação", new { @class = "col-md-2 control-label" })
                         <div class="col-md-9">
                             @Html.TextArea("Observacao", new { @class = "form-control atividadeObservacao", @placeholder = "Observações" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn yellow-haze btn-outline btn-circle btn-md">Cancelar</button>
+                    <button type="submit" class="btn blue btn-circle">Copiar</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div id="modalTransferirAtividade" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Transferir/Atribuir Atividade</h4>
+            </div>
+            @using (Html.BeginForm("TransferirAtividade", "Atividade",
+                    new { urlRetorno = Url.Action("Atividades", "Contrato", new { id = Model.Contrato.IdContrato }) },
+                    FormMethod.Post, new { @class = "form-horizontal margin-bottom-40", @id = "formCopiarAtividade" }))
+            {
+                <div class="modal-body">
+                    @Html.Hidden("IdAtividade", null, new { @class = "idAtividade" })
+                    <div class="form-group form-md-line-input">
+                        @Html.Label("Transferir/Atribuir Para", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-4">
+                            @Html.DropDownList("IdUsuario", new SelectList(Model.Equipe.EquipeUsuarios, "IdUsuario", "Usuario.EmailEUserName"), "Selecione", new { @class = "form-control", @placeholder = "Atribuido Para" })
                             <div class="form-control-focus"> </div>
                         </div>
                     </div>

@@ -294,7 +294,7 @@
                                     </th>
                                     <th onclick="ordenar('DataRealizacaoPrevista')">
                                         <a>
-                                            Data de Realização Prevista
+                                            Data Prevista
                                         </a>
                                     </th>
                                     <th onclick="ordenar('DataRealizacao')">
@@ -302,10 +302,8 @@
                                             Data de Realização
                                         </a>
                                     </th>
-                                    <th onclick="ordenar('Realizada')">
-                                        <a>
-                                            Tarefa Realizada
-                                        </a>
+                                    <th>
+                                        Status
                                     </th>
                                     <th>
                                         Descrição
@@ -344,7 +342,12 @@
                                             }
                                         </td>
                                         <td>
-                                            @(item.Realizada ? "Sim" : "Não")
+                                            @{
+                                                var situacao = item.SituacaoAtividade;
+                                            }
+                                            <span class="text-@situacao.Classe">
+                                                <strong>@situacao.Nome.ToUpper()</strong>
+                                            </span>
                                         </td>
                                         <td>
                                             <label class="btn blue btn-outline btn-circle btn-md tooltips" data-container="body" data-placement="top" data-original-title="@item.Descricao">
@@ -352,11 +355,36 @@
                                             </label>
                                         </td>
                                         <td class="text-right">
-                                            @Html.ActionLink("Alterar", "EditarAtividade", "Contrato", new { id = item.IdContrato, idAtividade = item.IdAtividade }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
+                                            <div class="btn-group">
+                                                <a class="btn grey-gallery btn-outline btn-circle btn-md" href="javascript:;" data-toggle="dropdown" aria-expanded="false">
+                                                    Ações
+                                                </a>
+                                                <ul class="dropdown-menu pull-right">
+                                                    <li>
+                                                        @Html.ActionLink("Alterar", "EditarAtividade", "Contrato", new { id = item.IdContrato, idAtividade = item.IdAtividade }, new { @class = "" })
+                                                    </li>
+                                                    <li>
+                                                        <a>
+                                                            Copiar
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a>
+                                                            Transferir/Atribuir
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a>
+                                                            Finalizar
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
                                             @Html.ActionLink("Excluir", "Excluir", "Atividade", new { id = item.IdAtividade }, new { @class = "btn red-flamingo btn-circle btn-md abrirModal" })
                                         </td>
                                     </tr>
-                                }
+                                                }
                             </tbody>
                         </table>
                     </div>
@@ -370,34 +398,34 @@
                                 @Html.PagedListPager(Model.Atividades,
                                pagina => Url.Action("Atividades", "Contrato", new
                                {
-                                    id = Model.Contrato.IdContrato,
+                                   id = Model.Contrato.IdContrato,
                                    pagina,
                                    TipoAtividade = ViewBag.TipoAtividade,
                                    dataRealizacaoInicio = ViewBag.DataRealizacaoInicio,
                                    dataRealizacaoFim = ViewBag.DataRealizacaoFim,
                                    dataPrevistaInicio = ViewBag.DataPrevistaInicio,
-                                   dataPrevistaFim= ViewBag.DataPrevistaFim,
+                                   dataPrevistaFim = ViewBag.DataPrevistaFim,
                                    realizada = ViewBag.Realizada,
                                    itensPagina = ViewBag.ItensPagina,
                                    ordenacao = ViewBag.Ordenacao,
-                                   crescente= ViewBag.Crescente
+                                   crescente = ViewBag.Crescente
                                }))
                             </div>
                         </div>
                     </div>
-                }
-                else
-                {
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-info">
-                                <h5 class="text-center">
-                                    Não foram encontrados resultados
-                                </h5>
-                            </div>
-                        </div>
-                    </div>
-                }
+                                                }
+                                                else
+                                                {
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="alert alert-info">
+                                                                <h5 class="text-center">
+                                                                    Não foram encontrados resultados
+                                                                </h5>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
             </div>
         </div>
     </div>

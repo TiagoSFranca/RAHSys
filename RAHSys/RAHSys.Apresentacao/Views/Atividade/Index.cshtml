@@ -144,8 +144,8 @@
                                             @item.Descricao
                                         </td>
                                         <td class="text-right">
-                                            @Html.ActionLink("Alterar", "Editar", "Atividade", new { id = item.IdAtividade }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
-                                            @Html.ActionLink("Excluir", "Excluir", "Atividade", new { id = item.IdAtividade }, new { @class = "btn red-flamingo btn-circle btn-md abrirModal" })
+                                            @*@Html.ActionLink("Alterar", "Editar", "Atividade", new { id = item.IdAtividade }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })*@
+                                            @Html.ActionLink("Excluir", "Excluir", "Atividade", new { id = item.IdAtividade, urlRetorno = Url.Action("Index", "Atividade") }, new { @class = "btn red-flamingo btn-circle btn-md abrirModal" })
                                         </td>
                                     </tr>
                                 }
@@ -160,11 +160,14 @@
                             </span>
                             <div class="text-center">
                                 @Html.PagedListPager(Model,
-                               pagina => Url.Action("Index", "Atividade", new {
-                                   pagina, localizacao = ViewBag.Localizacao, descricao = ViewBag.Descricao,
+                               pagina => Url.Action("Index", "Atividade", new
+                               {
+                                   pagina,
+                                   localizacao = ViewBag.Localizacao,
+                                   descricao = ViewBag.Descricao,
                                    itensPagina = ViewBag.ItensPagina,
                                    ordenacao = ViewBag.Ordenacao,
-                                   crescente= ViewBag.Crescente
+                                   crescente = ViewBag.Crescente
                                }))
                             </div>
                         </div>

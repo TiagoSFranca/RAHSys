@@ -4047,6 +4047,7 @@
     <Content Include="Views\Contrato\AdicionarAtividade.cshtml" />
     <Content Include="Views\Contrato\EditarAtividade.cshtml" />
     <Content Include="Views\Contrato\Atividades.cshtml" />
+    <Content Include="Views\Atividade\Excluir.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

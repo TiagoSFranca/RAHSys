@@ -76,9 +76,9 @@ namespace RAHSys.Apresentacao.Controllers
         [HttpPost]
         public ActionResult FinalizarAtividade(AtividadeAppModel atividadeApp, string urlRetorno)
         {
-            var atividade = _atividadeAppServico.ObterPorId(atividadeApp.IdAtividade);
             try
             {
+                var atividade = _atividadeAppServico.ObterPorId(atividadeApp.IdAtividade);
                 if (atividade == null)
                     MensagemErro("Atividade não encontrada");
                 else
@@ -98,9 +98,9 @@ namespace RAHSys.Apresentacao.Controllers
         [HttpPost]
         public ActionResult CopiarAtividade(AtividadeAppModel atividadeApp, string urlRetorno)
         {
-            var atividade = _atividadeAppServico.ObterPorId(atividadeApp.IdAtividade);
             try
             {
+                var atividade = _atividadeAppServico.ObterPorId(atividadeApp.IdAtividade);
                 if (atividade == null)
                     MensagemErro("Atividade não encontrada");
                 else
@@ -124,14 +124,58 @@ namespace RAHSys.Apresentacao.Controllers
         [HttpPost]
         public ActionResult TransferirAtividade(AtividadeAppModel atividadeApp, string urlRetorno)
         {
-            var atividade = _atividadeAppServico.ObterPorId(atividadeApp.IdAtividade);
             try
             {
+                var atividade = _atividadeAppServico.ObterPorId(atividadeApp.IdAtividade);
                 if (atividade == null)
                     MensagemErro("Atividade não encontrada");
                 else
                 {
                     _atividadeAppServico.TransferirAtividade(atividadeApp.IdAtividade, atividadeApp.IdUsuario);
+                    MensagemSucesso();
+                }
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+            }
+
+            return Redirect(urlRetorno);
+        }
+
+        [HttpGet]
+        public ActionResult Excluir(int id, string urlRetorno)
+        {
+            ViewBag.SubTitle = "Excluir Atividade";
+            ViewBag.UrlRetorno = urlRetorno;
+            try
+            {
+                var atividade = _atividadeAppServico.ObterPorId(id);
+                if (atividade == null)
+                {
+                    MensagemErro("Atividade não encontrada");
+                    return Redirect(urlRetorno);
+                }
+                return View(atividade);
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+            }
+            return Redirect(urlRetorno);
+        }
+
+        [HttpPost]
+        public ActionResult Excluir(AtividadeAppModel atividadeApp, string urlRetorno)
+        {
+            try
+            {
+                var atividade = _atividadeAppServico.ObterPorId(atividadeApp.IdAtividade);
+                if (atividade == null)
+                    MensagemErro("Atividade não encontrada");
+                else
+                {
+                    _atividadeAppServico.Remover(atividadeApp.IdAtividade);
                     MensagemSucesso();
                 }
             }

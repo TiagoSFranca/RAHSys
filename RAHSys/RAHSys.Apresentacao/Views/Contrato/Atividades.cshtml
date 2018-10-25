@@ -188,71 +188,71 @@
             <div class="portlet-body">
                 @using (Html.BeginForm("Atividades", "Contrato", FormMethod.Get, new { @id = "form-busca" }))
                 {
-                @Html.Hidden("contrato", Model.Contrato.IdContrato)
-                <div class="row">
-                    <div class="col-md-1">
-                        <div class="form-group form-md-line-input has-success">
-                            @Html.Editor("codigo", new { htmlAttributes = new { @class = "form-control", @placeholder = "Código", @type = "number" } })
-                            <div class="form-control-focus"> </div>
+                    @Html.Hidden("contrato", Model.Contrato.IdContrato)
+                    <div class="row">
+                        <div class="col-md-1">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.Editor("codigo", new { htmlAttributes = new { @class = "form-control", @placeholder = "Código", @type = "number" } })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.Editor("tipoAtividade", new { htmlAttributes = new { @class = "form-control", @placeholder = "Tipo de Atividade" } })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.Editor("usuario", new { htmlAttributes = new { @class = "form-control", @placeholder = "Atribuido Para" } })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.DropDownList("realizada", EnumHelper.GetSelectList(typeof(SimOuNaoEnum)), "Realizada", new { @class = "form-control" })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.Editor("dataRealizacaoInicio", new { htmlAttributes = new { @class = "form-control dataAtividade", @placeholder = "Data de Realização Início" } })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.Editor("dataRealizacaoFim", new { htmlAttributes = new { @class = "form-control dataAtividade", @placeholder = "Data de Realização Fim" } })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.Editor("dataPrevistaInicio", new { htmlAttributes = new { @class = "form-control dataAtividade", @placeholder = "Data de Realização Prevista Início" } })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.Editor("dataPrevistaFim", new { htmlAttributes = new { @class = "form-control dataAtividade", @placeholder = "Data de Realização Prevista Fim" } })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.DropDownList("itensPagina", EnumHelper.GetSelectList(typeof(ItensPorPaginaEnum)), "Itens Por Página", new { @class = "form-control" })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        @Html.Hidden("ordenacao", (string)ViewBag.Ordenacao)
+                        @Html.Hidden("crescente", (bool)ViewBag.Crescente)
+                        <div class="col-md-3">
+                            <div class="form-group form-md-line-input ">
+                                <button type="submit" class="btn blue btn-circle">Buscar</button>
+                                @Html.ActionLink("Limpar", "Atividades", "Contrato", new { id = Model.Contrato.IdContrato }, new { @class = "btn btn-white btn-outline btn-circle btn-md" })
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <div class="form-group form-md-line-input has-success">
-                            @Html.Editor("tipoAtividade", new { htmlAttributes = new { @class = "form-control", @placeholder = "Tipo de Atividade" } })
-                            <div class="form-control-focus"> </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group form-md-line-input has-success">
-                            @Html.Editor("usuario", new { htmlAttributes = new { @class = "form-control", @placeholder = "Atribuido Para" } })
-                            <div class="form-control-focus"> </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group form-md-line-input has-success">
-                            @Html.DropDownList("realizada", EnumHelper.GetSelectList(typeof(SimOuNaoEnum)), "Realizada", new { @class = "form-control" })
-                            <div class="form-control-focus"> </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group form-md-line-input has-success">
-                            @Html.Editor("dataRealizacaoInicio", new { htmlAttributes = new { @class = "form-control dataAtividade", @placeholder = "Data de Realização Início" } })
-                            <div class="form-control-focus"> </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group form-md-line-input has-success">
-                            @Html.Editor("dataRealizacaoFim", new { htmlAttributes = new { @class = "form-control dataAtividade", @placeholder = "Data de Realização Fim" } })
-                            <div class="form-control-focus"> </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group form-md-line-input has-success">
-                            @Html.Editor("dataPrevistaInicio", new { htmlAttributes = new { @class = "form-control dataAtividade", @placeholder = "Data de Realização Prevista Início" } })
-                            <div class="form-control-focus"> </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group form-md-line-input has-success">
-                            @Html.Editor("dataPrevistaFim", new { htmlAttributes = new { @class = "form-control dataAtividade", @placeholder = "Data de Realização Prevista Fim" } })
-                            <div class="form-control-focus"> </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group form-md-line-input has-success">
-                            @Html.DropDownList("itensPagina", EnumHelper.GetSelectList(typeof(ItensPorPaginaEnum)), "Itens Por Página", new { @class = "form-control" })
-                            <div class="form-control-focus"> </div>
-                        </div>
-                    </div>
-                    @Html.Hidden("ordenacao", (string)ViewBag.Ordenacao)
-                    @Html.Hidden("crescente", (bool)ViewBag.Crescente)
-                    <div class="col-md-3">
-                        <div class="form-group form-md-line-input ">
-                            <button type="submit" class="btn blue btn-circle">Buscar</button>
-                            @Html.ActionLink("Limpar", "Atividades", "Contrato", new { id = Model.Contrato.IdContrato }, new { @class = "btn btn-white btn-outline btn-circle btn-md" })
-                        </div>
-                    </div>
-                </div>
                 }
             </div>
         </div>
@@ -331,14 +331,14 @@
                                             @if (item.DataPrevista != null)
                                             {
                                                 data = (DateTime)item.DataPrevista;
-                                            @data.ToString("dd/MM/yyyy")
+                                                @data.ToString("dd/MM/yyyy")
                                             }
                                         </td>
                                         <td>
                                             @if (item.DataRealizacao != null)
                                             {
                                                 data = (DateTime)item.DataRealizacao;
-                                            @data.ToString("dd/MM/yyyy")
+                                                @data.ToString("dd/MM/yyyy")
                                             }
                                         </td>
                                         <td>
@@ -381,11 +381,11 @@
                                                     </li>
                                                     @if (!item.Realizada)
                                                     {
-                                                    <li>
-                                                        <a data-toggle="modal" href="#modalFinalizarAtividade" class="btn grey-gallery btn-outline inputFinalizarAtividade" data-atividade="@atividadeSerializada">
-                                                            Finalizar
-                                                        </a>
-                                                    </li>
+                                                        <li>
+                                                            <a data-toggle="modal" href="#modalFinalizarAtividade" class="btn grey-gallery btn-outline inputFinalizarAtividade" data-atividade="@atividadeSerializada">
+                                                                Finalizar
+                                                            </a>
+                                                        </li>
                                                     }
                                                 </ul>
                                             </div>
@@ -441,264 +441,14 @@
 </div>
 
 @*Modais*@
-<div id="modalFinalizarAtividade" class="modal fade" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">Finalizar Atividade</h4>
-            </div>
-            @using (Html.BeginForm("FinalizarAtividade", "Atividade",
-                new { urlRetorno = Url.Action("Atividades", "Contrato", new { id = Model.Contrato.IdContrato }) },
-                FormMethod.Post, new { @class = "form-horizontal margin-bottom-40", @id = "formFinalizarAtividade" }))
-            {
-            <div class="modal-body">
-                @Html.Hidden("IdAtividade", null, new { @class = "idAtividade" })
-                <div class="form-group form-md-line-input">
-                    @Html.Label("Data de Realizacao", new { @class = "col-md-2 control-label" })
-                    <div class="col-md-9">
-                        @Html.Editor("DataRealizacao", new { htmlAttributes = new { @class = "form-control dataAtividade", @placeholder = "Data de Realização", @required = "required" } })
-                    </div>
-                </div>
-                <div class="form-group form-md-line-input">
-                    @Html.Label("Observacao", new { @class = "col-md-2 control-label" })
-                    <div class="col-md-9">
-                        @Html.TextArea("Observacao", new { @class = "form-control", @placeholder = "Observações" })
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn yellow-haze btn-outline btn-circle btn-md">Cancelar</button>
-                <button type="submit" class="btn blue btn-circle">Finalizar</button>
-            </div>
-            }
-        </div>
-    </div>
-</div>
-<div id="modalCopiarAtividade" class="modal fade" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">Copiar Atividade</h4>
-            </div>
-            @using (Html.BeginForm("CopiarAtividade", "Atividade",
-                    new { urlRetorno = Url.Action("Atividades", "Contrato", new { id = Model.Contrato.IdContrato }) },
-                    FormMethod.Post, new { @class = "form-horizontal margin-bottom-40", @id = "formCopiarAtividade" }))
-            {
-            <div class="modal-body">
-                @Html.Hidden("IdAtividade", null, new { @class = "idAtividade" })
-                <div class="form-group form-md-line-input">
-                    @Html.Label("Atribuido Para", new { @class = "col-md-3 control-label" })
-                    <div class="col-md-8">
-                        @Html.DropDownList("IdUsuario", new SelectList(Model.Equipe.EquipeUsuarios, "IdUsuario", "Usuario.EmailEUserName"), "Selecione", new { @class = "form-control", @placeholder = "Atribuido Para" })
-                        <div class="form-control-focus"> </div>
-                    </div>
-                </div>
-                <div class="form-group form-md-line-input">
-                    @Html.Label("Data Prevista", new { @class = "col-md-3 control-label" })
-                    <div class="col-md-8">
-                        @Html.Editor("DataPrevista", new { htmlAttributes = new { @class = "form-control dataAtividade atividadeDataPrevista", @placeholder = "Data de Realização Prevista", @required = "required" } })
-                        <div class="form-control-focus"> </div>
-                    </div>
-                </div>
-                <div class="form-group form-md-line-input">
-                    @Html.Label("Descrição", new { @class = "col-md-3 control-label" })
-                    <div class="col-md-8">
-                        @Html.TextArea("Descricao", new { @class = "form-control atividadeDescricao", @placeholder = "Descrição" })
-                        <div class="form-control-focus"> </div>
-                    </div>
-                </div>
-                <div class="form-group form-md-line-input">
-                    <div class="col-md-8 col-md-offset-3">
-                        <div class="md-checkbox-inline">
-                            <div class="md-checkbox">
-                                @Html.CheckBox("Realizada", new { @class = "md-check atividadeChkRealizada", @id = "chkRealizada" })
-                                <label for="chkRealizada">
-                                    <span></span>
-                                    <span class="check"></span>
-                                    <span class="box"></span> Atividade Realizada
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group form-md-line-input atividadeRealizada">
-                    @Html.Label("Data de Realização", new { @class = "col-md-3 control-label" })
-                    <div class="col-md-8">
-                        @Html.Editor("DataRealizacao", new { htmlAttributes = new { @class = "form-control dataAtividade atividadeDataRealizacao", @placeholder = "Data de Realização", @id = "dataRealizacao" } })
-                        <div class="form-control-focus"> </div>
-                    </div>
-                </div>
-                <div class="form-group form-md-line-input atividadeRealizada">
-                    @Html.Label("Observação", new { @class = "col-md-3 control-label" })
-                    <div class="col-md-8">
-                        @Html.TextArea("Observacao", new { @class = "form-control atividadeObservacao", @placeholder = "Observações" })
-                        <div class="form-control-focus"> </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn yellow-haze btn-outline btn-circle btn-md">Cancelar</button>
-                <button type="submit" class="btn blue btn-circle">Copiar</button>
-            </div>
-            }
-        </div>
-    </div>
-</div>
-<div id="modalTransferirAtividade" class="modal fade" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">Transferir/Atribuir Atividade</h4>
-            </div>
-            @using (Html.BeginForm("TransferirAtividade", "Atividade",
-                    new { urlRetorno = Url.Action("Atividades", "Contrato", new { id = Model.Contrato.IdContrato }) },
-                    FormMethod.Post, new { @class = "form-horizontal margin-bottom-40", @id = "formCopiarAtividade" }))
-            {
-                <div class="modal-body">
-                    @Html.Hidden("IdAtividade", null, new { @class = "idAtividade" })
-                    <div class="form-group form-md-line-input">
-                        @Html.Label("Transferir/Atribuir Para", new { @class = "col-md-3 control-label" })
-                        <div class="col-md-8">
-                            @Html.DropDownList("IdUsuario", new SelectList(Model.Equipe.EquipeUsuarios, "IdUsuario", "Usuario.EmailEUserName"), "Selecione", new { @class = "form-control", @placeholder = "Atribuido Para" })
-                            <div class="form-control-focus"> </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" data-dismiss="modal" class="btn yellow-haze btn-outline btn-circle btn-md">Cancelar</button>
-                    <button type="submit" class="btn blue btn-circle">Transferir/Atribuir</button>
-                </div>
-            }
-        </div>
-    </div>
-</div>
+@Html.Partial("_ModalFinalizarAtividade")
+@Html.Partial("_ModalCopiarAtividade")
+@Html.Partial("_ModalTransferirAtividade")
 <input type="hidden" value="@Model.TodasAtividadesSerializadas" id="atividades" />
+<input type="hidden" value="@Url.Action("Atividades", "Contrato", new { id = Model.Contrato.IdContrato })" id="inputUrlRetorno" />
 @section scripts{
     @Scripts.Render("~/Ordenacao/js")
     @Scripts.Render("~/Modal/js")
     @Scripts.Render("~/Atividade/js")
-    <script>
-        function ObterSituacao(atividade) {
-            $('#infoSituacao').html($("<span class=\"label label-" + atividade.SituacaoAtividade.Classe + "\"> " + atividade.SituacaoAtividade.Nome + "</span>"));
-        }
-
-        function ConverterData(data) {
-            if (data == null)
-                return "";
-            return moment(new Date(data)).format("DD/MM/YYYY");
-        }
-
-        function ExibirAtividade(atividade) {
-
-            if (atividade != null) {
-                $('#copiarAtividade').data('atividade', atividade);
-                $('#transferirAtividade').data('atividade', atividade);
-                $('#finalizarAtividade').data('atividade', atividade);
-                $('#codigoAtividade').html('#' + atividade.IdAtividade)
-                var $showInfoAtividade = $('#showInfoAtividade');
-                if ($showInfoAtividade.hasClass('expand'))
-                    $showInfoAtividade.click();
-                ObterSituacao(atividade);
-                $('#divInfoAtividade').show();
-                $('#tipoAtividade').val(atividade.TipoAtividade.Descricao);
-                $('#dataPrevista').val(ConverterData(atividade.DataPrevista));
-                $('#dataRealizada').val(ConverterData(atividade.DataRealizacao));
-                if (atividade.Usuario != null)
-                    $('#atribuidoPara').val(atividade.Usuario.EmailEUserName)
-                if (atividade.Realizada) {
-                    $('.atividade-realizada').show();
-                    $('#finalizarAtividade').hide();
-                }
-                else {
-                    $('#finalizarAtividade').show();
-                    $('.atividade-realizada').hide();
-                }
-                $('#descricao').val(atividade.Descricao);
-                $('#observacao').val(atividade.Observacao);
-            } else {
-                $('#codigoAtividade').html('')
-                $('#divInfoAtividade').hide();
-                $('#finalizarAtividade').hide();
-            }
-        }
-
-        function PopularModais(atividade) {
-            LimparFinalizarAtividadeForm(atividade);
-            LimparCopiarAtividadeForm(atividade);
-            $('.idAtividade').val(atividade.IdAtividade)
-            $('.atividadeDataPrevista').val(ConverterData(atividade.DataPrevista));
-            $('.atividadeDescricao').val(atividade.Descricao);
-            SetRealizada(atividade.Realizada);
-            $('.atividadeDataRealizacao').val(ConverterData(atividade.DataRealizacao));
-            $('.atividadeObservacao').val(atividade.Observacao);
-        }
-
-        function SetRealizada(check) {
-            if (check == true && $('.atividadeChkRealizada').prop('checked') == false) {
-                $('.atividadeChkRealizada').click()
-            }
-        }
-
-        function LimparFinalizarAtividadeForm(atividade) {
-            LimparForm('formFinalizarAtividade')
-        }
-
-        function LimparCopiarAtividadeForm(atividade) {
-            LimparForm('formCopiarAtividade')
-        }
-
-        function LimparForm(form) {
-            $('#' + form).find("input, textarea").val("")
-        }
-
-        $(function () {
-            ExibirAtividade(null);
-            var $atividades = JSON.parse($('#atividades').val());
-            var $events = [];
-            $.each($atividades, function (key, item) {
-                $events.push(
-                    {
-                        title: item.TipoAtividade.Descricao,
-                        start: item.DataPrevista,
-                        atividade: item,
-                        color: item.SituacaoAtividade.BGCor
-                    })
-            });
-            var initialLocaleCode = 'pt-br';
-            $('#calendar').fullCalendar({
-                header: {
-                    left: '',
-                    center: 'title',
-                    right: 'prev,next today'
-                },
-                lang: initialLocaleCode,
-                defaultView: 'month',
-                buttonIcons: true,
-                eventLimit: true,
-                editable: true,
-                events: $events
-            });
-            var calendar = $('#calendar').fullCalendar('getCalendar');
-            calendar.on('eventClick', function (data) {
-                ExibirAtividade(data.atividade);
-            });
-
-            $('.calendario-portlet').addClass('portlet-collapsed');
-
-            $('.inputCopiarAtividade').click(function () {
-                PopularModais($(this).data('atividade'));
-            });
-
-            $('.inputTransferirAtividade').click(function () {
-                PopularModais($(this).data('atividade'));
-            });
-
-            $('.inputFinalizarAtividade').click(function () {
-                PopularModais($(this).data('atividade'));
-            });
-        });
-    </script>
+    @Scripts.Render("~/Atividade/Contrato/js")
 }

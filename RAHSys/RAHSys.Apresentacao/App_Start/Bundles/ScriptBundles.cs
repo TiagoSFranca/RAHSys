@@ -99,6 +99,10 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
             bundles.Add(new ScriptBundle("~/Atividade/js").Include(
                 "~/Scripts/atividade.js"
                 ));
+
+            bundles.Add(new ScriptBundle("~/Atividade/Contrato/js").Include(
+                "~/Scripts/contratoAtividade.js"
+                ));
         }
     }
 }

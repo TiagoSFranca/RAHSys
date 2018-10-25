@@ -648,7 +648,11 @@ namespace RAHSys.Apresentacao.Controllers
             lista.ForEach(item =>
             {
                 item.Contrato = null;
-                item.Equipe = null;
+                item.Equipe.Lider.UsuarioPerfis = null;
+                item.Equipe.EquipeUsuarios.ForEach(eu =>
+                    {
+                        eu.Usuario.UsuarioPerfis = null;
+                    });
             });
             return JsonConvert.SerializeObject(lista);
         }

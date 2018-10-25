@@ -1,0 +1,31 @@
+﻿<div id="modalTransferirAtividade" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Transferir/Atribuir Atividade</h4>
+            </div>
+            @using (Html.BeginForm("TransferirAtividade", "Atividade", null,
+                    FormMethod.Post, new { @class = "form-horizontal margin-bottom-40", @id = "formCopiarAtividade" }))
+            {
+                @Html.Hidden("urlRetorno", null, new { @class = "urlRetorno" })
+                <div class="modal-body">
+                    @Html.Hidden("IdAtividade", null, new { @class = "idAtividade" })
+                    <div class="form-group form-md-line-input">
+                        @Html.Label("Transferir/Atribuir Para", new { @class = "col-md-3 control-label" })
+                        <div class="col-md-8">
+                            <select class="form-control atividadeUsuario" name="IdUsuario" placeholder="Atribuido Para">
+                                <option value="">Selecione</option>
+                            </select>
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn yellow-haze btn-outline btn-circle btn-md">Cancelar</button>
+                    <button type="submit" class="btn blue btn-circle">Transferir/Atribuir</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

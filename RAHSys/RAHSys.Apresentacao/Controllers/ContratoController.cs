@@ -6,6 +6,7 @@ using RAHSys.Aplicacao.Interfaces;
 using RAHSys.Apresentacao.Attributes;
 using RAHSys.Apresentacao.Models;
 using RAHSys.Extras;
+using RAHSys.Extras.Enums;
 using RAHSys.Infra.CrossCutting.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -63,7 +64,7 @@ namespace RAHSys.Apresentacao.Controllers
             contratoIndex.Estados = estados;
             try
             {
-                var consulta = _contratoAppServico.Consultar(codigo != null ? new int[] { (int)codigo } : null, estado != null ? new int[] { (int)estado } : null, nomeEmpresa, receita, cidade, ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? 40);
+                var consulta = _contratoAppServico.Consultar(codigo != null ? new int[] { (int)codigo } : null, estado != null ? new int[] { (int)estado } : null, nomeEmpresa, receita, cidade, ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? (int)ItensPorPaginaEnum.MEDIO);
                 contratoIndex.Dados = new StaticPagedList<ContratoAppModel>(consulta.Resultado, consulta.PaginaAtual, consulta.ItensPorPagina, consulta.TotalItens);
                 return View(contratoIndex);
             }
@@ -426,7 +427,7 @@ namespace RAHSys.Apresentacao.Controllers
                     new[] { contratoModel.IdContrato },
                     listaUsuarios,
                     resultadoRealidada, dataRealizacaoInicio, dataRealizacaoFim, dataPrevistaInicio, dataPrevistaFim,
-                    ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? 40);
+                    ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? (int)ItensPorPaginaEnum.MEDIO);
 
                 var resultado = new StaticPagedList<AtividadeAppModel>(consulta.Resultado, consulta.PaginaAtual, consulta.ItensPorPagina, consulta.TotalItens);
 
@@ -444,7 +445,7 @@ namespace RAHSys.Apresentacao.Controllers
         public ActionResult AdicionarAtividade(int id)
         {
             ViewBag.SubTitle = "Adicionar nova Atividade";
-            var atividadeContratoAdicionarModel = MontarAtividadeContratoAdicionar();
+            var atividadeContratoAdicionarModel = MontarAtividadeContratoAdicionarEditar();
             try
             {
                 var contratoModel = _contratoAppServico.ObterPorId(id);
@@ -486,7 +487,7 @@ namespace RAHSys.Apresentacao.Controllers
         public ActionResult AdicionarAtividade(AtividadeContratoAdicionarEditarModel atividadePostModel)
         {
             ViewBag.SubTitle = "Adicionar nova Atividade";
-            var atividadeRetornoModel = MontarAtividadeContratoAdicionar();
+            var atividadeRetornoModel = MontarAtividadeContratoAdicionarEditar();
             atividadeRetornoModel.Atividade = atividadePostModel.Atividade;
             var contratoModel = _contratoAppServico.ObterPorId(atividadePostModel.Atividade.IdContrato);
             if (contratoModel == null)
@@ -530,7 +531,7 @@ namespace RAHSys.Apresentacao.Controllers
         public ActionResult EditarAtividade(int id, int idAtividade)
         {
             ViewBag.SubTitle = "Editar Atividade";
-            var atividadeContratoAdicionarModel = MontarAtividadeContratoAdicionar();
+            var atividadeContratoAdicionarModel = MontarAtividadeContratoAdicionarEditar();
             try
             {
                 var atividade = _atividadeAppServico.ObterPorId(idAtividade);
@@ -581,7 +582,7 @@ namespace RAHSys.Apresentacao.Controllers
         public ActionResult EditarAtividade(AtividadeContratoAdicionarEditarModel atividadePostModel)
         {
             ViewBag.SubTitle = "Adicionar nova Atividade";
-            var atividadeRetornoModel = MontarAtividadeContratoAdicionar();
+            var atividadeRetornoModel = MontarAtividadeContratoAdicionarEditar();
             atividadeRetornoModel.Atividade = atividadePostModel.Atividade;
             var atividade = atividadePostModel.Atividade;
             int idContrato = atividadePostModel.Atividade.IdContrato;
@@ -684,7 +685,7 @@ namespace RAHSys.Apresentacao.Controllers
 
         #region Métodos Aux
 
-        private AtividadeContratoAdicionarEditarModel MontarAtividadeContratoAdicionar()
+        private AtividadeContratoAdicionarEditarModel MontarAtividadeContratoAdicionarEditar()
         {
             var atividadeContratoAdicionarModel = new AtividadeContratoAdicionarEditarModel();
             atividadeContratoAdicionarModel.TipoAtividades = _tipoAtividadeAppServico.ListarTodos();

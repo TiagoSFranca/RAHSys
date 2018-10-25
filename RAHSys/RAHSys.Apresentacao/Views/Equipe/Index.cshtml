@@ -89,26 +89,27 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                <tr>
-                                    <td>
-                                        @item.IdEquipe
-                                    </td>
-                                    <td>
-                                        @item.Lider.EmailEUserName
-                                    </td>
-                                    <td>
-                                        @Html.Raw(item.ObterEquipe())
-                                    </td>
-                                    <td>
-                                        <label class="btn blue btn-outline btn-circle btn-md tooltips" data-container="body" data-html="true" data-placement="auto" data-original-title="@item.Descricao.Replace("\n","<br>")">
-                                            <i class="fa fa-eye"></i>
-                                        </label>
-                                    </td>
-                                    <td class="text-right">
-                                        @Html.ActionLink("Alterar", "Editar", "Equipe", new { id = item.IdEquipe }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
-                                        @Html.ActionLink("Excluir", "Excluir", "Equipe", new { id = item.IdEquipe }, new { @class = "btn red-flamingo btn-circle btn-md abrirModal" })
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>
+                                            @item.IdEquipe
+                                        </td>
+                                        <td>
+                                            @item.Lider.EmailEUserName
+                                        </td>
+                                        <td>
+                                            @Html.Raw(item.ObterEquipe())
+                                        </td>
+                                        <td>
+                                            <label class="btn blue btn-outline btn-circle btn-md tooltips" data-container="body" data-html="true" data-placement="auto" data-original-title="@item.Descricao.Replace("\n","<br>")">
+                                                <i class="fa fa-eye"></i>
+                                            </label>
+                                        </td>
+                                        <td class="text-right">
+                                            @Html.ActionLink("Atividades", "Atividades", "Equipe", new { id = item.IdEquipe }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
+                                            @Html.ActionLink("Alterar", "Editar", "Equipe", new { id = item.IdEquipe }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
+                                            @Html.ActionLink("Excluir", "Excluir", "Equipe", new { id = item.IdEquipe }, new { @class = "btn red-flamingo btn-circle btn-md abrirModal" })
+                                        </td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>

@@ -5,6 +5,6 @@ namespace RAHSys.Dominio.Servicos.Interfaces.Servicos
 {
     public interface ICidadeServico : IServicoBase<CidadeModel>
     {
-        List<CidadeModel> ObterCidadesPorEstado(int idEstado);
+        IEnumerable<CidadeModel> ObterCidadesPorEstado(int idEstado);
     }
 }

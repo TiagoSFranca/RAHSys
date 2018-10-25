@@ -173,5 +173,24 @@ namespace RAHSys.Aplicacao.Implementacao
                 throw nex;
             }
         }
+
+        public List<ContratoAppModel> ListarPorEquipe(int idEquipe)
+        {
+            try
+            {
+                return _contratoServico.ListarPorEquipe(idEquipe).Select(e => e.MapearParaAplicacao()).ToList();
+            }
+            catch (CustomBaseException ex)
+            {
+                LogExceptions(ex);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                var nex = new CustomBaseException(ex);
+                LogExceptions(nex);
+                throw nex;
+            }
+        }
     }
 }

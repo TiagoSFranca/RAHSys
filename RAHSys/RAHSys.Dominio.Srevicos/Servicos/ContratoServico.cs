@@ -82,7 +82,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
                     query = crescente ? query.OrderBy(c => c.NomeEmpresa) : query.OrderByDescending(c => c.NomeEmpresa);
                     break;
                 case "receita":
-                    query = crescente ? query.OrderBy(e => (e.AnaliseInvestimento.ConsumoTotal * e.AnaliseInvestimento.Tarifa)) 
+                    query = crescente ? query.OrderBy(e => (e.AnaliseInvestimento.ConsumoTotal * e.AnaliseInvestimento.Tarifa))
                         : query.OrderByDescending(e => (e.AnaliseInvestimento.ConsumoTotal * e.AnaliseInvestimento.Tarifa));
                     break;
                 case "cidade":
@@ -162,6 +162,13 @@ namespace RAHSys.Dominio.Servicos.Servicos
             if (contrato?.Excluido == true)
                 return null;
             return contrato;
+        }
+
+        public IEnumerable<ContratoModel> ListarPorEquipe(int idEquipe)
+        {
+            var query = _contratoRepositorio.Consultar();
+            query = query.Where(e => e.AnaliseInvestimento.Cliente.IdEquipe == idEquipe);
+            return query.ToList();
         }
     }
 }

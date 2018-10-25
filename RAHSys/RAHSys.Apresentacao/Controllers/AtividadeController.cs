@@ -4,6 +4,7 @@ using RAHSys.Aplicacao.AppModels;
 using RAHSys.Aplicacao.Interfaces;
 using RAHSys.Apresentacao.Models;
 using RAHSys.Extras;
+using RAHSys.Extras.Enums;
 using RAHSys.Infra.CrossCutting.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -62,7 +63,7 @@ namespace RAHSys.Apresentacao.Controllers
                     listaContratos,
                     listaUsuarios,
                     resultadoRealidada, dataRealizacaoInicio, dataRealizacaoFim, dataPrevistaInicio, dataPrevistaFim,
-                    ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? 40);
+                    ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? (int)ItensPorPaginaEnum.MEDIO);
                 var resultado = new StaticPagedList<AtividadeAppModel>(consulta.Resultado, consulta.PaginaAtual, consulta.ItensPorPagina, consulta.TotalItens);
                 return View(resultado);
             }

@@ -13,5 +13,6 @@ namespace RAHSys.Aplicacao.Interfaces
         void AdicionarFichaCliente(ClienteAppModel cliente);
 
         void AdicionarDocumento(int idContrato, ArquivoAppModel arquivo);
+        List<ContratoAppModel> ListarPorEquipe(int idEquipe);
     }
 }

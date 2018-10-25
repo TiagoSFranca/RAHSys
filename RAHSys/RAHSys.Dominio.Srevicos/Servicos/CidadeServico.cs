@@ -15,7 +15,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
             _cidadeRepositorio = cidadeRepositorio;
         }
 
-        public List<CidadeModel> ObterCidadesPorEstado(int idEstado)
+        public IEnumerable<CidadeModel> ObterCidadesPorEstado(int idEstado)
         {
             var query = _cidadeRepositorio.Consultar();
             return query.Where(c => c.IdEstado == idEstado).ToList();

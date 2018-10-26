@@ -67,6 +67,7 @@
     <Compile Include="EntityConfig\LogErrorConfiguracao.cs" />
     <Compile Include="EntityConfig\PagamentoConfiguracao.cs" />
     <Compile Include="EntityConfig\PerfilConfiguracao.cs" />
+    <Compile Include="EntityConfig\ResponsavelFinanceiroConfiguracao.cs" />
     <Compile Include="EntityConfig\TipoContatoConfiguracao.cs" />
     <Compile Include="EntityConfig\TipoTelhadoConfiguracao.cs" />
     <Compile Include="EntityConfig\UsuarioConfiguracao.cs" />
@@ -115,9 +116,13 @@
     <Compile Include="Migrations\201810031615348_Adicionado Tarifa a AnaliseInvestimento.Designer.cs">
       <DependentUpon>201810031615348_Adicionado Tarifa a AnaliseInvestimento.cs</DependentUpon>
     </Compile>
-	<Compile Include="Migrations\201810012043256_AtualizacaoAuditoria.cs" />
+    <Compile Include="Migrations\201810012043256_AtualizacaoAuditoria.cs" />
     <Compile Include="Migrations\201810012043256_AtualizacaoAuditoria.Designer.cs">
       <DependentUpon>201810012043256_AtualizacaoAuditoria.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810261131588_Criacao da Tabela ResponsavelFinanceiro.cs" />
+    <Compile Include="Migrations\201810261131588_Criacao da Tabela ResponsavelFinanceiro.Designer.cs">
+      <DependentUpon>201810261131588_Criacao da Tabela ResponsavelFinanceiro.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.cs" />
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.Designer.cs">
@@ -161,6 +166,7 @@
     <Compile Include="Repositorios\EstadoCivilRepositorio.cs" />
     <Compile Include="Repositorios\EstadoRepositorio.cs" />
     <Compile Include="Repositorios\RepositorioBase.cs" />
+    <Compile Include="Repositorios\ResponsavelFinanceiroRepositorio.cs" />
     <Compile Include="Repositorios\TipoContatoRepositorio.cs" />
     <Compile Include="Repositorios\TipoTelhadoRepository.cs" />
     <Compile Include="Repositorios\UsuarioRepositorio.cs" />
@@ -218,8 +224,11 @@
     <EmbeddedResource Include="Migrations\201810031615348_Adicionado Tarifa a AnaliseInvestimento.resx">
       <DependentUpon>201810031615348_Adicionado Tarifa a AnaliseInvestimento.cs</DependentUpon>
     </EmbeddedResource>
-	<EmbeddedResource Include="Migrations\201810012043256_AtualizacaoAuditoria.resx">
+    <EmbeddedResource Include="Migrations\201810012043256_AtualizacaoAuditoria.resx">
       <DependentUpon>201810012043256_AtualizacaoAuditoria.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810261131588_Criacao da Tabela ResponsavelFinanceiro.resx">
+      <DependentUpon>201810261131588_Criacao da Tabela ResponsavelFinanceiro.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\Audit\201808101838532_CriacaoDBAudit.resx">
       <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>

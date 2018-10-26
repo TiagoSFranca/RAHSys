@@ -13,5 +13,6 @@ namespace RAHSys.Entidades.Entidades
         public virtual EquipeModel Equipe { get; set; }
 
         public virtual ICollection<FiadorModel> Fiadores { get; set; }
+        public virtual ResponsavelFinanceiroModel ResponsavelFinanceiro { get; set; }
     }
 }

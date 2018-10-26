@@ -10,7 +10,7 @@ namespace RAHSys.Infra.Dados.Repositorios
         public void Adicionar(ClienteModel obj)
         {
             var fiadores = obj.Fiadores;
-
+            var responsavelFinanceiro = obj.ResponsavelFinanceiro;
             obj.Fiadores = null;
 
             _context.Cliente.Add(obj);

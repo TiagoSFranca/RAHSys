@@ -21,6 +21,9 @@ namespace RAHSys.Infra.Dados.EntityConfig
             HasRequired(c => c.AnaliseInvestimento)
                 .WithRequiredDependent(cc => cc.Cliente);
 
+            HasRequired(c => c.ResponsavelFinanceiro)
+                .WithRequiredPrincipal(rf => rf.Cliente);
+
             HasMany(e => e.Fiadores)
                 .WithRequired(es => es.Cliente)
                 .HasForeignKey(es => es.IdCliente)

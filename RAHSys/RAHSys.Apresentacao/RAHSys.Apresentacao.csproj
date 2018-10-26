@@ -1121,6 +1121,7 @@
     <Content Include="Views\Equipe\Excluir.cshtml" />
     <Content Include="Views\Equipe\Editar.cshtml" />
     <Content Include="Views\Account\RegisterRole.cshtml" />
+    <Content Include="Views\Contrato\EditarResponsavelFinanceiro.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

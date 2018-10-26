@@ -1,0 +1,70 @@
+﻿@model  RAHSys.Apresentacao.Models.ResponsavelFinanceiroEditar
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart font-dark hide"></i>
+                    <span class="caption-subject font-green-steel uppercase bold">Contrato</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                @{Html.RenderPartial("_ContratoInfo", Model.Contrato);}
+            </div>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("EditarResponsavelFinanceiro", "Contrato", FormMethod.Post, new { @class = "form-horizontal margin-bottom-40" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ResponsavelFinanceiro.IdResponsavelFinanceiro)
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart font-dark hide"></i>
+                        <span class="caption-subject font-green-steel uppercase bold">@ViewBag.SubSubTitle</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(model => model.ResponsavelFinanceiro.Nome, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.ResponsavelFinanceiro.Nome, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome do(a) Responsável Financeiro", @required = "required" } })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(model => model.ResponsavelFinanceiro.Email, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-5">
+                            @Html.EditorFor(model => model.ResponsavelFinanceiro.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.ResponsavelFinanceiro.Email, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                        @Html.LabelFor(m => m.ResponsavelFinanceiro.Telefone, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-2">
+                            @Html.EditorFor(model => model.ResponsavelFinanceiro.Telefone, new { htmlAttributes = new { @class = "form-control telefone", @placeholder = "Telefone" } })
+                            @Html.ValidationMessageFor(model => model.ResponsavelFinanceiro.Telefone, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" class="btn blue btn-circle">Salvar</button>
+                            @Html.ActionLink("Limpar", "EditarResponsavelFinanceiro", "Contrato", new { id = Model.Contrato.IdContrato }, new { @class = "btn btn-white btn-outline btn-circle btn-md" })
+                            @Html.ActionLink("Cancelar", "Index", "Contrato", null, new { @class = "btn yellow-haze btn-outline btn-circle btn-md" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section scripts{
+}

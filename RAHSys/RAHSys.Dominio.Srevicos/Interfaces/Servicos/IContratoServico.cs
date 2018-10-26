@@ -14,5 +14,6 @@ namespace RAHSys.Dominio.Servicos.Interfaces.Servicos
         void AdicionarFichaCliente(ClienteModel clienteModel);
 
         void AdicionarDocumento(int idContrato, ArquivoModel arquivo);
+        void AtualizarResponsavelFinanceiro(ResponsavelFinanceiroModel responsavelFinanceiroModel);
     }
 }

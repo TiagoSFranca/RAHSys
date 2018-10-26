@@ -36,6 +36,16 @@ namespace RAHSys.Aplicacao.Extensoes
             return AutoMapper.Mapper.Map<ClienteAppModel>(obj);
         }
 
+        public static ResponsavelFinanceiroModel MapearParaDominio(this ResponsavelFinanceiroAppModel obj)
+        {
+            return AutoMapper.Mapper.Map<ResponsavelFinanceiroModel>(obj);
+        }
+
+        public static ResponsavelFinanceiroAppModel MapearParaAplicacao(this ResponsavelFinanceiroModel obj)
+        {
+            return AutoMapper.Mapper.Map<ResponsavelFinanceiroAppModel>(obj);
+        }
+
         public static ArquivoModel MapearParaDominio(this ArquivoAppModel obj)
         {
             return AutoMapper.Mapper.Map<ArquivoModel>(obj);

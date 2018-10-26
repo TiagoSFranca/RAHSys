@@ -435,6 +435,15 @@
             if ($('#error').val()) {
                 displayMessage($('#error').val(), 'error');
             }
+
+            $('.table-scrollable').on('show.bs.dropdown', function () {
+                $('.table-scrollable').css("overflow", "inherit");
+            });
+
+            $('.table-scrollable').on('hide.bs.dropdown', function () {
+                $('.table-scrollable').css("overflow", "auto");
+            })
+
         });
     </script>
 </body>

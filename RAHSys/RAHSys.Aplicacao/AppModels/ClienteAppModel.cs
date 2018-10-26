@@ -18,5 +18,6 @@ namespace RAHSys.Aplicacao.AppModels
         public int IdEquipe { get; set; }
 
         public virtual List<FiadorAppModel> Fiadores { get; set; }
+        public virtual ResponsavelFinanceiroAppModel ResponsavelFinanceiro { get; set; }
     }
 }

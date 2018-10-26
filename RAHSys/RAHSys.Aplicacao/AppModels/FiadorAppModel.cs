@@ -17,7 +17,6 @@ namespace RAHSys.Aplicacao.AppModels
 
         public bool Conjuge { get; set; }
 
-        [Required]
         [Display(Name = "Telefone")]
         [MaxLength(20)]
         public string Telefone { get; set; }

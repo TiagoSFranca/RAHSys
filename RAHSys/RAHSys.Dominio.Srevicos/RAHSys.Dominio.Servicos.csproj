@@ -56,6 +56,7 @@
     <Compile Include="Interfaces\Repositorios\IEstadoCivilRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IEstadoRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioBase.cs" />
+    <Compile Include="Interfaces\Repositorios\IResponsavelFinanceiroRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\ITipoAtividadeRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\ITipoContatoRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\ITipoTelhadoRepositorio.cs" />

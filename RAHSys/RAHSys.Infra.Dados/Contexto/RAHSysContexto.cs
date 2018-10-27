@@ -33,6 +33,7 @@ namespace RAHSys.Infra.Dados.Contexto
         public DbSet<UsuarioPerfilModel> UsuarioPerfil { get; set; }
         public DbSet<EquipeModel> Equipe { get; set; }
         public DbSet<EquipeUsuarioModel> EquipeUsuario { get; set; }
+        public DbSet<ResponsavelFinanceiroModel> ResponsavelFinanceiro { get; set; }
         public DbSet<TipoAtividadeModel> TipoAtividade { get; set; }
         public DbSet<AtividadeModel> Atividade { get; set; }
 
@@ -77,6 +78,7 @@ namespace RAHSys.Infra.Dados.Contexto
             modelBuilder.Configurations.Add(new UsuarioPerfilConfiguracao());
             modelBuilder.Configurations.Add(new EquipeConfiguracao());
             modelBuilder.Configurations.Add(new EquipeUsuarioConfiguracao());
+            modelBuilder.Configurations.Add(new ResponsavelFinanceiroConfiguracao());
             modelBuilder.Configurations.Add(new TipoAtividadeConfiguracao());
             modelBuilder.Configurations.Add(new AtividadeConfiguracao());
         }

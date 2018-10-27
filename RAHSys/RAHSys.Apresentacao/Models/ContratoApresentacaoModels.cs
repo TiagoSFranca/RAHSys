@@ -59,4 +59,10 @@ namespace RAHSys.Apresentacao.Models
             Equipes = new List<EquipeAppModel>();
         }
     }
+
+    public class ResponsavelFinanceiroEditar
+    {
+        public ContratoAppModel Contrato { get; set; }
+        public ResponsavelFinanceiroAppModel ResponsavelFinanceiro { get; set; }
+    }
 }

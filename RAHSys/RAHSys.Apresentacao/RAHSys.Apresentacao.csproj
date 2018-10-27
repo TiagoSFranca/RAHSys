@@ -4052,6 +4052,7 @@
     <Content Include="Views\Shared\_ModalCopiarAtividade.cshtml" />
     <Content Include="Views\Shared\_ModalFinalizarAtividade.cshtml" />
     <Content Include="Views\Shared\_ModalTransferirAtividade.cshtml" />
+    <Content Include="Views\Contrato\EditarResponsavelFinanceiro.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -135,7 +135,7 @@ namespace RAHSys.Apresentacao.Controllers
             }
 
             var retorno = MontarAnaliseInvestimento();
-            retorno.AnaliseInvestimento = new AnaliseInvestimentoAppModel() { IdContrato = id };
+            retorno.AnaliseInvestimento = new AnaliseInvestimentoAppModel() { IdContrato = id, NomeCliente = contratoModel.NomeEmpresa };
 
             return View(retorno);
         }
@@ -199,7 +199,14 @@ namespace RAHSys.Apresentacao.Controllers
             }
 
             var retorno = MontarFichaCliente(id);
-            retorno.Cliente = new ClienteAppModel() { IdAnaliseInvestimento = id };
+            retorno.Cliente = new ClienteAppModel()
+            {
+                IdAnaliseInvestimento = id,
+                ResponsavelFinanceiro = new ResponsavelFinanceiroAppModel()
+                {
+                    IdResponsavelFinanceiro = id
+                }
+            };
 
             return View(retorno);
         }
@@ -374,6 +381,71 @@ namespace RAHSys.Apresentacao.Controllers
                 MensagemErro(ex.Mensagem);
                 return RedirectToAction("Index");
             }
+        }
+
+        [HttpGet]
+        [RAHAuthorize(Roles = "Comercial")]
+        public ActionResult EditarResponsavelFinanceiro(int id)
+        {
+            ViewBag.SubTitle = "Editar Contrato";
+            ViewBag.SubSubTitle = "Responsável Financeiro";
+
+            try
+            {
+                var contratoModel = _contratoAppServico.ObterPorId(id);
+                if (contratoModel == null)
+                {
+                    MensagemErro("Contrato não encontrado");
+                    return RedirectToAction("Index");
+                }
+
+                if (contratoModel.AnaliseInvestimento == null)
+                {
+
+                    MensagemErro("Necessário adicionar análise de investimento");
+                    return RedirectToAction("Index");
+                }
+
+                if (contratoModel.AnaliseInvestimento.Cliente == null)
+                {
+                    MensagemErro("Necessário adicionar ficha do cliente");
+                    return RedirectToAction("Index");
+                }
+                ResponsavelFinanceiroEditar responsavelFinanceiroEditar = new ResponsavelFinanceiroEditar();
+                responsavelFinanceiroEditar.Contrato = contratoModel;
+                var responsavelFinanceiro = contratoModel.AnaliseInvestimento.Cliente.ResponsavelFinanceiro;
+                responsavelFinanceiroEditar.ResponsavelFinanceiro = responsavelFinanceiro ?? new ResponsavelFinanceiroAppModel() { IdResponsavelFinanceiro = id };
+                return View(responsavelFinanceiroEditar);
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpPost]
+        [RAHAuthorize(Roles = "Comercial")]
+        public ActionResult EditarResponsavelFinanceiro(ResponsavelFinanceiroEditar responsavelFinanceiroPost)
+        {
+            ResponsavelFinanceiroEditar responsavelFinanceiroEditar = new ResponsavelFinanceiroEditar();
+            responsavelFinanceiroEditar.Contrato = _contratoAppServico.ObterPorId(responsavelFinanceiroPost.ResponsavelFinanceiro.IdResponsavelFinanceiro);
+            responsavelFinanceiroEditar.ResponsavelFinanceiro = responsavelFinanceiroPost.ResponsavelFinanceiro;
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _contratoAppServico.AtualizarResponsavelFinanceiro(responsavelFinanceiroPost.ResponsavelFinanceiro);
+                    MensagemSucesso();
+                    return RedirectToAction("Index", "Contrato");
+                }
+                catch (CustomBaseException ex)
+                {
+                    MensagemErro(ex.Mensagem);
+                    return View(responsavelFinanceiroEditar);
+                }
+            }
+            return View(responsavelFinanceiroEditar);
         }
 
         #region Atividades
@@ -651,9 +723,9 @@ namespace RAHSys.Apresentacao.Controllers
                 item.Contrato = null;
                 item.Equipe.Lider.UsuarioPerfis = null;
                 item.Equipe.EquipeUsuarios.ForEach(eu =>
-                    {
-                        eu.Usuario.UsuarioPerfis = null;
-                    });
+                {
+                    eu.Usuario.UsuarioPerfis = null;
+                });
             });
             return JsonConvert.SerializeObject(lista);
         }

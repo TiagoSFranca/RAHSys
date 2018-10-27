@@ -174,6 +174,25 @@ namespace RAHSys.Aplicacao.Implementacao
             }
         }
 
+        public void AtualizarResponsavelFinanceiro(ResponsavelFinanceiroAppModel responsavelFinanceiro)
+        {
+            try
+            {
+                _contratoServico.AtualizarResponsavelFinanceiro(responsavelFinanceiro.MapearParaDominio());
+            }
+            catch (CustomBaseException ex)
+            {
+                LogExceptions(ex);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                var nex = new CustomBaseException(ex);
+                LogExceptions(nex);
+                throw nex;
+            }
+        }
+
         public List<ContratoAppModel> ListarPorEquipe(int idEquipe)
         {
             try

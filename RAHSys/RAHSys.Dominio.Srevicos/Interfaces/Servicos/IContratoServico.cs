@@ -15,6 +15,8 @@ namespace RAHSys.Dominio.Servicos.Interfaces.Servicos
 
         void AdicionarDocumento(int idContrato, ArquivoModel arquivo);
 
+        void AtualizarResponsavelFinanceiro(ResponsavelFinanceiroModel responsavelFinanceiroModel);
+
         IEnumerable<ContratoModel> ListarPorEquipe(int idEquipe);
     }
 }

@@ -50,6 +50,7 @@
     <Compile Include="AppModels\FiadorEnderecoAppModel.cs" />
     <Compile Include="AppModels\PagamentoAppModel.cs" />
     <Compile Include="AppModels\PerfilAppModel.cs" />
+    <Compile Include="AppModels\ResponsavelFinanceiroAppModel.cs" />
     <Compile Include="AppModels\TipoAtividadeAppModel.cs" />
     <Compile Include="AppModels\TipoContatoAppModel.cs" />
     <Compile Include="AppModels\TipoTelhadoAppModel.cs" />

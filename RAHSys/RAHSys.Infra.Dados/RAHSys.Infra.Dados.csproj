@@ -71,6 +71,7 @@
     <Compile Include="EntityConfig\ResponsavelFinanceiroConfiguracao.cs" />
     <Compile Include="EntityConfig\TipoAtividadeConfiguracao.cs" />
     <Compile Include="EntityConfig\TipoContatoConfiguracao.cs" />
+    <Compile Include="EntityConfig\TipoRecorrenciaConfiguracao.cs" />
     <Compile Include="EntityConfig\TipoTelhadoConfiguracao.cs" />
     <Compile Include="EntityConfig\UsuarioConfiguracao.cs" />
     <Compile Include="EntityConfig\UsuarioPerfilConfiguracao.cs" />
@@ -138,6 +139,10 @@
     <Compile Include="Migrations\201810271239391_Merge.Designer.cs">
       <DependentUpon>201810271239391_Merge.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810271348356_Criacao da tabela TipoRecorrencia.cs" />
+    <Compile Include="Migrations\201810271348356_Criacao da tabela TipoRecorrencia.Designer.cs">
+      <DependentUpon>201810271348356_Criacao da tabela TipoRecorrencia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.cs" />
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.Designer.cs">
       <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>
@@ -188,6 +193,7 @@
     <Compile Include="Repositorios\ResponsavelFinanceiroRepositorio.cs" />
     <Compile Include="Repositorios\TipoAtividadeRepositorio.cs" />
     <Compile Include="Repositorios\TipoContatoRepositorio.cs" />
+    <Compile Include="Repositorios\TipoRecorrenciaRepositorio.cs" />
     <Compile Include="Repositorios\TipoTelhadoRepository.cs" />
     <Compile Include="Repositorios\UsuarioRepositorio.cs" />
   </ItemGroup>
@@ -258,6 +264,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810271239391_Merge.resx">
       <DependentUpon>201810271239391_Merge.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810271348356_Criacao da tabela TipoRecorrencia.resx">
+      <DependentUpon>201810271348356_Criacao da tabela TipoRecorrencia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\Audit\201808101838532_CriacaoDBAudit.resx">
       <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>

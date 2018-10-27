@@ -36,6 +36,7 @@ namespace RAHSys.Infra.Dados.Contexto
         public DbSet<ResponsavelFinanceiroModel> ResponsavelFinanceiro { get; set; }
         public DbSet<TipoAtividadeModel> TipoAtividade { get; set; }
         public DbSet<AtividadeModel> Atividade { get; set; }
+        public DbSet<TipoRecorrenciaModel> TipoRecorrencia { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -81,6 +82,7 @@ namespace RAHSys.Infra.Dados.Contexto
             modelBuilder.Configurations.Add(new ResponsavelFinanceiroConfiguracao());
             modelBuilder.Configurations.Add(new TipoAtividadeConfiguracao());
             modelBuilder.Configurations.Add(new AtividadeConfiguracao());
+            modelBuilder.Configurations.Add(new TipoRecorrenciaConfiguracao());
         }
     }
 }

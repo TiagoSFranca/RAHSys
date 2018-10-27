@@ -64,11 +64,13 @@
     <Compile Include="Entidades\ResponsavelFinanceiroModel.cs" />
     <Compile Include="Entidades\TipoAtividadeModel.cs" />
     <Compile Include="Entidades\TipoContatoModel.cs" />
+    <Compile Include="Entidades\TipoRecorrenciaModel.cs" />
     <Compile Include="Entidades\TipoTelhadoModel.cs" />
     <Compile Include="Entidades\UsuarioModel.cs" />
     <Compile Include="Entidades\UsuarioPerfilModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Seeds\EstadoCivilSeed.cs" />
+    <Compile Include="Seeds\TipoRecorrenciaSeed.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

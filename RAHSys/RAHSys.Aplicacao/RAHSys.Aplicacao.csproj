@@ -53,6 +53,7 @@
     <Compile Include="AppModels\ResponsavelFinanceiroAppModel.cs" />
     <Compile Include="AppModels\TipoAtividadeAppModel.cs" />
     <Compile Include="AppModels\TipoContatoAppModel.cs" />
+    <Compile Include="AppModels\TipoRecorrenciaAppModel.cs" />
     <Compile Include="AppModels\TipoTelhadoAppModel.cs" />
     <Compile Include="AppModels\UsuarioAppModel.cs" />
     <Compile Include="AppModels\UsuarioPerfilAppModel.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Extensoes\PagamentoExtensao.cs" />
     <Compile Include="Extensoes\TipoAtividadeExtensao.cs" />
     <Compile Include="Extensoes\TIpoContatoExtensao.cs" />
+    <Compile Include="Extensoes\TipoRecorrenciaExtensao.cs" />
     <Compile Include="Extensoes\TipoTelhadoExtensao.cs" />
     <Compile Include="Extensoes\UsuarioExtensao.cs" />
     <Compile Include="Implementacao\AppServicoAuditoriaBase.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="Implementacao\PagamentoAppServico.cs" />
     <Compile Include="Implementacao\TipoAtividadeAppServico.cs" />
     <Compile Include="Implementacao\TipoContatoAppServico.cs" />
+    <Compile Include="Implementacao\TipoRecorrenciaAppServico.cs" />
     <Compile Include="Implementacao\TipoTelhadoAppServico.cs" />
     <Compile Include="Implementacao\UsuarioAppServico.cs" />
     <Compile Include="Interfaces\IAppServicoBase.cs" />
@@ -98,6 +101,7 @@
     <Compile Include="Interfaces\IPagamentoAppServico.cs" />
     <Compile Include="Interfaces\ITipoAtividadeAppServico.cs" />
     <Compile Include="Interfaces\ITipoContatoAppServico.cs" />
+    <Compile Include="Interfaces\ITipoRecorrenciaAppServico.cs" />
     <Compile Include="Interfaces\ITipoTelhadoAppServico.cs" />
     <Compile Include="Interfaces\IUsuarioAppServico.cs" />
     <Compile Include="Mapeamento\AtividadeMapeamento.cs" />
@@ -112,6 +116,7 @@
     <Compile Include="Mapeamento\EstadoMapeamento.cs" />
     <Compile Include="Mapeamento\TipoAtividadeMapeamento.cs" />
     <Compile Include="Mapeamento\TipoContatoMapeamento.cs" />
+    <Compile Include="Mapeamento\TipoRecorrenciaMapeamento.cs" />
     <Compile Include="Mapeamento\TipoTelhadoMapeamento.cs" />
     <Compile Include="Mapeamento\UsuarioMapeamento.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

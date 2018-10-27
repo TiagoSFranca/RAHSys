@@ -36,6 +36,8 @@ namespace RAHSys.Apresentacao.AutoMapper
                 x.AddProfile(new TipoAtividadeMapeamento());
 
                 x.AddProfile(new AtividadeMapeamento());
+
+                x.AddProfile(new TipoRecorrenciaMapeamento());
             });
         }
     }

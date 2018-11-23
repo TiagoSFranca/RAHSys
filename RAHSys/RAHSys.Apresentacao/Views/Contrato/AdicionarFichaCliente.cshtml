@@ -11,6 +11,7 @@
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Cliente.IdAnaliseInvestimento)
+    @Html.HiddenFor(model => model.Cliente.ResponsavelFinanceiro.IdResponsavelFinanceiro)
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="portlet light ">
@@ -144,6 +145,41 @@
                 <div class="portlet-title">
                     <div class="caption caption-md">
                         <i class="icon-bar-chart font-dark hide"></i>
+                        <span class="caption-subject font-green-steel uppercase bold">Responsável Financeiro</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(model => model.Cliente.ResponsavelFinanceiro.Nome, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Cliente.ResponsavelFinanceiro.Nome, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome do(a) Responsável Financeiro", @required = "required" } })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.Cliente.ResponsavelFinanceiro.Email, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-5">
+                            @Html.EditorFor(model => model.Cliente.ResponsavelFinanceiro.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.Cliente.ResponsavelFinanceiro.Email, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                        @Html.LabelFor(m => m.Cliente.ResponsavelFinanceiro.Telefone, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-2">
+                            @Html.EditorFor(model => model.Cliente.ResponsavelFinanceiro.Telefone, new { htmlAttributes = new { @class = "form-control telefone", @placeholder = "Telefone" } })
+                            @Html.ValidationMessageFor(model => model.Cliente.ResponsavelFinanceiro.Telefone, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart font-dark hide"></i>
                         <span class="caption-subject font-green-steel uppercase bold">Documentos</span>
                     </div>
                 </div>
@@ -163,51 +199,51 @@
                     </div>
                     @if (Model?.Contrato?.Documentos?.Count() > 0)
                     {
-                        <div class="form-group form-md-line-input">
-                            <div class="col-md-2 control-label">
-                                <div class="caption caption-md">
-                                    <i class="icon-bar-chart font-dark hide"></i>
-                                    <span class="caption-subject font-green-steel uppercase bold">Histórico</span>
-                                </div>
+                    <div class="form-group form-md-line-input">
+                        <div class="col-md-2 control-label">
+                            <div class="caption caption-md">
+                                <i class="icon-bar-chart font-dark hide"></i>
+                                <span class="caption-subject font-green-steel uppercase bold">Histórico</span>
                             </div>
                         </div>
-                        <div class="table-scrollable">
-                            <table class="table table-hover table-light">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            #
-                                        </th>
-                                        <th>
-                                            Nome do Arquivo
-                                        </th>
-                                        <th>
-                                            Data Cadastro
-                                        </th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.Contrato.Documentos.OrderByDescending(e => e.DataUpload))
+                    </div>
+                    <div class="table-scrollable">
+                        <table class="table table-hover table-light">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        #
+                                    </th>
+                                    <th>
+                                        Nome do Arquivo
+                                    </th>
+                                    <th>
+                                        Data Cadastro
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Contrato.Documentos.OrderByDescending(e => e.DataUpload))
                                     {
-                                        <tr>
-                                            <td>
-                                                @item.IdDocumento
-                                            </td>
-                                            <td>
-                                                @item.NomeArquivo
-                                            </td>
-                                            <td>
-                                                @item.DataUpload
-                                            </td>
-                                            <td class="text-right">
-                                                @Html.ActionLink("Visualizar", "VisualizarContrato", "Contrato", new { id = item.IdDocumento }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md", target = "_blank" })
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td>
+                                            @item.IdDocumento
+                                        </td>
+                                        <td>
+                                            @item.NomeArquivo
+                                        </td>
+                                        <td>
+                                            @item.DataUpload
+                                        </td>
+                                        <td class="text-right">
+                                            @Html.ActionLink("Visualizar", "VisualizarContrato", "Contrato", new { id = item.IdDocumento }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md", target = "_blank" })
+                                        </td>
+                                    </tr>
                                     }
-                                </tbody>
-                            </table>
-                        </div>
+                            </tbody>
+                        </table>
+                    </div>
                     }
                 </div>
             </div>
@@ -287,15 +323,15 @@
                         </div>
                     </div>
                     <div class="form-group form-md-line-input">
+                        @Html.Label("Estado", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-3">
+                            @Html.DropDownListFor(m => m.Cliente.Fiadores[0].FiadorEndereco.Endereco.Cidade.IdEstado, new SelectList(Model.Estados, "IdEstado", "Descricao"), "Selecione", new { @class = "form-control", @placeholder = "Estado", @onchange = "buscarCidades(this.value,\"ddlCidadesFiador\")" })
+                            <div class="form-control-focus"> </div>
+                        </div>
                         @Html.LabelFor(m => m.Cliente.Fiadores[0].FiadorEndereco.Endereco.IdCidade, new { @class = "col-md-2 control-label" })
                         <div class="col-md-4">
                             @Html.DropDownListFor(model => model.Cliente.Fiadores[0].FiadorEndereco.Endereco.IdCidade, new SelectList(Model.CidadesFiador, "IdCidade", "Nome"), new { @class = "form-control", @placeholder = "Cidade", @required = "required", @id = "ddlCidadesFiador" })
                             @Html.ValidationMessageFor(model => model.Cliente.Fiadores[0].FiadorEndereco.Endereco.IdCidade, "", new { @class = "text-danger" })
-                            <div class="form-control-focus"> </div>
-                        </div>
-                        @Html.Label("Estado", new { @class = "col-md-2 control-label" })
-                        <div class="col-md-3">
-                            @Html.DropDownListFor(m => m.Cliente.Fiadores[0].FiadorEndereco.Endereco.Cidade.IdEstado, new SelectList(Model.Estados, "IdEstado", "Descricao"), "Selecione", new { @class = "form-control", @placeholder = "Estado", @onchange = "buscarCidades(this.value,\"ddlCidadesFiador\")" })
                             <div class="form-control-focus"> </div>
                         </div>
                     </div>
@@ -380,15 +416,15 @@
                         </div>
                     </div>
                     <div class="form-group form-md-line-input">
+                        @Html.Label("Estado", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-3">
+                            @Html.DropDownListFor(m => m.Cliente.Fiadores[1].FiadorEndereco.Endereco.Cidade.IdEstado, new SelectList(Model.Estados, "IdEstado", "Descricao"), "Selecione", new { @class = "form-control", @placeholder = "Estado", @onchange = "buscarCidades(this.value,\"ddlCidadesFiadorConjuge\")" })
+                            <div class="form-control-focus"> </div>
+                        </div>
                         @Html.LabelFor(m => m.Cliente.Fiadores[1].FiadorEndereco.Endereco.IdCidade, new { @class = "col-md-2 control-label" })
                         <div class="col-md-4">
                             @Html.DropDownListFor(model => model.Cliente.Fiadores[1].FiadorEndereco.Endereco.IdCidade, new SelectList(Model.CidadesFiadorConjuge, "IdCidade", "Nome"), new { @class = "form-control", @placeholder = "Cidade", @required = "required", @id = "ddlCidadesFiadorConjuge" })
                             @Html.ValidationMessageFor(model => model.Cliente.Fiadores[1].FiadorEndereco.Endereco.IdCidade, "", new { @class = "text-danger" })
-                            <div class="form-control-focus"> </div>
-                        </div>
-                        @Html.Label("Estado", new { @class = "col-md-2 control-label" })
-                        <div class="col-md-3">
-                            @Html.DropDownListFor(m => m.Cliente.Fiadores[1].FiadorEndereco.Endereco.Cidade.IdEstado, new SelectList(Model.Estados, "IdEstado", "Descricao"), "Selecione", new { @class = "form-control", @placeholder = "Estado", @onchange = "buscarCidades(this.value,\"ddlCidadesFiadorConjuge\")" })
                             <div class="form-control-focus"> </div>
                         </div>
                     </div>

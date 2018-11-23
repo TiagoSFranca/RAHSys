@@ -7,9 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RAHSys.Dominio.Servicos.Servicos
 {
@@ -19,18 +16,20 @@ namespace RAHSys.Dominio.Servicos.Servicos
         private readonly IAnaliseInvestimentoRepositorio _analiseInvestimentoRepositorio;
         private readonly IClienteRepositorio _clienteRepositorio;
         private readonly IDocumentoRepositorio _documentoRepositorio;
+        private readonly IResponsavelFinanceiroRepositorio _responsavelFinanceiroRepositorio;
 
         private readonly string Rota = "/Contratos/";
         private readonly string RootPath = AppDomain.CurrentDomain.BaseDirectory;
 
         public ContratoServico(IContratoRepositorio contratoRepositorio, IAnaliseInvestimentoRepositorio analiseInvestimentoRepositorio,
-            IClienteRepositorio clienteRepositorio, IDocumentoRepositorio documentoRepositorio)
+            IClienteRepositorio clienteRepositorio, IDocumentoRepositorio documentoRepositorio, IResponsavelFinanceiroRepositorio responsavelFinanceiroRepositorio)
             : base(contratoRepositorio)
         {
             _contratoRepositorio = contratoRepositorio;
             _analiseInvestimentoRepositorio = analiseInvestimentoRepositorio;
             _clienteRepositorio = clienteRepositorio;
             _documentoRepositorio = documentoRepositorio;
+            _responsavelFinanceiroRepositorio = responsavelFinanceiroRepositorio;
         }
 
         private bool ExisteAnaliseInvestimento(AnaliseInvestimentoModel analiseInvestimento)
@@ -82,7 +81,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
                     query = crescente ? query.OrderBy(c => c.NomeEmpresa) : query.OrderByDescending(c => c.NomeEmpresa);
                     break;
                 case "receita":
-                    query = crescente ? query.OrderBy(e => (e.AnaliseInvestimento.ConsumoTotal * e.AnaliseInvestimento.Tarifa)) 
+                    query = crescente ? query.OrderBy(e => (e.AnaliseInvestimento.ConsumoTotal * e.AnaliseInvestimento.Tarifa))
                         : query.OrderByDescending(e => (e.AnaliseInvestimento.ConsumoTotal * e.AnaliseInvestimento.Tarifa));
                     break;
                 case "cidade":
@@ -162,6 +161,21 @@ namespace RAHSys.Dominio.Servicos.Servicos
             if (contrato?.Excluido == true)
                 return null;
             return contrato;
+        }
+
+        public void AtualizarResponsavelFinanceiro(ResponsavelFinanceiroModel responsavelFinanceiroModel)
+        {
+            if (ExisteResponsavelFinanceiro(responsavelFinanceiroModel.IdResponsavelFinanceiro))
+                _responsavelFinanceiroRepositorio.Atualizar(responsavelFinanceiroModel);
+            else
+                _responsavelFinanceiroRepositorio.Adicionar(responsavelFinanceiroModel);
+        }
+
+        private bool ExisteResponsavelFinanceiro(int id)
+        {
+            var query = _responsavelFinanceiroRepositorio.Consultar().Where(e => e.IdResponsavelFinanceiro == id);
+
+            return query.Count() > 0;
         }
     }
 }

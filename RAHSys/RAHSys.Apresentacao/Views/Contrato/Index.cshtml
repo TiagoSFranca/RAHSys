@@ -144,25 +144,34 @@
                                             <label class="btn @situacaoPagamento.Classe btn-circle btn-md tooltips" data-container="body" data-placement="top" data-original-title="@situacaoPagamento.Nome">
                                                 <i></i>
                                             </label>
-                                            @Html.ActionLink("Visualizar", "Index", "Pagamento", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
                                         </td>
                                         <td class="text-right">
+
+                                            <div class="btn-group dropup">
+                                                <a class="btn grey-gallery btn-outline btn-circle btn-md" href="javascript:;" data-toggle="dropdown" aria-expanded="false">
+                                                    Ações
+                                                </a>
+                                                <ul class="dropdown-menu ">
+                                                    <li>
+                                                        @if (situacao.Nome.ToLower().Equals(SituacaoContratoEnum.NovoContrato.Nome.ToLower()))
+                                                        {
+                                                            @Html.ActionLink("Efetuar Análise", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
+                                                        }
+                                                        else if (situacao.Nome.ToLower().Equals(SituacaoContratoEnum.EmAnalise.Nome.ToLower()))
+                                                        {
+                                                            @Html.ActionLink("Efetivar Contrato", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.ActionLink("Alterar R. F.", "EditarResponsavelFinanceiro", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
+                                                        }
+                                                    </li>
+                                                    <li>
+                                                        @Html.ActionLink("Pagamentos", "Index", "Pagamento", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
+                                                    </li>
+                                                </ul>
+                                            </div>
                                             @*@Html.ActionLink("Alterar", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })*@
-                                            @{
-                                                // Exibe o texto do botão alterar de acordo com o status atual
-                                                if (situacao.Nome.ToUpper().Contains("NOVO"))
-                                                {
-                                                    @Html.ActionLink("Efetuar Análise", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
-                                                }
-                                                else if (situacao.Nome.ToUpper().Contains("EM ANÁLISE"))
-                                                {
-                                                    @Html.ActionLink("Efetivar Contrato", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
-                                                }
-                                                else
-                                                {
-                                                    @Html.ActionLink("Alterar", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
-                                                }
-                                            }
                                             @Html.ActionLink("Excluir", "Excluir", "Contrato", new { id = item.IdContrato }, new { @class = "btn red-flamingo btn-circle btn-md abrirModal" })
                                         </td>
                                     </tr>

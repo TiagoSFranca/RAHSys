@@ -38,6 +38,7 @@ namespace RAHSys.Apresentacao.Controllers
             ViewBag.Title = "Clientes/Contratos";
         }
 
+        [RAHAuthorize]
         public ActionResult Index(int? codigo, int? estado, string nomeEmpresa, decimal? receita, string cidade, string ordenacao, bool? crescente, int? pagina, int? itensPagina)
         {
             var contratoIndex = new ContratoIndexModel();

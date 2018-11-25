@@ -7,13 +7,13 @@ namespace RAHSys.Infra.Dados.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.0.0-20911")]
-    public sealed partial class CriaçãodastabelasConfiguracaoAtividadeDiaSemanaeDiaSemanaAtividade : IMigrationMetadata
+    public sealed partial class CriacaodastabelasdaAtividade : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CriaçãodastabelasConfiguracaoAtividadeDiaSemanaeDiaSemanaAtividade));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CriacaodastabelasdaAtividade));
         
         string IMigrationMetadata.Id
         {
-            get { return "201811241106563_Criação das tabelas ConfiguracaoAtividade, DiaSemana e DiaSemanaAtividade"; }
+            get { return "201811252200188_Criacao das tabelas da Atividade"; }
         }
         
         string IMigrationMetadata.Source

@@ -143,21 +143,9 @@
     <Compile Include="Migrations\201810271239391_Merge.Designer.cs">
       <DependentUpon>201810271239391_Merge.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201810271348356_Criacao da tabela TipoRecorrencia.cs" />
-    <Compile Include="Migrations\201810271348356_Criacao da tabela TipoRecorrencia.Designer.cs">
-      <DependentUpon>201810271348356_Criacao da tabela TipoRecorrencia.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201811241035464_Atualização da Tabela Atividade.cs" />
-    <Compile Include="Migrations\201811241035464_Atualização da Tabela Atividade.Designer.cs">
-      <DependentUpon>201811241035464_Atualização da Tabela Atividade.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201811241106563_Criação das tabelas ConfiguracaoAtividade, DiaSemana e DiaSemanaAtividade.cs" />
-    <Compile Include="Migrations\201811241106563_Criação das tabelas ConfiguracaoAtividade, DiaSemana e DiaSemanaAtividade.Designer.cs">
-      <DependentUpon>201811241106563_Criação das tabelas ConfiguracaoAtividade, DiaSemana e DiaSemanaAtividade.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201811251549402_Criacao da tabela RegistroRecorrencia.cs" />
-    <Compile Include="Migrations\201811251549402_Criacao da tabela RegistroRecorrencia.Designer.cs">
-      <DependentUpon>201811251549402_Criacao da tabela RegistroRecorrencia.cs</DependentUpon>
+    <Compile Include="Migrations\201811252200188_Criacao das tabelas da Atividade.cs" />
+    <Compile Include="Migrations\201811252200188_Criacao das tabelas da Atividade.Designer.cs">
+      <DependentUpon>201811252200188_Criacao das tabelas da Atividade.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.cs" />
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.Designer.cs">
@@ -283,17 +271,8 @@
     <EmbeddedResource Include="Migrations\201810271239391_Merge.resx">
       <DependentUpon>201810271239391_Merge.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810271348356_Criacao da tabela TipoRecorrencia.resx">
-      <DependentUpon>201810271348356_Criacao da tabela TipoRecorrencia.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811241035464_Atualização da Tabela Atividade.resx">
-      <DependentUpon>201811241035464_Atualização da Tabela Atividade.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811241106563_Criação das tabelas ConfiguracaoAtividade, DiaSemana e DiaSemanaAtividade.resx">
-      <DependentUpon>201811241106563_Criação das tabelas ConfiguracaoAtividade, DiaSemana e DiaSemanaAtividade.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811251549402_Criacao da tabela RegistroRecorrencia.resx">
-      <DependentUpon>201811251549402_Criacao da tabela RegistroRecorrencia.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201811252200188_Criacao das tabelas da Atividade.resx">
+      <DependentUpon>201811252200188_Criacao das tabelas da Atividade.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\Audit\201808101838532_CriacaoDBAudit.resx">
       <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>

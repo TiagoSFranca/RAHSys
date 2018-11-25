@@ -44,8 +44,10 @@
     <Compile Include="Interfaces\Repositorios\IAuditoriaRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IAnaliseInvestimentoRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\ICameraRepositorio.cs" />
+    <Compile Include="Interfaces\Repositorios\IDiaSemanaRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IEquipeRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IPagamentoRepositorio.cs" />
+    <Compile Include="Interfaces\Repositorios\IRegistroRecorrenciaRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IRepositorioAuditoriaBase.cs" />
     <Compile Include="Interfaces\Repositorios\ICidadeRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IClienteRepositorio.cs" />
@@ -65,6 +67,7 @@
     <Compile Include="Interfaces\Servicos\IAtividadeServico.cs" />
     <Compile Include="Interfaces\Servicos\IAuditoriaServico.cs" />
     <Compile Include="Interfaces\Servicos\ICameraServico.cs" />
+    <Compile Include="Interfaces\Servicos\IDiaSemanaServico.cs" />
     <Compile Include="Interfaces\Servicos\IDocumentoServico.cs" />
     <Compile Include="Interfaces\Servicos\IEquipeServico.cs" />
     <Compile Include="Interfaces\Servicos\IPagamentoServico.cs" />
@@ -83,6 +86,7 @@
     <Compile Include="Servicos\AtividadeServico.cs" />
     <Compile Include="Servicos\AuditoriaServico.cs" />
     <Compile Include="Servicos\CameraServico.cs" />
+    <Compile Include="Servicos\DiaSemanaServico.cs" />
     <Compile Include="Servicos\DocumentoServico.cs" />
     <Compile Include="Servicos\EquipeServico.cs" />
     <Compile Include="Servicos\PagamentoServico.cs" />

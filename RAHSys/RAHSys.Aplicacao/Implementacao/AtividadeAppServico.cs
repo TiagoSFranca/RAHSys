@@ -23,11 +23,6 @@ namespace RAHSys.Aplicacao.Implementacao
         {
             try
             {
-                if (obj != null && !obj.Realizada)
-                {
-                    obj.Observacao = null;
-                    obj.DataRealizacao = null;
-                }
                 var atividade = obj.MapearParaDominio();
 
                 if (string.IsNullOrEmpty(atividade.IdUsuario))
@@ -86,11 +81,6 @@ namespace RAHSys.Aplicacao.Implementacao
         {
             try
             {
-                if (obj != null && !obj.Realizada)
-                {
-                    obj.Observacao = null;
-                    obj.DataRealizacao = null;
-                }
                 var atividade = obj.MapearParaDominio();
 
                 if (string.IsNullOrEmpty(atividade.IdUsuario))
@@ -111,17 +101,16 @@ namespace RAHSys.Aplicacao.Implementacao
             }
         }
 
-        public ConsultaAppModel<AtividadeAppModel> Consultar(IEnumerable<int> idList, IEnumerable<int> idTipoAtividadeList, IEnumerable<int> idEquipeList,
-            IEnumerable<int> idContratoList, IEnumerable<string> idUsuarioList, bool? realizada,
-            string dataRealizacaoInicio, string dataRealizacaoFim, string dataPrevistaInicio, string dataPrevistaFim,
+        public ConsultaAppModel<AtividadeRecorrenciaAppModel> Consultar(IEnumerable<int> idList, IEnumerable<int> idTipoAtividadeList, IEnumerable<int> idEquipeList,
+            IEnumerable<int> idContratoList, IEnumerable<string> idUsuarioList, string mesAno, bool? realizada,
             string ordenacao, bool crescente, int pagina, int quantidade)
         {
             try
             {
-                var consulta = new ConsultaAppModel<AtividadeAppModel>();
+                var consulta = new ConsultaAppModel<AtividadeRecorrenciaAppModel>();
 
                 var resultado = _atividadeServico.Consultar(idList, idTipoAtividadeList, idEquipeList,
-                    idContratoList, idUsuarioList, realizada, dataRealizacaoInicio, dataRealizacaoFim, dataPrevistaInicio, dataPrevistaFim,
+                    idContratoList, idUsuarioList, mesAno, realizada,
                     ordenacao, crescente, pagina, quantidade);
 
                 consulta.ItensPorPagina = resultado.ItensPorPagina;
@@ -141,11 +130,11 @@ namespace RAHSys.Aplicacao.Implementacao
             }
         }
 
-        public void FinalizarAtividade(int idAtividade, DateTime? dataRealizacao, string observacao)
+        public void FinalizarAtividade(int idAtividade, DateTime dataRealizacaoPrevista, DateTime dataRealizacao, string observacao)
         {
             try
             {
-                _atividadeServico.FinalizarAtividade(idAtividade, dataRealizacao, observacao);
+                _atividadeServico.FinalizarAtividade(idAtividade, dataRealizacaoPrevista, dataRealizacao, observacao);
             }
             catch (CustomBaseException ex)
             {

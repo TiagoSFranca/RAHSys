@@ -15,7 +15,12 @@ namespace RAHSys.Infra.Dados.EntityConfig
             Property(c => c.Descricao)
                 .IsRequired()
                 .HasMaxLength(32);
-            
+
+            HasMany(pt => pt.Atividades)
+                .WithOptional(s => s.TipoRecorrencia)
+                .HasForeignKey(s => s.IdTipoRecorrencia)
+                .WillCascadeOnDelete(true);
+
             Property(pt => pt.IdTipoRecorrencia)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
         }

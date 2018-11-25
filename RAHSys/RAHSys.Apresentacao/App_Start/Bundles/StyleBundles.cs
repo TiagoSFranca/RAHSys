@@ -51,6 +51,11 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
             bundles.Add(new StyleBundle("~/MultiSelect/css").Include(
                 "~/Content/assets/global/plugins/jquery-multi-select/css/multi-select.css"
                 ));
+
+            bundles.Add(new StyleBundle("~/Select2/css").Include(
+                "~/Content/assets/global/plugins/select2/css/select2.min.css",
+                "~/Content/assets/global/plugins/select2/css/select2-bootstrap.min.css"
+                ));
         }
     }
 }

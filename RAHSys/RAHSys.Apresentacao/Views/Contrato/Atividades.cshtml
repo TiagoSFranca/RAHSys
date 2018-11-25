@@ -49,10 +49,8 @@
                     <i class="icon-bar-chart font-dark hide"></i>
                     <span class="caption-subject font-green-steel uppercase bold">Calendário do Contrato</span>
                 </div>
-                <div class="tools">
-                    <a href="javascript:;" class="expand"> </a>
-                </div>
                 <div class="actions">
+                    @Html.ActionLink("Adicionar", "AdicionarAtividade", "Contrato", new { id = Model.Contrato.IdContrato }, new { @class = "btn btn-no-border green btn-outline btn-circle btn-md" })
                     <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
                 </div>
             </div>
@@ -170,7 +168,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+@*<div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="portlet light ">
             <div class="portlet-title">
@@ -325,9 +323,6 @@
                                             @(item.Usuario?.EmailEUserName)
                                         </td>
                                         <td>
-                                            @{
-                                                DateTime data = DateTime.Now;
-                                            }
                                             @if (item.DataPrevista != null)
                                             {
                                                 data = (DateTime)item.DataPrevista;
@@ -438,7 +433,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 @*Modais*@
 @Html.Partial("_ModalFinalizarAtividade")
@@ -449,6 +444,6 @@
 @section scripts{
     @Scripts.Render("~/Ordenacao/js")
     @Scripts.Render("~/Modal/js")
-    @Scripts.Render("~/Atividade/js")
     @Scripts.Render("~/Atividade/Contrato/js")
+    @Scripts.Render("~/Atividade/js")
 }

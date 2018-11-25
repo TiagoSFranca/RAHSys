@@ -29,11 +29,14 @@ namespace RAHSys.Apresentacao.Controllers
         private readonly ITipoAtividadeAppServico _tipoAtividadeAppServico;
         private readonly IAtividadeAppServico _atividadeAppServico;
         private readonly IUsuarioAppServico _usuarioAppServico;
+        private readonly IDiaSemanaAppServico _diaSemanaAppServico;
+        private readonly ITipoRecorrenciaAppServico _tipoRecorrenciaAppServico;
 
         public ContratoController(IContratoAppServico contratoAppServico, IEstadoAppServico estadoAppServico,
             ICidadeAppServico cidadeAppServico, ITipoTelhadoAppServico tipoTelhadoAppServico, IEstadoCivilAppServico estadoCivilAppServico,
             IDocumentoAppServico documentoAppServico, IEquipeAppServico equipeAppServico, ITipoAtividadeAppServico tipoAtividadeAppServico,
-            IAtividadeAppServico atividadeAppServico, IUsuarioAppServico usuarioAppServico)
+            IAtividadeAppServico atividadeAppServico, IUsuarioAppServico usuarioAppServico, IDiaSemanaAppServico diaSemanaAppServico,
+            ITipoRecorrenciaAppServico tipoRecorrenciaAppServico)
         {
             _contratoAppServico = contratoAppServico;
             _estadoAppServico = estadoAppServico;
@@ -45,6 +48,8 @@ namespace RAHSys.Apresentacao.Controllers
             _tipoAtividadeAppServico = tipoAtividadeAppServico;
             _atividadeAppServico = atividadeAppServico;
             _usuarioAppServico = usuarioAppServico;
+            _diaSemanaAppServico = diaSemanaAppServico;
+            _tipoRecorrenciaAppServico = tipoRecorrenciaAppServico;
             ViewBag.Title = "Clientes/Contratos";
         }
 
@@ -450,17 +455,13 @@ namespace RAHSys.Apresentacao.Controllers
 
         #region Atividades
 
-        public ActionResult Atividades(int id, int? codigo, string tipoAtividade, string usuario, string dataRealizacaoInicio,
-            string dataRealizacaoFim, string dataPrevistaInicio, string dataPrevistaFim, string realizada,
+        public ActionResult Atividades(int id, int? codigo, string tipoAtividade, string usuario, string mesAno, string realizada,
             string ordenacao, bool? crescente, int? pagina, int? itensPagina)
         {
             ViewBag.SubTitle = "Contrato";
             ViewBag.SubSubTitle = "Atividades";
             ViewBag.TipoAtividade = tipoAtividade;
-            ViewBag.DataRealizacaoInicio = dataRealizacaoInicio;
-            ViewBag.DataRealizacaoFim = dataRealizacaoFim;
-            ViewBag.DataPrevistaInicio = dataPrevistaInicio;
-            ViewBag.DataPrevistaFim = dataPrevistaFim;
+            ViewBag.MesAno = mesAno;
             ViewBag.Realizada = realizada;
             ViewBag.Ordenacao = ordenacao;
             ViewBag.Crescente = crescente ?? true;
@@ -468,7 +469,7 @@ namespace RAHSys.Apresentacao.Controllers
             AtividadeContratoModel atividadeContratoModel = new AtividadeContratoModel();
             try
             {
-                atividadeContratoModel.TodasAtividadesSerializadas = ObterAtividadesContrato(id);
+                atividadeContratoModel.TodasAtividadesSerializadas = ObterAtividadesContrato(id, mesAno);
                 var contratoModel = _contratoAppServico.ObterPorId(id);
                 if (contratoModel == null)
                 {
@@ -497,11 +498,10 @@ namespace RAHSys.Apresentacao.Controllers
                     listaTiposAtividade,
                     new[] { idEquipe },
                     new[] { contratoModel.IdContrato },
-                    listaUsuarios,
-                    resultadoRealidada, dataRealizacaoInicio, dataRealizacaoFim, dataPrevistaInicio, dataPrevistaFim,
+                    listaUsuarios, mesAno, resultadoRealidada,
                     ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? (int)ItensPorPaginaEnum.MEDIO);
 
-                var resultado = new StaticPagedList<AtividadeAppModel>(consulta.Resultado, consulta.PaginaAtual, consulta.ItensPorPagina, consulta.TotalItens);
+                var resultado = new StaticPagedList<AtividadeRecorrenciaAppModel>(consulta.Resultado, consulta.PaginaAtual, consulta.ItensPorPagina, consulta.TotalItens);
 
                 atividadeContratoModel.Atividades = resultado;
             }
@@ -543,7 +543,8 @@ namespace RAHSys.Apresentacao.Controllers
                 atividadeContratoAdicionarModel.Atividade = new AtividadeAppModel()
                 {
                     IdContrato = id,
-                    IdEquipe = idEquipe
+                    IdEquipe = idEquipe,
+                    ConfiguracaoAtividade = new ConfiguracaoAtividadeAppModel()
                 };
 
                 return View(atividadeContratoAdicionarModel);
@@ -561,6 +562,7 @@ namespace RAHSys.Apresentacao.Controllers
             ViewBag.SubTitle = "Adicionar nova Atividade";
             var atividadeRetornoModel = MontarAtividadeContratoAdicionarEditar();
             atividadeRetornoModel.Atividade = atividadePostModel.Atividade;
+            atividadeRetornoModel.DiaSemanasSelecionadas = atividadePostModel.DiaSemanasSelecionadas ?? new List<int>();
             var contratoModel = _contratoAppServico.ObterPorId(atividadePostModel.Atividade.IdContrato);
             if (contratoModel == null)
             {
@@ -586,7 +588,12 @@ namespace RAHSys.Apresentacao.Controllers
             {
                 try
                 {
-                    _atividadeAppServico.Adicionar(atividadePostModel.Atividade);
+                    var atividade = atividadePostModel.Atividade;
+                    if (atividadePostModel.DiaSemanasSelecionadas?.Count > 0)
+                    {
+                        atividade.ConfiguracaoAtividade.AtividadeDiaSemanas = atividadePostModel.DiaSemanasSelecionadas.Select(e => new AtividadeDiaSemanaAppModel() { IdDiaSemana = e }).ToList();
+                    }
+                    _atividadeAppServico.Adicionar(atividade);
                     MensagemSucesso(MensagensPadrao.CadastroSucesso);
                     return RedirectToAction("Atividades", "Contrato", new { id = atividadePostModel.Atividade.IdContrato });
                 }
@@ -710,14 +717,11 @@ namespace RAHSys.Apresentacao.Controllers
             return View(atividadeRetornoModel);
         }
 
-        public string ObterAtividadesContrato(int id)
+        public string ObterAtividadesContrato(int id, string mesAno)
         {
-            var consulta = _atividadeAppServico.Consultar(null, null, null,
-                new[] { id },
-                null, null, null, null,
-                null, null,
-                null, true, 1, Int32.MaxValue);
-            List<AtividadeAppModel> lista = consulta.Resultado.ToList();
+            var consulta = _atividadeAppServico.Consultar(null, null, null, new[] { id },
+                null, mesAno, null, null, true, 1, Int32.MaxValue);
+            List<AtividadeRecorrenciaAppModel> lista = consulta.Resultado.ToList();
             lista.ForEach(item =>
             {
                 item.Contrato = null;
@@ -761,6 +765,8 @@ namespace RAHSys.Apresentacao.Controllers
         {
             var atividadeContratoAdicionarModel = new AtividadeContratoAdicionarEditarModel();
             atividadeContratoAdicionarModel.TipoAtividades = _tipoAtividadeAppServico.ListarTodos();
+            atividadeContratoAdicionarModel.DiaSemanas = _diaSemanaAppServico.ListarTodos();
+            atividadeContratoAdicionarModel.TipoRecorrencias = _tipoRecorrenciaAppServico.ListarTodos();
             return atividadeContratoAdicionarModel;
         }
 

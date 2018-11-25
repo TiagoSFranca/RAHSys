@@ -33,8 +33,8 @@ function PopularModais(atividade) {
     LimparCopiarAtividadeForm(atividade);
     PopularListaUsuariosEquipe(atividade.Equipe);
     $('.urlRetorno').val($('#inputUrlRetorno').val())
-    $('.idAtividade').val(atividade.IdAtividade)
-    $('.atividadeDataPrevista').val(ConverterData(atividade.DataPrevista));
+    $('.idAtividade').val(atividade.IdAtividade);
+    $('.atividadeDataPrevista').val(ConverterData(atividade.DataRealizacaoPrevista));
     $('.atividadeDescricao').val(atividade.Descricao);
     SetRealizada(atividade.Realizada);
     $('.atividadeDataRealizacao').val(ConverterData(atividade.DataRealizacao));

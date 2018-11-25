@@ -5,10 +5,9 @@ namespace RAHSys.Entidades.Seeds
 {
     public class TipoRecorrenciaSeed
     {
-        public static TipoRecorrenciaModel Dias { get { return new TipoRecorrenciaModel() { IdTipoRecorrencia = 1, Descricao = "Dias" }; } }
-        public static TipoRecorrenciaModel Semanas { get { return new TipoRecorrenciaModel() { IdTipoRecorrencia = 2, Descricao = "Semanas" }; } }
-        public static TipoRecorrenciaModel Meses { get { return new TipoRecorrenciaModel() { IdTipoRecorrencia = 3, Descricao = "Meses" }; } }
-        public static TipoRecorrenciaModel Anos { get { return new TipoRecorrenciaModel() { IdTipoRecorrencia = 4, Descricao = "Anos" }; } }
+        public static TipoRecorrenciaModel Diaria { get { return new TipoRecorrenciaModel() { IdTipoRecorrencia = 1, Descricao = "Diária" }; } }
+        public static TipoRecorrenciaModel Semanal { get { return new TipoRecorrenciaModel() { IdTipoRecorrencia = 2, Descricao = "Semanal" }; } }
+        public static TipoRecorrenciaModel Mensal { get { return new TipoRecorrenciaModel() { IdTipoRecorrencia = 3, Descricao = "Mensal" }; } }
 
         public static List<TipoRecorrenciaModel> Seeds
         {
@@ -16,10 +15,9 @@ namespace RAHSys.Entidades.Seeds
             {
                 return new List<TipoRecorrenciaModel>()
                 {
-                    Dias,
-                    Semanas,
-                    Meses,
-                    Anos
+                    Diaria,
+                    Semanal,
+                    Mensal
                 };
             }
         }

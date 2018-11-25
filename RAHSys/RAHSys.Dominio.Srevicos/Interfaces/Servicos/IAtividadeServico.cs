@@ -7,11 +7,10 @@ namespace RAHSys.Dominio.Servicos.Interfaces.Servicos
 {
     public interface IAtividadeServico : IServicoBase<AtividadeModel>
     {
-        ConsultaModel<AtividadeModel> Consultar(IEnumerable<int> idList, IEnumerable<int> idTipoAtividadeList, IEnumerable<int> idEquipeList,
-            IEnumerable<int> idContratoList, IEnumerable<string> idUsuarioList, bool? realizada, string dataRealizacaoInicio, string dataRealizacaoFim,
-            string dataPrevistaInicio, string dataPrevistaFim,
+        ConsultaModel<AtividadeRecorrenciaModel> Consultar(IEnumerable<int> idList, IEnumerable<int> idTipoAtividadeList, IEnumerable<int> idEquipeList,
+            IEnumerable<int> idContratoList, IEnumerable<string> idUsuarioList, string mesAno, bool? realizada,
             string ordenacao, bool crescente, int pagina, int quantidade);
-        void FinalizarAtividade(int idAtividade, DateTime? dataRealizacao, string observacao);
+        void FinalizarAtividade(int idAtividade, DateTime dataRealizacaoPrevista, DateTime dataRealizacao, string observacao);
         void TransferirAtividade(int idAtividade, string idUsuario);
     }
 }

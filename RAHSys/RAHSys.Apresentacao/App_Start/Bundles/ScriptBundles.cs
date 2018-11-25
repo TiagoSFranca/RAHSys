@@ -80,8 +80,7 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
 
             bundles.Add(new ScriptBundle("~/LoginPageLevel/js").Include(
                 "~/Content/assets/global/plugins/jquery-validation/js/jquery.validate.min.js",
-                "~/Content/assets/global/plugins/jquery-validation/js/additional-methods.min.js",
-                "~/Content/assets/global/plugins/select2/js/select2.full.min.js"
+                "~/Content/assets/global/plugins/jquery-validation/js/additional-methods.min.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/Pagamento/js").Include(
@@ -102,6 +101,10 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
 
             bundles.Add(new ScriptBundle("~/Atividade/Contrato/js").Include(
                 "~/Scripts/contratoAtividade.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/Select2/js").Include(
+                "~/Content/assets/global/plugins/select2/js/select2.full.min.js"
                 ));
         }
     }

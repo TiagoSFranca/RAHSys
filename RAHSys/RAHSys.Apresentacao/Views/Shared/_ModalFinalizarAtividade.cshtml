@@ -9,6 +9,7 @@
                 FormMethod.Post, new { @class = "form-horizontal margin-bottom-40", @id = "formFinalizarAtividade" }))
             {
                 @Html.Hidden("urlRetorno", null, new { @class = "urlRetorno" })
+                @Html.Hidden("dataRealizacaoPrevista", null, new { @class = "atividadeDataPrevista" })
                 <div class="modal-body">
                     @Html.Hidden("IdAtividade", null, new { @class = "idAtividade" })
                     <div class="form-group form-md-line-input">

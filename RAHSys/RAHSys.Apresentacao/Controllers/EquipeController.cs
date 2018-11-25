@@ -218,17 +218,17 @@ namespace RAHSys.Apresentacao.Controllers
                 var resultadoRealidada = ObterRealizada(realizada);
                 var listaUsuarios = ObterIdsUsuario(usuario);
                 var listaContratos = ObterIdsContrato(contrato);
-                var consulta = _atividadeAppServico.Consultar(codigo != null ? new int[] { (int)codigo } : null,
-                    listaTiposAtividade,
-                    new[] { id },
-                    listaContratos,
-                    listaUsuarios,
-                    resultadoRealidada, dataRealizacaoInicio, dataRealizacaoFim, dataPrevistaInicio, dataPrevistaFim,
-                    ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? (int)ItensPorPaginaEnum.MEDIO);
+                //var consulta = _atividadeAppServico.Consultar(codigo != null ? new int[] { (int)codigo } : null,
+                //    listaTiposAtividade,
+                //    new[] { id },
+                //    listaContratos,
+                //    listaUsuarios,
+                //    resultadoRealidada, dataRealizacaoInicio, dataRealizacaoFim, dataPrevistaInicio, dataPrevistaFim,
+                //    ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? (int)ItensPorPaginaEnum.MEDIO);
 
-                var resultado = new StaticPagedList<AtividadeAppModel>(consulta.Resultado, consulta.PaginaAtual, consulta.ItensPorPagina, consulta.TotalItens);
+                //var resultado = new StaticPagedList<AtividadeAppModel>(consulta.Resultado, consulta.PaginaAtual, consulta.ItensPorPagina, consulta.TotalItens);
 
-                atividadeEquipeModel.Atividades = resultado;
+                //atividadeEquipeModel.Atividades = resultado;
             }
             catch (CustomBaseException ex)
             {
@@ -373,22 +373,23 @@ namespace RAHSys.Apresentacao.Controllers
 
         public string ObterAtividadesContrato(int id)
         {
-            var consulta = _atividadeAppServico.Consultar(null, null, null,
-                new[] { id },
-                null, null, null, null,
-                null, null,
-                null, true, 1, Int32.MaxValue);
-            List<AtividadeAppModel> lista = consulta.Resultado.ToList();
-            lista.ForEach(item =>
-            {
-                item.Contrato = null;
-                item.Equipe.Lider.UsuarioPerfis = null;
-                item.Equipe.EquipeUsuarios.ForEach(eu =>
-                {
-                    eu.Usuario.UsuarioPerfis = null;
-                });
-            });
-            return JsonConvert.SerializeObject(lista);
+            //var consulta = _atividadeAppServico.Consultar(null, null, null,
+            //    new[] { id },
+            //    null, null, null, null,
+            //    null, null,
+            //    null, true, 1, Int32.MaxValue);
+            //List<AtividadeAppModel> lista = consulta.Resultado.ToList();
+            //lista.ForEach(item =>
+            //{
+            //    item.Contrato = null;
+            //    item.Equipe.Lider.UsuarioPerfis = null;
+            //    item.Equipe.EquipeUsuarios.ForEach(eu =>
+            //    {
+            //        eu.Usuario.UsuarioPerfis = null;
+            //    });
+            //});
+            //return JsonConvert.SerializeObject(lista);
+            return string.Empty;
         }
 
         private static bool? ObterRealizada(string realizada)

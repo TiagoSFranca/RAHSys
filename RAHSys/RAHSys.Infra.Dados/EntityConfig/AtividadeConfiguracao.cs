@@ -15,20 +15,13 @@ namespace RAHSys.Infra.Dados.EntityConfig
                 .IsRequired()
                 .HasMaxLength(256);
 
-            Property(c => c.Observacao)
-                .IsRequired()
-                .HasMaxLength(256);
-
             Property(a => a.IdUsuario)
                 .HasColumnType("nvarchar");
 
-            Property(c => c.Realizada)
+            Property(c => c.Finalizada)
                 .IsRequired();
 
-            Property(c => c.DataRealizacao)
-                .IsOptional();
-
-            Property(c => c.DataPrevista)
+            Property(c => c.DataInicial)
                 .IsRequired();
 
             HasRequired(e => e.TipoAtividade)
@@ -46,6 +39,19 @@ namespace RAHSys.Infra.Dados.EntityConfig
             HasOptional(e => e.Usuario)
                 .WithMany(s => s.Atividades)
                 .HasForeignKey(e => e.IdUsuario);
+
+            HasOptional(e => e.TipoRecorrencia)
+                .WithMany(s => s.Atividades)
+                .HasForeignKey(e => e.IdTipoRecorrencia);
+
+            HasRequired(e => e.ConfiguracaoAtividade)
+                .WithRequiredPrincipal(s => s.Atividade)
+                .WillCascadeOnDelete(true);
+
+            HasMany(e => e.RegistroRecorrencias)
+                .WithRequired(es => es.Atividade)
+                .HasForeignKey(es => es.IdAtividade)
+                .WillCascadeOnDelete(true);
         }
     }
 }

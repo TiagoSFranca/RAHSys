@@ -1,8 +1,12 @@
-﻿namespace RAHSys.Entidades.Entidades
+﻿using System.Collections.Generic;
+
+namespace RAHSys.Entidades.Entidades
 {
     public class TipoRecorrenciaModel
     {
         public int IdTipoRecorrencia { get; set; }
         public string Descricao { get; set; }
+
+        public virtual ICollection<AtividadeModel> Atividades { get; set; }
     }
 }

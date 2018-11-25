@@ -2872,10 +2872,6 @@
     <Content Include="Content\assets\pages\scripts\login.js" />
     <Content Include="Content\assets\pages\scripts\login.min.js" />
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\fullcalendar.css" />
-    <Content Include="Content\fullcalendar.min.css" />
-    <Content Include="Content\fullcalendar.print.css" />
-    <Content Include="Content\fullcalendar.print.min.css" />
     <Content Include="Content\img\logo-big.png" />
     <Content Include="Scripts\buscarCidades.js" />
     <Compile Include="Startup.cs" />

@@ -13,8 +13,8 @@ function ExibirAtividade(atividade) {
             $showInfoAtividade.click();
         ObterSituacao(atividade);
         $('#divInfoAtividade').show();
-        $('#tipoAtividade').val(atividade.TipoAtividade.Descricao);
-        $('#dataPrevista').val(ConverterData(atividade.DataPrevista));
+        $('#tipoAtividade').val(atividade.TipoAtividade);
+        $('#dataPrevista').val(ConverterData(atividade.DataRealizacaoPrevista));
         $('#dataRealizada').val(ConverterData(atividade.DataRealizacao));
         $('#atribuidoPara').val(atividade.Usuario != null ? atividade.Usuario.EmailEUserName : '')
         if (atividade.Realizada) {
@@ -41,12 +41,13 @@ $(function () {
     $.each($atividades, function (key, item) {
         $events.push(
             {
-                title: item.TipoAtividade.Descricao,
-                start: item.DataPrevista,
+                title: item.TipoAtividade,
+                start: item.DataRealizacaoPrevista,
                 atividade: item,
                 color: item.SituacaoAtividade.BGCor
             })
     });
+
     var initialLocaleCode = 'pt-br';
     $('#calendar').fullCalendar({
         header: {
@@ -61,10 +62,10 @@ $(function () {
         editable: true,
         events: $events
     });
+
     var calendar = $('#calendar').fullCalendar('getCalendar');
     calendar.on('eventClick', function (data) {
         ExibirAtividade(data.atividade);
     });
 
-    $('.calendario-portlet').addClass('portlet-collapsed');
 });

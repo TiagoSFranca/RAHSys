@@ -29,6 +29,7 @@ namespace RAHSys.Infra.Dados.Migrations
 
             context.EstadoCivil.AddOrUpdate(EstadoCivilSeed.Seeds.ToArray());
             context.TipoRecorrencia.AddOrUpdate(TipoRecorrenciaSeed.Seeds.ToArray());
+            context.DiaSemana.AddOrUpdate(DiaSemanaSeed.Seeds.ToArray());
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 

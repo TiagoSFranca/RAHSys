@@ -57,34 +57,34 @@ namespace RAHSys.Apresentacao.Controllers
                 var listaEquipes = ObterIdsEquipe(equipe);
                 var resultadoRealidada = ObterRealizada(realizada);
                 var listaUsuarios = ObterIdsUsuario(usuario);
-                var consulta = _atividadeAppServico.Consultar(codigo != null ? new int[] { (int)codigo } : null,
-                    listaTiposAtividade,
-                    listaEquipes,
-                    listaContratos,
-                    listaUsuarios,
-                    resultadoRealidada, dataRealizacaoInicio, dataRealizacaoFim, dataPrevistaInicio, dataPrevistaFim,
-                    ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? (int)ItensPorPaginaEnum.MEDIO);
-                var resultado = new StaticPagedList<AtividadeAppModel>(consulta.Resultado, consulta.PaginaAtual, consulta.ItensPorPagina, consulta.TotalItens);
-                return View(resultado);
+                //var consulta = _atividadeAppServico.Consultar(codigo != null ? new int[] { (int)codigo } : null,
+                //    listaTiposAtividade,
+                //    listaEquipes,
+                //    listaContratos,
+                //    listaUsuarios,
+                //    resultadoRealidada, dataRealizacaoInicio, dataRealizacaoFim, dataPrevistaInicio, dataPrevistaFim,
+                //    ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? (int)ItensPorPaginaEnum.MEDIO);
+                //var resultado = new StaticPagedList<AtividadeAppModel>(consulta.Resultado, consulta.PaginaAtual, consulta.ItensPorPagina, consulta.TotalItens);
+                //return View(resultado);
             }
             catch (CustomBaseException ex)
             {
                 MensagemErro(ex.Mensagem);
-                return View(new StaticPagedList<AtividadeAppModel>(new List<AtividadeAppModel>(), 1, 1, 0));
             }
+            return View(new StaticPagedList<AtividadeAppModel>(new List<AtividadeAppModel>(), 1, 1, 0));
         }
 
         [HttpPost]
-        public ActionResult FinalizarAtividade(AtividadeAppModel atividadeApp, string urlRetorno)
+        public ActionResult FinalizarAtividade(int idAtividade, DateTime dataRealizacaoPrevista, DateTime dataRealizacao, string observacao, string urlRetorno)
         {
             try
             {
-                var atividade = _atividadeAppServico.ObterPorId(atividadeApp.IdAtividade);
+                var atividade = _atividadeAppServico.ObterPorId(idAtividade);
                 if (atividade == null)
                     MensagemErro("Atividade não encontrada");
                 else
                 {
-                    _atividadeAppServico.FinalizarAtividade(atividadeApp.IdAtividade, atividadeApp.DataRealizacao, atividadeApp.Observacao);
+                    _atividadeAppServico.FinalizarAtividade(idAtividade, dataRealizacaoPrevista, dataRealizacao, observacao);
                     MensagemSucesso();
                 }
             }

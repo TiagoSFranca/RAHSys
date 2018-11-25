@@ -50,13 +50,16 @@
     <Compile Include="Contexto\RAHSysAuditContexto.cs" />
     <Compile Include="Contexto\RAHSysContexto.cs" />
     <Compile Include="EntityConfig\AtividadeConfiguracao.cs" />
+    <Compile Include="EntityConfig\AtividadeDiaSemanaConfiguracao.cs" />
     <Compile Include="EntityConfig\AuditoriaConfiguracao.cs" />
     <Compile Include="EntityConfig\AnaliseInvestimentoConfiguracao.cs" />
     <Compile Include="EntityConfig\CameraConfiguracao.cs" />
     <Compile Include="EntityConfig\CidadeConfiguracao.cs" />
     <Compile Include="EntityConfig\ClienteConfiguracao.cs" />
+    <Compile Include="EntityConfig\ConfiguracaoAtividade.cs" />
     <Compile Include="EntityConfig\ContratoConfiguracao.cs" />
     <Compile Include="EntityConfig\ContratoEnderecoConfiguracao.cs" />
+    <Compile Include="EntityConfig\DiaSemanaConfiguracao.cs" />
     <Compile Include="EntityConfig\DocumentoConfiguracao.cs" />
     <Compile Include="EntityConfig\EnderecoConfiguracao.cs" />
     <Compile Include="EntityConfig\EquipeConfiguracao.cs" />
@@ -68,6 +71,7 @@
     <Compile Include="EntityConfig\LogErrorConfiguracao.cs" />
     <Compile Include="EntityConfig\PagamentoConfiguracao.cs" />
     <Compile Include="EntityConfig\PerfilConfiguracao.cs" />
+    <Compile Include="EntityConfig\RegistroRecorrenciaConfiguracao.cs" />
     <Compile Include="EntityConfig\ResponsavelFinanceiroConfiguracao.cs" />
     <Compile Include="EntityConfig\TipoAtividadeConfiguracao.cs" />
     <Compile Include="EntityConfig\TipoContatoConfiguracao.cs" />
@@ -143,6 +147,18 @@
     <Compile Include="Migrations\201810271348356_Criacao da tabela TipoRecorrencia.Designer.cs">
       <DependentUpon>201810271348356_Criacao da tabela TipoRecorrencia.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811241035464_Atualização da Tabela Atividade.cs" />
+    <Compile Include="Migrations\201811241035464_Atualização da Tabela Atividade.Designer.cs">
+      <DependentUpon>201811241035464_Atualização da Tabela Atividade.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811241106563_Criação das tabelas ConfiguracaoAtividade, DiaSemana e DiaSemanaAtividade.cs" />
+    <Compile Include="Migrations\201811241106563_Criação das tabelas ConfiguracaoAtividade, DiaSemana e DiaSemanaAtividade.Designer.cs">
+      <DependentUpon>201811241106563_Criação das tabelas ConfiguracaoAtividade, DiaSemana e DiaSemanaAtividade.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811251549402_Criacao da tabela RegistroRecorrencia.cs" />
+    <Compile Include="Migrations\201811251549402_Criacao da tabela RegistroRecorrencia.Designer.cs">
+      <DependentUpon>201811251549402_Criacao da tabela RegistroRecorrencia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.cs" />
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.Designer.cs">
       <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>
@@ -178,8 +194,10 @@
     <Compile Include="Repositorios\AuditoriaRepositorio.cs" />
     <Compile Include="Repositorios\AnaliseInvestimentoRepositorio.cs" />
     <Compile Include="Repositorios\CameraRepositorio.cs" />
+    <Compile Include="Repositorios\DiaSemanaRepositorio.cs" />
     <Compile Include="Repositorios\EquipeRepositorio.cs" />
     <Compile Include="Repositorios\PagamentoRepositorio.cs" />
+    <Compile Include="Repositorios\RegistroRecorrenciaRepositorio.cs" />
     <Compile Include="Repositorios\RepositorioAuditBase.cs" />
     <Compile Include="Repositorios\CidadeRepositorio.cs" />
     <Compile Include="Repositorios\ClienteRepositorio.cs" />
@@ -267,6 +285,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810271348356_Criacao da tabela TipoRecorrencia.resx">
       <DependentUpon>201810271348356_Criacao da tabela TipoRecorrencia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811241035464_Atualização da Tabela Atividade.resx">
+      <DependentUpon>201811241035464_Atualização da Tabela Atividade.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811241106563_Criação das tabelas ConfiguracaoAtividade, DiaSemana e DiaSemanaAtividade.resx">
+      <DependentUpon>201811241106563_Criação das tabelas ConfiguracaoAtividade, DiaSemana e DiaSemanaAtividade.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811251549402_Criacao da tabela RegistroRecorrencia.resx">
+      <DependentUpon>201811251549402_Criacao da tabela RegistroRecorrencia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\Audit\201808101838532_CriacaoDBAudit.resx">
       <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>

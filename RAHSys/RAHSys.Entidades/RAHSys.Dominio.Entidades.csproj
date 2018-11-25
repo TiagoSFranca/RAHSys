@@ -41,7 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArquivoModel.cs" />
+    <Compile Include="AtividadeRecorrenciaModel.cs" />
     <Compile Include="ConsultaModel.cs" />
+    <Compile Include="Entidades\AtividadeDiaSemanaModel.cs" />
     <Compile Include="Entidades\AtividadeModel.cs" />
     <Compile Include="Entidades\AuditoriaModel.cs" />
     <Compile Include="Entidades\AnaliseInvestimentoModel.cs" />
@@ -50,6 +52,7 @@
     <Compile Include="Entidades\ClienteModel.cs" />
     <Compile Include="Entidades\ContratoEnderecoModel.cs" />
     <Compile Include="Entidades\ContratoModel.cs" />
+    <Compile Include="Entidades\DiaSemanaModel.cs" />
     <Compile Include="Entidades\DocumentoModel.cs" />
     <Compile Include="Entidades\EnderecoModel.cs" />
     <Compile Include="Entidades\EquipeModel.cs" />
@@ -58,9 +61,11 @@
     <Compile Include="Entidades\EstadoModel.cs" />
     <Compile Include="Entidades\FiadorEnderecoModel.cs" />
     <Compile Include="Entidades\FiadorModel.cs" />
+    <Compile Include="Entidades\ConfiguracaoAtividadeModel.cs" />
     <Compile Include="Entidades\LogErrorModel.cs" />
     <Compile Include="Entidades\PagamentoModel.cs" />
     <Compile Include="Entidades\PerfilModel.cs" />
+    <Compile Include="Entidades\RegistroRecorrenciaModel.cs" />
     <Compile Include="Entidades\ResponsavelFinanceiroModel.cs" />
     <Compile Include="Entidades\TipoAtividadeModel.cs" />
     <Compile Include="Entidades\TipoContatoModel.cs" />
@@ -69,6 +74,7 @@
     <Compile Include="Entidades\UsuarioModel.cs" />
     <Compile Include="Entidades\UsuarioPerfilModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Seeds\DiaSemanaSeed.cs" />
     <Compile Include="Seeds\EstadoCivilSeed.cs" />
     <Compile Include="Seeds\TipoRecorrenciaSeed.cs" />
   </ItemGroup>

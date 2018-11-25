@@ -12,6 +12,9 @@ namespace RAHSys.Aplicacao.AppModels
         [Display(Name = "Tipo da Atividade")]
         public int IdTipoAtividade { get; set; }
 
+        [Display(Name = "Tipo da Recorrência")]
+        public int? IdTipoRecorrencia { get; set; }
+
         [Display(Name = "Equipe")]
         public int IdEquipe { get; set; }
 
@@ -23,38 +26,21 @@ namespace RAHSys.Aplicacao.AppModels
 
         [Display(Name = "Descrição")]
         public string Descricao { get; set; }
+        
+        [Display(Name = "Finalizada")]
+        public bool Finalizada { get; set; }
 
-        [Display(Name = "Observações")]
-        public string Observacao { get; set; }
+        [Display(Name = "Começa em")]
+        public DateTime? DataInicial { get; set; }
 
-        [Display(Name = "Realizada")]
-        public bool Realizada { get; set; }
+        [Display(Name = "Criado Em")]
+        public DateTime? CriadoEm { get; set; }
 
-        [Display(Name = "Data de Realização Prevista")]
-        public DateTime? DataPrevista { get; set; }
-
-        [Display(Name = "Data de Realização")]
-        public DateTime? DataRealizacao { get; set; }
-
+        public virtual ConfiguracaoAtividadeAppModel ConfiguracaoAtividade { get; set; }
         public virtual TipoAtividadeAppModel TipoAtividade { get; set; }
+        public virtual TipoRecorrenciaAppModel TipoRecorrencia { get; set; }
         public virtual EquipeAppModel Equipe { get; set; }
         public virtual ContratoAppModel Contrato { get; set; }
         public virtual UsuarioAppModel Usuario { get; set; }
-
-        public virtual SituacaoAtividade SituacaoAtividade
-        {
-            get
-            {
-                if (Realizada)
-                    return SituacaoAtividadeEnum.AtividadeRealizada;
-                else
-                {
-                    if (DataPrevista < DateTime.Now)
-                        return SituacaoAtividadeEnum.AtividadeAtrasada;
-                    else
-                        return SituacaoAtividadeEnum.AtividadeNaoRealizada;
-                }
-            }
-        }
     }
 }

@@ -31,15 +31,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AppModels\AtividadeAppModel.cs" />
+    <Compile Include="AppModels\AtividadeDiaSemanaAppModel.cs" />
+    <Compile Include="AppModels\AtividadeRecorrenciaAppModel.cs" />
     <Compile Include="AppModels\AuditoriaAppModel.cs" />
     <Compile Include="AppModels\AnaliseInvestimentoAppModel.cs" />
     <Compile Include="AppModels\ArquivoAppModel.cs" />
     <Compile Include="AppModels\CameraAppModel.cs" />
     <Compile Include="AppModels\CidadeAppModel.cs" />
     <Compile Include="AppModels\ClienteAppModel.cs" />
+    <Compile Include="AppModels\ConfiguracaoAtividadeAppModel.cs" />
     <Compile Include="AppModels\ConsultaAppModel.cs" />
     <Compile Include="AppModels\ContratoAppModel.cs" />
     <Compile Include="AppModels\ContratoEnderecoAppModel.cs" />
+    <Compile Include="AppModels\DiaSemanaAppModel.cs" />
     <Compile Include="AppModels\DocumentoAppModel.cs" />
     <Compile Include="AppModels\EnderecoAppModel.cs" />
     <Compile Include="AppModels\EquipeAppModel.cs" />
@@ -62,6 +66,7 @@
     <Compile Include="Extensoes\CameraExtensao.cs" />
     <Compile Include="Extensoes\CidadeExtensao.cs" />
     <Compile Include="Extensoes\ContratoExtensao.cs" />
+    <Compile Include="Extensoes\DiaSemanaEstensao.cs" />
     <Compile Include="Extensoes\EquipeExtensao.cs" />
     <Compile Include="Extensoes\EstadoCivilExtensao.cs" />
     <Compile Include="Extensoes\EstadoExtensao.cs" />
@@ -78,6 +83,7 @@
     <Compile Include="Implementacao\CameraAppServico.cs" />
     <Compile Include="Implementacao\CidadeAppServico.cs" />
     <Compile Include="Implementacao\ContratoAppServico.cs" />
+    <Compile Include="Implementacao\DiaSemanaAppServico.cs" />
     <Compile Include="Implementacao\DocumentoAppServico.cs" />
     <Compile Include="Implementacao\EquipeAppServico.cs" />
     <Compile Include="Implementacao\EstadoAppServico.cs" />
@@ -94,6 +100,7 @@
     <Compile Include="Interfaces\ICameraAppServico.cs" />
     <Compile Include="Interfaces\ICidadeAppServico.cs" />
     <Compile Include="Interfaces\IContratoAppServico.cs" />
+    <Compile Include="Interfaces\IDiaSemanaAppServico.cs" />
     <Compile Include="Interfaces\IDocumentoAppServico.cs" />
     <Compile Include="Interfaces\IEquipeAppServico.cs" />
     <Compile Include="Interfaces\IEstadoAppServico.cs" />
@@ -110,6 +117,7 @@
     <Compile Include="Mapeamento\CidadeMapeamento.cs" />
     <Compile Include="Mapeamento\ConfiguracaoGeralMapeamento.cs" />
     <Compile Include="Mapeamento\ContratoMapeamento.cs" />
+    <Compile Include="Mapeamento\DiaSemanaMapeamento.cs" />
     <Compile Include="Mapeamento\EnderecoMapeamento.cs" />
     <Compile Include="Mapeamento\EquipeMapeamento.cs" />
     <Compile Include="Mapeamento\EstadoCivilMapeamento.cs" />

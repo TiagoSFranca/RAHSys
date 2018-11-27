@@ -97,20 +97,16 @@ namespace RAHSys.Apresentacao.Controllers
         }
 
         [HttpPost]
-        public ActionResult CopiarAtividade(AtividadeAppModel atividadeApp, string urlRetorno)
+        public ActionResult CopiarAtividade(int idAtividade, string urlRetorno)
         {
             try
             {
-                var atividade = _atividadeAppServico.ObterPorId(atividadeApp.IdAtividade);
+                var atividade = _atividadeAppServico.ObterPorId(idAtividade);
                 if (atividade == null)
                     MensagemErro("Atividade não encontrada");
                 else
                 {
-                    atividadeApp.IdAtividade = 0;
-                    atividadeApp.IdTipoAtividade = atividade.IdTipoAtividade;
-                    atividadeApp.IdContrato = atividade.IdContrato;
-                    atividadeApp.IdEquipe = atividade.IdEquipe;
-                    _atividadeAppServico.Adicionar(atividadeApp);
+                    _atividadeAppServico.CopiarAtividade(idAtividade);
                     MensagemSucesso();
                 }
             }

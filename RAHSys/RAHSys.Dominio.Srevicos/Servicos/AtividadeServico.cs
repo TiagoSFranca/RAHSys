@@ -237,6 +237,11 @@ namespace RAHSys.Dominio.Servicos.Servicos
             _registroRecorrenciaRepositorio.Adicionar(recorrencia);
         }
 
+        public void CopiarAtividade(int idAtividade)
+        {
+            _atividadeRepositorio.CopiarAtividade(idAtividade);
+        }
+
         private bool ValidarRecorrencia(int idAtividade, DateTime dataPrevista)
         {
             var query = _registroRecorrenciaRepositorio.Consultar().Where(e => e.IdAtividade == idAtividade && e.DataPrevista.Year == dataPrevista.Year

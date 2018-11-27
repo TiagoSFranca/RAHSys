@@ -167,5 +167,24 @@ namespace RAHSys.Aplicacao.Implementacao
                 throw nex;
             }
         }
+
+        public void CopiarAtividade(int idAtividade)
+        {
+            try
+            {
+                _atividadeServico.CopiarAtividade(idAtividade);
+            }
+            catch (CustomBaseException ex)
+            {
+                LogExceptions(ex);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                var nex = new CustomBaseException(ex);
+                LogExceptions(nex);
+                throw nex;
+            }
+        }
     }
 }

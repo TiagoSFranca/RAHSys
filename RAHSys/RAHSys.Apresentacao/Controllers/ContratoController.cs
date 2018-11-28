@@ -455,21 +455,14 @@ namespace RAHSys.Apresentacao.Controllers
 
         #region Atividades
 
-        public ActionResult Atividades(int id, int? codigo, string tipoAtividade, string usuario, string mesAno, string realizada,
-            string ordenacao, bool? crescente, int? pagina, int? itensPagina)
+        public ActionResult Atividades(int id, string mesAno)
         {
             ViewBag.SubTitle = "Contrato";
             ViewBag.SubSubTitle = "Atividades";
-            ViewBag.TipoAtividade = tipoAtividade;
             ViewBag.MesAno = mesAno;
-            ViewBag.Realizada = realizada;
-            ViewBag.Ordenacao = ordenacao;
-            ViewBag.Crescente = crescente ?? true;
-            ViewBag.ItensPagina = itensPagina;
             AtividadeContratoModel atividadeContratoModel = new AtividadeContratoModel();
             try
             {
-                atividadeContratoModel.TodasAtividadesSerializadas = ObterAtividadesContrato(id, mesAno);
                 var contratoModel = _contratoAppServico.ObterPorId(id);
                 if (contratoModel == null)
                 {
@@ -490,20 +483,8 @@ namespace RAHSys.Apresentacao.Controllers
                 atividadeContratoModel.Contrato = contratoModel;
                 int idEquipe = (int)contratoModel.AnaliseInvestimento.Cliente.IdEquipe;
                 atividadeContratoModel.Equipe = _equipeAppServico.ObterPorId(idEquipe);
+                atividadeContratoModel.TodasAtividadesSerializadas = ObterAtividadesContrato(id, mesAno);
 
-                var listaTiposAtividade = ObterIdsTipoAtividade(tipoAtividade);
-                var resultadoRealidada = ObterRealizada(realizada);
-                var listaUsuarios = ObterIdsUsuario(usuario);
-                var consulta = _atividadeAppServico.Consultar(codigo != null ? new int[] { (int)codigo } : null,
-                    listaTiposAtividade,
-                    new[] { idEquipe },
-                    new[] { contratoModel.IdContrato },
-                    listaUsuarios, mesAno, resultadoRealidada,
-                    ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? (int)ItensPorPaginaEnum.MEDIO);
-
-                var resultado = new StaticPagedList<AtividadeRecorrenciaAppModel>(consulta.Resultado, consulta.PaginaAtual, consulta.ItensPorPagina, consulta.TotalItens);
-
-                atividadeContratoModel.Atividades = resultado;
             }
             catch (CustomBaseException ex)
             {
@@ -733,30 +714,7 @@ namespace RAHSys.Apresentacao.Controllers
             });
             return JsonConvert.SerializeObject(lista);
         }
-
-        private static bool? ObterRealizada(string realizada)
-        {
-            if (string.IsNullOrEmpty(realizada))
-                return null;
-            return realizada == "1";
-        }
-
-        private List<int> ObterIdsTipoAtividade(string descricao)
-        {
-            if (string.IsNullOrEmpty(descricao))
-                return new List<int>();
-            var tipos = _tipoAtividadeAppServico.Consultar(null, descricao, null, true, 1, Int32.MaxValue);
-            return tipos.Resultado.Select(e => e.IdTipoAtividade).ToList();
-        }
-
-        private List<string> ObterIdsUsuario(string usuario)
-        {
-            if (string.IsNullOrEmpty(usuario))
-                return new List<string>();
-            var usuarios = _usuarioAppServico.Consultar(null, usuario, usuario, null, true, 1, Int32.MaxValue);
-            return usuarios.Resultado.Select(e => e.IdUsuario).ToList();
-        }
-
+        
         #endregion
 
         #region Métodos Aux

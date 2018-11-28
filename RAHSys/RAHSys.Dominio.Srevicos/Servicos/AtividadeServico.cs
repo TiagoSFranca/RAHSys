@@ -77,7 +77,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
             }
 
             var resultado = query.ToList();
-            var recorrencia = ObterRecorrencia(resultado, dataInicioMesAno);
+            var recorrencia = ObterRecorrenciaAtividades(resultado, dataInicioMesAno);
             recorrencia = recorrencia.Skip((pagina == 1 ? 0 : pagina - 1) * quantidade).Take(quantidade).ToList();
             consultaModel.TotalItens = recorrencia.Count();
             consultaModel.Resultado = recorrencia;
@@ -85,7 +85,28 @@ namespace RAHSys.Dominio.Servicos.Servicos
             return consultaModel;
         }
 
-        private List<AtividadeRecorrenciaModel> ObterRecorrencia(List<AtividadeModel> atividades, DateTime mes)
+        private AtividadeRecorrenciaModel MontarRegistroRecorrencia(AtividadeModel atividade, DateTime data)
+        {
+            var recorrenciasAtividade = atividade.RegistroRecorrencias;
+            var registroRecorrencia = recorrenciasAtividade.FirstOrDefault(e => e.DataPrevista == data);
+            bool realizada = registroRecorrencia != null;
+            if (registroRecorrencia == null)
+                registroRecorrencia = new RegistroRecorrenciaModel()
+                {
+                    DataPrevista = data
+                };
+
+            AtividadeRecorrenciaModel recorrencia = new AtividadeRecorrenciaModel(atividade.IdAtividade, atividade.Descricao, atividade.TipoAtividade,
+                atividade.Contrato, atividade.Equipe, atividade.Usuario,
+                atividade.TipoRecorrencia, registroRecorrencia, atividade.Finalizada)
+            {
+                Realizada = realizada
+            };
+
+            return recorrencia;
+        }
+
+        private List<AtividadeRecorrenciaModel> ObterRecorrenciaAtividades(List<AtividadeModel> atividades, DateTime mes)
         {
             var atividadesSemRecorrencia = atividades.Where(e => e.ConfiguracaoAtividade == null).ToList();
             var atividadesComRecorrencia = atividades.Where(e => e.ConfiguracaoAtividade != null).ToList();
@@ -116,153 +137,155 @@ namespace RAHSys.Dominio.Servicos.Servicos
             return listaRecorrencia;
         }
 
-        private List<AtividadeRecorrenciaModel> CalcularRecorrencia(AtividadeModel atividade, DateTime dataInicial)
+        private List<AtividadeRecorrenciaModel> CalcularRecorrenciaDiaria(AtividadeModel atividade, DateTime dataInicial)
         {
-            var configuracaoAtividade = atividade.ConfiguracaoAtividade;
-            var recorrenciasAtividade = atividade.RegistroRecorrencias;
-            var dataAtividade = atividade.DataInicial;
-            var dataFinal = dataInicial.AddMonths(1).AddDays(-1);
-            var contador = 0;
             List<AtividadeRecorrenciaModel> lista = new List<AtividadeRecorrenciaModel>();
 
+            var configuracaoAtividade = atividade.ConfiguracaoAtividade;
+            var recorrenciasAtividade = atividade.RegistroRecorrencias.ToList();
+            var dataFinal = dataInicial.AddMonths(1).AddDays(-1);
+            var frequencia = configuracaoAtividade.Frequencia;
+            frequencia = frequencia > 0 ? frequencia : 1;
+            var dataInicio = atividade.DataInicial;
+
+            if (atividade.ConfiguracaoAtividade.TerminaEm != null)
+                dataFinal = dataFinal < (DateTime)atividade.ConfiguracaoAtividade.TerminaEm ? dataFinal : (DateTime)atividade.ConfiguracaoAtividade.TerminaEm;
+
+            int qtdDias = dataFinal.Subtract(dataInicio).Days + 1;
+
+            var diasDaSemana = ObterDiasDaSemana(atividade.ConfiguracaoAtividade.AtividadeDiaSemanas.ToList());
+
+            var datas = Enumerable.Range(0, qtdDias).Select(i => dataInicio.AddDays(i * frequencia)).ToList();
+
+            List<DateTime> datasExatas = new List<DateTime>();
+
+            if (atividade.ConfiguracaoAtividade.QtdRepeticoes != null && atividade.ConfiguracaoAtividade.QtdRepeticoes > 0)
+                datasExatas = datas.Skip(0).Take((int)atividade.ConfiguracaoAtividade.QtdRepeticoes).ToList();
+            else
+                datasExatas = datas.Where(e => e.Date >= dataInicial.Date && e.Date <= dataFinal.Date).ToList();
+
+            datasExatas.ForEach(data =>
+            {
+                AtividadeRecorrenciaModel recorrencia = MontarRegistroRecorrencia(atividade, data);
+                lista.Add(recorrencia);
+            });
+
+            return lista;
+        }
+
+        private List<AtividadeRecorrenciaModel> CalcularRecorrenciaSemanal(AtividadeModel atividade, DateTime dataInicial)
+        {
+            List<AtividadeRecorrenciaModel> lista = new List<AtividadeRecorrenciaModel>();
+            var configuracaoAtividade = atividade.ConfiguracaoAtividade;
+            var recorrenciasAtividade = atividade.RegistroRecorrencias.ToList();
+            var dataFinal = dataInicial.AddMonths(1).AddDays(-1);
+            var frequencia = configuracaoAtividade.Frequencia;
+            frequencia = frequencia > 0 ? frequencia : 1;
+            var dataInicio = atividade.DataInicial;
+
+            if (atividade.ConfiguracaoAtividade.TerminaEm != null)
+                dataFinal = dataFinal < (DateTime)atividade.ConfiguracaoAtividade.TerminaEm ? dataFinal : (DateTime)atividade.ConfiguracaoAtividade.TerminaEm;
+
+            int qtdDias = dataFinal.Subtract(dataInicio).Days + 1;
+
+            var diasDaSemana = ObterDiasDaSemana(atividade.ConfiguracaoAtividade.AtividadeDiaSemanas.ToList());
+
+            var todasDatas = Enumerable.Range(0, qtdDias)
+                                  .Select(i => dataInicio.AddDays(i))
+                                  .Where(d => diasDaSemana.Contains(d.DayOfWeek)).ToList();
+            List<DateTime> datas = new List<DateTime>();
+            for (int i = 0; i < todasDatas.Count; i += (frequencia * diasDaSemana.Count))
+            {
+                if (todasDatas[i] != null)
+                {
+                    datas.Add(todasDatas[i]);
+                    var count = 1;
+                    while (count < diasDaSemana.Count)
+                    {
+                        if (todasDatas[i + count] != null)
+                            datas.Add(todasDatas[i + count]);
+                        else
+                            break;
+                        count++;
+                    }
+                }
+                else
+                    break;
+            }
+            List<DateTime> datasExatas = new List<DateTime>();
+
+            if (atividade.ConfiguracaoAtividade.QtdRepeticoes != null && atividade.ConfiguracaoAtividade.QtdRepeticoes > 0)
+                datasExatas = datas.Skip(0).Take((int)atividade.ConfiguracaoAtividade.QtdRepeticoes).ToList();
+            else
+                datasExatas = datas.Where(e => e.Date >= dataInicial.Date && e.Date <= dataFinal.Date).ToList();
+
+            datasExatas.ForEach(data =>
+            {
+                AtividadeRecorrenciaModel recorrencia = MontarRegistroRecorrencia(atividade, data);
+                lista.Add(recorrencia);
+            });
+
+            return lista;
+        }
+
+        private List<AtividadeRecorrenciaModel> CalcularRecorrenciaMensal(AtividadeModel atividade, DateTime dataInicial)
+        {
+            List<AtividadeRecorrenciaModel> lista = new List<AtividadeRecorrenciaModel>();
+            var contador = 0;
+            var dataAtividade = atividade.DataInicial;
+            var configuracaoAtividade = atividade.ConfiguracaoAtividade;
+            var recorrenciasAtividade = atividade.RegistroRecorrencias.ToList();
+            var dataFinal = dataInicial.AddMonths(1).AddDays(-1);
+            var frequencia = configuracaoAtividade.Frequencia;
+            frequencia = frequencia > 0 ? frequencia : 1;
+            int dia = configuracaoAtividade.DiaMes > 0 ? (int)configuracaoAtividade.DiaMes : atividade.DataInicial.Day;
+
+            do
+            {
+                if (configuracaoAtividade.TerminaEm != null && dataAtividade > configuracaoAtividade.TerminaEm)
+                    break;
+                if (configuracaoAtividade.QtdRepeticoes != null && configuracaoAtividade.QtdRepeticoes <= contador)
+                    break;
+                dataAtividade = dataAtividade.AddMonths(frequencia);
+                if (configuracaoAtividade.DiaMes > 0)
+                {
+                    var diaAtividade = dataAtividade.Day;
+                    if (diaAtividade > dia)
+                        dataAtividade = new DateTime(dataAtividade.Year, dataAtividade.Month, dia);
+                    else
+                    {
+                        var ultimoDiaMes = dataFinal.Day;
+                        if (ultimoDiaMes < dia)
+                            dataAtividade = new DateTime(dataAtividade.Year, dataAtividade.Month, ultimoDiaMes);
+                    }
+                }
+                if ((dataAtividade >= dataInicial && dataAtividade <= dataFinal))
+                {
+                    AtividadeRecorrenciaModel recorrencia = MontarRegistroRecorrencia(atividade, dataAtividade);
+                    lista.Add(recorrencia);
+                }
+                contador++;
+            }
+            while (dataAtividade <= dataFinal);
+
+            return lista;
+        }
+
+        private List<AtividadeRecorrenciaModel> CalcularRecorrencia(AtividadeModel atividade, DateTime dataInicial)
+        {
             if (atividade.IdTipoRecorrencia == TipoRecorrenciaSeed.Diaria.IdTipoRecorrencia)
             {
-                do
-                {
-                    if (configuracaoAtividade.TerminaEm != null && dataAtividade > configuracaoAtividade.TerminaEm)
-                        break;
-                    if (configuracaoAtividade.QtdRepeticoes != null && configuracaoAtividade.QtdRepeticoes <= contador)
-                        break;
-                    dataAtividade = dataAtividade.AddDays(configuracaoAtividade.Frequencia);
-                    if ((dataAtividade >= dataInicial && dataAtividade <= dataFinal))
-                    {
-                        var registroRecorrencia = recorrenciasAtividade.FirstOrDefault(e => e.DataPrevista == dataAtividade);
-                        bool realizada = registroRecorrencia != null;
-                        if (registroRecorrencia == null)
-                            registroRecorrencia = new RegistroRecorrenciaModel()
-                            {
-                                DataPrevista = dataAtividade
-                            };
-
-                        AtividadeRecorrenciaModel recorrencia = new AtividadeRecorrenciaModel(atividade.IdAtividade, atividade.Descricao,
-                            atividade.TipoAtividade, atividade.Contrato, atividade.Equipe, atividade.Usuario,
-                            atividade.TipoRecorrencia, registroRecorrencia, atividade.Finalizada)
-                        {
-                            Realizada = realizada
-                        };
-                        lista.Add(recorrencia);
-                    }
-                    contador++;
-                }
-                while (dataAtividade <= dataFinal);
+                return CalcularRecorrenciaDiaria(atividade, dataInicial);
             }
             else if (atividade.IdTipoRecorrencia == TipoRecorrenciaSeed.Semanal.IdTipoRecorrencia)
             {
-                var dataInicio = atividade.DataInicial;
-                if (atividade.ConfiguracaoAtividade.TerminaEm != null)
-                    dataFinal = dataFinal < (DateTime)atividade.ConfiguracaoAtividade.TerminaEm ? dataFinal : (DateTime)atividade.ConfiguracaoAtividade.TerminaEm;
-
-                int qtdDias = dataFinal.Subtract(dataInicio).Days + 1;
-
-                var diasDaSemana = ObterDiasDaSemana(atividade.ConfiguracaoAtividade.AtividadeDiaSemanas.ToList());
-
-                var todasDatas = Enumerable.Range(0, qtdDias)
-                                      .Select(i => dataInicio.AddDays(i))
-                                      .Where(d => diasDaSemana.Contains(d.DayOfWeek)).ToList();
-                List<DateTime> datas = new List<DateTime>();
-                for (int i = 0; i < todasDatas.Count; i += (atividade.ConfiguracaoAtividade.Frequencia * diasDaSemana.Count))
-                {
-                    if (todasDatas[i] != null)
-                    {
-                        datas.Add(todasDatas[i]);
-                        var count = 1;
-                        while (count < diasDaSemana.Count)
-                        {
-                            if (todasDatas[i + count] != null)
-                                datas.Add(todasDatas[i + count]);
-                            else
-                                break;
-                            count++;
-                        }
-                    }
-                    else
-                        break;
-                }
-                List<DateTime> datasExatas = new List<DateTime>();
-
-                if (atividade.ConfiguracaoAtividade.QtdRepeticoes != null && atividade.ConfiguracaoAtividade.QtdRepeticoes > 0)
-                    datasExatas = datas.Skip(0).Take((int)atividade.ConfiguracaoAtividade.QtdRepeticoes).ToList();
-                else
-                    datasExatas = datas.Where(e => e.Date >= dataInicial.Date && e.Date <= dataFinal.Date).ToList();
-
-                foreach (var data in datasExatas)
-                {
-                    var registroRecorrencia = recorrenciasAtividade.FirstOrDefault(e => e.DataPrevista == data);
-                    bool realizada = registroRecorrencia != null;
-                    if (registroRecorrencia == null)
-                        registroRecorrencia = new RegistroRecorrenciaModel()
-                        {
-                            DataPrevista = data
-                        };
-
-                    AtividadeRecorrenciaModel recorrencia = new AtividadeRecorrenciaModel(atividade.IdAtividade, atividade.Descricao, atividade.TipoAtividade,
-                        atividade.Contrato, atividade.Equipe, atividade.Usuario,
-                        atividade.TipoRecorrencia, registroRecorrencia, atividade.Finalizada)
-                    {
-                        Realizada = realizada
-                    };
-                    lista.Add(recorrencia);
-                }
+                return CalcularRecorrenciaSemanal(atividade, dataInicial);
             }
             else
             {
-                var frequencia = configuracaoAtividade.Frequencia;
-                frequencia = frequencia > 0 ? frequencia : 1;
-                int dia = configuracaoAtividade.DiaMes > 0 ? (int)configuracaoAtividade.DiaMes : atividade.DataInicial.Day;
-
-                do
-                {
-                    if (configuracaoAtividade.TerminaEm != null && dataAtividade > configuracaoAtividade.TerminaEm)
-                        break;
-                    if (configuracaoAtividade.QtdRepeticoes != null && configuracaoAtividade.QtdRepeticoes <= contador)
-                        break;
-                    dataAtividade = dataAtividade.AddMonths(frequencia);
-                    if (configuracaoAtividade.DiaMes > 0)
-                    {
-                        var diaAtividade = dataAtividade.Day;
-                        if (diaAtividade > dia)
-                            dataAtividade = new DateTime(dataAtividade.Year, dataAtividade.Month, dia);
-                        else
-                        {
-                            var ultimoDiaMes = dataFinal.Day;
-                            if (ultimoDiaMes < dia)
-                                dataAtividade = new DateTime(dataAtividade.Year, dataAtividade.Month, ultimoDiaMes);
-                        }
-                    }
-                    if ((dataAtividade >= dataInicial && dataAtividade <= dataFinal))
-                    {
-                        var registroRecorrencia = recorrenciasAtividade.FirstOrDefault(e => e.DataPrevista == dataAtividade);
-                        bool realizada = registroRecorrencia != null;
-                        if (registroRecorrencia == null)
-                            registroRecorrencia = new RegistroRecorrenciaModel()
-                            {
-                                DataPrevista = dataAtividade
-                            };
-
-                        AtividadeRecorrenciaModel recorrencia = new AtividadeRecorrenciaModel(atividade.IdAtividade, atividade.Descricao, atividade.TipoAtividade,
-                            atividade.Contrato, atividade.Equipe, atividade.Usuario,
-                            atividade.TipoRecorrencia, registroRecorrencia, atividade.Finalizada)
-                        {
-                            Realizada = realizada
-                        };
-                        lista.Add(recorrencia);
-                    }
-                    contador++;
-                }
-                while (dataAtividade <= dataFinal);
+                return CalcularRecorrenciaMensal(atividade, dataInicial);
             }
 
-            return lista;
         }
 
         public void Adicionar(AtividadeModel obj)

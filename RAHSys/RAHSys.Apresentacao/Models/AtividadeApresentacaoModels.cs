@@ -8,13 +8,8 @@ namespace RAHSys.Apresentacao.Models
     {
         public ContratoAppModel Contrato { get; set; }
         public EquipeAppModel Equipe { get; set; }
-        public StaticPagedList<AtividadeRecorrenciaAppModel> Atividades { get; set; }
         public string TodasAtividadesSerializadas { get; set; }
 
-        public AtividadeContratoModel()
-        {
-            Atividades = new StaticPagedList<AtividadeRecorrenciaAppModel>(new List<AtividadeRecorrenciaAppModel>(), 1, 1, 0);
-        }
     }
 
     public class AtividadeEquipeModel

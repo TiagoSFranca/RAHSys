@@ -159,7 +159,39 @@ namespace RAHSys.Dominio.Servicos.Servicos
             else if (atividade.IdTipoRecorrencia == TipoRecorrenciaSeed.Semanal.IdTipoRecorrencia)
             {
                 //TODO: CÁLCULO SEMANAL
+                var dataInicio = atividade.DataInicial;
+                int qtdDias = dataFinal.Subtract(dataInicio).Days + 1;
 
+                var diasDaSemana = ObterDiasDaSemana(atividade.ConfiguracaoAtividade.AtividadeDiaSemanas.ToList());
+
+                var todasDatas = Enumerable.Range(0, qtdDias)
+                                      .Select(i => dataInicio.AddDays(i))
+                                      .Where(d => diasDaSemana.Contains(d.DayOfWeek)).ToList();
+                List<DateTime> datas = new List<DateTime>();
+                for (int i = 0; i < todasDatas.Count; i += (atividade.ConfiguracaoAtividade.Frequencia * diasDaSemana.Count))
+                {
+                    if (todasDatas[i] != null)
+                    {
+                        datas.Add(todasDatas[i]);
+                        var count = 1;
+                        while (count < diasDaSemana.Count)
+                        {
+                            if (todasDatas[i + count] != null)
+                                datas.Add(todasDatas[i + count]);
+                            else
+                                break;
+                            count++;
+                        }
+                    }
+                    else
+                        break;
+                }
+
+                for (int i = 0; i < datas.Count; i += diasDaSemana.Count)
+                {
+
+                }
+                var o = datas;
             }
             else
             {
@@ -271,6 +303,28 @@ namespace RAHSys.Dominio.Servicos.Servicos
             if (!Int32.TryParse(datas[1], out ano))
                 throw new CustomBaseException(new Exception(), erroDataInvalida);
 
+        }
+
+        private List<DayOfWeek> ObterDiasDaSemana(List<AtividadeDiaSemanaModel> atividadeDiaSemanas)
+        {
+            List<DayOfWeek> retorno = new List<DayOfWeek>();
+
+            Dictionary<int, DayOfWeek> dicDias = new Dictionary<int, DayOfWeek>();
+            dicDias.Add(DiaSemanaSeed.Domingo.IdDiaSemana, DayOfWeek.Sunday);
+            dicDias.Add(DiaSemanaSeed.Segunda.IdDiaSemana, DayOfWeek.Monday);
+            dicDias.Add(DiaSemanaSeed.Terca.IdDiaSemana, DayOfWeek.Tuesday);
+            dicDias.Add(DiaSemanaSeed.Quarta.IdDiaSemana, DayOfWeek.Wednesday);
+            dicDias.Add(DiaSemanaSeed.Quinta.IdDiaSemana, DayOfWeek.Thursday);
+            dicDias.Add(DiaSemanaSeed.Sexta.IdDiaSemana, DayOfWeek.Friday);
+            dicDias.Add(DiaSemanaSeed.Sabado.IdDiaSemana, DayOfWeek.Saturday);
+
+            foreach (var dia in atividadeDiaSemanas)
+            {
+                var diaSemana = dicDias[dia.IdDiaSemana];
+                retorno.Add(diaSemana);
+            }
+
+            return retorno;
         }
     }
 }

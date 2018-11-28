@@ -158,8 +158,10 @@ namespace RAHSys.Dominio.Servicos.Servicos
             }
             else if (atividade.IdTipoRecorrencia == TipoRecorrenciaSeed.Semanal.IdTipoRecorrencia)
             {
-                //TODO: CÁLCULO SEMANAL
                 var dataInicio = atividade.DataInicial;
+                if (atividade.ConfiguracaoAtividade.TerminaEm != null)
+                    dataFinal = dataFinal < (DateTime)atividade.ConfiguracaoAtividade.TerminaEm ? dataFinal : (DateTime)atividade.ConfiguracaoAtividade.TerminaEm;
+
                 int qtdDias = dataFinal.Subtract(dataInicio).Days + 1;
 
                 var diasDaSemana = ObterDiasDaSemana(atividade.ConfiguracaoAtividade.AtividadeDiaSemanas.ToList());
@@ -186,12 +188,31 @@ namespace RAHSys.Dominio.Servicos.Servicos
                     else
                         break;
                 }
+                List<DateTime> datasExatas = new List<DateTime>();
 
-                for (int i = 0; i < datas.Count; i += diasDaSemana.Count)
+                if (atividade.ConfiguracaoAtividade.QtdRepeticoes != null && atividade.ConfiguracaoAtividade.QtdRepeticoes > 0)
+                    datasExatas = datas.Skip(0).Take((int)atividade.ConfiguracaoAtividade.QtdRepeticoes).ToList();
+                else
+                    datasExatas = datas.Where(e => e.Date >= dataInicial.Date && e.Date <= dataFinal.Date).ToList();
+
+                foreach (var data in datasExatas)
                 {
+                    var registroRecorrencia = recorrenciasAtividade.FirstOrDefault(e => e.DataPrevista == data);
+                    bool realizada = registroRecorrencia != null;
+                    if (registroRecorrencia == null)
+                        registroRecorrencia = new RegistroRecorrenciaModel()
+                        {
+                            DataPrevista = data
+                        };
 
+                    AtividadeRecorrenciaModel recorrencia = new AtividadeRecorrenciaModel(atividade.IdAtividade, atividade.Descricao, atividade.TipoAtividade,
+                        atividade.Contrato, atividade.Equipe, atividade.Usuario,
+                        atividade.TipoRecorrencia, registroRecorrencia, atividade.Finalizada)
+                    {
+                        Realizada = realizada
+                    };
+                    lista.Add(recorrencia);
                 }
-                var o = datas;
             }
             else
             {

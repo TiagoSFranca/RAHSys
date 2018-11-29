@@ -85,7 +85,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
             return consultaModel;
         }
 
-        private AtividadeRecorrenciaModel MontarRegistroRecorrencia(AtividadeModel atividade, DateTime data)
+        private AtividadeRecorrenciaModel MontarRegistroRecorrencia(AtividadeModel atividade, DateTime data, int numeroAtividade)
         {
             var recorrenciasAtividade = atividade.RegistroRecorrencias;
             var registroRecorrencia = recorrenciasAtividade.FirstOrDefault(e => e.DataPrevista == data);
@@ -98,7 +98,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
 
             AtividadeRecorrenciaModel recorrencia = new AtividadeRecorrenciaModel(atividade.IdAtividade, atividade.Descricao, atividade.TipoAtividade,
                 atividade.Contrato, atividade.Equipe, atividade.Usuario,
-                atividade.TipoRecorrencia, registroRecorrencia, atividade.Finalizada)
+                atividade.TipoRecorrencia, registroRecorrencia, atividade.Finalizada, numeroAtividade)
             {
                 Realizada = realizada
             };
@@ -125,7 +125,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
                         e.Usuario,
                         e.TipoRecorrencia,
                         e.RegistroRecorrencias.FirstOrDefault() ?? new RegistroRecorrenciaModel() { DataPrevista = e.DataInicial },
-                        e.Finalizada)
+                        e.Finalizada, 1)
                     { Realizada = e.RegistroRecorrencias.Count > 0 }
                     ).ToList());
 
@@ -166,7 +166,8 @@ namespace RAHSys.Dominio.Servicos.Servicos
 
             datasExatas.ForEach(data =>
             {
-                AtividadeRecorrenciaModel recorrencia = MontarRegistroRecorrencia(atividade, data);
+                var indice = datas.IndexOf(data);
+                AtividadeRecorrenciaModel recorrencia = MontarRegistroRecorrencia(atividade, data, indice + 1);
                 lista.Add(recorrencia);
             });
 
@@ -221,7 +222,8 @@ namespace RAHSys.Dominio.Servicos.Servicos
 
             datasExatas.ForEach(data =>
             {
-                AtividadeRecorrenciaModel recorrencia = MontarRegistroRecorrencia(atividade, data);
+                var indice = datas.IndexOf(data);
+                AtividadeRecorrenciaModel recorrencia = MontarRegistroRecorrencia(atividade, data, indice + 1);
                 lista.Add(recorrencia);
             });
 
@@ -261,7 +263,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
                 }
                 if ((dataAtividade >= dataInicial && dataAtividade <= dataFinal))
                 {
-                    AtividadeRecorrenciaModel recorrencia = MontarRegistroRecorrencia(atividade, dataAtividade);
+                    AtividadeRecorrenciaModel recorrencia = MontarRegistroRecorrencia(atividade, dataAtividade, contador + 1);
                     lista.Add(recorrencia);
                 }
                 contador++;
@@ -299,7 +301,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
             _atividadeRepositorio.Adicionar(obj);
         }
 
-        public void FinalizarAtividade(int idAtividade, DateTime dataRealizacaoPrevista, DateTime dataRealizacao, string observacao)
+        public void FinalizarRecorrencia(int idAtividade, DateTime dataRealizacaoPrevista, DateTime dataRealizacao, string observacao)
         {
             if (ValidarRecorrencia(idAtividade, dataRealizacaoPrevista))
                 throw new CustomBaseException(new Exception(), string.Format("Já existe um registro para [{0}]", dataRealizacaoPrevista));

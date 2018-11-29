@@ -130,11 +130,11 @@ namespace RAHSys.Aplicacao.Implementacao
             }
         }
 
-        public void FinalizarAtividade(int idAtividade, DateTime dataRealizacaoPrevista, DateTime dataRealizacao, string observacao)
+        public void FinalizarRecorrencia(int idAtividade, DateTime dataRealizacaoPrevista, DateTime dataRealizacao, string observacao)
         {
             try
             {
-                _atividadeServico.FinalizarAtividade(idAtividade, dataRealizacaoPrevista, dataRealizacao, observacao);
+                _atividadeServico.FinalizarRecorrencia(idAtividade, dataRealizacaoPrevista, dataRealizacao, observacao);
             }
             catch (CustomBaseException ex)
             {

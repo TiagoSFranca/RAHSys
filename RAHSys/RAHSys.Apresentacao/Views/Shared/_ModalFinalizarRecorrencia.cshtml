@@ -1,11 +1,11 @@
-﻿<div id="modalFinalizarAtividade" class="modal fade" tabindex="-1" aria-hidden="true">
+﻿<div id="modalFinalizarRecorrencia" class="modal fade" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">Finalizar Atividade</h4>
+                <h4 class="modal-title">Finalizar Recorrência</h4>
             </div>
-            @using (Html.BeginForm("FinalizarAtividade", "Atividade", null,
+            @using (Html.BeginForm("FinalizarRecorrencia", "Atividade", null,
                 FormMethod.Post, new { @class = "form-horizontal margin-bottom-40", @id = "formFinalizarAtividade" }))
             {
                 @Html.Hidden("urlRetorno", null, new { @class = "urlRetorno" })

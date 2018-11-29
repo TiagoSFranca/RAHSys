@@ -75,7 +75,7 @@ namespace RAHSys.Apresentacao.Controllers
         }
 
         [HttpPost]
-        public ActionResult FinalizarAtividade(int idAtividade, DateTime dataRealizacaoPrevista, DateTime dataRealizacao, string observacao, string urlRetorno)
+        public ActionResult FinalizarRecorrencia(int idAtividade, DateTime dataRealizacaoPrevista, DateTime dataRealizacao, string observacao, string urlRetorno)
         {
             try
             {
@@ -84,7 +84,7 @@ namespace RAHSys.Apresentacao.Controllers
                     MensagemErro("Atividade não encontrada");
                 else
                 {
-                    _atividadeAppServico.FinalizarAtividade(idAtividade, dataRealizacaoPrevista, dataRealizacao, observacao);
+                    _atividadeAppServico.FinalizarRecorrencia(idAtividade, dataRealizacaoPrevista, dataRealizacao, observacao);
                     MensagemSucesso();
                 }
             }

@@ -17,6 +17,7 @@ namespace RAHSys.Entidades
         public DateTime DataRealizacaoPrevista { get; set; }
         public DateTime? DataRealizacao { get; set; }
         public string Observacao { get; set; }
+        public int NumeroRecorrencia { get; set; }
 
         public string TipoAtividade { get; set; }
 
@@ -29,7 +30,7 @@ namespace RAHSys.Entidades
         public virtual UsuarioModel Usuario { get; set; }
 
         public AtividadeRecorrenciaModel(int idAtividade, string descricao, TipoAtividadeModel tipoAtividade, ContratoModel contrato,
-            EquipeModel equipe, UsuarioModel usuario, TipoRecorrenciaModel tipoRecorrencia, RegistroRecorrenciaModel registroRecorrencia, bool finalizada)
+            EquipeModel equipe, UsuarioModel usuario, TipoRecorrenciaModel tipoRecorrencia, RegistroRecorrenciaModel registroRecorrencia, bool finalizada, int numeroRecorrencia)
         {
             IdAtividade = idAtividade;
             Descricao = descricao;
@@ -62,6 +63,7 @@ namespace RAHSys.Entidades
             }
 
             AtividadeFinalizada = finalizada;
+            NumeroRecorrencia = numeroRecorrencia;
         }
     }
 }

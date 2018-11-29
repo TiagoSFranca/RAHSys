@@ -12,7 +12,7 @@
         PopularModais($(this).data('atividade'));
     });
 
-    $('.inputFinalizarAtividade').click(function () {
+    $('.inputFinalizarRecorrencia').click(function () {
         PopularModais($(this).data('atividade'));
     });
 });

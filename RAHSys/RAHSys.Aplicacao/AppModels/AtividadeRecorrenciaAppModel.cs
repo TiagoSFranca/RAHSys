@@ -17,6 +17,7 @@ namespace RAHSys.Aplicacao.AppModels
         public DateTime DataRealizacaoPrevista { get; set; }
         public DateTime? DataRealizacao { get; set; }
         public string Observacao { get; set; }
+        public int NumeroRecorrencia { get; set; }
 
         public string TipoAtividade { get; set; }
 
@@ -32,14 +33,24 @@ namespace RAHSys.Aplicacao.AppModels
         {
             get
             {
+                if (AtividadeFinalizada)
+                    return SituacaoAtividadeEnum.AtividadeFinalizada;
+                return SituacaoAtividadeEnum.AtividadeNaoFinalizada;
+            }
+        }
+
+        public virtual SituacaoAtividade SituacaoRecorrencia
+        {
+            get
+            {
                 if (Realizada)
-                    return SituacaoAtividadeEnum.AtividadeRealizada;
+                    return SituacaoAtividadeEnum.RecorrenciaRealizada;
                 else
                 {
                     if (DataRealizacaoPrevista.Date < DateTime.Now.Date)
-                        return SituacaoAtividadeEnum.AtividadeAtrasada;
+                        return SituacaoAtividadeEnum.RecorrenciaAtrasada;
                     else
-                        return SituacaoAtividadeEnum.AtividadeNaoRealizada;
+                        return SituacaoAtividadeEnum.RecorrenciaNaoRealizada;
                 }
             }
         }

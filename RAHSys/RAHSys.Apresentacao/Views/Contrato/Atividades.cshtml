@@ -89,14 +89,9 @@
                                                         Transferir/Atribuir
                                                     </a>
                                                 </li>
-                                                <li>
-                                                    <a data-toggle="modal" href="#modalFinalizarAtividade" class="btn grey-gallery btn-outline inputFinalizarAtividade" data-atividade="" id="finalizarAtividade">
-                                                        Finalizar Recorrência
-                                                    </a>
-                                                </li>
                                             </ul>
                                         </div>
-                                        <div id="infoSituacao">
+                                        <div id="infoSituacaoAtividade">
                                         </div>
                                         <div class="form-group form-md-line-input">
                                             <div class="row">
@@ -120,6 +115,47 @@
                                         </div>
                                         <div class="form-group form-md-line-input">
                                             <div class="row">
+                                                @Html.Label("Descrição", new { @class = "col-md-12 control-label" })
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <textarea class="form-control" placeholder="Descrição" disabled id="descricao"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portlet light ">
+                            <div class="portlet-title">
+                                <div class="caption caption-md">
+                                    <i class="icon-bar-chart font-dark hide"></i>
+                                    <span class="caption-subject font-green-steel uppercase bold">Info da Recorrência <span id="codigoRecorrencia"></span></span>
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="expand" id="showInfoRecorrencia"> </a>
+                                </div>
+                            </div>
+                            <div class="portlet-body portlet-collapsed">
+                                <div class="row">
+                                    <div class="col-md-12" id="divInfoRecorrencia">
+                                        <div class="btn-group pull-right">
+                                            <a class="btn btn-circle btn-default btn-sm" href="javascript:;" data-toggle="dropdown" aria-expanded="false">
+                                                <i class="fa fa-cogs"></i>
+                                            </a>
+                                            <ul class="dropdown-menu pull-right">
+                                                <li>
+                                                    <a data-toggle="modal" href="#modalFinalizarRecorrencia" class="btn grey-gallery btn-outline inputFinalizarRecorrencia" data-atividade="" id="finalizarRecorrencia">
+                                                        Finalizar Recorrência
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div id="infoSituacaoRecorrencia">
+                                        </div>
+                                        <div class="form-group form-md-line-input">
+                                            <div class="row">
                                                 @Html.Label("Data Prevista", new { @class = "col-md-12 control-label" })
                                             </div>
                                             <div class="row">
@@ -135,16 +171,6 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input type="text" class="form-control" placeholder="Data de Realizada" disabled id="dataRealizada" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group form-md-line-input">
-                                            <div class="row">
-                                                @Html.Label("Descrição", new { @class = "col-md-12 control-label" })
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <textarea class="form-control" placeholder="Descrição" disabled id="descricao"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -170,7 +196,7 @@
 </div>
 
 @*Modais*@
-@Html.Partial("_ModalFinalizarAtividade")
+@Html.Partial("_ModalFinalizarRecorrencia")
 @Html.Partial("_ModalCopiarAtividade")
 @Html.Partial("_ModalTransferirAtividade")
 <input type="hidden" value="@Model.TodasAtividadesSerializadas" id="atividades" />

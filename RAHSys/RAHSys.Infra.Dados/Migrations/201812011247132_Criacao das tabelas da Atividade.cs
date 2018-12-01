@@ -70,6 +70,7 @@ namespace RAHSys.Infra.Dados.Migrations
             AddColumn("dbo.Atividade", "IdTipoRecorrencia", c => c.Int());
             AddColumn("dbo.Atividade", "Finalizada", c => c.Boolean(nullable: false));
             AddColumn("dbo.Atividade", "DataInicial", c => c.DateTime(nullable: false));
+            AddColumn("dbo.Atividade", "DataFinalizacao", c => c.DateTime());
             CreateIndex("dbo.Atividade", "IdTipoRecorrencia");
             AddForeignKey("dbo.Atividade", "IdTipoRecorrencia", "dbo.TipoRecorrencia", "IdTipoRecorrencia", cascadeDelete: true);
             DropColumn("dbo.Atividade", "Observacao");
@@ -94,6 +95,7 @@ namespace RAHSys.Infra.Dados.Migrations
             DropIndex("dbo.ConfiguracaoAtividade", new[] { "IdConfiguracaoAtividade" });
             DropIndex("dbo.AtividadeDiaSemana", new[] { "IdDiaSemana" });
             DropIndex("dbo.AtividadeDiaSemana", new[] { "IdConfiguracaoAtividade" });
+            DropColumn("dbo.Atividade", "DataFinalizacao");
             DropColumn("dbo.Atividade", "DataInicial");
             DropColumn("dbo.Atividade", "Finalizada");
             DropColumn("dbo.Atividade", "IdTipoRecorrencia");

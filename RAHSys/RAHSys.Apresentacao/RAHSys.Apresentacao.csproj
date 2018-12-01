@@ -4049,6 +4049,8 @@
     <Content Include="Views\Shared\_ModalFinalizarRecorrencia.cshtml" />
     <Content Include="Views\Shared\_ModalTransferirAtividade.cshtml" />
     <Content Include="Views\Contrato\EditarResponsavelFinanceiro.cshtml" />
+    <Content Include="Views\Shared\_ModalExcluirAtividade.cshtml" />
+    <Content Include="Views\Shared\_ModalEncerrarAtividade.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

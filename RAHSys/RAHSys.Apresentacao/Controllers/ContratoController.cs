@@ -459,6 +459,7 @@ namespace RAHSys.Apresentacao.Controllers
         {
             ViewBag.SubTitle = "Contrato";
             ViewBag.SubSubTitle = "Atividades";
+            mesAno = mesAno ?? DateTime.Now.Month + "/" + DateTime.Now.Year;
             ViewBag.MesAno = mesAno;
             AtividadeContratoModel atividadeContratoModel = new AtividadeContratoModel();
             try
@@ -714,7 +715,7 @@ namespace RAHSys.Apresentacao.Controllers
             });
             return JsonConvert.SerializeObject(lista);
         }
-        
+
         #endregion
 
         #region Métodos Aux

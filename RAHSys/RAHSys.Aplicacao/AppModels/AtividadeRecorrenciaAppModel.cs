@@ -34,8 +34,8 @@ namespace RAHSys.Aplicacao.AppModels
             get
             {
                 if (AtividadeFinalizada)
-                    return SituacaoAtividadeEnum.AtividadeFinalizada;
-                return SituacaoAtividadeEnum.AtividadeNaoFinalizada;
+                    return SituacaoAtividadeEnum.AtividadeEncerrada;
+                return SituacaoAtividadeEnum.AtividadeNaoEncerrada;
             }
         }
 

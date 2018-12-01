@@ -24,6 +24,9 @@ namespace RAHSys.Infra.Dados.EntityConfig
             Property(c => c.DataInicial)
                 .IsRequired();
 
+            Property(c => c.DataFinalizacao)
+                .IsOptional();
+
             HasRequired(e => e.TipoAtividade)
                 .WithMany(s => s.Atividades)
                 .HasForeignKey(e => e.IdTipoAtividade);

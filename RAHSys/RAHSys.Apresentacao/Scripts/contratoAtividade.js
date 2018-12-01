@@ -5,9 +5,7 @@
 
 function ExibirAtividade(atividade) {
     if (atividade != null) {
-        $('#copiarAtividade').data('atividade', atividade);
-        $('#transferirAtividade').data('atividade', atividade);
-        $('#finalizarRecorrencia').data('atividade', atividade);
+        $('.addDataAtividade').data('atividade', atividade);
         $('#codigoAtividade').html('#' + atividade.IdAtividade)
         $('#codigoRecorrencia').html('nº ' + atividade.NumeroRecorrencia)
 
@@ -37,6 +35,14 @@ function ExibirAtividade(atividade) {
             $('#finalizarRecorrencia').show();
             $('.atividade-realizada').hide();
         }
+
+        if (atividade.AtividadeFinalizada) {
+            $('#encerrarAtividade').hide();
+        } else {
+            $('#encerrarAtividade').show();
+
+        }
+
         $('#descricao').val(atividade.Descricao);
         $('#observacao').val(atividade.Observacao);
     } else {
@@ -49,36 +55,8 @@ function ExibirAtividade(atividade) {
 
 $(function () {
     ExibirAtividade(null);
-    var $atividades = JSON.parse($('#atividades').val());
-    var $events = [];
-    $.each($atividades, function (key, item) {
-        $events.push(
-            {
-                title: item.TipoAtividade,
-                start: item.DataRealizacaoPrevista,
-                atividade: item,
-                color: item.SituacaoRecorrencia.BGCor
-            })
-    });
-
-    var initialLocaleCode = 'pt-br';
-    $('#calendar').fullCalendar({
-        header: {
-            left: '',
-            center: 'title',
-            right: 'prev,next today'
-        },
-        lang: initialLocaleCode,
-        defaultView: 'month',
-        buttonIcons: true,
-        eventLimit: true,
-        editable: true,
-        events: $events
-    });
-
     var calendar = $('#calendar').fullCalendar('getCalendar');
     calendar.on('eventClick', function (data) {
         ExibirAtividade(data.atividade);
     });
-
 });

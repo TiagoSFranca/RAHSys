@@ -143,9 +143,9 @@
     <Compile Include="Migrations\201810271239391_Merge.Designer.cs">
       <DependentUpon>201810271239391_Merge.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201811252200188_Criacao das tabelas da Atividade.cs" />
-    <Compile Include="Migrations\201811252200188_Criacao das tabelas da Atividade.Designer.cs">
-      <DependentUpon>201811252200188_Criacao das tabelas da Atividade.cs</DependentUpon>
+    <Compile Include="Migrations\201812011247132_Criacao das tabelas da Atividade.cs" />
+    <Compile Include="Migrations\201812011247132_Criacao das tabelas da Atividade.Designer.cs">
+      <DependentUpon>201812011247132_Criacao das tabelas da Atividade.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.cs" />
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.Designer.cs">
@@ -271,8 +271,8 @@
     <EmbeddedResource Include="Migrations\201810271239391_Merge.resx">
       <DependentUpon>201810271239391_Merge.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811252200188_Criacao das tabelas da Atividade.resx">
-      <DependentUpon>201811252200188_Criacao das tabelas da Atividade.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201812011247132_Criacao das tabelas da Atividade.resx">
+      <DependentUpon>201812011247132_Criacao das tabelas da Atividade.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\Audit\201808101838532_CriacaoDBAudit.resx">
       <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>

@@ -85,6 +85,157 @@ namespace RAHSys.Dominio.Servicos.Servicos
             return consultaModel;
         }
 
+        public void Adicionar(AtividadeModel obj)
+        {
+            if (obj.ConfiguracaoAtividade != null)
+                obj.ConfiguracaoAtividade.Frequencia = obj.ConfiguracaoAtividade.Frequencia == 0 ? 1 : obj.ConfiguracaoAtividade.Frequencia;
+
+            if (obj.ConfiguracaoAtividade?.QtdRepeticoes > 0 && obj.ConfiguracaoAtividade?.TerminaEm != null)
+                throw new CustomBaseException(new Exception(), "Deve definir OU [Quantidade de Repetições] OU [Termina em]");
+
+            _atividadeRepositorio.Adicionar(obj);
+        }
+
+        public void FinalizarRecorrencia(int idAtividade, DateTime dataRealizacaoPrevista, DateTime dataRealizacao, string observacao)
+        {
+            if (ValidarRecorrencia(idAtividade, dataRealizacaoPrevista))
+                throw new CustomBaseException(new Exception(), string.Format("Já existe um registro para [{0}]", dataRealizacaoPrevista));
+            var recorrencia = new RegistroRecorrenciaModel()
+            {
+                IdAtividade = idAtividade,
+                DataPrevista = dataRealizacaoPrevista,
+                DataRealizacao = dataRealizacao,
+                Observacao = observacao
+            };
+            _registroRecorrenciaRepositorio.Adicionar(recorrencia);
+            FinalizarAtividade(idAtividade);
+        }
+
+        public void CopiarAtividade(int idAtividade)
+        {
+            _atividadeRepositorio.CopiarAtividade(idAtividade);
+        }
+
+        public void TransferirAtividade(int idAtividade, string idUsuario)
+        {
+            var atividade = _atividadeRepositorio.ObterPorId(idAtividade, true);
+            atividade.IdUsuario = string.IsNullOrEmpty(idUsuario) ? null : idUsuario;
+            _atividadeRepositorio.Atualizar(atividade);
+        }
+
+        public void EncerrarAtividade(int idAtividade)
+        {
+            var atividade = _atividadeRepositorio.ObterPorId(idAtividade, true);
+            atividade.Finalizada = true;
+            atividade.DataFinalizacao = DateTime.Now;
+            _atividadeRepositorio.Atualizar(atividade);
+        }
+
+        private bool ValidarRecorrencia(int idAtividade, DateTime dataPrevista)
+        {
+            var query = _registroRecorrenciaRepositorio.Consultar().Where(e => e.IdAtividade == idAtividade && e.DataPrevista.Year == dataPrevista.Year
+            && e.DataPrevista.Month == dataPrevista.Month
+            && e.DataPrevista.Day == dataPrevista.Day);
+            return query.Count() > 0;
+        }
+
+        private void ValidarMesAno(string mesAno, ref int mes, ref int ano)
+        {
+            string erroDataInvalida = string.Format("Data [{0}] inválida", mesAno);
+            var datas = mesAno.Split('/');
+
+            if (datas.Count() != 2)
+                throw new CustomBaseException(new Exception(), erroDataInvalida);
+
+            if (!Int32.TryParse(datas[0], out mes) || (mes < 1 && mes > 12))
+                throw new CustomBaseException(new Exception(), erroDataInvalida);
+
+            if (!Int32.TryParse(datas[1], out ano))
+                throw new CustomBaseException(new Exception(), erroDataInvalida);
+
+        }
+
+        private List<DayOfWeek> ObterDiasDaSemana(List<AtividadeDiaSemanaModel> atividadeDiaSemanas)
+        {
+            List<DayOfWeek> retorno = new List<DayOfWeek>();
+
+            Dictionary<int, DayOfWeek> dicDias = new Dictionary<int, DayOfWeek>();
+            dicDias.Add(DiaSemanaSeed.Domingo.IdDiaSemana, DayOfWeek.Sunday);
+            dicDias.Add(DiaSemanaSeed.Segunda.IdDiaSemana, DayOfWeek.Monday);
+            dicDias.Add(DiaSemanaSeed.Terca.IdDiaSemana, DayOfWeek.Tuesday);
+            dicDias.Add(DiaSemanaSeed.Quarta.IdDiaSemana, DayOfWeek.Wednesday);
+            dicDias.Add(DiaSemanaSeed.Quinta.IdDiaSemana, DayOfWeek.Thursday);
+            dicDias.Add(DiaSemanaSeed.Sexta.IdDiaSemana, DayOfWeek.Friday);
+            dicDias.Add(DiaSemanaSeed.Sabado.IdDiaSemana, DayOfWeek.Saturday);
+
+            foreach (var dia in atividadeDiaSemanas)
+            {
+                var diaSemana = dicDias[dia.IdDiaSemana];
+                retorno.Add(diaSemana);
+            }
+
+            return retorno;
+        }
+
+        private void FinalizarAtividade(int idAtividade)
+        {
+            var atividade = _atividadeRepositorio.ObterPorId(idAtividade, false, true);
+            if (atividade.Finalizada)
+                return;
+            if (atividade.ConfiguracaoAtividade == null)
+            {
+                if (atividade.RegistroRecorrencias.Count > 0)
+                    atividade.Finalizada = true;
+            }
+            else
+            {
+                if (atividade.ConfiguracaoAtividade.QtdRepeticoes > 0 && atividade.RegistroRecorrencias.Count == atividade.ConfiguracaoAtividade.QtdRepeticoes)
+                    atividade.Finalizada = true;
+                else if ((atividade.ConfiguracaoAtividade.QtdRepeticoes == 0 || atividade.ConfiguracaoAtividade.QtdRepeticoes == null) && atividade.ConfiguracaoAtividade.TerminaEm != null)
+                {
+                    var frequencia = atividade.ConfiguracaoAtividade.Frequencia;
+                    var ultimoRegistroRecorrencia = atividade.RegistroRecorrencias.OrderByDescending(e => e.DataPrevista).FirstOrDefault();
+                    if (atividade.IdTipoRecorrencia == TipoRecorrenciaSeed.Diaria.IdTipoRecorrencia)
+                    {
+                        var data = ultimoRegistroRecorrencia.DataPrevista;
+                        data = data.AddDays(frequencia);
+                        if (data > atividade.ConfiguracaoAtividade.TerminaEm)
+                            atividade.Finalizada = true;
+                    }
+                    else if (atividade.IdTipoRecorrencia == TipoRecorrenciaSeed.Mensal.IdTipoRecorrencia)
+                    {
+                        var data = ultimoRegistroRecorrencia.DataPrevista;
+                        data = data.AddMonths(frequencia);
+                        if (data > atividade.ConfiguracaoAtividade.TerminaEm)
+                            atividade.Finalizada = true;
+                    }
+                    else if (atividade.IdTipoRecorrencia == TipoRecorrenciaSeed.Semanal.IdTipoRecorrencia)
+                    {
+                        //TODO: Verificação da recorrência para finalizar a atividade
+                        //var data = ultimoRegistroRecorrencia.DataPrevista;
+                        //var dataFinal = (DateTime)atividade.ConfiguracaoAtividade.TerminaEm;
+                        //var diasSemana = ObterDiasDaSemana(atividade.ConfiguracaoAtividade.AtividadeDiaSemanas.ToList());
+                        //int qtdDias = dataFinal.Subtract(data).Days + 1;
+
+                        //var todasDatas = Enumerable.Range(0, qtdDias)
+                        //                      .Select(i => data.AddDays(i))
+                        //                      .Where(d => diasSemana.Contains(d.DayOfWeek)).ToList();
+                        //if (todasDatas.Count > 0)
+                        //    if (todasDatas.FirstOrDefault() > atividade.ConfiguracaoAtividade.TerminaEm)
+                        //        atividade.Finalizada = true;
+                    }
+                }
+            }
+
+            if (atividade.Finalizada)
+            {
+                atividade.DataFinalizacao = DateTime.Now;
+                _atividadeRepositorio.Atualizar(atividade);
+            }
+        }
+
+        #region Registro de Recorrência
+
         private AtividadeRecorrenciaModel MontarRegistroRecorrencia(AtividadeModel atividade, DateTime data, int numeroAtividade)
         {
             var recorrenciasAtividade = atividade.RegistroRecorrencias;
@@ -290,87 +441,6 @@ namespace RAHSys.Dominio.Servicos.Servicos
 
         }
 
-        public void Adicionar(AtividadeModel obj)
-        {
-            if (obj.ConfiguracaoAtividade != null)
-                obj.ConfiguracaoAtividade.Frequencia = obj.ConfiguracaoAtividade.Frequencia == 0 ? 1 : obj.ConfiguracaoAtividade.Frequencia;
-
-            if (obj.ConfiguracaoAtividade?.QtdRepeticoes > 0 && obj.ConfiguracaoAtividade?.TerminaEm != null)
-                throw new CustomBaseException(new Exception(), "Deve definir OU [Quantidade de Repetições] OU [Termina em]");
-
-            _atividadeRepositorio.Adicionar(obj);
-        }
-
-        public void FinalizarRecorrencia(int idAtividade, DateTime dataRealizacaoPrevista, DateTime dataRealizacao, string observacao)
-        {
-            if (ValidarRecorrencia(idAtividade, dataRealizacaoPrevista))
-                throw new CustomBaseException(new Exception(), string.Format("Já existe um registro para [{0}]", dataRealizacaoPrevista));
-            var recorrencia = new RegistroRecorrenciaModel()
-            {
-                IdAtividade = idAtividade,
-                DataPrevista = dataRealizacaoPrevista,
-                DataRealizacao = dataRealizacao,
-                Observacao = observacao
-            };
-            _registroRecorrenciaRepositorio.Adicionar(recorrencia);
-        }
-
-        public void CopiarAtividade(int idAtividade)
-        {
-            _atividadeRepositorio.CopiarAtividade(idAtividade);
-        }
-
-        private bool ValidarRecorrencia(int idAtividade, DateTime dataPrevista)
-        {
-            var query = _registroRecorrenciaRepositorio.Consultar().Where(e => e.IdAtividade == idAtividade && e.DataPrevista.Year == dataPrevista.Year
-            && e.DataPrevista.Month == dataPrevista.Month
-            && e.DataPrevista.Day == dataPrevista.Day);
-            return query.Count() > 0;
-        }
-
-        public void TransferirAtividade(int idAtividade, string idUsuario)
-        {
-            var atividade = _atividadeRepositorio.ObterPorId(idAtividade, true);
-            atividade.IdUsuario = string.IsNullOrEmpty(idUsuario) ? null : idUsuario;
-            _atividadeRepositorio.Atualizar(atividade);
-        }
-
-        private void ValidarMesAno(string mesAno, ref int mes, ref int ano)
-        {
-            string erroDataInvalida = string.Format("Data [{0}] inválida", mesAno);
-            var datas = mesAno.Split('/');
-
-            if (datas.Count() != 2)
-                throw new CustomBaseException(new Exception(), erroDataInvalida);
-
-            if (!Int32.TryParse(datas[0], out mes) || (mes < 1 && mes > 12))
-                throw new CustomBaseException(new Exception(), erroDataInvalida);
-
-            if (!Int32.TryParse(datas[1], out ano))
-                throw new CustomBaseException(new Exception(), erroDataInvalida);
-
-        }
-
-        private List<DayOfWeek> ObterDiasDaSemana(List<AtividadeDiaSemanaModel> atividadeDiaSemanas)
-        {
-            List<DayOfWeek> retorno = new List<DayOfWeek>();
-
-            Dictionary<int, DayOfWeek> dicDias = new Dictionary<int, DayOfWeek>();
-            dicDias.Add(DiaSemanaSeed.Domingo.IdDiaSemana, DayOfWeek.Sunday);
-            dicDias.Add(DiaSemanaSeed.Segunda.IdDiaSemana, DayOfWeek.Monday);
-            dicDias.Add(DiaSemanaSeed.Terca.IdDiaSemana, DayOfWeek.Tuesday);
-            dicDias.Add(DiaSemanaSeed.Quarta.IdDiaSemana, DayOfWeek.Wednesday);
-            dicDias.Add(DiaSemanaSeed.Quinta.IdDiaSemana, DayOfWeek.Thursday);
-            dicDias.Add(DiaSemanaSeed.Sexta.IdDiaSemana, DayOfWeek.Friday);
-            dicDias.Add(DiaSemanaSeed.Sabado.IdDiaSemana, DayOfWeek.Saturday);
-
-            foreach (var dia in atividadeDiaSemanas)
-            {
-                var diaSemana = dicDias[dia.IdDiaSemana];
-                retorno.Add(diaSemana);
-            }
-
-            return retorno;
-        }
+        #endregion
     }
 }

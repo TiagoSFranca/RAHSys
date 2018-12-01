@@ -12,5 +12,6 @@ namespace RAHSys.Aplicacao.Interfaces
         void FinalizarRecorrencia(int idAtividade, DateTime dataRealizacaoPrevista, DateTime dataRealizacao, string observacao);
         void TransferirAtividade(int idAtividade, string idUsuario);
         void CopiarAtividade(int idAtividade);
+        void EncerrarAtividade(int idAtividade);
     }
 }

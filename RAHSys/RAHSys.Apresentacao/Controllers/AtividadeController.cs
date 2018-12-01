@@ -140,39 +140,61 @@ namespace RAHSys.Apresentacao.Controllers
             return Redirect(urlRetorno);
         }
 
-        [HttpGet]
-        public ActionResult Excluir(int id, string urlRetorno)
+        //[HttpGet]
+        //public ActionResult Excluir(int id, string urlRetorno)
+        //{
+        //    ViewBag.SubTitle = "Excluir Atividade";
+        //    ViewBag.UrlRetorno = urlRetorno;
+        //    try
+        //    {
+        //        var atividade = _atividadeAppServico.ObterPorId(id);
+        //        if (atividade == null)
+        //        {
+        //            MensagemErro("Atividade não encontrada");
+        //            return Redirect(urlRetorno);
+        //        }
+        //        return View(atividade);
+        //    }
+        //    catch (CustomBaseException ex)
+        //    {
+        //        MensagemErro(ex.Mensagem);
+        //    }
+        //    return Redirect(urlRetorno);
+        //}
+
+        [HttpPost]
+        public ActionResult ExcluirAtividade(int idAtividade, string urlRetorno)
         {
-            ViewBag.SubTitle = "Excluir Atividade";
-            ViewBag.UrlRetorno = urlRetorno;
             try
             {
-                var atividade = _atividadeAppServico.ObterPorId(id);
+                var atividade = _atividadeAppServico.ObterPorId(idAtividade);
                 if (atividade == null)
-                {
                     MensagemErro("Atividade não encontrada");
-                    return Redirect(urlRetorno);
+                else
+                {
+                    _atividadeAppServico.Remover(idAtividade);
+                    MensagemSucesso();
                 }
-                return View(atividade);
             }
             catch (CustomBaseException ex)
             {
                 MensagemErro(ex.Mensagem);
             }
+
             return Redirect(urlRetorno);
         }
 
         [HttpPost]
-        public ActionResult Excluir(AtividadeAppModel atividadeApp, string urlRetorno)
+        public ActionResult EncerrarAtividade(int idAtividade, string urlRetorno)
         {
             try
             {
-                var atividade = _atividadeAppServico.ObterPorId(atividadeApp.IdAtividade);
+                var atividade = _atividadeAppServico.ObterPorId(idAtividade);
                 if (atividade == null)
                     MensagemErro("Atividade não encontrada");
                 else
                 {
-                    _atividadeAppServico.Remover(atividadeApp.IdAtividade);
+                    _atividadeAppServico.EncerrarAtividade(idAtividade);
                     MensagemSucesso();
                 }
             }

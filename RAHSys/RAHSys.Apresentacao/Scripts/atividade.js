@@ -1,36 +1,56 @@
-﻿$(function () {
-    ExibirRealizada($(".atividadeChkRealizada").prop('checked'));
-    $(".atividadeChkRealizada").change(function () {
+﻿function Redirecionar(data) {
+    var mesAno = data.month() + 1 + encodeURIComponent("/") + data.year();
+    var rota = $('#inputUrlBase').val()
+    var append = 'mesAno=' + mesAno;
+    if (rota.indexOf('?') != -1)
+        append = '&' + append;
+    else
+        append = '?' + append;
+    rota = rota + append;
+    window.location.replace(rota);
+}
+
+$(function () {
+    IniciarCalendario();
+    $('.fc-prev-button').click(function () {
+        var data = $('#calendar').fullCalendar('getDate');
+        Redirecionar(data);
+    });
+
+    $('.fc-today-button').click(function () {
+        var data = $('#calendar').fullCalendar('getDate');
+        Redirecionar(data);
+    });
+
+    $('.fc-next-button').click(function () {
+        var data = $('#calendar').fullCalendar('getDate');
+        Redirecionar(data);
+    });
+
+    ExibirRealizada($('.atividadeChkRealizada').prop('checked'));
+    $('.atividadeChkRealizada').change(function () {
         ExibirRealizada(this.checked);
     });
 
-    $('.inputCopiarAtividade').click(function () {
-        PopularModais($(this).data('atividade'));
-    });
-
-    $('.inputTransferirAtividade').click(function () {
-        PopularModais($(this).data('atividade'));
-    });
-
-    $('.inputFinalizarRecorrencia').click(function () {
+    $('.addDataAtividade').click(function () {
         PopularModais($(this).data('atividade'));
     });
 });
 
 function ExibirRealizada(exibir) {
     if (exibir) {
-        $(".atividadeRealizada").show();
-        $("#dataRealizacao").prop('required', true);
+        $('.atividadeRealizada').show();
+        $('#dataRealizacao').prop('required', true);
     }
     else {
-        $(".atividadeRealizada").hide();
-        $("#dataRealizacao").prop('required', false);
+        $('.atividadeRealizada').hide();
+        $('#dataRealizacao').prop('required', false);
     }
 }
 
 function PopularModais(atividade) {
     LimparFinalizarAtividadeForm(atividade);
-    LimparCopiarAtividadeForm(atividade);
+    //LimparCopiarAtividadeForm(atividade);
     PopularListaUsuariosEquipe(atividade.Equipe);
     $('.urlRetorno').val($('#inputUrlRetorno').val())
     $('.idAtividade').val(atividade.IdAtividade);
@@ -51,18 +71,18 @@ function LimparFinalizarAtividadeForm(atividade) {
     LimparForm('formFinalizarAtividade')
 }
 
-function LimparCopiarAtividadeForm(atividade) {
-    LimparForm('formCopiarAtividade')
-}
+//function LimparCopiarAtividadeForm(atividade) {
+//    LimparForm('formCopiarAtividade')
+//}
 
 function LimparForm(form) {
-    $('#' + form).find("input, textarea").val("")
+    $('#' + form).find('input, textarea').val('')
 }
 
 function ConverterData(data) {
     if (data == null)
-        return "";
-    return moment(new Date(data)).format("DD/MM/YYYY");
+        return '';
+    return moment(new Date(data)).format('DD/MM/YYYY');
 }
 
 function PopularListaUsuariosEquipe(equipe) {
@@ -75,5 +95,38 @@ function PopularListaUsuariosEquipe(equipe) {
             text: item.Usuario.EmailEUserName,
             value: item.IdUsuario
         }));
+    });
+}
+
+function IniciarCalendario() {
+    var data = $('#mesAno').val()
+    data = "01/" + data;
+    var dataConvertida = moment(data, 'DD/MM/YYYY');
+    var $atividades = JSON.parse($('#atividades').val());
+    var $events = [];
+    $.each($atividades, function (key, item) {
+        $events.push(
+            {
+                title: item.TipoAtividade,
+                start: item.DataRealizacaoPrevista,
+                atividade: item,
+                color: item.SituacaoRecorrencia.BGCor
+            })
+    });
+
+    var initialLocaleCode = 'pt-br';
+    $('#calendar').fullCalendar({
+        header: {
+            left: '',
+            center: 'title',
+            right: 'prev,next today'
+        },
+        lang: initialLocaleCode,
+        defaultView: 'month',
+        buttonIcons: true,
+        eventLimit: true,
+        editable: true,
+        events: $events,
+        defaultDate: dataConvertida
     });
 }

@@ -32,9 +32,9 @@ namespace RAHSys.Aplicacao.AppModels
 
         [Display(Name = "Começa em")]
         public DateTime? DataInicial { get; set; }
-
-        [Display(Name = "Criado Em")]
-        public DateTime? CriadoEm { get; set; }
+        
+        [Display(Name = "Finalizada Em")]
+        public DateTime? DataFinalizacao { get; set; }
 
         public virtual ConfiguracaoAtividadeAppModel ConfiguracaoAtividade { get; set; }
         public virtual TipoAtividadeAppModel TipoAtividade { get; set; }

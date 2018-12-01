@@ -56,77 +56,11 @@
             </div>
             <div class="portlet-body calendario-portlet">
                 <div class="row">
-                    <div class="col-md-8 col-sm-8">
+                    <div class="col-md-6 col-sm-6">
                         <div id="calendar">
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-4">
-                        <div class="portlet light ">
-                            <div class="portlet-title">
-                                <div class="caption caption-md">
-                                    <i class="icon-bar-chart font-dark hide"></i>
-                                    <span class="caption-subject font-green-steel uppercase bold">Info da Atividade <span id="codigoAtividade"></span></span>
-                                </div>
-                                <div class="tools">
-                                    <a href="javascript:;" class="expand" id="showInfoAtividade"> </a>
-                                </div>
-                            </div>
-                            <div class="portlet-body portlet-collapsed">
-                                <div class="row">
-                                    <div class="col-md-12" id="divInfoAtividade">
-                                        <div class="btn-group pull-right">
-                                            <a class="btn btn-circle btn-default btn-sm" href="javascript:;" data-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa fa-cogs"></i>
-                                            </a>
-                                            <ul class="dropdown-menu pull-right">
-                                                <li>
-                                                    <a data-toggle="modal" href="#modalCopiarAtividade" class="btn grey-gallery btn-outline inputCopiarAtividade" data-atividade="" id="copiarAtividade">
-                                                        Copiar Atividade
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a data-toggle="modal" href="#modalTransferirAtividade" class="btn grey-gallery btn-outline inputTransferirAtividade" data-atividade="" id="transferirAtividade">
-                                                        Transferir/Atribuir
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div id="infoSituacaoAtividade">
-                                        </div>
-                                        <div class="form-group form-md-line-input">
-                                            <div class="row">
-                                                @Html.Label("Tipo de Atividade", new { @class = "col-md-12 control-label" })
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <input type="text" class="form-control" placeholder="Tipo de Atividade" disabled id="tipoAtividade" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group form-md-line-input">
-                                            <div class="row">
-                                                @Html.Label("Atribuido Para", new { @class = "col-md-12 control-label" })
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <input type="text" class="form-control" placeholder="Atribuido Para" disabled id="atribuidoPara" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group form-md-line-input">
-                                            <div class="row">
-                                                @Html.Label("Descrição", new { @class = "col-md-12 control-label" })
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <textarea class="form-control" placeholder="Descrição" disabled id="descricao"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-md-3 col-sm-3">
                         <div class="portlet light ">
                             <div class="portlet-title">
                                 <div class="caption caption-md">
@@ -146,7 +80,7 @@
                                             </a>
                                             <ul class="dropdown-menu pull-right">
                                                 <li>
-                                                    <a data-toggle="modal" href="#modalFinalizarRecorrencia" class="btn grey-gallery btn-outline inputFinalizarRecorrencia" data-atividade="" id="finalizarRecorrencia">
+                                                    <a data-toggle="modal" href="#modalFinalizarRecorrencia" class="btn grey-gallery btn-outline addDataAtividade" data-atividade="" id="finalizarRecorrencia">
                                                         Finalizar Recorrência
                                                     </a>
                                                 </li>
@@ -189,6 +123,84 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-3 col-sm-3">
+                        <div class="portlet light ">
+                            <div class="portlet-title">
+                                <div class="caption caption-md">
+                                    <i class="icon-bar-chart font-dark hide"></i>
+                                    <span class="caption-subject font-green-steel uppercase bold">Info da Atividade <span id="codigoAtividade"></span></span>
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="expand" id="showInfoAtividade"> </a>
+                                </div>
+                            </div>
+                            <div class="portlet-body portlet-collapsed">
+                                <div class="row">
+                                    <div class="col-md-12" id="divInfoAtividade">
+                                        <div class="btn-group pull-right">
+                                            <a class="btn btn-circle btn-default btn-sm" href="javascript:;" data-toggle="dropdown" aria-expanded="false">
+                                                <i class="fa fa-cogs"></i>
+                                            </a>
+                                            <ul class="dropdown-menu pull-right">
+                                                <li>
+                                                    <a data-toggle="modal" href="#modalCopiarAtividade" class="btn grey-gallery btn-outline addDataAtividade" data-atividade="">
+                                                        Copiar Atividade
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a data-toggle="modal" href="#modalTransferirAtividade" class="btn grey-gallery btn-outline addDataAtividade" data-atividade="">
+                                                        Transferir/Atribuir
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a data-toggle="modal" href="#modalEncerrarAtividade" class="btn grey-gallery btn-outline addDataAtividade" data-atividade="" id="encerrarAtividade">
+                                                        Encerrar Atividade
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a data-toggle="modal" href="#modalExcluirAtividade" class="btn grey-gallery btn-outline addDataAtividade" data-atividade="">
+                                                        Excluir Atividade
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div id="infoSituacaoAtividade">
+                                        </div>
+                                        <div class="form-group form-md-line-input">
+                                            <div class="row">
+                                                @Html.Label("Tipo de Atividade", new { @class = "col-md-12 control-label" })
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input type="text" class="form-control" placeholder="Tipo de Atividade" disabled id="tipoAtividade" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group form-md-line-input">
+                                            <div class="row">
+                                                @Html.Label("Atribuido Para", new { @class = "col-md-12 control-label" })
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input type="text" class="form-control" placeholder="Atribuido Para" disabled id="atribuidoPara" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group form-md-line-input">
+                                            <div class="row">
+                                                @Html.Label("Descrição", new { @class = "col-md-12 control-label" })
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <textarea class="form-control" placeholder="Descrição" disabled id="descricao"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -196,14 +208,18 @@
 </div>
 
 @*Modais*@
-@Html.Partial("_ModalFinalizarRecorrencia")
 @Html.Partial("_ModalCopiarAtividade")
+@Html.Partial("_ModalExcluirAtividade")
+@Html.Partial("_ModalEncerrarAtividade")
 @Html.Partial("_ModalTransferirAtividade")
+@Html.Partial("_ModalFinalizarRecorrencia")
+<input type="hidden" value="@ViewBag.MesAno" id="mesAno" />
 <input type="hidden" value="@Model.TodasAtividadesSerializadas" id="atividades" />
-<input type="hidden" value="@Url.Action("Atividades", "Contrato", new { id = Model.Contrato.IdContrato })" id="inputUrlRetorno" />
+<input type="hidden" value="@Url.Action("Atividades", "Contrato", new { id = Model.Contrato.IdContrato})" id="inputUrlBase" />
+<input type="hidden" value="@Url.Action("Atividades", "Contrato", new { id = Model.Contrato.IdContrato, mesAno = ViewBag.MesAno })" id="inputUrlRetorno" />
 @section scripts{
     @Scripts.Render("~/Ordenacao/js")
     @Scripts.Render("~/Modal/js")
-    @Scripts.Render("~/Atividade/Contrato/js")
     @Scripts.Render("~/Atividade/js")
+    @Scripts.Render("~/Atividade/Contrato/js")
 }

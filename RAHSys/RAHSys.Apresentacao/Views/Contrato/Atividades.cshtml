@@ -159,6 +159,11 @@
                                                         </a>
                                                     </li>
                                                     <li>
+                                                        <a class="btn grey-gallery btn-outline addDataAtividade" data-atividade="" id="editarAtividade">
+                                                            Editar Atividade
+                                                        </a>
+                                                    </li>
+                                                    <li>
                                                         <a data-toggle="modal" href="#modalExcluirAtividade" class="btn grey-gallery btn-outline addDataAtividade" data-atividade="">
                                                             Excluir Atividade
                                                         </a>
@@ -207,19 +212,26 @@
     </div>
 </div>
 
+@*BEGIN -- Necessários para o calendário*@
+
 @*Modais*@
 @Html.Partial("_ModalCopiarAtividade")
 @Html.Partial("_ModalExcluirAtividade")
 @Html.Partial("_ModalEncerrarAtividade")
 @Html.Partial("_ModalTransferirAtividade")
 @Html.Partial("_ModalFinalizarRecorrencia")
+
 <input type="hidden" value="@ViewBag.MesAno" id="mesAno" />
 <input type="hidden" value="@Model.TodasAtividadesSerializadas" id="atividades" />
 <input type="hidden" value="@Url.Action("Atividades", "Contrato", new { id = Model.Contrato.IdContrato})" id="inputUrlBase" />
+<input type="hidden" value="@Url.Action("EditarAtividade", "Contrato", new { id = Model.Contrato.IdContrato})" id="inputEditarAtividade" />
 <input type="hidden" value="@Url.Action("Atividades", "Contrato", new { id = Model.Contrato.IdContrato, mesAno = ViewBag.MesAno })" id="inputUrlRetorno" />
+
+@*END -- Necessários para o calendário*@
+
 @section scripts{
     @Scripts.Render("~/Ordenacao/js")
     @Scripts.Render("~/Modal/js")
     @Scripts.Render("~/Atividade/js")
-    @Scripts.Render("~/Atividade/Contrato/js")
+    @Scripts.Render("~/Contrato/Atividade/js")
 }

@@ -4,6 +4,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section styles{
+    @Styles.Render("~/Select2/css");
+}
+
 <div class="row">
     <div class="col-md-6 col-sm-6">
         <div class="portlet light ">
@@ -39,6 +43,13 @@
     </div>
 </div>
 <div class="row">
+    <div class="col-md-12">
+        <div class="alert alert-danger">
+            <strong>Atenção!</strong> Ao editar a atividade, será criado uma outra atividade com os dados e a antiga será terminada com a data atual. Contudo, as recorrências existentes até o dia da edição permanecerão.
+        </div>
+    </div>
+</div>
+<div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="portlet light ">
             <div class="portlet-title">
@@ -48,31 +59,37 @@
                 </div>
             </div>
             <div class="portlet-body">
-                @using (Html.BeginForm("EditarAtividade", "Contrato", FormMethod.Post, new { @class = "form-horizontal margin-bottom-40" }))
+                @using (Html.BeginForm("AdicionarAtividade", "Contrato", FormMethod.Post, new { @class = "form-horizontal margin-bottom-40" }))
                 {
                     @Html.AntiForgeryToken()
-                    @Html.HiddenFor(model => model.Atividade.IdAtividade)
                     @Html.HiddenFor(model => model.Atividade.IdEquipe)
                     @Html.HiddenFor(model => model.Atividade.IdContrato)
+                    @Html.HiddenFor(model => model.Atividade.IdAtividade)
                     <div class="form-group form-md-line-input">
                         @Html.LabelFor(m => m.Atividade.IdTipoAtividade, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             @Html.DropDownListFor(model => model.Atividade.IdTipoAtividade, new SelectList(Model.TipoAtividades, "IdTipoAtividade", "Descricao"), "Selecione", new { @class = "form-control", @placeholder = "Tipo de Atividade", @required = "required" })
                             @Html.ValidationMessageFor(model => model.Atividade.IdTipoAtividade, "", new { @class = "text-danger" })
                             <div class="form-control-focus"> </div>
                         </div>
+                        @Html.LabelFor(m => m.Atividade.IdTipoRecorrencia, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-3">
+                            @Html.DropDownListFor(model => model.Atividade.IdTipoRecorrencia, new SelectList(Model.TipoRecorrencias, "IdTipoRecorrencia", "Descricao"), "Selecione", new { @class = "form-control", @placeholder = "Tipo de Recorrência", @id = "ddlRecorrencia", @onchange = "exibirConfigAtividadeBody(this.value)" })
+                            @Html.ValidationMessageFor(model => model.Atividade.IdTipoRecorrencia, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
                         @Html.LabelFor(m => m.Atividade.IdUsuario, new { @class = "col-md-2 control-label" })
                         <div class="col-md-4">
                             @Html.DropDownListFor(model => model.Atividade.IdUsuario, new SelectList(Model.Equipe.EquipeUsuarios, "IdUsuario", "Usuario.EmailEUserName"), "Selecione", new { @class = "form-control", @placeholder = "Atribuido Para" })
                             @Html.ValidationMessageFor(model => model.Atividade.IdUsuario, "", new { @class = "text-danger" })
                             <div class="form-control-focus"> </div>
                         </div>
-                    </div>
-                    <div class="form-group form-md-line-input">
-                        @Html.LabelFor(m => m.Atividade.DataPrevista, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-9">
-                            @Html.EditorFor(model => model.Atividade.DataPrevista, new { htmlAttributes = new { @class = "form-control dataAtividade", @placeholder = "Data de Realização Prevista", @required = "required" } })
-                            @Html.ValidationMessageFor(model => model.Atividade.DataPrevista, "", new { @class = "text-danger" })
+                        @Html.LabelFor(m => m.Atividade.DataInicial, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-3">
+                            @Html.EditorFor(model => model.Atividade.DataInicial, new { htmlAttributes = new { @Value = ((DateTime)Model.Atividade.DataInicial).ToString("dd/MM/yyyy"), @class = "form-control dataAtividade", @placeholder = "Começa em", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.Atividade.DataInicial, "", new { @class = "text-danger" })
                             <div class="form-control-focus"> </div>
                         </div>
                     </div>
@@ -84,39 +101,68 @@
                             <div class="form-control-focus"> </div>
                         </div>
                     </div>
-                    <div class="form-group form-md-line-input">
-                        <div class="col-md-9 col-md-offset-2">
-                            <div class="md-checkbox-inline">
-                                <div class="md-checkbox">
-                                    @Html.CheckBoxFor(model => model.Atividade.Realizada, new { @class = "md-check atividadeChkRealizada", @id = "chkRealizada" })
-                                    <label for="chkRealizada">
-                                        <span></span>
-                                        <span class="check"></span>
-                                        <span class="box"></span> Atividade Realizada
-                                    </label>
+                    <div class="row config-atividade-body">
+                        <div class="col-md-12">
+                            <div class="form-group form-md-line-input">
+                                <div class="col-md-2 control-label">
+                                    <div class="caption caption-md">
+                                        <i class="icon-bar-chart font-dark hide"></i>
+                                        <span class="caption-subject font-green-steel uppercase bold">Configuração</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group form-md-line-input">
+                                @Html.LabelFor(m => m.Atividade.ConfiguracaoAtividade.Frequencia, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-2">
+                                    @Html.EditorFor(model => model.Atividade.ConfiguracaoAtividade.Frequencia, new { htmlAttributes = new { @class = "form-control", @placeholder = "Frequência" } })
+                                    @Html.ValidationMessageFor(model => model.Atividade.ConfiguracaoAtividade.Frequencia, "", new { @class = "text-danger" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                                @Html.LabelFor(m => m.Atividade.ConfiguracaoAtividade.DiaMes, new { @class = "col-md-2 control-label selectMes" })
+                                <div class="col-md-2 selectMes">
+                                    @Html.EditorFor(model => model.Atividade.ConfiguracaoAtividade.DiaMes, new { htmlAttributes = new { @class = "form-control", @placeholder = "Dia do Mês" } })
+                                    @Html.ValidationMessageFor(model => model.Atividade.ConfiguracaoAtividade.DiaMes, "", new { @class = "text-danger" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                                @Html.LabelFor(m => m.Atividade.ConfiguracaoAtividade.AtividadeDiaSemanas, new { @class = "col-md-2 control-label selectSemana" })
+                                <div class="col-md-4">
+                                    <select id="multiple" class="form-control select2-multiple selectSemana" multiple name="DiaSemanasSelecionadas[]">
+                                        @foreach (var item in Model.DiaSemanas)
+                                        {
+                                            var selecionado = Model.DiaSemanasSelecionadas?.Count(e => item.IdDiaSemana == e) > 0;
+                                            if (selecionado)
+                                            {
+                                                <option value="@item.IdDiaSemana" selected>@item.Descricao</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.IdDiaSemana">@item.Descricao</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group form-md-line-input">
+                                @Html.LabelFor(m => m.Atividade.ConfiguracaoAtividade.QtdRepeticoes, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-2">
+                                    @Html.EditorFor(model => model.Atividade.ConfiguracaoAtividade.QtdRepeticoes, new { htmlAttributes = new { @class = "form-control", @placeholder = "Repetições" } })
+                                    @Html.ValidationMessageFor(model => model.Atividade.ConfiguracaoAtividade.QtdRepeticoes, "", new { @class = "text-danger" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                                @Html.LabelFor(m => m.Atividade.ConfiguracaoAtividade.TerminaEm, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-2">
+                                    @Html.EditorFor(model => model.Atividade.ConfiguracaoAtividade.TerminaEm, new { htmlAttributes = new { @class = "form-control dataAtividade", @placeholder = "Termina em" } })
+                                    @Html.ValidationMessageFor(model => model.Atividade.ConfiguracaoAtividade.TerminaEm, "", new { @class = "text-danger" })
+                                    <div class="form-control-focus"> </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group form-md-line-input atividadeRealizada">
-                        @Html.LabelFor(m => m.Atividade.DataRealizacao, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-9">
-                            @Html.EditorFor(model => model.Atividade.DataRealizacao, new { htmlAttributes = new { @class = "form-control dataAtividade", @placeholder = "Data de Realização", @id = "dataRealizacao" } })
-                            @Html.ValidationMessageFor(model => model.Atividade.DataRealizacao, "", new { @class = "text-danger" })
-                            <div class="form-control-focus"> </div>
-                        </div>
-                    </div>
-                    <div class="form-group form-md-line-input atividadeRealizada">
-                        @Html.LabelFor(m => m.Atividade.Observacao, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-9">
-                            @Html.TextAreaFor(model => model.Atividade.Observacao, new { @class = "form-control", @placeholder = "Observações" })
-                            @Html.ValidationMessageFor(model => model.Atividade.Observacao, "", new { @class = "text-danger" })
-                            <div class="form-control-focus"> </div>
-                        </div>
-                    </div>
+
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
                             <button type="submit" class="btn blue btn-circle">Salvar</button>
+                            @Html.ActionLink("Limpar", "AdicionarAtividade", "Contrato", new { id = Model.Atividade.IdContrato }, new { @class = "btn btn-white btn-outline btn-circle btn-md" })
                             @Html.ActionLink("Cancelar", "Atividades", "Contrato", new { id = Model.Atividade.IdContrato }, new { @class = "btn yellow-haze btn-outline btn-circle btn-md" })
                         </div>
                     </div>
@@ -126,8 +172,10 @@
     </div>
 </div>
 
+<input type="hidden" value="" id="configAtividadeBody" />
+<input type="hidden" value="@RAHSys.Entidades.Seeds.TipoRecorrenciaSeed.Mensal.IdTipoRecorrencia" id="idTipoMes" />
+<input type="hidden" value="@RAHSys.Entidades.Seeds.TipoRecorrenciaSeed.Semanal.IdTipoRecorrencia" id="idTipoSemana" />
 @section scripts{
-    @Scripts.Render("~/Ordenacao/js")
-    @Scripts.Render("~/Modal/js")
-    @Scripts.Render("~/Atividade/js")
+    @Scripts.Render("~/Select2/js")
+    @Scripts.Render("~/Contrato/Atividade/AdicionarEditar/js")
 }

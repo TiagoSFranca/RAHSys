@@ -1,4 +1,4 @@
-﻿function Redirecionar(data) {
+﻿function MoverMesCalendario(data) {
     var mesAno = data.month() + 1 + encodeURIComponent("/") + data.year();
     var rota = $('#inputUrlBase').val()
     var append = 'mesAno=' + mesAno;
@@ -10,21 +10,32 @@
     window.location.replace(rota);
 }
 
+function EditarAtividade(atividade) {
+    var rota = $('#inputEditarAtividade').val();
+    var append = 'idAtividade=' + atividade.IdAtividade;
+    if (rota.indexOf('?') != -1)
+        append = '&' + append;
+    else
+        append = '?' + append;
+    rota = rota + append;
+    window.location.href = rota;
+}
+
 $(function () {
     IniciarCalendario();
     $('.fc-prev-button').click(function () {
         var data = $('#calendar').fullCalendar('getDate');
-        Redirecionar(data);
+        MoverMesCalendario(data);
     });
 
     $('.fc-today-button').click(function () {
         var data = $('#calendar').fullCalendar('getDate');
-        Redirecionar(data);
+        MoverMesCalendario(data);
     });
 
     $('.fc-next-button').click(function () {
         var data = $('#calendar').fullCalendar('getDate');
-        Redirecionar(data);
+        MoverMesCalendario(data);
     });
 
     ExibirRealizada($('.atividadeChkRealizada').prop('checked'));
@@ -34,6 +45,10 @@ $(function () {
 
     $('.addDataAtividade').click(function () {
         PopularModais($(this).data('atividade'));
+    });
+
+    $('#editarAtividade').click(function () {
+        EditarAtividade($(this).data('atividade'));
     });
 });
 

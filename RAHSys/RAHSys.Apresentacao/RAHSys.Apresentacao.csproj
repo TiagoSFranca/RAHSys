@@ -2873,6 +2873,7 @@
     <Content Include="Content\assets\pages\scripts\login.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\img\logo-big.png" />
+    <Content Include="Scripts\atividade\atividade.js" />
     <Content Include="Scripts\buscarCidades.js" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -3952,8 +3953,8 @@
     <Content Include="Content\assets\global\plugins\wysihtml\minified\wysihtml.table_editing.min.map" />
     <Content Include="Content\assets\global\plugins\wysihtml\minified\wysihtml.toolbar.min.map" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Scripts\atividade.js" />
-    <Content Include="Scripts\contratoAtividade.js" />
+    <Content Include="Scripts\contrato\atividadeAdicionarEditar.js" />
+    <Content Include="Scripts\contrato\contratoAtividade.js" />
     <Content Include="Scripts\fichaCliente.js" />
     <Content Include="Scripts\integrantes.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

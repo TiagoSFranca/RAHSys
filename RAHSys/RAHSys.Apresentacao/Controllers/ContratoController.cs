@@ -498,9 +498,9 @@ namespace RAHSys.Apresentacao.Controllers
         public ActionResult AdicionarAtividade(int id)
         {
             ViewBag.SubTitle = "Adicionar nova Atividade";
-            var atividadeContratoAdicionarModel = MontarAtividadeContratoAdicionarEditar();
             try
             {
+                var atividadeContratoAdicionarModel = MontarAtividadeContratoAdicionarEditar();
                 var contratoModel = _contratoAppServico.ObterPorId(id);
                 if (contratoModel == null)
                 {
@@ -591,9 +591,9 @@ namespace RAHSys.Apresentacao.Controllers
         public ActionResult EditarAtividade(int id, int idAtividade)
         {
             ViewBag.SubTitle = "Editar Atividade";
-            var atividadeContratoAdicionarModel = MontarAtividadeContratoAdicionarEditar();
             try
             {
+                var atividadeContratoAdicionarModel = MontarAtividadeContratoAdicionarEditar();
                 var atividade = _atividadeAppServico.ObterPorId(idAtividade);
 
                 if (atividade == null)

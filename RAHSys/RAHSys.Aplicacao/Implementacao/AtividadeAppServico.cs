@@ -102,7 +102,7 @@ namespace RAHSys.Aplicacao.Implementacao
         }
 
         public ConsultaAppModel<AtividadeRecorrenciaAppModel> Consultar(IEnumerable<int> idList, IEnumerable<int> idTipoAtividadeList, IEnumerable<int> idEquipeList,
-            IEnumerable<int> idContratoList, IEnumerable<string> idUsuarioList, string mesAno, bool? realizada,
+            IEnumerable<int> idContratoList, IEnumerable<string> idUsuarioList, string mesAno,
             string ordenacao, bool crescente, int pagina, int quantidade)
         {
             try
@@ -110,8 +110,7 @@ namespace RAHSys.Aplicacao.Implementacao
                 var consulta = new ConsultaAppModel<AtividadeRecorrenciaAppModel>();
 
                 var resultado = _atividadeServico.Consultar(idList, idTipoAtividadeList, idEquipeList,
-                    idContratoList, idUsuarioList, mesAno, realizada,
-                    ordenacao, crescente, pagina, quantidade);
+                    idContratoList, idUsuarioList, mesAno, ordenacao, crescente, pagina, quantidade);
 
                 consulta.ItensPorPagina = resultado.ItensPorPagina;
                 consulta.PaginaAtual = resultado.PaginaAtual;
@@ -187,11 +186,11 @@ namespace RAHSys.Aplicacao.Implementacao
             }
         }
 
-        public void EncerrarAtividade(int idAtividade)
+        public void EncerrarAtividade(int idAtividade, DateTime dataEncerramento)
         {
             try
             {
-                _atividadeServico.EncerrarAtividade(idAtividade);
+                _atividadeServico.EncerrarAtividade(idAtividade, dataEncerramento);
             }
             catch (CustomBaseException ex)
             {

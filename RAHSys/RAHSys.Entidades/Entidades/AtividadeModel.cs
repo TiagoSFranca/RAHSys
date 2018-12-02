@@ -12,9 +12,7 @@ namespace RAHSys.Entidades.Entidades
         public int IdContrato { get; set; }
         public string IdUsuario { get; set; }
         public string Descricao { get; set; }
-        public bool Finalizada { get; set; }
         public DateTime DataInicial { get; set; }
-        public DateTime? DataFinalizacao { get; set; }
 
         public virtual ConfiguracaoAtividadeModel ConfiguracaoAtividade { get; set; }
         public virtual TipoAtividadeModel TipoAtividade { get; set; }

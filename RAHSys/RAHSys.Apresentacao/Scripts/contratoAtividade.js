@@ -1,6 +1,6 @@
 ﻿function ObterSituacao(atividade) {
     $('#infoSituacaoRecorrencia').html($("<span class=\"label label-" + atividade.SituacaoRecorrencia.Classe + "\"> " + atividade.SituacaoRecorrencia.Nome + "</span>"));
-    $('#infoSituacaoAtividade').html($("<span class=\"label label-" + atividade.SituacaoAtividade.Classe + "\"> " + atividade.SituacaoAtividade.Nome + "</span>"));
+    //$('#infoSituacaoAtividade').html($("<span class=\"label label-" + atividade.SituacaoAtividade.Classe + "\"> " + atividade.SituacaoAtividade.Nome + "</span>"));
 }
 
 function ExibirAtividade(atividade) {
@@ -30,13 +30,15 @@ function ExibirAtividade(atividade) {
         if (atividade.Realizada) {
             $('.atividade-realizada').show();
             $('#finalizarRecorrencia').hide();
+            $('#ulRecorrencia').hide();
         }
         else {
             $('#finalizarRecorrencia').show();
+            $('#ulRecorrencia').show();
             $('.atividade-realizada').hide();
         }
 
-        if (atividade.AtividadeFinalizada) {
+        if (!atividade.Encerrar) {
             $('#encerrarAtividade').hide();
         } else {
             $('#encerrarAtividade').show();

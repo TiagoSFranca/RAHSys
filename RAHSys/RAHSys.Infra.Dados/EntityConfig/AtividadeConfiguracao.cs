@@ -18,14 +18,8 @@ namespace RAHSys.Infra.Dados.EntityConfig
             Property(a => a.IdUsuario)
                 .HasColumnType("nvarchar");
 
-            Property(c => c.Finalizada)
-                .IsRequired();
-
             Property(c => c.DataInicial)
                 .IsRequired();
-
-            Property(c => c.DataFinalizacao)
-                .IsOptional();
 
             HasRequired(e => e.TipoAtividade)
                 .WithMany(s => s.Atividades)

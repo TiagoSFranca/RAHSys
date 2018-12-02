@@ -185,7 +185,7 @@ namespace RAHSys.Apresentacao.Controllers
         }
 
         [HttpPost]
-        public ActionResult EncerrarAtividade(int idAtividade, string urlRetorno)
+        public ActionResult EncerrarAtividade(int idAtividade, DateTime dataEncerramento, string urlRetorno)
         {
             try
             {
@@ -194,7 +194,7 @@ namespace RAHSys.Apresentacao.Controllers
                     MensagemErro("Atividade não encontrada");
                 else
                 {
-                    _atividadeAppServico.EncerrarAtividade(idAtividade);
+                    _atividadeAppServico.EncerrarAtividade(idAtividade, dataEncerramento);
                     MensagemSucesso();
                 }
             }

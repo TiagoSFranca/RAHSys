@@ -23,7 +23,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
         }
 
         public ConsultaModel<AtividadeRecorrenciaModel> Consultar(IEnumerable<int> idList, IEnumerable<int> idTipoAtividadeList, IEnumerable<int> idEquipeList,
-            IEnumerable<int> idContratoList, IEnumerable<string> idUsuarioList, string mesAno, bool? realizada,
+            IEnumerable<int> idContratoList, IEnumerable<string> idUsuarioList, string mesAno,
             string ordenacao, bool crescente, int pagina, int quantidade)
         {
             var consultaModel = new ConsultaModel<AtividadeRecorrenciaModel>(pagina, quantidade);
@@ -56,10 +56,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
 
             if (idUsuarioList?.Count() > 0)
                 query = query.Where(c => idUsuarioList.Contains(c.IdUsuario));
-
-            if (realizada != null)
-                query = query.Where(c => c.Finalizada == realizada);
-
+            
             switch ((ordenacao ?? string.Empty).ToLower())
             {
                 case "tipoatividade":
@@ -67,9 +64,6 @@ namespace RAHSys.Dominio.Servicos.Servicos
                     break;
                 case "atribuidopara":
                     query = crescente ? query.OrderBy(c => c.Usuario.UserName) : query.OrderByDescending(c => c.Usuario.UserName);
-                    break;
-                case "Realizada":
-                    query = crescente ? query.OrderBy(c => c.Finalizada) : query.OrderByDescending(c => c.Finalizada);
                     break;
                 default:
                     query = crescente ? query.OrderBy(c => c.IdAtividade) : query.OrderByDescending(c => c.IdAtividade);
@@ -108,7 +102,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
                 Observacao = observacao
             };
             _registroRecorrenciaRepositorio.Adicionar(recorrencia);
-            FinalizarAtividade(idAtividade);
+            //FinalizarAtividade(idAtividade);
         }
 
         public void CopiarAtividade(int idAtividade)
@@ -123,11 +117,12 @@ namespace RAHSys.Dominio.Servicos.Servicos
             _atividadeRepositorio.Atualizar(atividade);
         }
 
-        public void EncerrarAtividade(int idAtividade)
+        public void EncerrarAtividade(int idAtividade, DateTime dataEncerramento)
         {
-            var atividade = _atividadeRepositorio.ObterPorId(idAtividade, true);
-            atividade.Finalizada = true;
-            atividade.DataFinalizacao = DateTime.Now;
+            var atividade = _atividadeRepositorio.ObterPorId(idAtividade, false);
+            if (atividade.ConfiguracaoAtividade == null)
+                throw new CustomBaseException(new Exception(), string.Format("Atividade de código [{0}] não pode ser encerrada", idAtividade));
+            atividade.ConfiguracaoAtividade.TerminaEm = dataEncerramento;
             _atividadeRepositorio.Atualizar(atividade);
         }
 
@@ -177,62 +172,62 @@ namespace RAHSys.Dominio.Servicos.Servicos
             return retorno;
         }
 
-        private void FinalizarAtividade(int idAtividade)
-        {
-            var atividade = _atividadeRepositorio.ObterPorId(idAtividade, false, true);
-            if (atividade.Finalizada)
-                return;
-            if (atividade.ConfiguracaoAtividade == null)
-            {
-                if (atividade.RegistroRecorrencias.Count > 0)
-                    atividade.Finalizada = true;
-            }
-            else
-            {
-                if (atividade.ConfiguracaoAtividade.QtdRepeticoes > 0 && atividade.RegistroRecorrencias.Count == atividade.ConfiguracaoAtividade.QtdRepeticoes)
-                    atividade.Finalizada = true;
-                else if ((atividade.ConfiguracaoAtividade.QtdRepeticoes == 0 || atividade.ConfiguracaoAtividade.QtdRepeticoes == null) && atividade.ConfiguracaoAtividade.TerminaEm != null)
-                {
-                    var frequencia = atividade.ConfiguracaoAtividade.Frequencia;
-                    var ultimoRegistroRecorrencia = atividade.RegistroRecorrencias.OrderByDescending(e => e.DataPrevista).FirstOrDefault();
-                    if (atividade.IdTipoRecorrencia == TipoRecorrenciaSeed.Diaria.IdTipoRecorrencia)
-                    {
-                        var data = ultimoRegistroRecorrencia.DataPrevista;
-                        data = data.AddDays(frequencia);
-                        if (data > atividade.ConfiguracaoAtividade.TerminaEm)
-                            atividade.Finalizada = true;
-                    }
-                    else if (atividade.IdTipoRecorrencia == TipoRecorrenciaSeed.Mensal.IdTipoRecorrencia)
-                    {
-                        var data = ultimoRegistroRecorrencia.DataPrevista;
-                        data = data.AddMonths(frequencia);
-                        if (data > atividade.ConfiguracaoAtividade.TerminaEm)
-                            atividade.Finalizada = true;
-                    }
-                    else if (atividade.IdTipoRecorrencia == TipoRecorrenciaSeed.Semanal.IdTipoRecorrencia)
-                    {
-                        //TODO: Verificação da recorrência para finalizar a atividade
-                        //var data = ultimoRegistroRecorrencia.DataPrevista;
-                        //var dataFinal = (DateTime)atividade.ConfiguracaoAtividade.TerminaEm;
-                        //var diasSemana = ObterDiasDaSemana(atividade.ConfiguracaoAtividade.AtividadeDiaSemanas.ToList());
-                        //int qtdDias = dataFinal.Subtract(data).Days + 1;
+        //private void FinalizarAtividade(int idAtividade)
+        //{
+        //    var atividade = _atividadeRepositorio.ObterPorId(idAtividade, false, true);
+        //    if (atividade.Finalizada)
+        //        return;
+        //    if (atividade.ConfiguracaoAtividade == null)
+        //    {
+        //        if (atividade.RegistroRecorrencias.Count > 0)
+        //            atividade.Finalizada = true;
+        //    }
+        //    else
+        //    {
+        //        if (atividade.ConfiguracaoAtividade.QtdRepeticoes > 0 && atividade.RegistroRecorrencias.Count == atividade.ConfiguracaoAtividade.QtdRepeticoes)
+        //            atividade.Finalizada = true;
+        //        else if ((atividade.ConfiguracaoAtividade.QtdRepeticoes == 0 || atividade.ConfiguracaoAtividade.QtdRepeticoes == null) && atividade.ConfiguracaoAtividade.TerminaEm != null)
+        //        {
+        //            var frequencia = atividade.ConfiguracaoAtividade.Frequencia;
+        //            var ultimoRegistroRecorrencia = atividade.RegistroRecorrencias.OrderByDescending(e => e.DataPrevista).FirstOrDefault();
+        //            if (atividade.IdTipoRecorrencia == TipoRecorrenciaSeed.Diaria.IdTipoRecorrencia)
+        //            {
+        //                var data = ultimoRegistroRecorrencia.DataPrevista;
+        //                data = data.AddDays(frequencia);
+        //                if (data > atividade.ConfiguracaoAtividade.TerminaEm)
+        //                    atividade.Finalizada = true;
+        //            }
+        //            else if (atividade.IdTipoRecorrencia == TipoRecorrenciaSeed.Mensal.IdTipoRecorrencia)
+        //            {
+        //                var data = ultimoRegistroRecorrencia.DataPrevista;
+        //                data = data.AddMonths(frequencia);
+        //                if (data > atividade.ConfiguracaoAtividade.TerminaEm)
+        //                    atividade.Finalizada = true;
+        //            }
+        //            else if (atividade.IdTipoRecorrencia == TipoRecorrenciaSeed.Semanal.IdTipoRecorrencia)
+        //            {
+        //                //TODO: Verificação da recorrência para finalizar a atividade
+        //                //var data = ultimoRegistroRecorrencia.DataPrevista;
+        //                //var dataFinal = (DateTime)atividade.ConfiguracaoAtividade.TerminaEm;
+        //                //var diasSemana = ObterDiasDaSemana(atividade.ConfiguracaoAtividade.AtividadeDiaSemanas.ToList());
+        //                //int qtdDias = dataFinal.Subtract(data).Days + 1;
 
-                        //var todasDatas = Enumerable.Range(0, qtdDias)
-                        //                      .Select(i => data.AddDays(i))
-                        //                      .Where(d => diasSemana.Contains(d.DayOfWeek)).ToList();
-                        //if (todasDatas.Count > 0)
-                        //    if (todasDatas.FirstOrDefault() > atividade.ConfiguracaoAtividade.TerminaEm)
-                        //        atividade.Finalizada = true;
-                    }
-                }
-            }
+        //                //var todasDatas = Enumerable.Range(0, qtdDias)
+        //                //                      .Select(i => data.AddDays(i))
+        //                //                      .Where(d => diasSemana.Contains(d.DayOfWeek)).ToList();
+        //                //if (todasDatas.Count > 0)
+        //                //    if (todasDatas.FirstOrDefault() > atividade.ConfiguracaoAtividade.TerminaEm)
+        //                //        atividade.Finalizada = true;
+        //            }
+        //        }
+        //    }
 
-            if (atividade.Finalizada)
-            {
-                atividade.DataFinalizacao = DateTime.Now;
-                _atividadeRepositorio.Atualizar(atividade);
-            }
-        }
+        //    if (atividade.Finalizada)
+        //    {
+        //        atividade.DataFinalizacao = DateTime.Now;
+        //        _atividadeRepositorio.Atualizar(atividade);
+        //    }
+        //}
 
         #region Registro de Recorrência
 
@@ -249,7 +244,8 @@ namespace RAHSys.Dominio.Servicos.Servicos
 
             AtividadeRecorrenciaModel recorrencia = new AtividadeRecorrenciaModel(atividade.IdAtividade, atividade.Descricao, atividade.TipoAtividade,
                 atividade.Contrato, atividade.Equipe, atividade.Usuario,
-                atividade.TipoRecorrencia, registroRecorrencia, atividade.Finalizada, numeroAtividade)
+                atividade.TipoRecorrencia, registroRecorrencia, atividade.ConfiguracaoAtividade.TerminaEm == null &&
+                (atividade.ConfiguracaoAtividade.QtdRepeticoes == null || atividade.ConfiguracaoAtividade.QtdRepeticoes == 0), numeroAtividade)
             {
                 Realizada = realizada
             };
@@ -276,7 +272,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
                         e.Usuario,
                         e.TipoRecorrencia,
                         e.RegistroRecorrencias.FirstOrDefault() ?? new RegistroRecorrenciaModel() { DataPrevista = e.DataInicial },
-                        e.Finalizada, 1)
+                        false, 1)
                     { Realizada = e.RegistroRecorrencias.Count > 0 }
                     ).ToList());
 
@@ -303,8 +299,6 @@ namespace RAHSys.Dominio.Servicos.Servicos
                 dataFinal = dataFinal < (DateTime)atividade.ConfiguracaoAtividade.TerminaEm ? dataFinal : (DateTime)atividade.ConfiguracaoAtividade.TerminaEm;
 
             int qtdDias = dataFinal.Subtract(dataInicio).Days + 1;
-
-            var diasDaSemana = ObterDiasDaSemana(atividade.ConfiguracaoAtividade.AtividadeDiaSemanas.ToList());
 
             var datas = Enumerable.Range(0, qtdDias).Select(i => dataInicio.AddDays(i * frequencia)).ToList();
 
@@ -341,6 +335,9 @@ namespace RAHSys.Dominio.Servicos.Servicos
             int qtdDias = dataFinal.Subtract(dataInicio).Days + 1;
 
             var diasDaSemana = ObterDiasDaSemana(atividade.ConfiguracaoAtividade.AtividadeDiaSemanas.ToList());
+
+            if (diasDaSemana.Count == 0)
+                diasDaSemana.Add(atividade.DataInicial.DayOfWeek);
 
             var todasDatas = Enumerable.Range(0, qtdDias)
                                   .Select(i => dataInicio.AddDays(i))
@@ -392,6 +389,9 @@ namespace RAHSys.Dominio.Servicos.Servicos
             var frequencia = configuracaoAtividade.Frequencia;
             frequencia = frequencia > 0 ? frequencia : 1;
             int dia = configuracaoAtividade.DiaMes > 0 ? (int)configuracaoAtividade.DiaMes : atividade.DataInicial.Day;
+
+            if (atividade.ConfiguracaoAtividade.TerminaEm != null)
+                dataFinal = dataFinal < (DateTime)atividade.ConfiguracaoAtividade.TerminaEm ? dataFinal : (DateTime)atividade.ConfiguracaoAtividade.TerminaEm;
 
             do
             {

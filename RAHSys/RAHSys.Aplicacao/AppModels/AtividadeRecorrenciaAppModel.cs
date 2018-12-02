@@ -12,8 +12,8 @@ namespace RAHSys.Aplicacao.AppModels
         public int IdContrato { get; set; }
         public string IdUsuario { get; set; }
         public string Descricao { get; set; }
-        public bool AtividadeFinalizada { get; set; }
         public bool Realizada { get; set; }
+        public bool Encerrar { get; set; }
         public DateTime DataRealizacaoPrevista { get; set; }
         public DateTime? DataRealizacao { get; set; }
         public string Observacao { get; set; }
@@ -28,16 +28,6 @@ namespace RAHSys.Aplicacao.AppModels
         public virtual EquipeAppModel Equipe { get; set; }
 
         public virtual UsuarioAppModel Usuario { get; set; }
-
-        public virtual SituacaoAtividade SituacaoAtividade
-        {
-            get
-            {
-                if (AtividadeFinalizada)
-                    return SituacaoAtividadeEnum.AtividadeEncerrada;
-                return SituacaoAtividadeEnum.AtividadeNaoEncerrada;
-            }
-        }
 
         public virtual SituacaoAtividade SituacaoRecorrencia
         {

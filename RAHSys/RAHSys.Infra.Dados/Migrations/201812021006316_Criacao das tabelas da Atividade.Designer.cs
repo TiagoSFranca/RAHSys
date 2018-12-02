@@ -13,7 +13,7 @@ namespace RAHSys.Infra.Dados.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201812011247132_Criacao das tabelas da Atividade"; }
+            get { return "201812021006316_Criacao das tabelas da Atividade"; }
         }
         
         string IMigrationMetadata.Source

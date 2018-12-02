@@ -457,8 +457,7 @@ namespace RAHSys.Apresentacao.Controllers
 
         public ActionResult Atividades(int id, string mesAno)
         {
-            ViewBag.SubTitle = "Contrato";
-            ViewBag.SubSubTitle = "Atividades";
+            ViewBag.SubTitle = "Atividades";
             mesAno = mesAno ?? DateTime.Now.Month + "/" + DateTime.Now.Year;
             ViewBag.MesAno = mesAno;
             AtividadeContratoModel atividadeContratoModel = new AtividadeContratoModel();
@@ -702,7 +701,7 @@ namespace RAHSys.Apresentacao.Controllers
         public string ObterAtividadesContrato(int id, string mesAno)
         {
             var consulta = _atividadeAppServico.Consultar(null, null, null, new[] { id },
-                null, mesAno, null, null, true, 1, Int32.MaxValue);
+                null, mesAno, null, true, 1, Int32.MaxValue);
             List<AtividadeRecorrenciaAppModel> lista = consulta.Resultado.ToList();
             lista.ForEach(item =>
             {

@@ -182,6 +182,7 @@
     <Compile Include="Repositorios\AuditoriaRepositorio.cs" />
     <Compile Include="Repositorios\AnaliseInvestimentoRepositorio.cs" />
     <Compile Include="Repositorios\CameraRepositorio.cs" />
+    <Compile Include="Repositorios\ConfiguracaoAtividadeRepositorio.cs" />
     <Compile Include="Repositorios\DiaSemanaRepositorio.cs" />
     <Compile Include="Repositorios\EquipeRepositorio.cs" />
     <Compile Include="Repositorios\PagamentoRepositorio.cs" />

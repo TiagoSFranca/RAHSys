@@ -15,11 +15,14 @@ namespace RAHSys.Dominio.Servicos.Servicos
     {
         private readonly IAtividadeRepositorio _atividadeRepositorio;
         private readonly IRegistroRecorrenciaRepositorio _registroRecorrenciaRepositorio;
+        private readonly IConfiguracaoAtividadeRepositorio _configuracaoAtividadeRepositorio;
 
-        public AtividadeServico(IAtividadeRepositorio atividadeRepositorio, IRegistroRecorrenciaRepositorio registroRecorrenciaRepositorio) : base(atividadeRepositorio)
+        public AtividadeServico(IAtividadeRepositorio atividadeRepositorio, IRegistroRecorrenciaRepositorio registroRecorrenciaRepositorio,
+            IConfiguracaoAtividadeRepositorio configuracaoAtividadeRepositorio) : base(atividadeRepositorio)
         {
             _atividadeRepositorio = atividadeRepositorio;
             _registroRecorrenciaRepositorio = registroRecorrenciaRepositorio;
+            _configuracaoAtividadeRepositorio = configuracaoAtividadeRepositorio;
         }
 
         public ConsultaModel<AtividadeRecorrenciaModel> Consultar(IEnumerable<int> idList, IEnumerable<int> idTipoAtividadeList, IEnumerable<int> idEquipeList,
@@ -56,7 +59,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
 
             if (idUsuarioList?.Count() > 0)
                 query = query.Where(c => idUsuarioList.Contains(c.IdUsuario));
-            
+
             switch ((ordenacao ?? string.Empty).ToLower())
             {
                 case "tipoatividade":
@@ -88,6 +91,27 @@ namespace RAHSys.Dominio.Servicos.Servicos
                 throw new CustomBaseException(new Exception(), "Deve definir OU [Quantidade de Repetições] OU [Termina em]");
 
             _atividadeRepositorio.Adicionar(obj);
+        }
+
+        public void Atualizar(AtividadeModel obj)
+        {
+            var idAtividade = obj.IdAtividade;
+
+            if (ObterConfiguracaoAtividade(idAtividade) == null)
+            {
+                if (ObterRecorrenciasAtividade(idAtividade).Count > 0)
+                    _atividadeRepositorio.Adicionar(obj);
+                else
+                    _atividadeRepositorio.Atualizar(obj);
+            }
+            else
+            {
+                var atividade = _atividadeRepositorio.ObterPorId(idAtividade, false, true);
+                _atividadeRepositorio.Adicionar(obj);
+
+                atividade.ConfiguracaoAtividade.TerminaEm = DateTime.Now;
+                _atividadeRepositorio.Atualizar(atividade);
+            }
         }
 
         public void FinalizarRecorrencia(int idAtividade, DateTime dataRealizacaoPrevista, DateTime dataRealizacao, string observacao)
@@ -124,6 +148,17 @@ namespace RAHSys.Dominio.Servicos.Servicos
                 throw new CustomBaseException(new Exception(), string.Format("Atividade de código [{0}] não pode ser encerrada", idAtividade));
             atividade.ConfiguracaoAtividade.TerminaEm = dataEncerramento;
             _atividadeRepositorio.Atualizar(atividade);
+        }
+
+        private List<RegistroRecorrenciaModel> ObterRecorrenciasAtividade(int idAtividade)
+        {
+            var query = _registroRecorrenciaRepositorio.Consultar().Where(e => e.IdAtividade == idAtividade);
+            return query.ToList();
+        }
+
+        private ConfiguracaoAtividadeModel ObterConfiguracaoAtividade(int idAtividade)
+        {
+            return _configuracaoAtividadeRepositorio.ObterPorId(idAtividade);
         }
 
         private bool ValidarRecorrencia(int idAtividade, DateTime dataPrevista)

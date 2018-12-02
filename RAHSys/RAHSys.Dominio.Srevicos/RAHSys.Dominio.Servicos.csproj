@@ -44,6 +44,7 @@
     <Compile Include="Interfaces\Repositorios\IAuditoriaRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IAnaliseInvestimentoRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\ICameraRepositorio.cs" />
+    <Compile Include="Interfaces\Repositorios\IConfiguracaoAtividadeRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IDiaSemanaRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IEquipeRepositorio.cs" />
     <Compile Include="Interfaces\Repositorios\IPagamentoRepositorio.cs" />

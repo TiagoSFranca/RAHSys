@@ -59,12 +59,19 @@
                 </div>
             </div>
             <div class="portlet-body">
-                @using (Html.BeginForm("AdicionarAtividade", "Contrato", FormMethod.Post, new { @class = "form-horizontal margin-bottom-40" }))
+                @using (Html.BeginForm("EditarAtividade", "Contrato", FormMethod.Post, new { @class = "form-horizontal margin-bottom-40" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(model => model.Atividade.IdEquipe)
                     @Html.HiddenFor(model => model.Atividade.IdContrato)
                     @Html.HiddenFor(model => model.Atividade.IdAtividade)
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(model => model.Atividade.IdAtividade, "Código", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Atividade.IdAtividade, new { htmlAttributes = new { @class = "form-control", @placeholder = "Código", @required = "required", @disabled = "disabled" } })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
                     <div class="form-group form-md-line-input">
                         @Html.LabelFor(m => m.Atividade.IdTipoAtividade, new { @class = "col-md-2 control-label" })
                         <div class="col-md-4">

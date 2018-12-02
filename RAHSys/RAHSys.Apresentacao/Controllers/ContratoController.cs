@@ -641,7 +641,7 @@ namespace RAHSys.Apresentacao.Controllers
         [HttpPost]
         public ActionResult EditarAtividade(AtividadeContratoAdicionarEditarModel atividadePostModel)
         {
-            ViewBag.SubTitle = "Adicionar nova Atividade";
+            ViewBag.SubTitle = "Editar Atividade";
             var atividadeRetornoModel = MontarAtividadeContratoAdicionarEditar();
             atividadeRetornoModel.Atividade = atividadePostModel.Atividade;
             var atividade = atividadePostModel.Atividade;

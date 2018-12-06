@@ -150,6 +150,40 @@ namespace RAHSys.Dominio.Servicos.Servicos
             _atividadeRepositorio.Atualizar(atividade);
         }
 
+        //public Dictionary<string, int> ObterRecorrenciasAtrasadas(string mesAno, int? idContrato, int? idEquipe, int? idAtividade, string usuario)
+        //{
+        //    Dictionary<string, int> recorrenciasAtrasadas = new Dictionary<string, int>();
+
+        //    var query = _atividadeRepositorio.Consultar().Where(c => !c.Contrato.Excluido);
+
+        //    mesAno = mesAno ?? string.Format("{0}/{1}", DateTime.Now.Month, DateTime.Now.Year);
+
+        //    int mes = 0;
+        //    int ano = 0;
+
+        //    ValidarMesAno(mesAno, ref mes, ref ano);
+        //    DateTime dataInicioMesAno = new DateTime(ano, mes, 1);
+        //    DateTime dataFim = dataInicioMesAno.AddDays(-1);
+
+        //    query = query.Where(e => e.DataInicial <= dataFim);
+
+        //    if (idAtividade != null)
+        //        query = query.Where(c => idAtividade == c.IdAtividade);
+
+        //    if (idEquipe != null)
+        //        query = query.Where(c => idEquipe == c.IdEquipe);
+
+        //    if (idContrato != null)
+        //        query = query.Where(c => idContrato == c.IdContrato);
+
+        //    if (!string.IsNullOrEmpty(usuario))
+        //        query = query.Where(c => usuario == c.IdUsuario);
+
+        //    var atividades = query.ToList();
+
+        //    return recorrenciasAtrasadas;
+        //}
+
         private List<RegistroRecorrenciaModel> ObterRecorrenciasAtividade(int idAtividade)
         {
             var query = _registroRecorrenciaRepositorio.Consultar().Where(e => e.IdAtividade == idAtividade);
@@ -206,63 +240,6 @@ namespace RAHSys.Dominio.Servicos.Servicos
 
             return retorno;
         }
-
-        //private void FinalizarAtividade(int idAtividade)
-        //{
-        //    var atividade = _atividadeRepositorio.ObterPorId(idAtividade, false, true);
-        //    if (atividade.Finalizada)
-        //        return;
-        //    if (atividade.ConfiguracaoAtividade == null)
-        //    {
-        //        if (atividade.RegistroRecorrencias.Count > 0)
-        //            atividade.Finalizada = true;
-        //    }
-        //    else
-        //    {
-        //        if (atividade.ConfiguracaoAtividade.QtdRepeticoes > 0 && atividade.RegistroRecorrencias.Count == atividade.ConfiguracaoAtividade.QtdRepeticoes)
-        //            atividade.Finalizada = true;
-        //        else if ((atividade.ConfiguracaoAtividade.QtdRepeticoes == 0 || atividade.ConfiguracaoAtividade.QtdRepeticoes == null) && atividade.ConfiguracaoAtividade.TerminaEm != null)
-        //        {
-        //            var frequencia = atividade.ConfiguracaoAtividade.Frequencia;
-        //            var ultimoRegistroRecorrencia = atividade.RegistroRecorrencias.OrderByDescending(e => e.DataPrevista).FirstOrDefault();
-        //            if (atividade.IdTipoRecorrencia == TipoRecorrenciaSeed.Diaria.IdTipoRecorrencia)
-        //            {
-        //                var data = ultimoRegistroRecorrencia.DataPrevista;
-        //                data = data.AddDays(frequencia);
-        //                if (data > atividade.ConfiguracaoAtividade.TerminaEm)
-        //                    atividade.Finalizada = true;
-        //            }
-        //            else if (atividade.IdTipoRecorrencia == TipoRecorrenciaSeed.Mensal.IdTipoRecorrencia)
-        //            {
-        //                var data = ultimoRegistroRecorrencia.DataPrevista;
-        //                data = data.AddMonths(frequencia);
-        //                if (data > atividade.ConfiguracaoAtividade.TerminaEm)
-        //                    atividade.Finalizada = true;
-        //            }
-        //            else if (atividade.IdTipoRecorrencia == TipoRecorrenciaSeed.Semanal.IdTipoRecorrencia)
-        //            {
-        //                //TODO: Verificação da recorrência para finalizar a atividade
-        //                //var data = ultimoRegistroRecorrencia.DataPrevista;
-        //                //var dataFinal = (DateTime)atividade.ConfiguracaoAtividade.TerminaEm;
-        //                //var diasSemana = ObterDiasDaSemana(atividade.ConfiguracaoAtividade.AtividadeDiaSemanas.ToList());
-        //                //int qtdDias = dataFinal.Subtract(data).Days + 1;
-
-        //                //var todasDatas = Enumerable.Range(0, qtdDias)
-        //                //                      .Select(i => data.AddDays(i))
-        //                //                      .Where(d => diasSemana.Contains(d.DayOfWeek)).ToList();
-        //                //if (todasDatas.Count > 0)
-        //                //    if (todasDatas.FirstOrDefault() > atividade.ConfiguracaoAtividade.TerminaEm)
-        //                //        atividade.Finalizada = true;
-        //            }
-        //        }
-        //    }
-
-        //    if (atividade.Finalizada)
-        //    {
-        //        atividade.DataFinalizacao = DateTime.Now;
-        //        _atividadeRepositorio.Atualizar(atividade);
-        //    }
-        //}
 
         #region Registro de Recorrência
 
@@ -434,7 +411,9 @@ namespace RAHSys.Dominio.Servicos.Servicos
                     break;
                 if (configuracaoAtividade.QtdRepeticoes != null && configuracaoAtividade.QtdRepeticoes <= contador)
                     break;
-                dataAtividade = dataAtividade.AddMonths(frequencia);
+                if (contador > 0)
+                    dataAtividade = dataAtividade.AddMonths(frequencia);
+
                 if (configuracaoAtividade.DiaMes > 0)
                 {
                     var diaAtividade = dataAtividade.Day;

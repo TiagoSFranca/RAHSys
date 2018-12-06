@@ -133,7 +133,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RAHSys.Dominio.Srevicos\RAHSys.Dominio.Servicos.csproj">
+    <ProjectReference Include="..\RAHSys.Dominio.Servicos\RAHSys.Dominio.Servicos.csproj">
       <Project>{E21BA9C2-8EE8-467E-B909-3B7114C6D646}</Project>
       <Name>RAHSys.Dominio.Servicos</Name>
     </ProjectReference>

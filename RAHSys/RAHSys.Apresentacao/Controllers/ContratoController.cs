@@ -629,6 +629,7 @@ namespace RAHSys.Apresentacao.Controllers
                 atividadeContratoAdicionarModel.Contrato = contratoModel;
                 atividadeContratoAdicionarModel.Equipe = _equipeAppServico.ObterPorId(atividade.IdEquipe);
                 atividadeContratoAdicionarModel.Atividade = atividade;
+                atividadeContratoAdicionarModel.DiaSemanasSelecionadas = atividade.ConfiguracaoAtividade?.AtividadeDiaSemanas?.Select(e => e.IdDiaSemana).ToList();
 
                 return View(atividadeContratoAdicionarModel);
             }
@@ -645,6 +646,7 @@ namespace RAHSys.Apresentacao.Controllers
             ViewBag.SubTitle = "Editar Atividade";
             var atividadeRetornoModel = MontarAtividadeContratoAdicionarEditar();
             atividadeRetornoModel.Atividade = atividadePostModel.Atividade;
+            atividadeRetornoModel.DiaSemanasSelecionadas = atividadePostModel.DiaSemanasSelecionadas ?? new List<int>();
             var atividade = atividadePostModel.Atividade;
             int idContrato = atividadePostModel.Atividade.IdContrato;
             if (atividade == null)
@@ -685,8 +687,12 @@ namespace RAHSys.Apresentacao.Controllers
             {
                 try
                 {
-                    _atividadeAppServico.Atualizar(atividadePostModel.Atividade);
-                    MensagemSucesso(MensagensPadrao.CadastroSucesso);
+                    if (atividadePostModel.DiaSemanasSelecionadas?.Count > 0)
+                    {
+                        atividade.ConfiguracaoAtividade.AtividadeDiaSemanas = atividadePostModel.DiaSemanasSelecionadas.Select(e => new AtividadeDiaSemanaAppModel() { IdDiaSemana = e }).ToList();
+                    }
+                    _atividadeAppServico.Atualizar(atividade);
+                    MensagemSucesso();
                     return RedirectToAction("Atividades", "Contrato", new { id = idContrato });
                 }
                 catch (CustomBaseException ex)

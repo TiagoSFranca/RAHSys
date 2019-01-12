@@ -363,7 +363,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
                     var count = 1;
                     while (count < diasDaSemana.Count)
                     {
-                        if (todasDatas.Count < i + count && todasDatas[i + count] != null)
+                        if (i + count < todasDatas.Count && todasDatas[i + count] != null)
                             datas.Add(todasDatas[i + count]);
                         else
                             break;

@@ -1,0 +1,196 @@
+﻿@using RAHSys.Aplicacao.AppModels;
+@using RAHSys.Extras.Enums;
+@using PagedList.Mvc;
+
+@model PagedList.StaticPagedList<AtividadeAppModel>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart font-dark hide"></i>
+                    <span class="caption-subject font-green-steel uppercase bold">Buscar</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                @using (Html.BeginForm("Index", "Atividade", FormMethod.Get, new { @id = "form-busca" }))
+                {
+                    <div class="row">
+                        <div class="col-md-1">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.Editor("codigo", new { htmlAttributes = new { @class = "form-control", @placeholder = "Código", @type = "number" } })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.Editor("tipoAtividade", new { htmlAttributes = new { @class = "form-control", @placeholder = "Tipo de Atividade" } })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.Editor("equipe", new { htmlAttributes = new { @class = "form-control", @placeholder = "Email Equipe" } })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.Editor("contrato", new { htmlAttributes = new { @class = "form-control", @placeholder = "Cliente/Contrato" } })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.Editor("usuario", new { htmlAttributes = new { @class = "form-control", @placeholder = "Atribuido Para" } })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.DropDownList("realizada", EnumHelper.GetSelectList(typeof(SimOuNaoEnum)), "Realizada", new { @class = "form-control" })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.Editor("dataRealizacaoInicio", new { htmlAttributes = new { @class = "form-control dataAtividade", @placeholder = "Data de Realização Início" } })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.Editor("dataRealizacaoFim", new { htmlAttributes = new { @class = "form-control dataAtividade", @placeholder = "Data de Realização Fim" } })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.Editor("dataPrevistaInicio", new { htmlAttributes = new { @class = "form-control dataAtividade", @placeholder = "Data de Realização Prevista Início" } })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.Editor("dataPrevistaFim", new { htmlAttributes = new { @class = "form-control dataAtividade", @placeholder = "Data de Realização Prevista Fim" } })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group form-md-line-input has-success">
+                                @Html.DropDownList("itensPagina", EnumHelper.GetSelectList(typeof(ItensPorPaginaEnum)), "Itens Por Página", new { @class = "form-control" })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        @Html.Hidden("ordenacao", (string)ViewBag.Ordenacao)
+                        @Html.Hidden("crescente", (bool)ViewBag.Crescente)
+                        <div class="col-md-3">
+                            <div class="form-group form-md-line-input ">
+                                <button type="submit" class="btn blue btn-circle">Buscar</button>
+                                @Html.ActionLink("Limpar", "Index", "Atividade", null, new { @class = "btn btn-white btn-outline btn-circle btn-md" })
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart font-dark hide"></i>
+                    <span class="caption-subject font-green-steel uppercase bold">Dados</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                @if (Model.Count > 0)
+                {
+                    <div class="table-scrollable">
+                        <table class="table table-hover table-light">
+                            <thead>
+                                <tr>
+                                    <th onclick="ordenar('')">
+                                        <a>
+                                            #
+                                        </a>
+                                    </th>
+                                    <th onclick="ordenar('Localização')">
+                                        <a>
+                                            Localização
+                                        </a>
+                                    </th>
+                                    <th onclick="ordenar('Descrição')">
+                                        <a>
+                                            Descrição
+                                        </a>
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.IdAtividade
+                                        </td>
+                                        <td>
+                                            @*@item.Localizacao*@
+                                        </td>
+                                        <td>
+                                            @item.Descricao
+                                        </td>
+                                        <td class="text-right">
+                                            @*@Html.ActionLink("Alterar", "Editar", "Atividade", new { id = item.IdAtividade }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })*@
+                                            @Html.ActionLink("Excluir", "Excluir", "Atividade", new { id = item.IdAtividade, urlRetorno = Url.Action("Index", "Atividade") }, new { @class = "btn red-flamingo btn-circle btn-md abrirModal" })
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class="italic bold">
+                                @Model.FirstItemOnPage a @Model.LastItemOnPage de @Model.TotalItemCount registros
+                            </span>
+                            <div class="text-center">
+                                @Html.PagedListPager(Model,
+                               pagina => Url.Action("Index", "Atividade", new
+                               {
+                                   pagina,
+                                   localizacao = ViewBag.Localizacao,
+                                   descricao = ViewBag.Descricao,
+                                   itensPagina = ViewBag.ItensPagina,
+                                   ordenacao = ViewBag.Ordenacao,
+                                   crescente = ViewBag.Crescente
+                               }))
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-info">
+                                <h5 class="text-center">
+                                    Não foram encontrados resultados
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/Ordenacao/js")
+    @Scripts.Render("~/Modal/js")
+}

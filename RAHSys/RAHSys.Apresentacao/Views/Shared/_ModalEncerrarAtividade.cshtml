@@ -1,0 +1,28 @@
+﻿<div id="modalEncerrarAtividade" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Encerrar Atividade</h4>
+            </div>
+            @using (Html.BeginForm("EncerrarAtividade", "Atividade", null,
+                    FormMethod.Post, new { @class = "form-horizontal margin-bottom-40", @id = "formCopiarAtividade" }))
+            {
+                @Html.Hidden("urlRetorno", null, new { @class = "urlRetorno" })
+                <div class="modal-body">
+                    @Html.Hidden("IdAtividade", null, new { @class = "idAtividade" })
+                    @Html.Hidden("DataEncerramento", null, new { @class = "atividadeDataPrevista" })
+                    <div class="form-group form-md-line-input">
+                        <div class="col-md-12">
+                            Tem certeza que deseja encerrar a atividade?
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn blue btn-circle">Encerrar</button>
+                    <button type="button" data-dismiss="modal" class="btn yellow-haze btn-outline btn-circle btn-md">Cancelar</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

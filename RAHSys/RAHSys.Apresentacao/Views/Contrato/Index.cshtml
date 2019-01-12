@@ -155,19 +155,22 @@
                                                     <li>
                                                         @if (situacao.Nome.ToLower().Equals(SituacaoContratoEnum.NovoContrato.Nome.ToLower()))
                                                         {
-                                                            @Html.ActionLink("Efetuar Análise", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
+                                                            @Html.ActionLink("Efetuar Análise", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-md" })
                                                         }
                                                         else if (situacao.Nome.ToLower().Equals(SituacaoContratoEnum.EmAnalise.Nome.ToLower()))
                                                         {
-                                                            @Html.ActionLink("Efetivar Contrato", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
+                                                            @Html.ActionLink("Efetivar Contrato", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-md" })
                                                         }
                                                         else
                                                         {
-                                                            @Html.ActionLink("Alterar R. F.", "EditarResponsavelFinanceiro", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
+                                                            @Html.ActionLink("Alterar R. F.", "EditarResponsavelFinanceiro", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-md" })
                                                         }
                                                     </li>
                                                     <li>
-                                                        @Html.ActionLink("Pagamentos", "Index", "Pagamento", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })
+                                                        @Html.ActionLink("Pagamentos", "Index", "Pagamento", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-md" })
+                                                    </li>
+                                                    <li>
+                                                        @Html.ActionLink("Atividades", "Atividades", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-md" })
                                                     </li>
                                                 </ul>
                                             </div>
@@ -175,7 +178,7 @@
                                             @Html.ActionLink("Excluir", "Excluir", "Contrato", new { id = item.IdContrato }, new { @class = "btn red-flamingo btn-circle btn-md abrirModal" })
                                         </td>
                                     </tr>
-                                                }
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -202,19 +205,19 @@
                             </div>
                         </div>
                     </div>
-                                                }
-                                                else
-                                                {
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <div class="alert alert-info">
-                                                                <h5 class="text-center">
-                                                                    Não foram encontrados resultados
-                                                                </h5>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                }
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-info">
+                                <h5 class="text-center">
+                                    Não foram encontrados resultados
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>

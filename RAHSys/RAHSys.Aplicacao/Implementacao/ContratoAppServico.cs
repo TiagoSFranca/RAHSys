@@ -38,7 +38,7 @@ namespace RAHSys.Aplicacao.Implementacao
             }
         }
 
-        public ConsultaAppModel<ContratoAppModel> Consultar(IEnumerable<int> idList, IEnumerable<int> idEstadoList, string nomeEmpresa, decimal? receita, string cidade, 
+        public ConsultaAppModel<ContratoAppModel> Consultar(IEnumerable<int> idList, IEnumerable<int> idEstadoList, string nomeEmpresa, decimal? receita, string cidade,
             string ordenacao, bool crescente, int pagina, int quantidade)
         {
             try
@@ -179,6 +179,25 @@ namespace RAHSys.Aplicacao.Implementacao
             try
             {
                 _contratoServico.AtualizarResponsavelFinanceiro(responsavelFinanceiro.MapearParaDominio());
+            }
+            catch (CustomBaseException ex)
+            {
+                LogExceptions(ex);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                var nex = new CustomBaseException(ex);
+                LogExceptions(nex);
+                throw nex;
+            }
+        }
+
+        public List<ContratoAppModel> ListarPorEquipe(int idEquipe)
+        {
+            try
+            {
+                return _contratoServico.ListarPorEquipe(idEquipe).Select(e => e.MapearParaAplicacao()).ToList();
             }
             catch (CustomBaseException ex)
             {

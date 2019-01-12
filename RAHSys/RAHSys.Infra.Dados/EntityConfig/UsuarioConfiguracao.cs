@@ -37,6 +37,11 @@ namespace RAHSys.Infra.Dados.EntityConfig
                 .WithRequired(s => s.Usuario)
                 .HasForeignKey(s => s.IdUsuario)
                 .WillCascadeOnDelete(true);
+
+            HasMany(pt => pt.Atividades)
+                .WithOptional(s => s.Usuario)
+                .HasForeignKey(s => s.IdUsuario)
+                .WillCascadeOnDelete(true);
         }
     }
 }

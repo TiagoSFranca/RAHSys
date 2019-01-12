@@ -12,8 +12,7 @@ namespace RAHSys.Aplicacao.AppModels
         [Display(Name = "Tipo de Telhado")]
         public int IdTipoTelhado { get; set; }
 
-        [Required]
-        [Display(Name = "Nome do Cliente")]
+        [Display(Name = "Nome da Empresa")]
         [MaxLength(256)]
         public string NomeCliente { get; set; }
 

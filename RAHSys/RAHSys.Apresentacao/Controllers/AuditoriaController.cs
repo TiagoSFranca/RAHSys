@@ -3,6 +3,7 @@ using RAHSys.Aplicacao.AppModels;
 using RAHSys.Aplicacao.Interfaces;
 using RAHSys.Apresentacao.Attributes;
 using RAHSys.Extras;
+using RAHSys.Extras.Enums;
 using RAHSys.Infra.CrossCutting.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,7 @@ namespace RAHSys.Apresentacao.Controllers
             ViewBag.ItensPagina = itensPagina;
             try
             {
-                var consulta = _auditoriaAppServico.Consultar(null, usuario, funcao, acao, enderecoIP, dataHora ?? DateTime.Now, ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? 40);
+                var consulta = _auditoriaAppServico.Consultar(null, usuario, funcao, acao, enderecoIP, dataHora ?? DateTime.Now, ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? (int)ItensPorPaginaEnum.MEDIO);
                 var resultado = new StaticPagedList<AuditoriaAppModel>(consulta.Resultado, consulta.PaginaAtual, consulta.ItensPorPagina, consulta.TotalItens);
                 return View(resultado);
             }

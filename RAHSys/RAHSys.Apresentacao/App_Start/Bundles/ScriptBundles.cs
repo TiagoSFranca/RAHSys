@@ -34,6 +34,8 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
                 "~/Content/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js",
                 "~/Content/assets/global/plugins/morris/morris.min.js",
                 "~/Content/assets/global/plugins/morris/raphael-min.js",
+                "~/Content/assets/global/plugins/fullcalendar/fullcalendar.min.js",
+                "~/Content/assets/global/plugins/fullcalendar/lang-all.js",
                 "~/Content/assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js"
                 ));
 
@@ -78,8 +80,7 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
 
             bundles.Add(new ScriptBundle("~/LoginPageLevel/js").Include(
                 "~/Content/assets/global/plugins/jquery-validation/js/jquery.validate.min.js",
-                "~/Content/assets/global/plugins/jquery-validation/js/additional-methods.min.js",
-                "~/Content/assets/global/plugins/select2/js/select2.full.min.js"
+                "~/Content/assets/global/plugins/jquery-validation/js/additional-methods.min.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/Pagamento/js").Include(
@@ -92,6 +93,22 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
 
             bundles.Add(new ScriptBundle("~/Integrantes/js").Include(
                 "~/Scripts/integrantes.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/Atividade/js").Include(
+                "~/Scripts/atividade/atividade.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/Contrato/Atividade/js").Include(
+                "~/Scripts/contrato/contratoAtividade.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/Contrato/Atividade/AdicionarEditar/js").Include(
+                "~/Scripts/contrato/atividadeAdicionarEditar.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/Select2/js").Include(
+                "~/Content/assets/global/plugins/select2/js/select2.full.min.js"
                 ));
         }
     }

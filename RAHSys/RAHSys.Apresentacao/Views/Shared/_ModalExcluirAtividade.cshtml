@@ -1,0 +1,27 @@
+﻿<div id="modalExcluirAtividade" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Excluir Atividade</h4>
+            </div>
+            @using (Html.BeginForm("ExcluirAtividade", "Atividade", null,
+                    FormMethod.Post, new { @class = "form-horizontal margin-bottom-40", @id = "formExcluirAtividade" }))
+            {
+                @Html.Hidden("urlRetorno", null, new { @class = "urlRetorno" })
+                <div class="modal-body">
+                    @Html.Hidden("IdAtividade", null, new { @class = "idAtividade" })
+                    <div class="form-group form-md-line-input">
+                        <div class="col-md-12">
+                            Tem certeza que deseja excluir a atividade?
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn red-flamingo btn-circle">Excluir</button>
+                    <button type="button" data-dismiss="modal" class="btn yellow-haze btn-outline btn-circle btn-md">Cancelar</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

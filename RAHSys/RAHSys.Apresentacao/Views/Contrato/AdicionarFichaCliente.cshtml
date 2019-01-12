@@ -1,4 +1,4 @@
-﻿@model  RAHSys.Apresentacao.Models.FichaClienteAdicionar
+﻿@model  RAHSys.Apresentacao.Models.FichaClienteAdicionarModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -28,23 +28,16 @@
                             @Html.EditorFor(model => model.Cliente.IdAnaliseInvestimento, new { htmlAttributes = new { @class = "form-control", @placeholder = "Código", @required = "required", @disabled = "disabled" } })
                             <div class="form-control-focus"> </div>
                         </div>
+                        @Html.LabelFor(model => model.Contrato.ContatoInicial, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.Contrato.ContatoInicial, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome do Cliente", @required = "required", @disabled = "disabled" } })
+                            <div class="form-control-focus"></div>
+                        </div>
                     </div>
                     <div class="form-group form-md-line-input">
                         @Html.LabelFor(model => model.Contrato.NomeEmpresa, new { @class = "col-md-2 control-label" })
                         <div class="col-md-9">
                             @Html.EditorFor(model => model.Contrato.NomeEmpresa, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome do Cliente", @required = "required", @disabled = "disabled" } })
-                            <div class="form-control-focus"></div>
-                        </div>
-                    </div>
-                    <div class="form-group form-md-line-input">
-                        @Html.LabelFor(model => model.Contrato.AnaliseInvestimento.NomeCliente, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-4">
-                            @Html.EditorFor(model => model.Contrato.AnaliseInvestimento.NomeCliente, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome do Cliente", @required = "required", @disabled = "disabled" } })
-                            <div class="form-control-focus"></div>
-                        </div>
-                        @Html.LabelFor(model => model.Contrato.ContatoInicial, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-3">
-                            @Html.EditorFor(model => model.Contrato.ContatoInicial, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome do Cliente", @required = "required", @disabled = "disabled" } })
                             <div class="form-control-focus"></div>
                         </div>
                     </div>
@@ -81,14 +74,14 @@
                         </div>
                     </div>
                     <div class="form-group form-md-line-input">
-                        @Html.LabelFor(m => m.Contrato.ContratoEndereco.Endereco.IdCidade, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-4">
-                            @Html.EditorFor(model => model.Contrato.ContratoEndereco.Endereco.Cidade.Nome, new { htmlAttributes = new { @class = "form-control", @placeholder = "Cidade", @required = "required", @disabled = "disabled" } })
-                            <div class="form-control-focus"> </div>
-                        </div>
                         @Html.Label("Estado", new { @class = "col-md-2 control-label" })
                         <div class="col-md-3">
                             @Html.EditorFor(m => m.Contrato.ContratoEndereco.Endereco.Cidade.Estado.Descricao, new { htmlAttributes = new { @class = "form-control", @placeholder = "Estado", @disabled = "disabled" } })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                        @Html.LabelFor(m => m.Contrato.ContratoEndereco.Endereco.IdCidade, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.Contrato.ContratoEndereco.Endereco.Cidade.Nome, new { htmlAttributes = new { @class = "form-control", @placeholder = "Cidade", @required = "required", @disabled = "disabled" } })
                             <div class="form-control-focus"> </div>
                         </div>
                     </div>

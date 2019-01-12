@@ -4,6 +4,7 @@ using RAHSys.Aplicacao.Interfaces;
 using RAHSys.Apresentacao.Attributes;
 using RAHSys.Apresentacao.Models;
 using RAHSys.Extras;
+using RAHSys.Extras.Enums;
 using RAHSys.Infra.CrossCutting.Exceptions;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -43,7 +44,7 @@ namespace RAHSys.Apresentacao.Controllers
             ViewBag.ItensPagina = itensPagina;
             try
             {
-                var consulta = _pagamentoAppServico.Consultar(id, codigo != null ? new int[] { (int)codigo } : null, data, ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? 40);
+                var consulta = _pagamentoAppServico.Consultar(id, codigo != null ? new int[] { (int)codigo } : null, data, ordenacao, crescente ?? true, pagina ?? 1, itensPagina ?? (int)ItensPorPaginaEnum.MEDIO);
                 viewIndex.Pagamentos = new StaticPagedList<PagamentoAppModel>(consulta.Resultado, consulta.PaginaAtual, consulta.ItensPorPagina, consulta.TotalItens);
 
                 return View(viewIndex);

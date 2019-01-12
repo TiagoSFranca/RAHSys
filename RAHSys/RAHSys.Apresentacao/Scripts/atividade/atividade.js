@@ -105,9 +105,9 @@ function PopularListaUsuariosEquipe(equipe) {
         text: 'Selecione',
         value: ''
     }));
-    $.each(equipe.EquipeUsuarios, function (i, item) {
+    $.each(equipe.Usuarios, function (i, item) {
         $('.atividadeUsuario').append($('<option>', {
-            text: item.Usuario.EmailEUserName,
+            text: item.EmailEUserName,
             value: item.IdUsuario
         }));
     });

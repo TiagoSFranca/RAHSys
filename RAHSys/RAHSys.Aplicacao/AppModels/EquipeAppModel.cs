@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace RAHSys.Aplicacao.AppModels
 {
@@ -43,11 +44,24 @@ namespace RAHSys.Aplicacao.AppModels
         {
             string equipe = string.Empty;
 
-            equipe += "<strong>Líder:</strong><br>" + ObterLider +"<br/>";
+            equipe += "<strong>Líder:</strong><br>" + ObterLider + "<br/>";
             if (EquipeUsuarios?.Count > 0)
                 equipe += "<strong>Integrantes:</strong><br>" + ObterEquipe();
 
             return equipe;
+        }
+
+        public virtual List<UsuarioAppModel> Usuarios
+        {
+            get
+            {
+                var lista = new List<UsuarioAppModel>
+                {
+                    Lider
+                };
+                lista.AddRange(this.EquipeUsuarios?.Select(e => e.Usuario).ToList());
+                return lista;
+            }
         }
 
     }

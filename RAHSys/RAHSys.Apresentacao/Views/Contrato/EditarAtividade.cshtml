@@ -89,7 +89,7 @@
                     <div class="form-group form-md-line-input">
                         @Html.LabelFor(m => m.Atividade.IdUsuario, new { @class = "col-md-2 control-label" })
                         <div class="col-md-4">
-                            @Html.DropDownListFor(model => model.Atividade.IdUsuario, new SelectList(Model.Equipe.EquipeUsuarios, "IdUsuario", "Usuario.EmailEUserName"), "Selecione", new { @class = "form-control", @placeholder = "Atribuido Para" })
+                            @Html.DropDownListFor(model => model.Atividade.IdUsuario, new SelectList(Model.Equipe.Usuarios, "IdUsuario", "EmailEUserName"), "Selecione", new { @class = "form-control", @placeholder = "Atribuido Para" })
                             @Html.ValidationMessageFor(model => model.Atividade.IdUsuario, "", new { @class = "text-danger" })
                             <div class="form-control-focus"> </div>
                         </div>

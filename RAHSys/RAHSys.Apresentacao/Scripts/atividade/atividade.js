@@ -125,6 +125,7 @@ function IniciarCalendario() {
                 title: item.TipoAtividade,
                 start: item.DataRealizacaoPrevista,
                 atividade: item,
+                allDay: true,
                 color: item.SituacaoRecorrencia.BGCor
             })
     });
@@ -142,6 +143,7 @@ function IniciarCalendario() {
         eventLimit: true,
         editable: true,
         events: $events,
+        timeFormat: '',
         defaultDate: dataConvertida
     });
 }

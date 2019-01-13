@@ -18,6 +18,7 @@ namespace RAHSys.Aplicacao.AppModels
         public DateTime? DataRealizacao { get; set; }
         public string Observacao { get; set; }
         public int NumeroRecorrencia { get; set; }
+        public bool EquipeInteira { get; set; }
 
         public string TipoAtividade { get; set; }
 

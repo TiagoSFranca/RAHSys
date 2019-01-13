@@ -101,9 +101,16 @@ function ConverterData(data) {
 }
 
 function PopularListaUsuariosEquipe(equipe) {
+    var equipeHelper = $("#equipeInteiraHelper").val();
+    var $eq = JSON.parse(equipeHelper)
+    console.log($eq);
     $('.atividadeUsuario').empty().append($('<option>', {
         text: 'Selecione',
         value: ''
+    }));
+    $('.atividadeUsuario').append($('<option>', {
+        text: $eq.Descricao,
+        value: $eq.Codigo
     }));
     $.each(equipe.Usuarios, function (i, item) {
         $('.atividadeUsuario').append($('<option>', {

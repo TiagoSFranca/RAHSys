@@ -226,7 +226,7 @@
 <input type="hidden" value="@Url.Action("Atividades", "Contrato", new { id = Model.Contrato.IdContrato})" id="inputUrlBase" />
 <input type="hidden" value="@Url.Action("EditarAtividade", "Contrato", new { id = Model.Contrato.IdContrato})" id="inputEditarAtividade" />
 <input type="hidden" value="@Url.Action("Atividades", "Contrato", new { id = Model.Contrato.IdContrato, mesAno = ViewBag.MesAno })" id="inputUrlRetorno" />
-
+<input type="hidden" value="@JsonConvert.SerializeObject(RAHSys.Extras.Helper.EquipeHelper.EquipeInteira)" id="equipeInteiraHelper"/>
 @*END -- Necessários para o calendário*@
 
 @section scripts{

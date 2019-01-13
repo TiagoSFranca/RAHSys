@@ -147,6 +147,10 @@
     <Compile Include="Migrations\201812021006316_Criacao das tabelas da Atividade.Designer.cs">
       <DependentUpon>201812021006316_Criacao das tabelas da Atividade.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901131510584_Adicionado EquipeInteria a Atividade.cs" />
+    <Compile Include="Migrations\201901131510584_Adicionado EquipeInteria a Atividade.Designer.cs">
+      <DependentUpon>201901131510584_Adicionado EquipeInteria a Atividade.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.cs" />
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.Designer.cs">
       <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>
@@ -274,6 +278,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812021006316_Criacao das tabelas da Atividade.resx">
       <DependentUpon>201812021006316_Criacao das tabelas da Atividade.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901131510584_Adicionado EquipeInteria a Atividade.resx">
+      <DependentUpon>201901131510584_Adicionado EquipeInteria a Atividade.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\Audit\201808101838532_CriacaoDBAudit.resx">
       <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>

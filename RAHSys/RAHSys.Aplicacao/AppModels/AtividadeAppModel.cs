@@ -32,7 +32,10 @@ namespace RAHSys.Aplicacao.AppModels
 
         [Display(Name = "Começa em")]
         public DateTime? DataInicial { get; set; }
-        
+
+        [Display(Name = "Equipe Inteira")]
+        public bool EquipeInteira { get; set; }
+
         [Display(Name = "Finalizada Em")]
         public DateTime? DataFinalizacao { get; set; }
 

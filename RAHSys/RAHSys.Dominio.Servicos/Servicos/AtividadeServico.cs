@@ -8,6 +8,7 @@ using System;
 using System.Globalization;
 using RAHSys.Entidades.Seeds;
 using RAHSys.Infra.CrossCutting.Exceptions;
+using RAHSys.Extras.Helper;
 
 namespace RAHSys.Dominio.Servicos.Servicos
 {
@@ -90,12 +91,18 @@ namespace RAHSys.Dominio.Servicos.Servicos
             if (obj.ConfiguracaoAtividade?.QtdRepeticoes > 0 && obj.ConfiguracaoAtividade?.TerminaEm != null)
                 throw new CustomBaseException(new Exception(), "Deve definir OU [Quantidade de Repetições] OU [Termina em]");
 
+            if (obj.EquipeInteira)
+                obj.IdUsuario = null;
+
             _atividadeRepositorio.Adicionar(obj);
         }
 
         public void Atualizar(AtividadeModel obj)
         {
             var idAtividade = obj.IdAtividade;
+
+            if (obj.EquipeInteira)
+                obj.IdUsuario = null;
 
             if (ObterConfiguracaoAtividade(idAtividade) == null)
             {
@@ -137,7 +144,21 @@ namespace RAHSys.Dominio.Servicos.Servicos
         public void TransferirAtividade(int idAtividade, string idUsuario)
         {
             var atividade = _atividadeRepositorio.ObterPorId(idAtividade, true);
-            atividade.IdUsuario = string.IsNullOrEmpty(idUsuario) ? null : idUsuario;
+            if (string.IsNullOrEmpty(idUsuario))
+            {
+                atividade.IdUsuario = null;
+                atividade.EquipeInteira = false;
+            }
+            else if (idUsuario.Equals(EquipeHelper.EquipeInteira.Codigo))
+            {
+                atividade.IdUsuario = null;
+                atividade.EquipeInteira = true;
+            }
+            else
+            {
+                atividade.IdUsuario = idUsuario;
+                atividade.EquipeInteira = false;
+            }
             _atividadeRepositorio.Atualizar(atividade);
         }
 
@@ -259,7 +280,8 @@ namespace RAHSys.Dominio.Servicos.Servicos
                 atividade.TipoRecorrencia, registroRecorrencia, atividade.ConfiguracaoAtividade.TerminaEm == null &&
                 (atividade.ConfiguracaoAtividade.QtdRepeticoes == null || atividade.ConfiguracaoAtividade.QtdRepeticoes == 0), numeroAtividade)
             {
-                Realizada = realizada
+                Realizada = realizada,
+                EquipeInteira = atividade.EquipeInteira
             };
 
             return recorrencia;
@@ -285,7 +307,10 @@ namespace RAHSys.Dominio.Servicos.Servicos
                         e.TipoRecorrencia,
                         e.RegistroRecorrencias.FirstOrDefault() ?? new RegistroRecorrenciaModel() { DataPrevista = e.DataInicial },
                         false, 1)
-                    { Realizada = e.RegistroRecorrencias.Count > 0 }
+                    {
+                        Realizada = e.RegistroRecorrencias.Count > 0,
+                        EquipeInteira = e.EquipeInteira
+                    }
                     ).ToList());
 
             foreach (var atividadeComRecorrencia in atividadesComRecorrencia)

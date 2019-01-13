@@ -108,6 +108,23 @@
                             <div class="form-control-focus"> </div>
                         </div>
                     </div>
+                    <div class="form-group form-md-line-input">
+                        <div class="col-md-2 control-label">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="md-checkbox-inline">
+                                <div class="md-checkbox">
+                                    @Html.CheckBoxFor(m => m.Atividade.EquipeInteira, new { @class = "md-check", @id = "equipeInteira" })
+                                    <label for="equipeInteira">
+                                        <span></span>
+                                        <span class="check"></span>
+                                        <span class="box"></span> Equipe Inteira
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                     <div class="row config-atividade-body">
                         <div class="col-md-12">
                             <div class="form-group form-md-line-input">

@@ -26,7 +26,12 @@ function ExibirAtividade(atividade) {
         $('#tipoAtividade').val(atividade.TipoAtividade);
         $('#dataPrevista').val(ConverterData(atividade.DataRealizacaoPrevista));
         $('#dataRealizada').val(ConverterData(atividade.DataRealizacao));
-        $('#atribuidoPara').val(atividade.Usuario != null ? atividade.Usuario.EmailEUserName : '')
+        var atribuidoPara = "";
+        if (atividade.EquipeInteira)
+            atribuidoPara = "Equipe Inteira";
+        else
+            atribuidoPara = atividade.Usuario != null ? atividade.Usuario.EmailEUserName : ''
+        $('#atribuidoPara').val(atribuidoPara);
         if (atividade.Realizada) {
             $('.atividade-realizada').show();
             $('#finalizarRecorrencia').hide();

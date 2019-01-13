@@ -36,6 +36,7 @@
     <Compile Include="Enums\SituacaoAtividadeEnum.cs" />
     <Compile Include="Enums\SituacaoContratoEnum.cs" />
     <Compile Include="Enums\SituacaoPagamentoEnum.cs" />
+    <Compile Include="Helper\EquipeHelper.cs" />
     <Compile Include="MensagensPadrao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

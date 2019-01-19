@@ -102,7 +102,7 @@ namespace RAHSys.Aplicacao.Implementacao
         }
 
         public ConsultaAppModel<AtividadeRecorrenciaAppModel> Consultar(IEnumerable<int> idList, IEnumerable<int> idTipoAtividadeList, IEnumerable<int> idEquipeList,
-            IEnumerable<int> idContratoList, IEnumerable<string> idUsuarioList, string mesAno,
+            IEnumerable<int> idContratoList, IEnumerable<string> idUsuarioList, DateTime dataInicial, DateTime dataFinal,
             string ordenacao, bool crescente, int pagina, int quantidade)
         {
             try
@@ -110,7 +110,7 @@ namespace RAHSys.Aplicacao.Implementacao
                 var consulta = new ConsultaAppModel<AtividadeRecorrenciaAppModel>();
 
                 var resultado = _atividadeServico.Consultar(idList, idTipoAtividadeList, idEquipeList,
-                    idContratoList, idUsuarioList, mesAno, ordenacao, crescente, pagina, quantidade);
+                    idContratoList, idUsuarioList, dataInicial, dataFinal, ordenacao, crescente, pagina, quantidade);
 
                 consulta.ItensPorPagina = resultado.ItensPorPagina;
                 consulta.PaginaAtual = resultado.PaginaAtual;

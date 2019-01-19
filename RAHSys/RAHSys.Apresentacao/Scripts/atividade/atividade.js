@@ -1,13 +1,35 @@
-﻿function MoverMesCalendario(data) {
-    var mesAno = data.month() + 1 + encodeURIComponent("/") + data.year();
+﻿function MoverDatasCalendario() {
+    var view = $('#calendar').fullCalendar('getView');
+    var datas = ObterIntervaloDatas();
+    var dataInicial = datas.inicio;
+    var dataFinal = datas.fim;
+    var modoVisualizacao = ObterDefaultView();
     var rota = $('#inputUrlBase').val()
-    var append = 'mesAno=' + mesAno;
+    var append = 'dataInicial=' + dataInicial + '&dataFinal=' + dataFinal + '&modoVisualizacao=' + modoVisualizacao;
+
     if (rota.indexOf('?') != -1)
         append = '&' + append;
     else
         append = '?' + append;
+
     rota = rota + append;
+
     window.location.replace(rota);
+}
+
+function ObterIntervaloDatas() {
+    var calendar = $('#calendar').fullCalendar('getCalendar');
+    var view = calendar.view;
+    var start = moment(view.start).format('l');
+    var end = moment(view.end).format('l');
+    var dates = { inicio: start, fim: end };
+
+    return dates;
+}
+
+function ObterDefaultView() {
+    var view = $('#calendar').fullCalendar('getView');
+    return view.name;
 }
 
 function EditarAtividade(atividade) {
@@ -24,18 +46,27 @@ function EditarAtividade(atividade) {
 $(function () {
     IniciarCalendario();
     $('.fc-prev-button').click(function () {
-        var data = $('#calendar').fullCalendar('getDate');
-        MoverMesCalendario(data);
-    });
-
-    $('.fc-today-button').click(function () {
-        var data = $('#calendar').fullCalendar('getDate');
-        MoverMesCalendario(data);
+        MoverDatasCalendario();
     });
 
     $('.fc-next-button').click(function () {
-        var data = $('#calendar').fullCalendar('getDate');
-        MoverMesCalendario(data);
+        MoverDatasCalendario();
+    });
+
+    $('.fc-month-button').click(function () {
+        MoverDatasCalendario();
+    });
+
+    $('.fc-basicWeek-button').click(function () {
+        MoverDatasCalendario();
+    });
+
+    $('.fc-basicDay-button').click(function () {
+        MoverDatasCalendario();
+    });
+
+    $('.fc-today-button').click(function () {
+        MoverDatasCalendario();
     });
 
     ExibirRealizada($('.atividadeChkRealizada').prop('checked'));
@@ -65,7 +96,6 @@ function ExibirRealizada(exibir) {
 
 function PopularModais(atividade) {
     LimparFinalizarAtividadeForm(atividade);
-    //LimparCopiarAtividadeForm(atividade);
     PopularListaUsuariosEquipe(atividade.Equipe);
     $('.urlRetorno').val($('#inputUrlRetorno').val())
     $('.idAtividade').val(atividade.IdAtividade);
@@ -86,10 +116,6 @@ function LimparFinalizarAtividadeForm(atividade) {
     LimparForm('formFinalizarAtividade')
 }
 
-//function LimparCopiarAtividadeForm(atividade) {
-//    LimparForm('formCopiarAtividade')
-//}
-
 function LimparForm(form) {
     $('#' + form).find('input, textarea').val('')
 }
@@ -103,7 +129,6 @@ function ConverterData(data) {
 function PopularListaUsuariosEquipe(equipe) {
     var equipeHelper = $("#equipeInteiraHelper").val();
     var $eq = JSON.parse(equipeHelper)
-    console.log($eq);
     $('.atividadeUsuario').empty().append($('<option>', {
         text: 'Selecione',
         value: ''
@@ -121,9 +146,11 @@ function PopularListaUsuariosEquipe(equipe) {
 }
 
 function IniciarCalendario() {
-    var data = $('#mesAno').val()
-    data = "01/" + data;
-    var dataConvertida = moment(data, 'DD/MM/YYYY');
+    var dataInicial = $('#dataInicial').val()
+    var dataFinal = $('#dataFinal').val()
+    var dataInicialConvertida = moment(dataInicial, 'DD/MM/YYYY');
+    var dataFinalConvertida = moment(dataFinal, 'DD/MM/YYYY');
+    var defaultView = $('#modoVisualizacao').val();
     var $atividades = JSON.parse($('#atividades').val());
     var $events = [];
     $.each($atividades, function (key, item) {
@@ -140,17 +167,32 @@ function IniciarCalendario() {
     var initialLocaleCode = 'pt-br';
     $('#calendar').fullCalendar({
         header: {
-            left: '',
+            left: 'prev,next',
             center: 'title',
-            right: 'prev,next today'
+            right: 'month,basicWeek,basicDay, today'
         },
         lang: initialLocaleCode,
-        defaultView: 'month',
+        defaultView: defaultView,
         buttonIcons: true,
         eventLimit: true,
         editable: true,
         events: $events,
         timeFormat: '',
-        defaultDate: dataConvertida
+        visibleRange: {
+            start: dataInicialConvertida,
+            end: dataFinalConvertida
+        },
+        dayClick: function (date, jsEvent, view) {
+            if (ObterDefaultView() !== 'basicDay') {
+                $('#calendar').fullCalendar('changeView', 'basicDay');
+                $('#calendar').fullCalendar('gotoDate', date);
+
+                MoverDatasCalendario()
+            }
+        }
     });
+    if (ObterDefaultView() == 'basicDay' || ObterDefaultView() == 'basicWeek')
+        $('#calendar').fullCalendar('gotoDate', dataInicialConvertida);
+
+    $('#calendar').fullCalendar('option', 'timezone', false);
 }

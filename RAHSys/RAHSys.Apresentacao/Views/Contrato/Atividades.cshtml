@@ -221,7 +221,9 @@
 @Html.Partial("_ModalTransferirAtividade")
 @Html.Partial("_ModalFinalizarRecorrencia")
 
-<input type="hidden" value="@ViewBag.MesAno" id="mesAno" />
+<input type="hidden" value="@ViewBag.DataInicial" id="dataInicial" />
+<input type="hidden" value="@ViewBag.DataFinal" id="dataFinal" />
+<input type="hidden" value="@ViewBag.ModoVisualizacao" id="modoVisualizacao" />
 <input type="hidden" value="@Model.TodasAtividadesSerializadas" id="atividades" />
 <input type="hidden" value="@Url.Action("Atividades", "Contrato", new { id = Model.Contrato.IdContrato})" id="inputUrlBase" />
 <input type="hidden" value="@Url.Action("EditarAtividade", "Contrato", new { id = Model.Contrato.IdContrato})" id="inputEditarAtividade" />

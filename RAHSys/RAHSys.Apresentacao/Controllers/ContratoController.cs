@@ -10,6 +10,7 @@ using RAHSys.Extras.Enums;
 using RAHSys.Infra.CrossCutting.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
@@ -453,14 +454,22 @@ namespace RAHSys.Apresentacao.Controllers
             }
             return View(responsavelFinanceiroEditar);
         }
-
+        
         #region Atividades
 
-        public ActionResult Atividades(int id, string mesAno)
+        public ActionResult Atividades(int id, string dataInicial, string dataFinal, string modoVisualizacao)
         {
             ViewBag.SubTitle = "Atividades";
-            mesAno = mesAno ?? DateTime.Now.Month + "/" + DateTime.Now.Year;
-            ViewBag.MesAno = mesAno;
+
+            modoVisualizacao = modoVisualizacao ?? "basicDay";
+
+            dataInicial = GetData(dataInicial, modoVisualizacao, true);
+            dataFinal = GetData(dataFinal, modoVisualizacao, false);
+
+            ViewBag.DataInicial = dataInicial;
+            ViewBag.DataFinal = dataFinal;
+            ViewBag.ModoVisualizacao = modoVisualizacao;
+
             AtividadeContratoModel atividadeContratoModel = new AtividadeContratoModel();
             try
             {
@@ -484,7 +493,7 @@ namespace RAHSys.Apresentacao.Controllers
                 atividadeContratoModel.Contrato = contratoModel;
                 int idEquipe = (int)contratoModel.AnaliseInvestimento.Cliente.IdEquipe;
                 atividadeContratoModel.Equipe = _equipeAppServico.ObterPorId(idEquipe);
-                atividadeContratoModel.TodasAtividadesSerializadas = ObterAtividadesContrato(id, mesAno);
+                atividadeContratoModel.TodasAtividadesSerializadas = ObterAtividadesContrato(id, dataInicial, dataFinal);
 
             }
             catch (CustomBaseException ex)
@@ -705,10 +714,13 @@ namespace RAHSys.Apresentacao.Controllers
             return View(atividadeRetornoModel);
         }
 
-        public string ObterAtividadesContrato(int id, string mesAno)
+        public string ObterAtividadesContrato(int id, string dataInicial, string dataFinal)
         {
+            DateTimeFormatInfo formatter = new CultureInfo("pt-BR", false).DateTimeFormat;
+            var dataInicialConvertida = Convert.ToDateTime(dataInicial, formatter);
+            var dataFinalConvertida = Convert.ToDateTime(dataFinal, formatter);
             var consulta = _atividadeAppServico.Consultar(null, null, null, new[] { id },
-                null, mesAno, null, true, 1, Int32.MaxValue);
+                null, dataInicialConvertida, dataFinalConvertida, null, true, 1, Int32.MaxValue);
             List<AtividadeRecorrenciaAppModel> lista = consulta.Resultado.ToList();
             lista.ForEach(item =>
             {
@@ -775,6 +787,15 @@ namespace RAHSys.Apresentacao.Controllers
             List<CidadeAppModel> lista = new List<CidadeAppModel>();
             lista.AddRange(_cidadeAppServico.ObterCidadesPorEstado(id));
             return Json(lista, JsonRequestBehavior.AllowGet);
+        }
+
+        private string GetData(string data, string modoVisualizacao, bool dataInicial)
+        {
+            string formato = "{0}/{1}/{2}";
+            if (!string.IsNullOrEmpty(data))
+                return data;
+            data = string.Format(formato, DateTime.Now.Day, DateTime.Now.Month, DateTime.Now.Year);
+            return data;
         }
 
         #endregion

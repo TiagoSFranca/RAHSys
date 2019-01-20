@@ -10,6 +10,7 @@ namespace RAHSys.Entidades.Entidades
         public int? QtdRepeticoes { get; set; }
         public DateTime? TerminaEm { get; set; }
         public int? DiaMes { get; set; }
+        public bool ApenasDiaUtil { get; set; }
 
         public virtual AtividadeModel Atividade { get; set; }
 

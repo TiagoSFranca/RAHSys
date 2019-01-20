@@ -150,8 +150,15 @@ function IniciarCalendario() {
     var dataFinal = $('#dataFinal').val()
     var dataInicialConvertida = moment(dataInicial, 'DD/MM/YYYY');
     var dataFinalConvertida = moment(dataFinal, 'DD/MM/YYYY');
+
+    var diff = dataFinalConvertida.diff(dataInicialConvertida, 'days');
+
+    var dias = diff <= 1 ? 0 : (diff / 2 + (diff % 2 != 0 ? 1 : 0));
+    var dataMedia = dataInicialConvertida.add(dias.toFixed(0), 'days');
+
     var defaultView = $('#modoVisualizacao').val();
     var $atividades = JSON.parse($('#atividades').val());
+
     var $events = [];
     $.each($atividades, function (key, item) {
         $events.push(
@@ -176,6 +183,7 @@ function IniciarCalendario() {
         buttonIcons: true,
         eventLimit: true,
         editable: true,
+        defaultDate: dataMedia,
         events: $events,
         timeFormat: '',
         visibleRange: {
@@ -191,8 +199,6 @@ function IniciarCalendario() {
             }
         }
     });
-    if (ObterDefaultView() == 'basicDay' || ObterDefaultView() == 'basicWeek')
-        $('#calendar').fullCalendar('gotoDate', dataInicialConvertida);
 
     $('#calendar').fullCalendar('option', 'timezone', false);
 }

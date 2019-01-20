@@ -5,10 +5,10 @@ using RAHSys.Entidades.Entidades;
 using System.Linq;
 using RAHSys.Entidades;
 using System;
-using System.Globalization;
 using RAHSys.Entidades.Seeds;
 using RAHSys.Infra.CrossCutting.Exceptions;
 using RAHSys.Extras.Helper;
+using System.Data.Entity;
 
 namespace RAHSys.Dominio.Servicos.Servicos
 {
@@ -27,24 +27,18 @@ namespace RAHSys.Dominio.Servicos.Servicos
         }
 
         public ConsultaModel<AtividadeRecorrenciaModel> Consultar(IEnumerable<int> idList, IEnumerable<int> idTipoAtividadeList, IEnumerable<int> idEquipeList,
-            IEnumerable<int> idContratoList, IEnumerable<string> idUsuarioList, string mesAno,
+            IEnumerable<int> idContratoList, IEnumerable<string> idUsuarioList, DateTime dataInicial, DateTime dataFinal,
             string ordenacao, bool crescente, int pagina, int quantidade)
         {
             var consultaModel = new ConsultaModel<AtividadeRecorrenciaModel>(pagina, quantidade);
 
             var query = _atividadeRepositorio.Consultar().Where(c => !c.Contrato.Excluido);
 
-            mesAno = mesAno ?? string.Format("{0}/{1}", DateTime.Now.Month, DateTime.Now.Year);
-
-            int mes = 0;
-            int ano = 0;
-
-            ValidarMesAno(mesAno, ref mes, ref ano);
-            DateTime dataInicioMesAno = new DateTime(ano, mes, 1);
-            DateTime dataFimMesAno = dataInicioMesAno.AddMonths(1).AddDays(-1);
-
-            query = query.Where(e => (e.DataInicial <= dataFimMesAno && e.ConfiguracaoAtividade != null) ||
-            (e.DataInicial.Month == dataInicioMesAno.Month && e.DataInicial.Year == dataInicioMesAno.Year && e.ConfiguracaoAtividade == null));
+            query = query.Where(e => (DbFunctions.TruncateTime(e.DataInicial) <= DbFunctions.TruncateTime(dataFinal) && e.ConfiguracaoAtividade != null) ||
+                (DbFunctions.TruncateTime(e.DataInicial) >= DbFunctions.TruncateTime(dataInicial) &&
+                    DbFunctions.TruncateTime(e.DataInicial) <= DbFunctions.TruncateTime(dataFinal) &&
+                    e.ConfiguracaoAtividade == null)
+            );
 
             if (idList?.Count() > 0)
                 query = query.Where(c => idList.Contains(c.IdAtividade));
@@ -75,7 +69,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
             }
 
             var resultado = query.ToList();
-            var recorrencia = ObterRecorrenciaAtividades(resultado, dataInicioMesAno);
+            var recorrencia = ObterRecorrenciaAtividades(resultado, dataInicial, dataFinal);
             recorrencia = recorrencia.Skip((pagina == 1 ? 0 : pagina - 1) * quantidade).Take(quantidade).ToList();
             consultaModel.TotalItens = recorrencia.Count();
             consultaModel.Resultado = recorrencia;
@@ -287,7 +281,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
             return recorrencia;
         }
 
-        private List<AtividadeRecorrenciaModel> ObterRecorrenciaAtividades(List<AtividadeModel> atividades, DateTime mes)
+        private List<AtividadeRecorrenciaModel> ObterRecorrenciaAtividades(List<AtividadeModel> atividades, DateTime dataInicial, DateTime dataFinal)
         {
             var atividadesSemRecorrencia = atividades.Where(e => e.ConfiguracaoAtividade == null).ToList();
             var atividadesComRecorrencia = atividades.Where(e => e.ConfiguracaoAtividade != null).ToList();
@@ -315,19 +309,18 @@ namespace RAHSys.Dominio.Servicos.Servicos
 
             foreach (var atividadeComRecorrencia in atividadesComRecorrencia)
             {
-                listaRecorrencia.AddRange(CalcularRecorrencia(atividadeComRecorrencia, mes));
+                listaRecorrencia.AddRange(CalcularRecorrencia(atividadeComRecorrencia, dataInicial, dataFinal));
             }
 
             return listaRecorrencia;
         }
 
-        private List<AtividadeRecorrenciaModel> CalcularRecorrenciaDiaria(AtividadeModel atividade, DateTime dataInicial)
+        private List<AtividadeRecorrenciaModel> CalcularRecorrenciaDiaria(AtividadeModel atividade, DateTime dataInicial, DateTime dataFinal)
         {
             List<AtividadeRecorrenciaModel> lista = new List<AtividadeRecorrenciaModel>();
 
             var configuracaoAtividade = atividade.ConfiguracaoAtividade;
             var recorrenciasAtividade = atividade.RegistroRecorrencias.ToList();
-            var dataFinal = dataInicial.AddMonths(1).AddDays(-1);
             var frequencia = configuracaoAtividade.Frequencia;
             frequencia = frequencia > 0 ? frequencia : 1;
             var dataInicio = atividade.DataInicial;
@@ -356,12 +349,11 @@ namespace RAHSys.Dominio.Servicos.Servicos
             return lista;
         }
 
-        private List<AtividadeRecorrenciaModel> CalcularRecorrenciaSemanal(AtividadeModel atividade, DateTime dataInicial)
+        private List<AtividadeRecorrenciaModel> CalcularRecorrenciaSemanal(AtividadeModel atividade, DateTime dataInicial, DateTime dataFinal)
         {
             List<AtividadeRecorrenciaModel> lista = new List<AtividadeRecorrenciaModel>();
             var configuracaoAtividade = atividade.ConfiguracaoAtividade;
             var recorrenciasAtividade = atividade.RegistroRecorrencias.ToList();
-            var dataFinal = dataInicial.AddMonths(1).AddDays(-1);
             var frequencia = configuracaoAtividade.Frequencia;
             frequencia = frequencia > 0 ? frequencia : 1;
             var dataInicio = atividade.DataInicial;
@@ -415,14 +407,13 @@ namespace RAHSys.Dominio.Servicos.Servicos
             return lista;
         }
 
-        private List<AtividadeRecorrenciaModel> CalcularRecorrenciaMensal(AtividadeModel atividade, DateTime dataInicial)
+        private List<AtividadeRecorrenciaModel> CalcularRecorrenciaMensal(AtividadeModel atividade, DateTime dataInicial, DateTime dataFinal)
         {
             List<AtividadeRecorrenciaModel> lista = new List<AtividadeRecorrenciaModel>();
             var contador = 0;
             var dataAtividade = atividade.DataInicial;
             var configuracaoAtividade = atividade.ConfiguracaoAtividade;
             var recorrenciasAtividade = atividade.RegistroRecorrencias.ToList();
-            var dataFinal = dataInicial.AddMonths(1).AddDays(-1);
             var frequencia = configuracaoAtividade.Frequencia;
             frequencia = frequencia > 0 ? frequencia : 1;
             int dia = configuracaoAtividade.DiaMes > 0 ? (int)configuracaoAtividade.DiaMes : atividade.DataInicial.Day;
@@ -463,19 +454,19 @@ namespace RAHSys.Dominio.Servicos.Servicos
             return lista;
         }
 
-        private List<AtividadeRecorrenciaModel> CalcularRecorrencia(AtividadeModel atividade, DateTime dataInicial)
+        private List<AtividadeRecorrenciaModel> CalcularRecorrencia(AtividadeModel atividade, DateTime dataInicial, DateTime dataFinal)
         {
             if (atividade.IdTipoRecorrencia == TipoRecorrenciaSeed.Diaria.IdTipoRecorrencia)
             {
-                return CalcularRecorrenciaDiaria(atividade, dataInicial);
+                return CalcularRecorrenciaDiaria(atividade, dataInicial, dataFinal);
             }
             else if (atividade.IdTipoRecorrencia == TipoRecorrenciaSeed.Semanal.IdTipoRecorrencia)
             {
-                return CalcularRecorrenciaSemanal(atividade, dataInicial);
+                return CalcularRecorrenciaSemanal(atividade, dataInicial, dataFinal);
             }
             else
             {
-                return CalcularRecorrenciaMensal(atividade, dataInicial);
+                return CalcularRecorrenciaMensal(atividade, dataInicial, dataFinal);
             }
 
         }

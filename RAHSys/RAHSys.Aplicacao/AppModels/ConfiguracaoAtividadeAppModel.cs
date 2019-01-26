@@ -23,6 +23,9 @@ namespace RAHSys.Aplicacao.AppModels
         [Range(1, 31)]
         public int? DiaMes { get; set; }
 
+        [Display(Name = "Apenas dia útil")]
+        public bool ApenasDiaUtil { get; set; }
+
         [Display(Name = "Dia da semana")]
         public virtual List<AtividadeDiaSemanaAppModel> AtividadeDiaSemanas { get; set; }
     }

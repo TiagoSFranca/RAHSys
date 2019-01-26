@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using RAHSys.Dominio.Servicos.Interfaces.Repositorios;
+﻿using RAHSys.Dominio.Servicos.Interfaces.Repositorios;
 using RAHSys.Dominio.Servicos.Interfaces.Servicos;
-using RAHSys.Entidades.Entidades;
-using System.Linq;
 using RAHSys.Entidades;
-using System;
+using RAHSys.Entidades.Entidades;
 using RAHSys.Entidades.Seeds;
-using RAHSys.Infra.CrossCutting.Exceptions;
 using RAHSys.Extras.Helper;
+using RAHSys.Infra.CrossCutting.Exceptions;
+using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 
 namespace RAHSys.Dominio.Servicos.Servicos
 {
@@ -17,6 +17,24 @@ namespace RAHSys.Dominio.Servicos.Servicos
         private readonly IAtividadeRepositorio _atividadeRepositorio;
         private readonly IRegistroRecorrenciaRepositorio _registroRecorrenciaRepositorio;
         private readonly IConfiguracaoAtividadeRepositorio _configuracaoAtividadeRepositorio;
+
+        private Dictionary<int, DayOfWeek> _dictDias
+        {
+            get
+            {
+                Dictionary<int, DayOfWeek> dicDias = new Dictionary<int, DayOfWeek>
+                {
+                    { DiaSemanaSeed.Domingo.IdDiaSemana, DayOfWeek.Sunday },
+                    { DiaSemanaSeed.Segunda.IdDiaSemana, DayOfWeek.Monday },
+                    { DiaSemanaSeed.Terca.IdDiaSemana, DayOfWeek.Tuesday },
+                    { DiaSemanaSeed.Quarta.IdDiaSemana, DayOfWeek.Wednesday },
+                    { DiaSemanaSeed.Quinta.IdDiaSemana, DayOfWeek.Thursday },
+                    { DiaSemanaSeed.Sexta.IdDiaSemana, DayOfWeek.Friday },
+                    { DiaSemanaSeed.Sabado.IdDiaSemana, DayOfWeek.Saturday }
+                };
+                return dicDias;
+            }
+        }
 
         public AtividadeServico(IAtividadeRepositorio atividadeRepositorio, IRegistroRecorrenciaRepositorio registroRecorrenciaRepositorio,
             IConfiguracaoAtividadeRepositorio configuracaoAtividadeRepositorio) : base(atividadeRepositorio)
@@ -80,10 +98,20 @@ namespace RAHSys.Dominio.Servicos.Servicos
         public void Adicionar(AtividadeModel obj)
         {
             if (obj.ConfiguracaoAtividade != null)
+            {
                 obj.ConfiguracaoAtividade.Frequencia = obj.ConfiguracaoAtividade.Frequencia == 0 ? 1 : obj.ConfiguracaoAtividade.Frequencia;
+                if (obj.ConfiguracaoAtividade.ApenasDiaUtil && obj.IdTipoRecorrencia == TipoRecorrenciaSeed.Semanal.IdTipoRecorrencia)
+                {
+                    if (obj.ConfiguracaoAtividade.AtividadeDiaSemanas?.Count == 0)
+                        throw new CustomBaseException(new Exception(), "Para atividades semanais deve definir [Dia da semana].");
+                    else if (obj.ConfiguracaoAtividade.AtividadeDiaSemanas.Where(e => new[] { DiaSemanaSeed.Domingo.IdDiaSemana, DiaSemanaSeed.Sabado.IdDiaSemana }.Contains(e.IdDiaSemana)).Count() > 0)
+                        throw new CustomBaseException(new Exception(), "Para atividades semanais com [Apenas dia útil] marcado NÃO pode definir [Dia da semana] como [Sábado] ou [Domingo].");
+                }
+            }
 
             if (obj.ConfiguracaoAtividade?.QtdRepeticoes > 0 && obj.ConfiguracaoAtividade?.TerminaEm != null)
-                throw new CustomBaseException(new Exception(), "Deve definir OU [Quantidade de Repetições] OU [Termina em]");
+                throw new CustomBaseException(new Exception(), "Deve definir OU [Quantidade de Repetições] OU [Termina em].");
+
 
             if (obj.EquipeInteira)
                 obj.IdUsuario = null;
@@ -98,27 +126,27 @@ namespace RAHSys.Dominio.Servicos.Servicos
             if (obj.EquipeInteira)
                 obj.IdUsuario = null;
 
-            if (ObterConfiguracaoAtividade(idAtividade) == null)
-            {
-                if (ObterRecorrenciasAtividade(idAtividade).Count > 0)
-                    _atividadeRepositorio.Adicionar(obj);
-                else
-                    _atividadeRepositorio.Atualizar(obj);
-            }
-            else
-            {
-                var atividade = _atividadeRepositorio.ObterPorId(idAtividade, false, true);
-                _atividadeRepositorio.Adicionar(obj);
+            //if (ObterConfiguracaoAtividade(idAtividade) == null)
+            //{
+            //    if (ObterRecorrenciasAtividade(idAtividade).Count > 0)
+            //        _atividadeRepositorio.Adicionar(obj);
+            //    else
+            //        _atividadeRepositorio.Atualizar(obj);
+            //}
+            //else
+            //{
+            var atividade = _atividadeRepositorio.ObterPorId(idAtividade, false, true);
+            this.Adicionar(obj);
 
-                atividade.ConfiguracaoAtividade.TerminaEm = DateTime.Now;
-                _atividadeRepositorio.Atualizar(atividade);
-            }
+            atividade.ConfiguracaoAtividade.TerminaEm = DateTime.Now;
+            _atividadeRepositorio.Atualizar(atividade);
+            //}
         }
 
         public void FinalizarRecorrencia(int idAtividade, DateTime dataRealizacaoPrevista, DateTime dataRealizacao, string observacao)
         {
             if (ValidarRecorrencia(idAtividade, dataRealizacaoPrevista))
-                throw new CustomBaseException(new Exception(), string.Format("Já existe um registro para [{0}]", dataRealizacaoPrevista));
+                throw new CustomBaseException(new Exception(), string.Format("Já existe um registro para [{0}].", dataRealizacaoPrevista));
             var recorrencia = new RegistroRecorrenciaModel()
             {
                 IdAtividade = idAtividade,
@@ -127,7 +155,6 @@ namespace RAHSys.Dominio.Servicos.Servicos
                 Observacao = observacao
             };
             _registroRecorrenciaRepositorio.Adicionar(recorrencia);
-            //FinalizarAtividade(idAtividade);
         }
 
         public void CopiarAtividade(int idAtividade)
@@ -160,7 +187,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
         {
             var atividade = _atividadeRepositorio.ObterPorId(idAtividade, false);
             if (atividade.ConfiguracaoAtividade == null)
-                throw new CustomBaseException(new Exception(), string.Format("Atividade de código [{0}] não pode ser encerrada", idAtividade));
+                throw new CustomBaseException(new Exception(), string.Format("Atividade de código [{0}] não pode ser encerrada.", idAtividade));
             atividade.ConfiguracaoAtividade.TerminaEm = dataEncerramento;
             _atividadeRepositorio.Atualizar(atividade);
         }
@@ -220,7 +247,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
 
         private void ValidarMesAno(string mesAno, ref int mes, ref int ano)
         {
-            string erroDataInvalida = string.Format("Data [{0}] inválida", mesAno);
+            string erroDataInvalida = string.Format("Data [{0}] inválida.", mesAno);
             var datas = mesAno.Split('/');
 
             if (datas.Count() != 2)
@@ -238,18 +265,9 @@ namespace RAHSys.Dominio.Servicos.Servicos
         {
             List<DayOfWeek> retorno = new List<DayOfWeek>();
 
-            Dictionary<int, DayOfWeek> dicDias = new Dictionary<int, DayOfWeek>();
-            dicDias.Add(DiaSemanaSeed.Domingo.IdDiaSemana, DayOfWeek.Sunday);
-            dicDias.Add(DiaSemanaSeed.Segunda.IdDiaSemana, DayOfWeek.Monday);
-            dicDias.Add(DiaSemanaSeed.Terca.IdDiaSemana, DayOfWeek.Tuesday);
-            dicDias.Add(DiaSemanaSeed.Quarta.IdDiaSemana, DayOfWeek.Wednesday);
-            dicDias.Add(DiaSemanaSeed.Quinta.IdDiaSemana, DayOfWeek.Thursday);
-            dicDias.Add(DiaSemanaSeed.Sexta.IdDiaSemana, DayOfWeek.Friday);
-            dicDias.Add(DiaSemanaSeed.Sabado.IdDiaSemana, DayOfWeek.Saturday);
-
             foreach (var dia in atividadeDiaSemanas)
             {
-                var diaSemana = dicDias[dia.IdDiaSemana];
+                var diaSemana = _dictDias[dia.IdDiaSemana];
                 retorno.Add(diaSemana);
             }
 
@@ -323,28 +341,34 @@ namespace RAHSys.Dominio.Servicos.Servicos
             var recorrenciasAtividade = atividade.RegistroRecorrencias.ToList();
             var frequencia = configuracaoAtividade.Frequencia;
             frequencia = frequencia > 0 ? frequencia : 1;
-            var dataInicio = atividade.DataInicial;
+            var dataAtividade = atividade.DataInicial;
 
             if (atividade.ConfiguracaoAtividade.TerminaEm != null)
                 dataFinal = dataFinal < (DateTime)atividade.ConfiguracaoAtividade.TerminaEm ? dataFinal : (DateTime)atividade.ConfiguracaoAtividade.TerminaEm;
 
-            int qtdDias = dataFinal.Subtract(dataInicio).Days + 1;
+            var contador = 0;
 
-            var datas = Enumerable.Range(0, qtdDias).Select(i => dataInicio.AddDays(i * frequencia)).ToList();
-
-            List<DateTime> datasExatas = new List<DateTime>();
-
-            if (atividade.ConfiguracaoAtividade.QtdRepeticoes != null && atividade.ConfiguracaoAtividade.QtdRepeticoes > 0)
-                datasExatas = datas.Skip(0).Take((int)atividade.ConfiguracaoAtividade.QtdRepeticoes).ToList();
-            else
-                datasExatas = datas.Where(e => e.Date >= dataInicial.Date && e.Date <= dataFinal.Date).ToList();
-
-            datasExatas.ForEach(data =>
+            do
             {
-                var indice = datas.IndexOf(data);
-                AtividadeRecorrenciaModel recorrencia = MontarRegistroRecorrencia(atividade, data, indice + 1);
-                lista.Add(recorrencia);
-            });
+                if (configuracaoAtividade.TerminaEm != null && dataAtividade > configuracaoAtividade.TerminaEm)
+                    break;
+                if (configuracaoAtividade.QtdRepeticoes != null && configuracaoAtividade.QtdRepeticoes <= contador)
+                    break;
+
+                if (contador > 0)
+                    dataAtividade = dataAtividade.AddDays(frequencia);
+
+                if (configuracaoAtividade.ApenasDiaUtil)
+                    VerificarDiaUtil(ref dataAtividade);
+
+                if (dataAtividade >= dataInicial && dataAtividade <= dataFinal)
+                {
+                    AtividadeRecorrenciaModel recorrencia = MontarRegistroRecorrencia(atividade, dataAtividade, contador + 1);
+                    lista.Add(recorrencia);
+                }
+
+                contador++;
+            } while (dataAtividade < dataFinal);
 
             return lista;
         }
@@ -366,7 +390,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
             var diasDaSemana = ObterDiasDaSemana(atividade.ConfiguracaoAtividade.AtividadeDiaSemanas.ToList());
 
             if (diasDaSemana.Count == 0)
-                diasDaSemana.Add(atividade.DataInicial.DayOfWeek);
+                return lista;
 
             var todasDatas = Enumerable.Range(0, qtdDias)
                                   .Select(i => dataInicio.AddDays(i))
@@ -409,6 +433,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
 
         private List<AtividadeRecorrenciaModel> CalcularRecorrenciaMensal(AtividadeModel atividade, DateTime dataInicial, DateTime dataFinal)
         {
+            //TODO: CALCULO DE RECORRÊNCIA MENSAL
             List<AtividadeRecorrenciaModel> lista = new List<AtividadeRecorrenciaModel>();
             var contador = 0;
             var dataAtividade = atividade.DataInicial;
@@ -430,21 +455,21 @@ namespace RAHSys.Dominio.Servicos.Servicos
                 if (contador > 0)
                     dataAtividade = dataAtividade.AddMonths(frequencia);
 
-                if (configuracaoAtividade.DiaMes > 0)
+                if (dataAtividade.Day < dia)
                 {
-                    var diaAtividade = dataAtividade.Day;
-                    if (diaAtividade > dia)
+                    var ultimoDiaMes = DateTime.DaysInMonth(dataAtividade.Year, dataAtividade.Month);
+                    if (ultimoDiaMes >= dia)
                         dataAtividade = new DateTime(dataAtividade.Year, dataAtividade.Month, dia);
-                    else
-                    {
-                        var ultimoDiaMes = dataFinal.Day;
-                        if (ultimoDiaMes < dia)
-                            dataAtividade = new DateTime(dataAtividade.Year, dataAtividade.Month, ultimoDiaMes);
-                    }
                 }
-                if ((dataAtividade >= dataInicial && dataAtividade <= dataFinal))
+
+                var dataAtividadeClone = dataAtividade;
+
+                if (configuracaoAtividade.ApenasDiaUtil)
+                    VerificarDiaUtil(ref dataAtividadeClone);
+
+                if (dataAtividadeClone >= dataInicial && dataAtividadeClone <= dataFinal)
                 {
-                    AtividadeRecorrenciaModel recorrencia = MontarRegistroRecorrencia(atividade, dataAtividade, contador + 1);
+                    AtividadeRecorrenciaModel recorrencia = MontarRegistroRecorrencia(atividade, dataAtividadeClone, contador + 1);
                     lista.Add(recorrencia);
                 }
                 contador++;
@@ -452,6 +477,26 @@ namespace RAHSys.Dominio.Servicos.Servicos
             while (dataAtividade <= dataFinal);
 
             return lista;
+        }
+
+        private void VerificarDiaUtil(ref DateTime data)
+        {
+            var diasUteis = new List<DayOfWeek>
+            {
+                _dictDias[DiaSemanaSeed.Segunda.IdDiaSemana],
+                _dictDias[DiaSemanaSeed.Terca.IdDiaSemana],
+                _dictDias[DiaSemanaSeed.Quarta.IdDiaSemana],
+                _dictDias[DiaSemanaSeed.Quinta.IdDiaSemana],
+                _dictDias[DiaSemanaSeed.Sexta.IdDiaSemana]
+            };
+
+            if (!diasUteis.Contains(data.DayOfWeek))
+            {
+                while (!diasUteis.Contains(data.DayOfWeek))
+                {
+                    data = data.AddDays(1);
+                }
+            }
         }
 
         private List<AtividadeRecorrenciaModel> CalcularRecorrencia(AtividadeModel atividade, DateTime dataInicial, DateTime dataFinal)

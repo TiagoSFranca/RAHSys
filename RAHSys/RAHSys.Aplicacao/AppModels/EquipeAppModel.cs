@@ -40,15 +40,18 @@ namespace RAHSys.Aplicacao.AppModels
             }
         }
 
-        public virtual string ObterEquipeFormatada()
+        public virtual string ObterEquipeFormatada
         {
-            string equipe = string.Empty;
+            get
+            {
+                string equipe = string.Empty;
 
-            equipe += "<strong>Líder:</strong><br>" + ObterLider + "<br/>";
-            if (EquipeUsuarios?.Count > 0)
-                equipe += "<strong>Integrantes:</strong><br>" + ObterEquipe();
+                equipe += "<strong>Líder:</strong><br>" + ObterLider + "<br/>";
+                if (EquipeUsuarios?.Count > 0)
+                    equipe += "<strong>Integrantes:</strong><br>" + ObterEquipe();
 
-            return equipe;
+                return equipe;
+            }
         }
 
         public virtual List<UsuarioAppModel> Usuarios

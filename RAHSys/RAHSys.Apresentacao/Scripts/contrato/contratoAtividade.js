@@ -5,8 +5,6 @@
 function PreencherInfoEquipe(atividade) {
     var $equipe = atividade.Equipe;
 
-    console.log($equipe);
-
     var $showInfoEquipe = $('#showInfoEquipe');
     if ($showInfoEquipe.hasClass('expand'))
         $showInfoEquipe.click();
@@ -15,16 +13,15 @@ function PreencherInfoEquipe(atividade) {
     $('#idEquipe').val($equipe.IdEquipe)
     $('#infoLider').val($equipe.Lider.EmailEUserName)
 
-    if ($equipe.Usuarios.length > 0) {
+    if ($equipe.EquipeUsuarios.length > 0) {
         $('.membros-equipe').show();
         var $divIntegrantes = $('#divIntegrante');
-        $.each($equipe.Usuarios, function (index, element) {
-            console.log(index)
+        $.each($equipe.EquipeUsuarios, function (index, element) {
             if (index == 0) {
-                $divIntegrantes.find('#infoIntegrante').val(element.EmailEUserName)
+                $divIntegrantes.find('#infoIntegrante').val(element.Usuario.EmailEUserName)
             } else {
                 var clone = $divIntegrantes.clone();
-                clone.find('#infoIntegrante').val(element.EmailEUserName)
+                clone.find('#infoIntegrante').val(element.Usuario.EmailEUserName)
                 clone.insertBefore($divIntegrantes)
             }
         });

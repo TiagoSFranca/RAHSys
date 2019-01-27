@@ -224,15 +224,29 @@
                                     <div class="portlet-body portlet-collapsed">
                                         <div class="row">
                                             <div class="col-md-12" id="divInfoEquipe">
+                                                <div class="form-group">
+                                                    <div class="btn-group pull-right">
+                                                        <a class="btn btn-circle btn-default btn-sm" href="javascript:;" data-toggle="dropdown" aria-expanded="false">
+                                                            <i class="fa fa-cogs"></i>
+                                                        </a>
+                                                        <ul class="dropdown-menu pull-right">
+                                                            <li>
+                                                                <a data-toggle="modal" href="#modalAlterarEquipe" class="btn grey-gallery btn-outline addDataAtividade" data-atividade="">
+                                                                    Alterar Equipe
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
                                                 <div class="form-group form-md-line-input">
                                                     @Html.LabelFor(model => model.Equipe.IdEquipe, new { @class = "col-md-3 control-label" })
-                                                    <div class="col-md-8">
+                                                    <div class="col-md-9">
                                                         <input type="text" class="form-control" placeholder="Código" disabled id="idEquipe" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group form-md-line-input">
                                                     @Html.LabelFor(model => model.Equipe.IdLider, new { @class = "col-md-3 control-label" })
-                                                    <div class="col-md-8">
+                                                    <div class="col-md-9">
                                                         <input type="text" class="form-control" placeholder="Nome do Líder" disabled id="infoLider" />
                                                     </div>
                                                 </div>
@@ -240,7 +254,7 @@
                                                     @Html.Label("Membros", new { @class = "col-md-2 control-label" })
                                                 </div>
                                                 <div class="form-group form-md-line-input membros-equipe" id="divIntegrante">
-                                                    <div class="col-md-offset-2 col-md-9">
+                                                    <div class="col-md-offset-3 col-md-9">
                                                         <input type="text" class="form-control" placeholder="Nome do Integrante" disabled id="infoIntegrante" />
                                                     </div>
                                                 </div>
@@ -265,14 +279,16 @@
 @Html.Partial("_ModalEncerrarAtividade")
 @Html.Partial("_ModalTransferirAtividade")
 @Html.Partial("_ModalFinalizarRecorrencia")
+@Html.Partial("_ModalAlterarEquipe")
 
 <input type="hidden" value="@ViewBag.DataInicial" id="dataInicial" />
 <input type="hidden" value="@ViewBag.DataFinal" id="dataFinal" />
 <input type="hidden" value="@ViewBag.ModoVisualizacao" id="modoVisualizacao" />
 <input type="hidden" value="@Model.TodasAtividadesSerializadas" id="atividades" />
+<input type="hidden" value="@Model.TodasEquipesSerializadas" id="equipes" />
 <input type="hidden" value="@Url.Action("Atividades", "Contrato", new { id = Model.Contrato.IdContrato})" id="inputUrlBase" />
 <input type="hidden" value="@Url.Action("EditarAtividade", "Contrato", new { id = Model.Contrato.IdContrato})" id="inputEditarAtividade" />
-<input type="hidden" value="@Url.Action("Atividades", "Contrato", new { id = Model.Contrato.IdContrato, mesAno = ViewBag.MesAno })" id="inputUrlRetorno" />
+<input type="hidden" value="@Url.Action("Atividades", "Contrato", new { id = Model.Contrato.IdContrato, dataInicial = ViewBag.DataInicial, dataFinal = ViewBag.DataFinal, modoVisualizacao = ViewBag.ModoVisualizacao })" id="inputUrlRetorno" />
 <input type="hidden" value="@JsonConvert.SerializeObject(RAHSys.Extras.Helper.EquipeHelper.EquipeInteira)" id="equipeInteiraHelper" />
 @*END -- Necessários para o calendário*@
 

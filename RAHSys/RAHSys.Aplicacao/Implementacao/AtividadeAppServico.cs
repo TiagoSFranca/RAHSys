@@ -1,10 +1,10 @@
-﻿using RAHSys.Aplicacao.Interfaces;
-using RAHSys.Entidades.Entidades;
-using System;
-using RAHSys.Dominio.Servicos.Interfaces.Servicos;
-using RAHSys.Aplicacao.AppModels;
+﻿using RAHSys.Aplicacao.AppModels;
 using RAHSys.Aplicacao.Extensoes;
+using RAHSys.Aplicacao.Interfaces;
+using RAHSys.Dominio.Servicos.Interfaces.Servicos;
+using RAHSys.Entidades.Entidades;
 using RAHSys.Infra.CrossCutting.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -191,6 +191,25 @@ namespace RAHSys.Aplicacao.Implementacao
             try
             {
                 _atividadeServico.EncerrarAtividade(idAtividade, dataEncerramento);
+            }
+            catch (CustomBaseException ex)
+            {
+                LogExceptions(ex);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                var nex = new CustomBaseException(ex);
+                LogExceptions(nex);
+                throw nex;
+            }
+        }
+
+        public void AlterarEquipe(int idAtividade, int idEquipe)
+        {
+            try
+            {
+                _atividadeServico.AlterarEquipe(idAtividade, idEquipe);
             }
             catch (CustomBaseException ex)
             {

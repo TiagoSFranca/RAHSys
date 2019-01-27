@@ -454,7 +454,7 @@ namespace RAHSys.Apresentacao.Controllers
             }
             return View(responsavelFinanceiroEditar);
         }
-        
+
         #region Atividades
 
         public ActionResult Atividades(int id, string dataInicial, string dataFinal, string modoVisualizacao)
@@ -492,8 +492,8 @@ namespace RAHSys.Apresentacao.Controllers
 
                 atividadeContratoModel.Contrato = contratoModel;
                 int idEquipe = (int)contratoModel.AnaliseInvestimento.Cliente.IdEquipe;
-                atividadeContratoModel.Equipe = _equipeAppServico.ObterPorId(idEquipe);
                 atividadeContratoModel.TodasAtividadesSerializadas = ObterAtividadesContrato(id, dataInicial, dataFinal);
+                atividadeContratoModel.TodasEquipesSerializadas = ObterTodasEquipesSerializadas();
 
             }
             catch (CustomBaseException ex)
@@ -727,6 +727,21 @@ namespace RAHSys.Apresentacao.Controllers
                 item.Contrato = null;
                 item.Equipe.Lider.UsuarioPerfis = null;
                 item.Equipe.EquipeUsuarios.ForEach(eu =>
+                {
+                    eu.Usuario.UsuarioPerfis = null;
+                });
+            });
+            return JsonConvert.SerializeObject(lista);
+        }
+
+        public string ObterTodasEquipesSerializadas()
+        {
+            var consulta = _equipeAppServico.Consultar(null, null, null, true, 1, Int32.MaxValue);
+            var lista = consulta.Resultado.ToList();
+            lista.ForEach(item =>
+            {
+                item.Lider.UsuarioPerfis = null;
+                item.EquipeUsuarios.ForEach(eu =>
                 {
                     eu.Usuario.UsuarioPerfis = null;
                 });

@@ -7,8 +7,9 @@ namespace RAHSys.Apresentacao.Models
     public class AtividadeContratoModel
     {
         public ContratoAppModel Contrato { get; set; }
-        public EquipeAppModel Equipe { get; set; }
+        public EquipeAppModel Equipe { get; private set; }
         public string TodasAtividadesSerializadas { get; set; }
+        public string TodasEquipesSerializadas { get; set; }
 
     }
 

@@ -4052,6 +4052,7 @@
     <Content Include="Views\Contrato\EditarResponsavelFinanceiro.cshtml" />
     <Content Include="Views\Shared\_ModalExcluirAtividade.cshtml" />
     <Content Include="Views\Shared\_ModalEncerrarAtividade.cshtml" />
+    <Content Include="Views\Shared\_ModalAlterarEquipe.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

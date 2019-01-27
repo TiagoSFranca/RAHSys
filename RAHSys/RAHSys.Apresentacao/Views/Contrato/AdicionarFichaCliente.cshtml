@@ -433,7 +433,7 @@
     </div>
     foreach (var item in Model.Equipes)
     {
-        <input type="hidden" value="@item.ObterEquipeFormatada()" id="equipe_@item.IdEquipe" />
+        <input type="hidden" value="@item.ObterEquipeFormatada" id="equipe_@item.IdEquipe" />
     }
 }
 <input type="hidden" value="@Url.Action("ObterCidadesPorEstado", "Contrato")" id="consultaCidades" />

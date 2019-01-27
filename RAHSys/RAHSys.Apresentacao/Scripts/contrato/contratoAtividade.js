@@ -1,6 +1,33 @@
 ﻿function ObterSituacao(atividade) {
     $('#infoSituacaoRecorrencia').html($("<span class=\"label label-" + atividade.SituacaoRecorrencia.Classe + "\"> " + atividade.SituacaoRecorrencia.Nome + "</span>"));
-    //$('#infoSituacaoAtividade').html($("<span class=\"label label-" + atividade.SituacaoAtividade.Classe + "\"> " + atividade.SituacaoAtividade.Nome + "</span>"));
+}
+
+function PreencherInfoEquipe(atividade) {
+    var $equipe = atividade.Equipe;
+
+    var $showInfoEquipe = $('#showInfoEquipe');
+    if ($showInfoEquipe.hasClass('expand'))
+        $showInfoEquipe.click();
+    $('#divInfoEquipe').show();
+
+    $('#idEquipe').val($equipe.IdEquipe)
+    $('#infoLider').val($equipe.Lider.EmailEUserName)
+
+    if ($equipe.EquipeUsuarios.length > 0) {
+        $('.membros-equipe').show();
+        var $divIntegrantes = $('#divIntegrante');
+        $.each($equipe.EquipeUsuarios, function (index, element) {
+            if (index == 0) {
+                $divIntegrantes.find('#infoIntegrante').val(element.Usuario.EmailEUserName)
+            } else {
+                var clone = $divIntegrantes.clone();
+                clone.find('#infoIntegrante').val(element.Usuario.EmailEUserName)
+                clone.insertBefore($divIntegrantes)
+            }
+        });
+    } else {
+        $('.membros-equipe').hide();
+    }
 }
 
 function ExibirAtividade(atividade) {
@@ -19,6 +46,7 @@ function ExibirAtividade(atividade) {
             $showInfoRecorrencia.click();
 
         ObterSituacao(atividade);
+        PreencherInfoEquipe(atividade);
 
         $('#divInfoAtividade').show();
         $('#divInfoRecorrencia').show();
@@ -57,6 +85,7 @@ function ExibirAtividade(atividade) {
         $('#divInfoAtividade').hide();
         $('#divInfoRecorrencia').hide();
         $('#finalizarRecorrencia').hide();
+        $('#divInfoEquipe').hide();
     }
 }
 

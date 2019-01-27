@@ -97,13 +97,14 @@ function ExibirRealizada(exibir) {
 function PopularModais(atividade) {
     LimparFinalizarAtividadeForm(atividade);
     PopularListaUsuariosEquipe(atividade.Equipe);
-    $('.urlRetorno').val($('#inputUrlRetorno').val())
+    $('.urlRetorno').val($('#inputUrlRetorno').val());
     $('.idAtividade').val(atividade.IdAtividade);
     $('.atividadeDataPrevista').val(ConverterData(atividade.DataRealizacaoPrevista));
     $('.atividadeDescricao').val(atividade.Descricao);
     SetRealizada(atividade.Realizada);
     $('.atividadeDataRealizacao').val(ConverterData(atividade.DataRealizacao));
     $('.atividadeObservacao').val(atividade.Observacao);
+    PopularModalAlterarEquipe(atividade.IdEquipe);
 }
 
 function SetRealizada(check) {
@@ -202,3 +203,26 @@ function IniciarCalendario() {
 
     $('#calendar').fullCalendar('option', 'timezone', false);
 }
+
+function PopularModalAlterarEquipe(idEquipe) {
+    var $equipes = JSON.parse($('#equipes').val());
+    $('.equipeAtividade').empty().append($('<option>', {
+        text: 'Selecione',
+        value: ''
+    }));
+    $.each($equipes, function (i, item) {
+        if (item.IdEquipe != idEquipe)
+            $('.equipeAtividade').append($('<option>', {
+                text: item.ObterLider,
+                value: item.IdEquipe
+            }).attr('data-equipe', JSON.stringify(item)));
+    });
+}
+
+$("#ddlEquipe").change(function () {
+    var id = $(this).val();
+    var equipe = $(this).find(':selected').attr('data-equipe');
+    equipe = JSON.parse(equipe);
+    $("#nomeEquipe")
+        .attr('data-original-title', equipe.ObterEquipeFormatada);
+});

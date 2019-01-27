@@ -1,10 +1,6 @@
-﻿using Newtonsoft.Json;
-using PagedList;
+﻿using PagedList;
 using RAHSys.Aplicacao.AppModels;
 using RAHSys.Aplicacao.Interfaces;
-using RAHSys.Apresentacao.Models;
-using RAHSys.Extras;
-using RAHSys.Extras.Enums;
 using RAHSys.Infra.CrossCutting.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -195,6 +191,28 @@ namespace RAHSys.Apresentacao.Controllers
                 else
                 {
                     _atividadeAppServico.EncerrarAtividade(idAtividade, dataEncerramento);
+                    MensagemSucesso();
+                }
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+            }
+
+            return Redirect(urlRetorno);
+        }
+
+        [HttpPost]
+        public ActionResult AlterarEquipe(int idAtividade, int idEquipe, string urlRetorno)
+        {
+            try
+            {
+                var atividade = _atividadeAppServico.ObterPorId(idAtividade);
+                if (atividade == null)
+                    MensagemErro("Atividade não encontrada");
+                else
+                {
+                    _atividadeAppServico.AlterarEquipe(idAtividade, idEquipe);
                     MensagemSucesso();
                 }
             }

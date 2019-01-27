@@ -192,6 +192,19 @@ namespace RAHSys.Dominio.Servicos.Servicos
             _atividadeRepositorio.Atualizar(atividade);
         }
 
+        public void AlterarEquipe(int idAtividade, int idEquipe)
+        {
+            var atividade = _atividadeRepositorio.ObterPorId(idAtividade, false);
+
+            if (atividade.IdEquipe == idEquipe)
+                return;
+
+            atividade.IdEquipe = idEquipe;
+            atividade.IdUsuario = null;
+
+            _atividadeRepositorio.Atualizar(atividade);
+        }
+
         //public Dictionary<string, int> ObterRecorrenciasAtrasadas(string mesAno, int? idContrato, int? idEquipe, int? idAtividade, string usuario)
         //{
         //    Dictionary<string, int> recorrenciasAtrasadas = new Dictionary<string, int>();

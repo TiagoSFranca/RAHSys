@@ -13,5 +13,6 @@ namespace RAHSys.Aplicacao.Interfaces
         void TransferirAtividade(int idAtividade, string idUsuario);
         void CopiarAtividade(int idAtividade);
         void EncerrarAtividade(int idAtividade, DateTime dataEncerramento);
+        void AlterarEquipe(int idAtividade, int idEquipe);
     }
 }

@@ -6,7 +6,7 @@
                 <h4 class="modal-title">Transferir/Atribuir Atividade</h4>
             </div>
             @using (Html.BeginForm("TransferirAtividade", "Atividade", null,
-                    FormMethod.Post, new { @class = "form-horizontal margin-bottom-40", @id = "formCopiarAtividade" }))
+                    FormMethod.Post, new { @class = "form-horizontal margin-bottom-40", @id = "formTransferirAtividade" }))
             {
                 @Html.Hidden("urlRetorno", null, new { @class = "urlRetorno" })
                 <div class="modal-body">

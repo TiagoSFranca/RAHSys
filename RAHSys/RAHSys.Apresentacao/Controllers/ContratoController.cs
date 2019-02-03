@@ -32,12 +32,13 @@ namespace RAHSys.Apresentacao.Controllers
         private readonly IUsuarioAppServico _usuarioAppServico;
         private readonly IDiaSemanaAppServico _diaSemanaAppServico;
         private readonly ITipoRecorrenciaAppServico _tipoRecorrenciaAppServico;
+        private readonly IRegistroRecorrenciaAppServico _registroRecorrenciaAppServico;
 
         public ContratoController(IContratoAppServico contratoAppServico, IEstadoAppServico estadoAppServico,
             ICidadeAppServico cidadeAppServico, ITipoTelhadoAppServico tipoTelhadoAppServico, IEstadoCivilAppServico estadoCivilAppServico,
             IDocumentoAppServico documentoAppServico, IEquipeAppServico equipeAppServico, ITipoAtividadeAppServico tipoAtividadeAppServico,
             IAtividadeAppServico atividadeAppServico, IUsuarioAppServico usuarioAppServico, IDiaSemanaAppServico diaSemanaAppServico,
-            ITipoRecorrenciaAppServico tipoRecorrenciaAppServico)
+            ITipoRecorrenciaAppServico tipoRecorrenciaAppServico, IRegistroRecorrenciaAppServico registroRecorrenciaAppServico)
         {
             _contratoAppServico = contratoAppServico;
             _estadoAppServico = estadoAppServico;
@@ -51,6 +52,7 @@ namespace RAHSys.Apresentacao.Controllers
             _usuarioAppServico = usuarioAppServico;
             _diaSemanaAppServico = diaSemanaAppServico;
             _tipoRecorrenciaAppServico = tipoRecorrenciaAppServico;
+            _registroRecorrenciaAppServico = registroRecorrenciaAppServico;
             ViewBag.Title = "Clientes/Contratos";
         }
 
@@ -714,6 +716,74 @@ namespace RAHSys.Apresentacao.Controllers
             return View(atividadeRetornoModel);
         }
 
+        public ActionResult FinalizarAtividade(int id, int idAtividade, DateTime data, string urlRetorno)
+        {
+            ViewBag.SubTitle = "Finalizar Atividade";
+            try
+            {
+                if (string.IsNullOrEmpty(urlRetorno))
+                {
+                    MensagemErro("Ecorreu um erro!");
+                    return RedirectToAction("Atividades", "Contrato", new { id });
+                }
+
+                var atividadeContratoFinalizarModel = new FinalizarAtividadeModel();
+                var atividade = _atividadeAppServico.ObterPorId(idAtividade);
+
+                if (atividade == null)
+                {
+                    MensagemErro("Atividade não encontrada");
+                    return Redirect(urlRetorno);
+                }
+
+                var contratoModel = _contratoAppServico.ObterPorId(id);
+                if (contratoModel == null)
+                {
+                    MensagemErro("Contrato não encontrado");
+                    return RedirectToAction("Index", "Contrato");
+                }
+                if (contratoModel.AnaliseInvestimento?.Cliente == null)
+                {
+                    MensagemErro("O contrato precisa estar assinado");
+                    return RedirectToAction("Index", "Contrato");
+                }
+                if (contratoModel.AnaliseInvestimento?.Cliente?.IdEquipe == null)
+                {
+                    MensagemErro("O contrato não possui equipe associada");
+                    return RedirectToAction("Index", "Contrato");
+                }
+
+                if (atividade.IdContrato != contratoModel.IdContrato)
+                {
+                    MensagemErro("Atividade não pertence ao contrato");
+                    return Redirect(urlRetorno);
+                }
+                var registroRecorrencia = _registroRecorrenciaAppServico.Consultar(idAtividade, null, data, null, null, true, 1, Int32.MaxValue);
+                if (registroRecorrencia.Resultado.Count() > 0)
+                {
+                    MensagemErro("Atividade já foi finalizada");
+                    return Redirect(urlRetorno);
+                }
+
+                //atividadeContratoAdicionarModel.Contrato = contratoModel;
+                //atividadeContratoAdicionarModel.Equipe = _equipeAppServico.ObterPorId(atividade.IdEquipe);
+                atividadeContratoFinalizarModel.Atividade = atividade;
+                atividadeContratoFinalizarModel.DataPrevista = data;
+                //atividadeContratoAdicionarModel.DiaSemanasSelecionadas = atividade.ConfiguracaoAtividade?.AtividadeDiaSemanas?.Select(e => e.IdDiaSemana).ToList();
+
+                return View(atividadeContratoFinalizarModel);
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+                return Redirect(urlRetorno);
+            }
+        }
+
+        #endregion
+
+        #region Métodos Aux
+
         public string ObterAtividadesContrato(int id, string dataInicial, string dataFinal)
         {
             DateTimeFormatInfo formatter = new CultureInfo("pt-BR", false).DateTimeFormat;
@@ -748,10 +818,6 @@ namespace RAHSys.Apresentacao.Controllers
             });
             return JsonConvert.SerializeObject(lista);
         }
-
-        #endregion
-
-        #region Métodos Aux
 
         private AtividadeContratoAdicionarEditarModel MontarAtividadeContratoAdicionarEditar()
         {

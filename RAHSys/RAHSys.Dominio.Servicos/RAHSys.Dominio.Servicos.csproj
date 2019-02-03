@@ -79,6 +79,7 @@
     <Compile Include="Interfaces\Servicos\IDocumentoServico.cs" />
     <Compile Include="Interfaces\Servicos\IEquipeServico.cs" />
     <Compile Include="Interfaces\Servicos\IPagamentoServico.cs" />
+    <Compile Include="Interfaces\Servicos\IRegistroRecorrenciaServico.cs" />
     <Compile Include="Interfaces\Servicos\IServicoAuditoriaBase.cs" />
     <Compile Include="Interfaces\Servicos\ICidadeServico.cs" />
     <Compile Include="Interfaces\Servicos\IContratoServico.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Servicos\DocumentoServico.cs" />
     <Compile Include="Servicos\EquipeServico.cs" />
     <Compile Include="Servicos\PagamentoServico.cs" />
+    <Compile Include="Servicos\RegistroRecorrenciaServico.cs" />
     <Compile Include="Servicos\ServicoAuditoriaBase.cs" />
     <Compile Include="Servicos\CidadeServico.cs" />
     <Compile Include="Servicos\ContratoServico.cs" />

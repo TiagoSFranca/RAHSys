@@ -9,37 +9,7 @@ namespace RAHSys.Apresentacao.AutoMapper
         {
             Mapper.Initialize(x =>
             {
-                x.AddProfile(new ConfiguracaoGeralMapeamento());
-
-                x.AddProfile(new CameraMapeamento());
-
-                x.AddProfile(new TipoTelhadoMapeamento());
-
-                x.AddProfile(new TipoContatoMapeamento());
-
-                x.AddProfile(new ContratoMapeamento());
-
-                x.AddProfile(new EstadoMapeamento());
-
-                x.AddProfile(new EnderecoMapeamento());
-
-                x.AddProfile(new CidadeMapeamento());
-
-                x.AddProfile(new EstadoCivilMapeamento());
-
-                x.AddProfile(new ArquivoMapeamento());
-
-                x.AddProfile(new UsuarioMapeamento());
-
-                x.AddProfile(new EquipeMapeamento());
-
-                x.AddProfile(new TipoAtividadeMapeamento());
-
-                x.AddProfile(new AtividadeMapeamento());
-
-                x.AddProfile(new TipoRecorrenciaMapeamento());
-
-                x.AddProfile(new DiaSemanaMapeamento());
+                x.AddProfile(new MapeamentoGeral());
             });
         }
     }

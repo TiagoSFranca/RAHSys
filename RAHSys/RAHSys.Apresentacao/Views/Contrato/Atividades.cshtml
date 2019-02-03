@@ -82,7 +82,7 @@
                                                     </a>
                                                     <ul class="dropdown-menu pull-right">
                                                         <li>
-                                                            <a data-toggle="modal" href="#modalFinalizarRecorrencia" class="btn grey-gallery btn-outline addDataAtividade" data-atividade="" id="finalizarRecorrencia">
+                                                            <a href="" class="btn grey-gallery btn-outline addDataAtividade" data-atividade="" id="finalizarRecorrencia">
                                                                 Finalizar Atividade
                                                             </a>
                                                         </li>
@@ -288,6 +288,7 @@
 <input type="hidden" value="@Model.TodasEquipesSerializadas" id="equipes" />
 <input type="hidden" value="@Url.Action("Atividades", "Contrato", new { id = Model.Contrato.IdContrato})" id="inputUrlBase" />
 <input type="hidden" value="@Url.Action("EditarAtividade", "Contrato", new { id = Model.Contrato.IdContrato})" id="inputEditarAtividade" />
+<input type="hidden" value="@Url.Action("FinalizarAtividade", "Contrato", new { id = Model.Contrato.IdContrato})" id="inputUrlFinalizarAtividade" />
 <input type="hidden" value="@Url.Action("Atividades", "Contrato", new { id = Model.Contrato.IdContrato, dataInicial = ViewBag.DataInicial, dataFinal = ViewBag.DataFinal, modoVisualizacao = ViewBag.ModoVisualizacao })" id="inputUrlRetorno" />
 <input type="hidden" value="@JsonConvert.SerializeObject(RAHSys.Extras.Helper.EquipeHelper.EquipeInteira)" id="equipeInteiraHelper" />
 @*END -- Necessários para o calendário*@

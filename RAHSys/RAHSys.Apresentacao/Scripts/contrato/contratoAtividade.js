@@ -32,6 +32,10 @@ function PreencherInfoEquipe(atividade) {
 
 function ExibirAtividade(atividade) {
     if (atividade != null) {
+        var urlFinalizarAtividade = $('#inputUrlFinalizarAtividade').val();
+        var data = moment(atividade.DataRealizacaoPrevista, "YYYY-MM-DD").format('DD/MM/YYYY');
+        urlFinalizarAtividade += '?idAtividade=' + atividade.IdAtividade + '&data=' + data + '&urlRetorno=' + $('#inputUrlRetorno').val();
+        $('#finalizarRecorrencia').attr('href', urlFinalizarAtividade)
         $('.addDataAtividade').data('atividade', atividade);
         $('#codigoAtividade').html('#' + atividade.IdAtividade)
         $('#codigoRecorrencia').html('nº ' + atividade.NumeroRecorrencia)

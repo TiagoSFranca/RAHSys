@@ -1,5 +1,6 @@
 ﻿using PagedList;
 using RAHSys.Aplicacao.AppModels;
+using System;
 using System.Collections.Generic;
 
 namespace RAHSys.Apresentacao.Models
@@ -60,5 +61,14 @@ namespace RAHSys.Apresentacao.Models
             TipoAtividades = new List<TipoAtividadeAppModel>();
             Contratos = new List<ContratoAppModel>();
         }
+    }
+
+    public class FinalizarAtividadeModel
+    {
+        public AtividadeAppModel Atividade { get; set; }
+        public RegistroRecorrenciaAppModel RegistroRecorrencia { get; set; }
+        public DateTime? DataRealizacao { get; set; }
+        public DateTime DataPrevista { get; set; }
+        public string Observacao { get; set; }
     }
 }

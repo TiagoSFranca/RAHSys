@@ -34,7 +34,7 @@ function ExibirAtividade(atividade) {
     if (atividade != null) {
         var urlFinalizarAtividade = $('#inputUrlFinalizarAtividade').val();
         var data = moment(atividade.DataRealizacaoPrevista, "YYYY-MM-DD").format('DD/MM/YYYY');
-        urlFinalizarAtividade += '?idAtividade=' + atividade.IdAtividade + '&data=' + data + '&urlRetorno=' + $('#inputUrlRetorno').val();
+        urlFinalizarAtividade += '?idAtividade=' + atividade.IdAtividade + '&data=' + data + '&urlRetorno=' + encodeURIComponent($('#inputUrlRetorno').val());
         $('#finalizarRecorrencia').attr('href', urlFinalizarAtividade)
         $('.addDataAtividade').data('atividade', atividade);
         $('#codigoAtividade').html('#' + atividade.IdAtividade)

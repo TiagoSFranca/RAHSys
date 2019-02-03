@@ -7,6 +7,7 @@ using RAHSys.Apresentacao.Attributes;
 using RAHSys.Apresentacao.Models;
 using RAHSys.Extras;
 using RAHSys.Extras.Enums;
+using RAHSys.Extras.Helper;
 using RAHSys.Infra.CrossCutting.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -716,7 +717,7 @@ namespace RAHSys.Apresentacao.Controllers
             return View(atividadeRetornoModel);
         }
 
-        public ActionResult FinalizarAtividade(int id, int idAtividade, DateTime data, string urlRetorno)
+        public ActionResult FinalizarAtividade(int id, int idAtividade, string data, string urlRetorno)
         {
             ViewBag.SubTitle = "Finalizar Atividade";
             try
@@ -726,6 +727,8 @@ namespace RAHSys.Apresentacao.Controllers
                     MensagemErro("Ecorreu um erro!");
                     return RedirectToAction("Atividades", "Contrato", new { id });
                 }
+
+                ViewBag.UrlRetorno = urlRetorno;
 
                 var atividadeContratoFinalizarModel = new FinalizarAtividadeModel();
                 var atividade = _atividadeAppServico.ObterPorId(idAtividade);
@@ -758,7 +761,11 @@ namespace RAHSys.Apresentacao.Controllers
                     MensagemErro("Atividade não pertence ao contrato");
                     return Redirect(urlRetorno);
                 }
-                var registroRecorrencia = _registroRecorrenciaAppServico.Consultar(idAtividade, null, data, null, null, true, 1, Int32.MaxValue);
+
+                var dataConvertida = DataHelper.ConverterStringParaData(data);
+
+                var registroRecorrencia = _registroRecorrenciaAppServico.Consultar(idAtividade, null, dataConvertida, null, null, true, 1, Int32.MaxValue);
+
                 if (registroRecorrencia.Resultado.Count() > 0)
                 {
                     MensagemErro("Atividade já foi finalizada");
@@ -767,8 +774,7 @@ namespace RAHSys.Apresentacao.Controllers
 
                 //atividadeContratoAdicionarModel.Contrato = contratoModel;
                 //atividadeContratoAdicionarModel.Equipe = _equipeAppServico.ObterPorId(atividade.IdEquipe);
-                atividadeContratoFinalizarModel.Atividade = atividade;
-                atividadeContratoFinalizarModel.DataPrevista = data;
+                atividadeContratoFinalizarModel.AtividadeInfo = new AtividadeInfoModel(atividade, dataConvertida);
                 //atividadeContratoAdicionarModel.DiaSemanasSelecionadas = atividade.ConfiguracaoAtividade?.AtividadeDiaSemanas?.Select(e => e.IdDiaSemana).ToList();
 
                 return View(atividadeContratoFinalizarModel);

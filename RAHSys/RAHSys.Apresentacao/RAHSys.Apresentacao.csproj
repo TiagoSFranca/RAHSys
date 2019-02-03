@@ -4054,6 +4054,7 @@
     <Content Include="Views\Shared\_ModalEncerrarAtividade.cshtml" />
     <Content Include="Views\Shared\_ModalAlterarEquipe.cshtml" />
     <Content Include="Views\Contrato\FinalizarAtividade.cshtml" />
+    <Content Include="Views\Shared\_AtividadeInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

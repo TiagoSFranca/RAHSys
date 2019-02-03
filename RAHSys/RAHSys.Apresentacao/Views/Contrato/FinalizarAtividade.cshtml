@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="portlet-body portlet-collapsed">
-                @{Html.RenderPartial("_ContratoInfo", Model.Atividade.Contrato);}
+                @{Html.RenderPartial("_ContratoInfo", Model.AtividadeInfo.Atividade.Contrato);}
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@
                 </div>
             </div>
             <div class="portlet-body portlet-collapsed">
-                @{Html.RenderPartial("_EquipeInfo", Model.Atividade.Equipe);}
+                @{Html.RenderPartial("_EquipeInfo", Model.AtividadeInfo.Atividade.Equipe);}
             </div>
         </div>
     </div>
@@ -56,37 +56,7 @@
                 </div>
             </div>
             <div class="portlet-body portlet-collapsed">
-                <div class="form-group form-md-line-input">
-                    @Html.LabelFor(model => model.Atividade.IdAtividade, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-3">
-                        @Html.EditorFor(model => model.Atividade.IdAtividade, new { htmlAttributes = new { @class = "form-control", @required = "required", @disabled = "disabled" } })
-                        <div class="form-control-focus"> </div>
-                    </div>
-                    @Html.LabelFor(model => model.Atividade.IdTipoAtividade, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-4">
-                        @Html.EditorFor(model => model.Atividade.TipoAtividade.Descricao, new { htmlAttributes = new { @class = "form-control", @required = "required", @disabled = "disabled" } })
-                        <div class="form-control-focus"> </div>
-                    </div>
-                </div>
-                <div class="form-group form-md-line-input">
-                    @Html.LabelFor(model => model.Atividade.DataInicial, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-3">
-                        @Html.EditorFor(model => model.Atividade.DataInicial, new { htmlAttributes = new { @class = "form-control", @required = "required", @disabled = "disabled" } })
-                        <div class="form-control-focus"></div>
-                    </div>
-                    @Html.LabelFor(model => model.Atividade.IdTipoRecorrencia, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-4">
-                        @Html.EditorFor(model => (model.Atividade.TipoRecorrencia ?? new TipoRecorrenciaAppModel()).Descricao, new { htmlAttributes = new { @class = "form-control", @required = "required", @disabled = "disabled" } })
-                        <div class="form-control-focus"> </div>
-                    </div>
-                </div>
-                <div class="form-group form-md-line-input">
-                    @Html.LabelFor(model => model.Atividade.Descricao, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.Atividade.Descricao, new { htmlAttributes = new { @class = "form-control", @required = "required", @disabled = "disabled" } })
-                        <div class="form-control-focus"></div>
-                    </div>
-                </div>
+                @{Html.RenderPartial("_AtividadeInfo", Model.AtividadeInfo);}
             </div>
         </div>
     </div>
@@ -102,151 +72,36 @@
                 </div>
             </div>
             <div class="portlet-body">
-                @*@using (Html.BeginForm("EditarAtividade", "Contrato", FormMethod.Post, new { @class = "form-horizontal margin-bottom-40" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.HiddenFor(model => model.Atividade.IdEquipe)
-                        @Html.HiddenFor(model => model.Atividade.IdContrato)
-                        @Html.HiddenFor(model => model.Atividade.IdAtividade)
-                        <div class="form-group form-md-line-input">
-                            @Html.LabelFor(model => model.Atividade.IdAtividade, "Código", new { @class = "col-md-2 control-label" })
-                            <div class="col-md-9">
-                                @Html.EditorFor(model => model.Atividade.IdAtividade, new { htmlAttributes = new { @class = "form-control", @placeholder = "Código", @required = "required", @disabled = "disabled" } })
-                                <div class="form-control-focus"> </div>
-                            </div>
+                @using (Html.BeginForm("FinalizarAtividade", "Contrato", new { urlRetorno = ViewBag.UrlRetorno }, FormMethod.Post, new { @class = "form-horizontal margin-bottom-40" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.AtividadeInfo.Atividade.IdContrato)
+                    @Html.HiddenFor(model => model.AtividadeInfo.Atividade.IdAtividade)
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.DataRealizacao, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-3">
+                            @Html.EditorFor(model => model.DataRealizacao, new { htmlAttributes = new { @class = "form-control dataAtividade", @placeholder = "Realizado em", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.DataRealizacao, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
                         </div>
-                        <div class="form-group form-md-line-input">
-                            @Html.LabelFor(m => m.Atividade.IdTipoAtividade, new { @class = "col-md-2 control-label" })
-                            <div class="col-md-4">
-                                @Html.DropDownListFor(model => model.Atividade.IdTipoAtividade, new SelectList(Model.TipoAtividades, "IdTipoAtividade", "Descricao"), "Selecione", new { @class = "form-control", @placeholder = "Tipo de Atividade", @required = "required" })
-                                @Html.ValidationMessageFor(model => model.Atividade.IdTipoAtividade, "", new { @class = "text-danger" })
-                                <div class="form-control-focus"> </div>
-                            </div>
-                            @Html.LabelFor(m => m.Atividade.IdTipoRecorrencia, new { @class = "col-md-2 control-label" })
-                            <div class="col-md-3">
-                                @Html.DropDownListFor(model => model.Atividade.IdTipoRecorrencia, new SelectList(Model.TipoRecorrencias, "IdTipoRecorrencia", "Descricao"), "Selecione", new { @class = "form-control", @placeholder = "Tipo de Recorrência", @id = "ddlRecorrencia", @onchange = "exibirConfigAtividadeBody(this.value)" })
-                                @Html.ValidationMessageFor(model => model.Atividade.IdTipoRecorrencia, "", new { @class = "text-danger" })
-                                <div class="form-control-focus"> </div>
-                            </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.Observacao, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.TextAreaFor(model => model.Observacao, new { @class = "form-control", @placeholder = "Observação" })
+                            @Html.ValidationMessageFor(model => model.Observacao, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
                         </div>
-                        <div class="form-group form-md-line-input">
-                            @Html.LabelFor(m => m.Atividade.IdUsuario, new { @class = "col-md-2 control-label" })
-                            <div class="col-md-4">
-                                @Html.DropDownListFor(model => model.Atividade.IdUsuario, new SelectList(Model.Equipe.Usuarios, "IdUsuario", "EmailEUserName"), "Selecione", new { @class = "form-control", @placeholder = "Atribuido Para" })
-                                @Html.ValidationMessageFor(model => model.Atividade.IdUsuario, "", new { @class = "text-danger" })
-                                <div class="form-control-focus"> </div>
-                            </div>
-                            @Html.LabelFor(m => m.Atividade.DataInicial, new { @class = "col-md-2 control-label" })
-                            <div class="col-md-3">
-                                @Html.EditorFor(model => model.Atividade.DataInicial, new { htmlAttributes = new { @Value = ((DateTime)Model.Atividade.DataInicial).ToString("dd/MM/yyyy"), @class = "form-control dataAtividade", @placeholder = "Começa em", @required = "required" } })
-                                @Html.ValidationMessageFor(model => model.Atividade.DataInicial, "", new { @class = "text-danger" })
-                                <div class="form-control-focus"> </div>
-                            </div>
-                        </div>
-                        <div class="form-group form-md-line-input">
-                            @Html.LabelFor(m => m.Atividade.Descricao, new { @class = "col-md-2 control-label" })
-                            <div class="col-md-9">
-                                @Html.TextAreaFor(model => model.Atividade.Descricao, new { @class = "form-control", @placeholder = "Descrição" })
-                                @Html.ValidationMessageFor(model => model.Atividade.Descricao, "", new { @class = "text-danger" })
-                                <div class="form-control-focus"> </div>
-                            </div>
-                        </div>
-                        <div class="form-group form-md-line-input">
-                            <div class="col-md-2 control-label">
-                            </div>
-                            <div class="col-md-9">
-                                <div class="md-checkbox-inline">
-                                    <div class="md-checkbox">
-                                        @Html.CheckBoxFor(m => m.Atividade.EquipeInteira, new { @class = "md-check", @id = "equipeInteira" })
-                                        <label for="equipeInteira">
-                                            <span></span>
-                                            <span class="check"></span>
-                                            <span class="box"></span> Equipe Inteira
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row config-atividade-body">
-                            <div class="col-md-12">
-                                <div class="form-group form-md-line-input">
-                                    <div class="col-md-2 control-label">
-                                        <div class="caption caption-md">
-                                            <i class="icon-bar-chart font-dark hide"></i>
-                                            <span class="caption-subject font-green-steel uppercase bold">Configuração</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group form-md-line-input">
-                                    @Html.LabelFor(m => m.Atividade.ConfiguracaoAtividade.Frequencia, new { @class = "col-md-2 control-label" })
-                                    <div class="col-md-2">
-                                        @Html.EditorFor(model => model.Atividade.ConfiguracaoAtividade.Frequencia, new { htmlAttributes = new { @class = "form-control", @placeholder = "Frequência" } })
-                                        @Html.ValidationMessageFor(model => model.Atividade.ConfiguracaoAtividade.Frequencia, "", new { @class = "text-danger" })
-                                        <div class="form-control-focus"> </div>
-                                    </div>
-                                    @Html.LabelFor(m => m.Atividade.ConfiguracaoAtividade.DiaMes, new { @class = "col-md-2 control-label selectMes" })
-                                    <div class="col-md-2 selectMes">
-                                        @Html.EditorFor(model => model.Atividade.ConfiguracaoAtividade.DiaMes, new { htmlAttributes = new { @class = "form-control", @placeholder = "Dia do Mês" } })
-                                        @Html.ValidationMessageFor(model => model.Atividade.ConfiguracaoAtividade.DiaMes, "", new { @class = "text-danger" })
-                                        <div class="form-control-focus"> </div>
-                                    </div>
-                                    @Html.LabelFor(m => m.Atividade.ConfiguracaoAtividade.AtividadeDiaSemanas, new { @class = "col-md-2 control-label selectSemana" })
-                                    <div class="col-md-4">
-                                        <select id="multiple" class="form-control select2-multiple selectSemana" multiple name="DiaSemanasSelecionadas[]">
-                                            @foreach (var item in Model.DiaSemanas)
-                                            {
-                                                var selecionado = Model.DiaSemanasSelecionadas?.Count(e => item.IdDiaSemana == e) > 0;
-                                                if (selecionado)
-                                                {
-                                                    <option value="@item.IdDiaSemana" selected>@item.Descricao</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="@item.IdDiaSemana">@item.Descricao</option>
-                                                }
-                                            }
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group form-md-line-input">
-                                    <div class="col-md-2 control-label">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="md-checkbox-inline">
-                                            <div class="md-checkbox">
-                                                @Html.CheckBoxFor(m => m.Atividade.ConfiguracaoAtividade.ApenasDiaUtil, new { @class = "md-check", @id = "apenasDiaUtil" })
-                                                <label for="apenasDiaUtil">
-                                                    <span></span>
-                                                    <span class="check"></span>
-                                                    <span class="box"></span> Apenas dia útil
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @Html.LabelFor(m => m.Atividade.ConfiguracaoAtividade.QtdRepeticoes, new { @class = "col-md-2 control-label" })
-                                    <div class="col-md-1">
-                                        @Html.EditorFor(model => model.Atividade.ConfiguracaoAtividade.QtdRepeticoes, new { htmlAttributes = new { @class = "form-control", @placeholder = "Repetições" } })
-                                        @Html.ValidationMessageFor(model => model.Atividade.ConfiguracaoAtividade.QtdRepeticoes, "", new { @class = "text-danger" })
-                                        <div class="form-control-focus"> </div>
-                                    </div>
-                                    @Html.LabelFor(m => m.Atividade.ConfiguracaoAtividade.TerminaEm, new { @class = "col-md-2 control-label" })
-                                    <div class="col-md-2">
-                                        @Html.EditorFor(model => model.Atividade.ConfiguracaoAtividade.TerminaEm, new { htmlAttributes = new { @class = "form-control dataAtividade", @placeholder = "Termina em" } })
-                                        @Html.ValidationMessageFor(model => model.Atividade.ConfiguracaoAtividade.TerminaEm, "", new { @class = "text-danger" })
-                                        <div class="form-control-focus"> </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
 
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <button type="submit" class="btn blue btn-circle">Salvar</button>
-                                @Html.ActionLink("Limpar", "AdicionarAtividade", "Contrato", new { id = Model.Atividade.IdContrato }, new { @class = "btn btn-white btn-outline btn-circle btn-md" })
-                                @Html.ActionLink("Cancelar", "Atividades", "Contrato", new { id = Model.Atividade.IdContrato }, new { @class = "btn yellow-haze btn-outline btn-circle btn-md" })
-                            </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" class="btn blue btn-circle">Salvar</button>
+                            @Html.ActionLink("Limpar", "FinalizarAtividade", "Contrato", new { id = Model.AtividadeInfo.Atividade.IdContrato, idAtividade = Model.AtividadeInfo.Atividade.IdAtividade, data = Model.AtividadeInfo.DataPrevista, urlRetorno = ViewBag.UrlRetorno }, new { @class = "btn btn-white btn-outline btn-circle btn-md" })
+                            <a class="btn yellow-haze btn-outline btn-circle btn-md" href="@ViewBag.UrlRetorno">Cancelar</a>
                         </div>
-                    }*@
+                    </div>
+                }
             </div>
         </div>
     </div>
@@ -257,5 +112,4 @@
 <input type="hidden" value="@RAHSys.Entidades.Seeds.TipoRecorrenciaSeed.Semanal.IdTipoRecorrencia" id="idTipoSemana" />
 @section scripts{
     @Scripts.Render("~/Select2/js")
-    @Scripts.Render("~/Contrato/Atividade/AdicionarEditar/js")
 }

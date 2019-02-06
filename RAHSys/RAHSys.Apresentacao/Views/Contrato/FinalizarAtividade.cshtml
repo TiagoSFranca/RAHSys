@@ -5,6 +5,7 @@
 }
 
 @section styles{
+    @Styles.Render("~/FileInput/css");
     @Styles.Render("~/Select2/css");
 }
 
@@ -107,9 +108,97 @@
     </div>
 </div>
 
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart font-dark hide"></i>
+                    <span class="caption-subject font-green-steel uppercase bold">Evidências</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="form-group form-md-line-input" id="fileInputDiv">
+                    <div class="col-md-9 col-md-offset-1">
+                        <div class="fileinput fileinput-new" data-provides="fileinput" id="fileInput">
+                            <span class="btn green btn-file btn-circle">
+                                <span class="fileinput-new"> Selecionar Evidência </span>
+                                <span class="fileinput-exists"> Alterar </span>
+                                <input type="file" name="...">
+                            </span>
+                            <span class="fileinput-filename"> </span> &nbsp;
+                            <a href="javascript:;" class="close fileinput-exists" data-dismiss="fileinput"> </a>
+                        </div>
+                    </div>
+                </div>
+                @*@if (Model?.Contrato?.Documentos?.Count() > 0)
+                    {
+                        <div class="form-group form-md-line-input">
+                            <div class="col-md-2 control-label">
+                                <div class="caption caption-md">
+                                    <i class="icon-bar-chart font-dark hide"></i>
+                                    <span class="caption-subject font-green-steel uppercase bold">Histórico</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-scrollable">
+                            <table class="table table-hover table-light">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            #
+                                        </th>
+                                        <th>
+                                            Nome do Arquivo
+                                        </th>
+                                        <th>
+                                            Data Cadastro
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Contrato.Documentos.OrderByDescending(e => e.DataUpload))
+                                    {
+                                        <tr>
+                                            <td>
+                                                @item.IdDocumento
+                                            </td>
+                                            <td>
+                                                @item.NomeArquivo
+                                            </td>
+                                            <td>
+                                                @item.DataUpload
+                                            </td>
+                                            <td class="text-right">
+                                                @Html.ActionLink("Visualizar", "VisualizarContrato", "Contrato", new { id = item.IdDocumento }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md", target = "_blank" })
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }*@
+            </div>
+        </div>
+    </div>
+</div>
+
 <input type="hidden" value="" id="configAtividadeBody" />
 <input type="hidden" value="@RAHSys.Entidades.Seeds.TipoRecorrenciaSeed.Mensal.IdTipoRecorrencia" id="idTipoMes" />
 <input type="hidden" value="@RAHSys.Entidades.Seeds.TipoRecorrenciaSeed.Semanal.IdTipoRecorrencia" id="idTipoSemana" />
 @section scripts{
+    @Scripts.Render("~/FileInput/js")
     @Scripts.Render("~/Select2/js")
+    <script>
+        $(document).ready(function () {
+            $('.fileinput').on('change.bs.fileinput', function () {
+                console.log('p');
+                var clone = $(this).clone();
+                clone.fileinput('clear');
+                clone.insertAfter($(this))
+            })
+        })
+    </script>
 }

@@ -63,7 +63,7 @@
     </div>
 </div>
 
-@using (Html.BeginForm("FinalizarAtividade", "Contrato", new { urlRetorno = ViewBag.UrlRetorno }, FormMethod.Post, new { @class = "form-horizontal margin-bottom-40" }))
+@using (Html.BeginForm("FinalizarAtividade", "Contrato", new { urlRetorno = ViewBag.UrlRetorno }, FormMethod.Post, new { @class = "form-horizontal margin-bottom-40", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div class="row">
@@ -78,6 +78,7 @@
                 <div class="portlet-body">
                     @Html.HiddenFor(model => model.AtividadeInfo.Atividade.IdContrato)
                     @Html.HiddenFor(model => model.AtividadeInfo.Atividade.IdAtividade)
+                    @Html.HiddenFor(model => model.AtividadeInfo.DataPrevista)
                     <div class="form-group form-md-line-input">
                         @Html.LabelFor(m => m.DataRealizacao, new { @class = "col-md-2 control-label" })
                         <div class="col-md-3">

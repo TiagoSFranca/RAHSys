@@ -52,5 +52,10 @@ namespace RAHSys.Dominio.Servicos.Servicos
 
             return consultaModel;
         }
+
+        public void FinalizarRegistroRecorrencia(int idAtividade, DateTime dataRealizacaoPrevista, List<ArquivoModel> evidencias)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

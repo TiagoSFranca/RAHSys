@@ -114,5 +114,24 @@ namespace RAHSys.Aplicacao.Implementacao
                 throw nex;
             }
         }
+
+        public void FinalizarRegistroRecorrencia(int idAtividade, DateTime dataRealizacaoPrevista, List<ArquivoAppModel> evidencias)
+        {
+            try
+            {
+                _registroRecorrenciaServico.FinalizarRegistroRecorrencia(idAtividade, dataRealizacaoPrevista, evidencias.Select(e => e.MapearParaDominio()).ToList());
+            }
+            catch (CustomBaseException ex)
+            {
+                LogExceptions(ex);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                var nex = new CustomBaseException(ex);
+                LogExceptions(nex);
+                throw nex;
+            }
+        }
     }
 }

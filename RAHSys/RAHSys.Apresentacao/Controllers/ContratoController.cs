@@ -264,7 +264,7 @@ namespace RAHSys.Apresentacao.Controllers
                 try
                 {
                     _contratoAppServico.AdicionarFichaCliente(fichaCliente.Cliente);
-                    MensagemSucesso(MensagensPadrao.CadastroSucesso);
+                    MensagemSucesso();
                     return RedirectToAction("Index", "Contrato");
                 }
                 catch (CustomBaseException ex)
@@ -724,7 +724,7 @@ namespace RAHSys.Apresentacao.Controllers
             {
                 if (string.IsNullOrEmpty(urlRetorno))
                 {
-                    MensagemErro("Ecorreu um erro!");
+                    MensagemErro("Ocorreu um erro!");
                     return RedirectToAction("Atividades", "Contrato", new { id });
                 }
 
@@ -787,11 +787,80 @@ namespace RAHSys.Apresentacao.Controllers
         }
 
         [HttpPost]
-        public ActionResult FinalizarAtividade(FinalizarAtividadeModel finalizarAtividadeModel)
+        public ActionResult FinalizarAtividade(FinalizarAtividadeModel finalizarAtividadeModel, string urlRetorno)
         {
-            var files = Request.Files;
+            ViewBag.SubTitle = "Finalizar Atividade";
 
-            return View();
+            var idAtividade = finalizarAtividadeModel.AtividadeInfo.Atividade.IdAtividade;
+            var idContrato = finalizarAtividadeModel.AtividadeInfo.Atividade.IdContrato;
+            if (string.IsNullOrEmpty(urlRetorno))
+            {
+                MensagemErro("Ocorreu um erro!");
+                return RedirectToAction("Atividades", "Contrato", new { idContrato });
+            }
+
+            ViewBag.UrlRetorno = urlRetorno;
+
+            var atividadeContratoFinalizarModel = new FinalizarAtividadeModel();
+            var atividade = _atividadeAppServico.ObterPorId(idAtividade);
+
+            if (atividade == null)
+            {
+                MensagemErro("Atividade não encontrada");
+                return Redirect(urlRetorno);
+            }
+
+            var contratoModel = _contratoAppServico.ObterPorId(idContrato);
+            if (contratoModel == null)
+            {
+                MensagemErro("Contrato não encontrado");
+                return RedirectToAction("Index", "Contrato");
+            }
+            if (contratoModel.AnaliseInvestimento?.Cliente == null)
+            {
+                MensagemErro("O contrato precisa estar assinado");
+                return RedirectToAction("Index", "Contrato");
+            }
+            if (contratoModel.AnaliseInvestimento?.Cliente?.IdEquipe == null)
+            {
+                MensagemErro("O contrato não possui equipe associada");
+                return RedirectToAction("Index", "Contrato");
+            }
+
+            if (atividade.IdContrato != contratoModel.IdContrato)
+            {
+                MensagemErro("Atividade não pertence ao contrato");
+                return Redirect(urlRetorno);
+            }
+
+            var dataConvertida = finalizarAtividadeModel.AtividadeInfo.DataPrevista;
+
+            var registroRecorrencia = _registroRecorrenciaAppServico.Consultar(idAtividade, null, dataConvertida, null, null, true, 1, Int32.MaxValue);
+
+            if (registroRecorrencia.Resultado.Count() > 0)
+            {
+                MensagemErro("Atividade já foi finalizada");
+                return Redirect(urlRetorno);
+            }
+
+            atividadeContratoFinalizarModel.AtividadeInfo = new AtividadeInfoModel(atividade, dataConvertida);
+            var arquivos = Request.Files;
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _registroRecorrenciaAppServico.FinalizarRegistroRecorrencia(idAtividade, dataConvertida, Mapper.Map<List<ArquivoAppModel>>(arquivos));
+                    MensagemSucesso();
+                    return Redirect(urlRetorno);
+                }
+                catch (CustomBaseException ex)
+                {
+                    MensagemErro(ex.Mensagem);
+                    return View(atividadeContratoFinalizarModel);
+                }
+            }
+
+            return View(atividadeContratoFinalizarModel);
         }
 
         #endregion

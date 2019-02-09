@@ -83,6 +83,11 @@ namespace RAHSys.Apresentacao.Models
             DataPrevista = dataPrevista;
         }
 
+        public AtividadeInfoModel()
+        {
+
+        }
+
         public AtividadeAppModel Atividade { get; set; }
         public RegistroRecorrenciaAppModel RegistroRecorrencia { get; set; }
 

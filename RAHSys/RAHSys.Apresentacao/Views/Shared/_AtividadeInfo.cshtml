@@ -110,10 +110,13 @@
                 <div class="col-md-1">
                     @Html.EditorFor(model => model.Atividade.ConfiguracaoAtividade.QtdRepeticoes, new { htmlAttributes = new { @class = "form-control", @placeholder = "Repetições", @disabled = "disabled" } })
                 </div>
-                @Html.LabelFor(m => m.Atividade.ConfiguracaoAtividade.TerminaEm, new { @class = "col-md-2 control-label" })
-                <div class="col-md-2">
-                    @Html.EditorFor(model => model.Atividade.ConfiguracaoAtividade.TerminaEm, new { htmlAttributes = new { @Value = ((DateTime)Model.Atividade.ConfiguracaoAtividade.TerminaEm).ToString("dd/MM/yyyy"), @class = "form-control dataAtividade", @placeholder = "Termina em", @disabled = "disabled" } })
-                </div>
+                @if (Model.Atividade.ConfiguracaoAtividade.TerminaEm != null)
+                {
+                    @Html.LabelFor(m => m.Atividade.ConfiguracaoAtividade.TerminaEm, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-2">
+                        @Html.EditorFor(model => model.Atividade.ConfiguracaoAtividade.TerminaEm, new { htmlAttributes = new { @Value = ((DateTime)Model.Atividade.ConfiguracaoAtividade.TerminaEm).ToString("dd/MM/yyyy"), @class = "form-control dataAtividade", @placeholder = "Termina em", @disabled = "disabled" } })
+                    </div>
+                }
             </div>
         </div>
     </div>

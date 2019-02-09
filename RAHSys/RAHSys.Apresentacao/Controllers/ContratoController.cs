@@ -786,6 +786,14 @@ namespace RAHSys.Apresentacao.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult FinalizarAtividade(FinalizarAtividadeModel finalizarAtividadeModel)
+        {
+            var files = Request.Files;
+
+            return View();
+        }
+
         #endregion
 
         #region Métodos Aux

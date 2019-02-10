@@ -19,6 +19,7 @@ namespace RAHSys.Aplicacao.AppModels
         public string Observacao { get; set; }
         public int NumeroRecorrencia { get; set; }
         public bool EquipeInteira { get; set; }
+        public bool TemEvidencias { get; set; }
 
         public string TipoAtividade { get; set; }
 

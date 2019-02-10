@@ -110,7 +110,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
             {
                 count++;
                 rotaArquivo = string.Format("{0}/{1}{2}", rota, count.ToString(), extensao);
-            } while (File.Exists(RootPath + rotaArquivo));
+            } while (File.Exists(rotaArquivo));
             var fileStream = File.Create(rotaArquivo);
             arquivo.InputStream.Seek(0, SeekOrigin.Begin);
             arquivo.InputStream.CopyTo(fileStream);

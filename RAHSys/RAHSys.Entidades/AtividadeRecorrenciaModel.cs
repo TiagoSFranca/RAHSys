@@ -19,6 +19,7 @@ namespace RAHSys.Entidades
         public string Observacao { get; set; }
         public int NumeroRecorrencia { get; set; }
         public bool EquipeInteira { get; set; }
+        public bool TemEvidencias { get; set; }
 
         public string TipoAtividade { get; set; }
 
@@ -31,7 +32,7 @@ namespace RAHSys.Entidades
         public virtual UsuarioModel Usuario { get; set; }
 
         public AtividadeRecorrenciaModel(int idAtividade, string descricao, TipoAtividadeModel tipoAtividade, ContratoModel contrato,
-            EquipeModel equipe, UsuarioModel usuario, TipoRecorrenciaModel tipoRecorrencia, RegistroRecorrenciaModel registroRecorrencia, bool encerrar, int numeroRecorrencia)
+            EquipeModel equipe, UsuarioModel usuario, TipoRecorrenciaModel tipoRecorrencia, RegistroRecorrenciaModel registroRecorrencia, bool encerrar, int numeroRecorrencia, bool temEvidencias)
         {
             IdAtividade = idAtividade;
             Descricao = descricao;
@@ -65,6 +66,7 @@ namespace RAHSys.Entidades
 
             Encerrar = encerrar;
             NumeroRecorrencia = numeroRecorrencia;
+            TemEvidencias = temEvidencias;
         }
     }
 }

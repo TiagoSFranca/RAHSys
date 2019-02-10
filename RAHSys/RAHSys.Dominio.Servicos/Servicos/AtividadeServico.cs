@@ -282,7 +282,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
             AtividadeRecorrenciaModel recorrencia = new AtividadeRecorrenciaModel(atividade.IdAtividade, atividade.Descricao, atividade.TipoAtividade,
                 atividade.Contrato, atividade.Equipe, atividade.Usuario,
                 atividade.TipoRecorrencia, registroRecorrencia, atividade.ConfiguracaoAtividade.TerminaEm == null &&
-                (atividade.ConfiguracaoAtividade.QtdRepeticoes == null || atividade.ConfiguracaoAtividade.QtdRepeticoes == 0), numeroAtividade)
+                (atividade.ConfiguracaoAtividade.QtdRepeticoes == null || atividade.ConfiguracaoAtividade.QtdRepeticoes == 0), numeroAtividade, registroRecorrencia.Evidencias?.Count > 0)
             {
                 Realizada = realizada,
                 EquipeInteira = atividade.EquipeInteira
@@ -310,7 +310,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
                         e.Usuario,
                         e.TipoRecorrencia,
                         e.RegistroRecorrencias.FirstOrDefault() ?? new RegistroRecorrenciaModel() { DataPrevista = e.DataInicial },
-                        false, 1)
+                        false, 1, (e.RegistroRecorrencias.FirstOrDefault() ?? new RegistroRecorrenciaModel() { DataPrevista = e.DataInicial }).Evidencias?.Count > 0)
                     {
                         Realizada = e.RegistroRecorrencias.Count > 0,
                         EquipeInteira = e.EquipeInteira

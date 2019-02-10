@@ -67,9 +67,16 @@ function ExibirAtividade(atividade) {
         if (atividade.Realizada) {
             $('.atividade-realizada').show();
             $('#finalizarRecorrencia').hide();
-            $('#ulRecorrencia').hide();
+            if (atividade.TemEvidencias) {
+                $('#evidencias').show();
+                $('#ulRecorrencia').show();
+            } else {
+                $('#evidencias').hide();
+                $('#ulRecorrencia').hide();
+            }
         }
         else {
+            $('#evidencias').hide();
             $('#finalizarRecorrencia').show();
             $('#ulRecorrencia').show();
             $('.atividade-realizada').hide();

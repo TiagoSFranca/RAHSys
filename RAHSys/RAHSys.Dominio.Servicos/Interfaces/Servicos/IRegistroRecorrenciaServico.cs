@@ -9,6 +9,6 @@ namespace RAHSys.Dominio.Servicos.Interfaces.Servicos
     {
         ConsultaModel<RegistroRecorrenciaModel> Consultar(int idAtividade, IEnumerable<int> idList, DateTime? dataPrevista, DateTime? dataRealizacao,
             string ordenacao, bool crescente, int pagina, int quantidade);
-        void FinalizarRegistroRecorrencia(int idAtividade, DateTime dataRealizacaoPrevista, List<ArquivoModel> evidencias);
+        void FinalizarRegistroRecorrencia(int idAtividade, DateTime dataRealizacaoPrevista, DateTime dataRealizacao, string observacao, List<ArquivoModel> evidencias);
     }
 }

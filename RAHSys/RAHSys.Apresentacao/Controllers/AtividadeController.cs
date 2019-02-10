@@ -80,7 +80,7 @@ namespace RAHSys.Apresentacao.Controllers
                     MensagemErro("Atividade não encontrada");
                 else
                 {
-                    _atividadeAppServico.FinalizarRecorrencia(idAtividade, dataRealizacaoPrevista, dataRealizacao, observacao);
+                    //_atividadeAppServico.FinalizarRecorrencia(idAtividade, dataRealizacaoPrevista, dataRealizacao, observacao);
                     MensagemSucesso();
                 }
             }

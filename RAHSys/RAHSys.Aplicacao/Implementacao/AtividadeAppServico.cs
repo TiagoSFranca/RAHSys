@@ -129,25 +129,6 @@ namespace RAHSys.Aplicacao.Implementacao
             }
         }
 
-        public void FinalizarRecorrencia(int idAtividade, DateTime dataRealizacaoPrevista, DateTime dataRealizacao, string observacao)
-        {
-            try
-            {
-                _atividadeServico.FinalizarRecorrencia(idAtividade, dataRealizacaoPrevista, dataRealizacao, observacao);
-            }
-            catch (CustomBaseException ex)
-            {
-                LogExceptions(ex);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                var nex = new CustomBaseException(ex);
-                LogExceptions(nex);
-                throw nex;
-            }
-        }
-
         public void TransferirAtividade(int idAtividade, string idUsuario)
         {
             try

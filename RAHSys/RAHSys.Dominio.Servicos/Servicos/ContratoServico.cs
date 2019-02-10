@@ -19,7 +19,6 @@ namespace RAHSys.Dominio.Servicos.Servicos
         private readonly IResponsavelFinanceiroRepositorio _responsavelFinanceiroRepositorio;
 
         private readonly string Rota = "/Contratos/";
-        private readonly string RootPath = AppDomain.CurrentDomain.BaseDirectory;
 
         public ContratoServico(IContratoRepositorio contratoRepositorio, IAnaliseInvestimentoRepositorio analiseInvestimentoRepositorio,
             IClienteRepositorio clienteRepositorio, IDocumentoRepositorio documentoRepositorio, IResponsavelFinanceiroRepositorio responsavelFinanceiroRepositorio)

@@ -1,11 +1,14 @@
 ﻿using RAHSys.Dominio.Servicos.Interfaces.Repositorios;
 using RAHSys.Dominio.Servicos.Interfaces.Servicos;
+using System;
 
 namespace RAHSys.Dominio.Servicos.Servicos
 {
     public class ServicoBase<TEntity> : IServicoBase<TEntity> where TEntity : class
     {
         private readonly IRepositorioBase<TEntity> _repository;
+
+        protected readonly string RootPath = AppDomain.CurrentDomain.BaseDirectory;
 
         public ServicoBase(IRepositorioBase<TEntity> repository)
         {

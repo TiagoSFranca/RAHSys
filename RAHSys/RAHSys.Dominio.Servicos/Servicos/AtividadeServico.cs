@@ -37,7 +37,8 @@ namespace RAHSys.Dominio.Servicos.Servicos
         }
 
         public AtividadeServico(IAtividadeRepositorio atividadeRepositorio, IRegistroRecorrenciaRepositorio registroRecorrenciaRepositorio,
-            IConfiguracaoAtividadeRepositorio configuracaoAtividadeRepositorio) : base(atividadeRepositorio)
+            IConfiguracaoAtividadeRepositorio configuracaoAtividadeRepositorio)
+            : base(atividadeRepositorio)
         {
             _atividadeRepositorio = atividadeRepositorio;
             _registroRecorrenciaRepositorio = registroRecorrenciaRepositorio;
@@ -143,20 +144,6 @@ namespace RAHSys.Dominio.Servicos.Servicos
             //}
         }
 
-        public void FinalizarRecorrencia(int idAtividade, DateTime dataRealizacaoPrevista, DateTime dataRealizacao, string observacao)
-        {
-            if (ValidarRecorrencia(idAtividade, dataRealizacaoPrevista))
-                throw new CustomBaseException(new Exception(), string.Format("Já existe um registro para [{0}].", dataRealizacaoPrevista));
-            var recorrencia = new RegistroRecorrenciaModel()
-            {
-                IdAtividade = idAtividade,
-                DataPrevista = dataRealizacaoPrevista,
-                DataRealizacao = dataRealizacao,
-                Observacao = observacao
-            };
-            _registroRecorrenciaRepositorio.Adicionar(recorrencia);
-        }
-
         public void CopiarAtividade(int idAtividade)
         {
             _atividadeRepositorio.CopiarAtividade(idAtividade);
@@ -248,14 +235,6 @@ namespace RAHSys.Dominio.Servicos.Servicos
         private ConfiguracaoAtividadeModel ObterConfiguracaoAtividade(int idAtividade)
         {
             return _configuracaoAtividadeRepositorio.ObterPorId(idAtividade);
-        }
-
-        private bool ValidarRecorrencia(int idAtividade, DateTime dataPrevista)
-        {
-            var query = _registroRecorrenciaRepositorio.Consultar().Where(e => e.IdAtividade == idAtividade && e.DataPrevista.Year == dataPrevista.Year
-            && e.DataPrevista.Month == dataPrevista.Month
-            && e.DataPrevista.Day == dataPrevista.Day);
-            return query.Count() > 0;
         }
 
         private void ValidarMesAno(string mesAno, ref int mes, ref int ano)

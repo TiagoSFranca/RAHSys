@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RAHSys.Entidades.Entidades
 {
@@ -11,5 +12,7 @@ namespace RAHSys.Entidades.Entidades
         public string Observacao { get; set; }
 
         public virtual AtividadeModel Atividade { get; set; }
+
+        public virtual ICollection<EvidenciaModel> Evidencias { get; set; }
     }
 }

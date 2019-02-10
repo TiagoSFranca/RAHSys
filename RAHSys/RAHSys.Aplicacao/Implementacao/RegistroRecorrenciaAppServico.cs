@@ -115,11 +115,11 @@ namespace RAHSys.Aplicacao.Implementacao
             }
         }
 
-        public void FinalizarRegistroRecorrencia(int idAtividade, DateTime dataRealizacaoPrevista, List<ArquivoAppModel> evidencias)
+        public void FinalizarRegistroRecorrencia(int idAtividade, DateTime dataRealizacaoPrevista, DateTime dataRealizacao, string observacao, List<ArquivoAppModel> evidencias)
         {
             try
             {
-                _registroRecorrenciaServico.FinalizarRegistroRecorrencia(idAtividade, dataRealizacaoPrevista, evidencias.Select(e => e.MapearParaDominio()).ToList());
+                _registroRecorrenciaServico.FinalizarRegistroRecorrencia(idAtividade, dataRealizacaoPrevista, dataRealizacao, observacao, evidencias.Select(e => e.MapearParaDominio()).ToList());
             }
             catch (CustomBaseException ex)
             {

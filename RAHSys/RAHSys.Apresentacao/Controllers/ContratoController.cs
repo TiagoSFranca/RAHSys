@@ -849,7 +849,16 @@ namespace RAHSys.Apresentacao.Controllers
             {
                 try
                 {
-                    _registroRecorrenciaAppServico.FinalizarRegistroRecorrencia(idAtividade, dataConvertida, Mapper.Map<List<ArquivoAppModel>>(arquivos));
+                    var listaArquivos = new List<ArquivoAppModel>();
+                    if (arquivos.Count > 0)
+                    {
+                        for (int i = 0; i < arquivos.Count; i++)
+                        {
+                            listaArquivos.Add(Mapper.Map<ArquivoAppModel>(arquivos[i]));
+                        }
+                    }
+
+                    _registroRecorrenciaAppServico.FinalizarRegistroRecorrencia(idAtividade, dataConvertida, finalizarAtividadeModel.DataRealizacao.Value, finalizarAtividadeModel.Observacao, listaArquivos);
                     MensagemSucesso();
                     return Redirect(urlRetorno);
                 }

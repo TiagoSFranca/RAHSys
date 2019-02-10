@@ -31,6 +31,7 @@ namespace RAHSys.Infra.CrossCutting.IoC.Registradores
             container.Register<IDiaSemanaRepositorio, DiaSemanaRepositorio>(Lifestyle.Scoped);
             container.Register<IRegistroRecorrenciaRepositorio, RegistroRecorrenciaRepositorio>(Lifestyle.Scoped);
             container.Register<IConfiguracaoAtividadeRepositorio, ConfiguracaoAtividadeRepositorio>(Lifestyle.Scoped);
+            container.Register<IEvidenciaRepositorio, EvidenciaRepositorio>(Lifestyle.Scoped);
         }
     }
 }

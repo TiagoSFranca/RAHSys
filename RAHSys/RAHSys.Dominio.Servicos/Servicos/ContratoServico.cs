@@ -18,9 +18,6 @@ namespace RAHSys.Dominio.Servicos.Servicos
         private readonly IDocumentoRepositorio _documentoRepositorio;
         private readonly IResponsavelFinanceiroRepositorio _responsavelFinanceiroRepositorio;
 
-        private readonly string Rota = "/Contratos/";
-        private readonly string RootPath = AppDomain.CurrentDomain.BaseDirectory;
-
         public ContratoServico(IContratoRepositorio contratoRepositorio, IAnaliseInvestimentoRepositorio analiseInvestimentoRepositorio,
             IClienteRepositorio clienteRepositorio, IDocumentoRepositorio documentoRepositorio, IResponsavelFinanceiroRepositorio responsavelFinanceiroRepositorio)
             : base(contratoRepositorio)
@@ -129,7 +126,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
             do
             {
                 count++;
-                rotaArquivo = string.Format("{0}/{1}{2}", Rota + idContrato.ToString(), count.ToString(), extensao);
+                rotaArquivo = string.Format("{0}/{1}{2}", RotaContratos + idContrato.ToString(), count.ToString(), extensao);
             } while (File.Exists(RootPath + rotaArquivo));
             var fileStream = File.Create(RootPath + rotaArquivo);
             arquivo.InputStream.Seek(0, SeekOrigin.Begin);
@@ -141,11 +138,11 @@ namespace RAHSys.Dominio.Servicos.Servicos
 
         private void CriarDiretorio(int idContrato)
         {
-            if (!Directory.Exists(RootPath + Rota))
-                Directory.CreateDirectory(RootPath + Rota);
+            if (!Directory.Exists(RootPath + RotaContratos))
+                Directory.CreateDirectory(RootPath + RotaContratos);
 
-            if (!Directory.Exists(RootPath + Rota + idContrato.ToString()))
-                Directory.CreateDirectory(RootPath + Rota + idContrato.ToString());
+            if (!Directory.Exists(RootPath + RotaContratos + idContrato.ToString()))
+                Directory.CreateDirectory(RootPath + RotaContratos + idContrato.ToString());
         }
 
         public void Remover(ContratoModel obj)

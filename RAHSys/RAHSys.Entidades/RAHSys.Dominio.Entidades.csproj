@@ -59,6 +59,7 @@
     <Compile Include="Entidades\EquipeUsuarioModel.cs" />
     <Compile Include="Entidades\EstadoCivilModel.cs" />
     <Compile Include="Entidades\EstadoModel.cs" />
+    <Compile Include="Entidades\EvidenciaModel.cs" />
     <Compile Include="Entidades\FiadorEnderecoModel.cs" />
     <Compile Include="Entidades\FiadorModel.cs" />
     <Compile Include="Entidades\ConfiguracaoAtividadeModel.cs" />

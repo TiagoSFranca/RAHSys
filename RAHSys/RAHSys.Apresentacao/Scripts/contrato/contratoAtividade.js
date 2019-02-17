@@ -32,6 +32,13 @@ function PreencherInfoEquipe(atividade) {
 
 function ExibirAtividade(atividade) {
     if (atividade != null) {
+        var urlFinalizarAtividade = $('#inputUrlFinalizarAtividade').val();
+        var urlEvidencias = $('#inputUrlEvidencias').val();
+        var data = moment(atividade.DataRealizacaoPrevista, "YYYY-MM-DD").format('DD/MM/YYYY');
+        urlFinalizarAtividade += '?idAtividade=' + atividade.IdAtividade + '&data=' + data + '&urlRetorno=' + encodeURIComponent($('#inputUrlRetorno').val());
+        urlEvidencias += '?idAtividade=' + atividade.IdRecorrencia + '&urlRetorno=' + encodeURIComponent($('#inputUrlRetorno').val());
+        $('#finalizarRecorrencia').attr('href', urlFinalizarAtividade)
+        $('#evidencias').attr('href', urlEvidencias)
         $('.addDataAtividade').data('atividade', atividade);
         $('#codigoAtividade').html('#' + atividade.IdAtividade)
         $('#codigoRecorrencia').html('nº ' + atividade.NumeroRecorrencia)
@@ -63,9 +70,10 @@ function ExibirAtividade(atividade) {
         if (atividade.Realizada) {
             $('.atividade-realizada').show();
             $('#finalizarRecorrencia').hide();
-            $('#ulRecorrencia').hide();
+            $('#evidencias').show();
         }
         else {
+            $('#evidencias').hide();
             $('#finalizarRecorrencia').show();
             $('#ulRecorrencia').show();
             $('.atividade-realizada').hide();

@@ -7,6 +7,7 @@ using RAHSys.Apresentacao.Attributes;
 using RAHSys.Apresentacao.Models;
 using RAHSys.Extras;
 using RAHSys.Extras.Enums;
+using RAHSys.Extras.Helper;
 using RAHSys.Infra.CrossCutting.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -32,12 +33,14 @@ namespace RAHSys.Apresentacao.Controllers
         private readonly IUsuarioAppServico _usuarioAppServico;
         private readonly IDiaSemanaAppServico _diaSemanaAppServico;
         private readonly ITipoRecorrenciaAppServico _tipoRecorrenciaAppServico;
+        private readonly IRegistroRecorrenciaAppServico _registroRecorrenciaAppServico;
+        private readonly IEvidenciaAppServico _evidenciaAppServico;
 
         public ContratoController(IContratoAppServico contratoAppServico, IEstadoAppServico estadoAppServico,
             ICidadeAppServico cidadeAppServico, ITipoTelhadoAppServico tipoTelhadoAppServico, IEstadoCivilAppServico estadoCivilAppServico,
             IDocumentoAppServico documentoAppServico, IEquipeAppServico equipeAppServico, ITipoAtividadeAppServico tipoAtividadeAppServico,
             IAtividadeAppServico atividadeAppServico, IUsuarioAppServico usuarioAppServico, IDiaSemanaAppServico diaSemanaAppServico,
-            ITipoRecorrenciaAppServico tipoRecorrenciaAppServico)
+            ITipoRecorrenciaAppServico tipoRecorrenciaAppServico, IRegistroRecorrenciaAppServico registroRecorrenciaAppServico, IEvidenciaAppServico evidenciaAppServico)
         {
             _contratoAppServico = contratoAppServico;
             _estadoAppServico = estadoAppServico;
@@ -51,6 +54,8 @@ namespace RAHSys.Apresentacao.Controllers
             _usuarioAppServico = usuarioAppServico;
             _diaSemanaAppServico = diaSemanaAppServico;
             _tipoRecorrenciaAppServico = tipoRecorrenciaAppServico;
+            _registroRecorrenciaAppServico = registroRecorrenciaAppServico;
+            _evidenciaAppServico = evidenciaAppServico;
             ViewBag.Title = "Clientes/Contratos";
         }
 
@@ -261,7 +266,7 @@ namespace RAHSys.Apresentacao.Controllers
                 try
                 {
                     _contratoAppServico.AdicionarFichaCliente(fichaCliente.Cliente);
-                    MensagemSucesso(MensagensPadrao.CadastroSucesso);
+                    MensagemSucesso();
                     return RedirectToAction("Index", "Contrato");
                 }
                 catch (CustomBaseException ex)
@@ -340,10 +345,9 @@ namespace RAHSys.Apresentacao.Controllers
         }
 
         [HttpGet]
-        public ActionResult VisualizarContrato(int id)
+        public ActionResult VisualizarDocumento(int id)
         {
-            ViewBag.SubTitle = "Editar Contrato";
-            var contratoModel = new ContratoAppModel();
+            ViewBag.SubTitle = "Visualizar Documento";
             try
             {
                 var documento = _documentoAppServico.ObterPorId(id);
@@ -457,6 +461,7 @@ namespace RAHSys.Apresentacao.Controllers
 
         #region Atividades
 
+        [HttpGet]
         public ActionResult Atividades(int id, string dataInicial, string dataFinal, string modoVisualizacao)
         {
             ViewBag.SubTitle = "Atividades";
@@ -505,6 +510,7 @@ namespace RAHSys.Apresentacao.Controllers
             return View(atividadeContratoModel);
         }
 
+        [HttpGet]
         public ActionResult AdicionarAtividade(int id)
         {
             ViewBag.SubTitle = "Adicionar nova Atividade";
@@ -598,6 +604,7 @@ namespace RAHSys.Apresentacao.Controllers
             return View(atividadeRetornoModel);
         }
 
+        [HttpGet]
         public ActionResult EditarAtividade(int id, int idAtividade)
         {
             ViewBag.SubTitle = "Editar Atividade";
@@ -714,6 +721,289 @@ namespace RAHSys.Apresentacao.Controllers
             return View(atividadeRetornoModel);
         }
 
+        [HttpGet]
+        public ActionResult FinalizarAtividade(int id, int idAtividade, string data, string urlRetorno)
+        {
+            ViewBag.SubTitle = "Finalizar Atividade";
+            try
+            {
+                if (string.IsNullOrEmpty(urlRetorno))
+                {
+                    MensagemErro("Ocorreu um erro!");
+                    return RedirectToAction("Atividades", "Contrato", new { id });
+                }
+
+                ViewBag.UrlRetorno = urlRetorno;
+
+                var atividadeContratoFinalizarModel = new FinalizarAtividadeModel();
+                var atividade = _atividadeAppServico.ObterPorId(idAtividade);
+
+                if (atividade == null)
+                {
+                    MensagemErro("Atividade não encontrada");
+                    return Redirect(urlRetorno);
+                }
+
+                var contratoModel = _contratoAppServico.ObterPorId(id);
+                if (contratoModel == null)
+                {
+                    MensagemErro("Contrato não encontrado");
+                    return RedirectToAction("Index", "Contrato");
+                }
+                if (contratoModel.AnaliseInvestimento?.Cliente == null)
+                {
+                    MensagemErro("O contrato precisa estar assinado");
+                    return RedirectToAction("Index", "Contrato");
+                }
+                if (contratoModel.AnaliseInvestimento?.Cliente?.IdEquipe == null)
+                {
+                    MensagemErro("O contrato não possui equipe associada");
+                    return RedirectToAction("Index", "Contrato");
+                }
+
+                if (atividade.IdContrato != contratoModel.IdContrato)
+                {
+                    MensagemErro("Atividade não pertence ao contrato");
+                    return Redirect(urlRetorno);
+                }
+
+                var dataConvertida = DataHelper.ConverterStringParaData(data);
+
+                var registroRecorrencia = _registroRecorrenciaAppServico.Consultar(idAtividade, null, dataConvertida, null, null, true, 1, Int32.MaxValue);
+
+                if (registroRecorrencia.Resultado.Count() > 0)
+                {
+                    MensagemErro("Atividade já foi finalizada");
+                    return Redirect(urlRetorno);
+                }
+
+                atividadeContratoFinalizarModel.AtividadeInfo = new AtividadeInfoModel(atividade, dataConvertida);
+
+                return View(atividadeContratoFinalizarModel);
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+                return Redirect(urlRetorno);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult FinalizarAtividade(FinalizarAtividadeModel finalizarAtividadeModel, string urlRetorno)
+        {
+            ViewBag.SubTitle = "Finalizar Atividade";
+
+            var idAtividade = finalizarAtividadeModel.AtividadeInfo.Atividade.IdAtividade;
+            var idContrato = finalizarAtividadeModel.AtividadeInfo.Atividade.IdContrato;
+            if (string.IsNullOrEmpty(urlRetorno))
+            {
+                MensagemErro("Ocorreu um erro!");
+                return RedirectToAction("Atividades", "Contrato", new { idContrato });
+            }
+
+            ViewBag.UrlRetorno = urlRetorno;
+
+            var atividadeContratoFinalizarModel = new FinalizarAtividadeModel();
+            var atividade = _atividadeAppServico.ObterPorId(idAtividade);
+
+            if (atividade == null)
+            {
+                MensagemErro("Atividade não encontrada");
+                return Redirect(urlRetorno);
+            }
+
+            var contratoModel = _contratoAppServico.ObterPorId(idContrato);
+            if (contratoModel == null)
+            {
+                MensagemErro("Contrato não encontrado");
+                return RedirectToAction("Index", "Contrato");
+            }
+            if (contratoModel.AnaliseInvestimento?.Cliente == null)
+            {
+                MensagemErro("O contrato precisa estar assinado");
+                return RedirectToAction("Index", "Contrato");
+            }
+            if (contratoModel.AnaliseInvestimento?.Cliente?.IdEquipe == null)
+            {
+                MensagemErro("O contrato não possui equipe associada");
+                return RedirectToAction("Index", "Contrato");
+            }
+
+            if (atividade.IdContrato != contratoModel.IdContrato)
+            {
+                MensagemErro("Atividade não pertence ao contrato");
+                return Redirect(urlRetorno);
+            }
+
+            var dataConvertida = finalizarAtividadeModel.AtividadeInfo.DataPrevista;
+
+            var registroRecorrencia = _registroRecorrenciaAppServico.Consultar(idAtividade, null, dataConvertida, null, null, true, 1, Int32.MaxValue);
+
+            if (registroRecorrencia.Resultado.Count() > 0)
+            {
+                MensagemErro("Atividade já foi finalizada");
+                return Redirect(urlRetorno);
+            }
+
+            atividadeContratoFinalizarModel.AtividadeInfo = new AtividadeInfoModel(atividade, dataConvertida);
+            var arquivos = Request.Files;
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var listaArquivos = new List<ArquivoAppModel>();
+                    if (arquivos.Count > 0)
+                    {
+                        for (int i = 0; i < arquivos.Count; i++)
+                        {
+                            listaArquivos.Add(Mapper.Map<ArquivoAppModel>(arquivos[i]));
+                        }
+                    }
+
+                    _registroRecorrenciaAppServico.FinalizarRegistroRecorrencia(idAtividade, dataConvertida, finalizarAtividadeModel.DataRealizacao.Value, finalizarAtividadeModel.Observacao, listaArquivos);
+                    MensagemSucesso();
+                    return Redirect(urlRetorno);
+                }
+                catch (CustomBaseException ex)
+                {
+                    MensagemErro(ex.Mensagem);
+                    return View(atividadeContratoFinalizarModel);
+                }
+            }
+
+            return View(atividadeContratoFinalizarModel);
+        }
+
+        [HttpGet]
+        public ActionResult EvidenciaAtividade(int id, int idAtividade, string urlRetorno)
+        {
+            ViewBag.SubTitle = "Evidências da Atividade";
+            try
+            {
+                if (string.IsNullOrEmpty(urlRetorno))
+                {
+                    MensagemErro("Ocorreu um erro!");
+                    return RedirectToAction("Atividades", "Contrato", new { id });
+                }
+
+                ViewBag.UrlRetorno = urlRetorno;
+
+                var atividadeContratoFinalizarModel = new EvidenciaAtividadeModel();
+                var registroRecorrencia = _registroRecorrenciaAppServico.ObterPorId(idAtividade);
+
+                if (registroRecorrencia == null)
+                {
+                    MensagemErro("Atividade não encontrada");
+                    return Redirect(urlRetorno);
+                }
+
+                var contratoModel = _contratoAppServico.ObterPorId(id);
+                if (contratoModel == null)
+                {
+                    MensagemErro("Contrato não encontrado");
+                    return RedirectToAction("Index", "Contrato");
+                }
+                if (contratoModel.AnaliseInvestimento?.Cliente == null)
+                {
+                    MensagemErro("O contrato precisa estar assinado");
+                    return RedirectToAction("Index", "Contrato");
+                }
+                if (contratoModel.AnaliseInvestimento?.Cliente?.IdEquipe == null)
+                {
+                    MensagemErro("O contrato não possui equipe associada");
+                    return RedirectToAction("Index", "Contrato");
+                }
+
+                if (registroRecorrencia.Atividade.IdContrato != contratoModel.IdContrato)
+                {
+                    MensagemErro("Atividade não pertence ao contrato");
+                    return Redirect(urlRetorno);
+                }
+
+
+                atividadeContratoFinalizarModel.AtividadeInfo = new AtividadeInfoModel(registroRecorrencia.Atividade, registroRecorrencia.DataPrevista)
+                {
+                    RegistroRecorrencia = registroRecorrencia
+                };
+
+                return View(atividadeContratoFinalizarModel);
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+                return Redirect(urlRetorno);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ExcluirEvidencia(int id, int idRegistroRecorrencia, int idContrato, string urlRetorno)
+        {
+            ViewBag.SubTitle = "Excluir Evidência";
+            var evidenciaModel = new EvidenciaAppModel();
+            try
+            {
+                evidenciaModel = _evidenciaAppServico.ObterPorId(id);
+                if (evidenciaModel == null)
+                {
+                    MensagemErro("Evicência não encontrada");
+                    return RedirectToAction("EvidenciaAtividade", new { id = idContrato, idAtividade = idRegistroRecorrencia, urlRetorno });
+                }
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+                return RedirectToAction("EvidenciaAtividade", new { id = idContrato, idAtividade = idRegistroRecorrencia, urlRetorno });
+            }
+            ViewBag.IdContrato = idContrato;
+            ViewBag.UrlRetorno = urlRetorno;
+            return View(evidenciaModel);
+        }
+
+        [HttpPost]
+        public ActionResult ExcluirEvidencia(EvidenciaAppModel evidencia, int idContrato, string urlRetorno)
+        {
+            try
+            {
+                _evidenciaAppServico.Remover(evidencia.IdEvidencia);
+                MensagemSucesso(MensagensPadrao.ExclusaoSucesso);
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+            }
+
+            return RedirectToAction("EvidenciaAtividade", new { id = idContrato, idAtividade = evidencia.IdRegistroRecorrencia, urlRetorno });
+        }
+
+        [HttpPost]
+        public ActionResult AdicionarEvidencias(int idContrato, int idAtividadeGeral, int idRegistroRecorrencia, string urlRetorno)
+        {
+            var arquivos = Request.Files;
+            try
+            {
+                var listaArquivos = new List<ArquivoAppModel>();
+                if (arquivos.Count > 0)
+                {
+                    for (int i = 0; i < arquivos.Count; i++)
+                    {
+                        listaArquivos.Add(Mapper.Map<ArquivoAppModel>(arquivos[i]));
+                    }
+                }
+
+                _evidenciaAppServico.AdicionarEvidencias(idAtividadeGeral, idRegistroRecorrencia, listaArquivos);
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+            }
+
+            return RedirectToAction("EvidenciaAtividade", new { id = idContrato, idAtividade = idRegistroRecorrencia, urlRetorno });
+        }
+
+        #endregion
+
+        #region Métodos Aux
+
         public string ObterAtividadesContrato(int id, string dataInicial, string dataFinal)
         {
             DateTimeFormatInfo formatter = new CultureInfo("pt-BR", false).DateTimeFormat;
@@ -748,10 +1038,6 @@ namespace RAHSys.Apresentacao.Controllers
             });
             return JsonConvert.SerializeObject(lista);
         }
-
-        #endregion
-
-        #region Métodos Aux
 
         private AtividadeContratoAdicionarEditarModel MontarAtividadeContratoAdicionarEditar()
         {

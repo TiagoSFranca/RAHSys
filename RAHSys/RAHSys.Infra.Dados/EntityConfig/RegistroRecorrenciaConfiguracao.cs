@@ -23,7 +23,12 @@ namespace RAHSys.Infra.Dados.EntityConfig
 
             Property(e => e.Observacao)
                 .HasMaxLength(256)
-                .IsRequired();
+                .IsOptional();
+
+            HasMany(e => e.Evidencias)
+                .WithRequired(es => es.RegistroRecorrencia)
+                .HasForeignKey(es => es.IdRegistroRecorrencia)
+                .WillCascadeOnDelete(true);
         }
     }
 }

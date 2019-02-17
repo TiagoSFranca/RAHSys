@@ -37,7 +37,8 @@ namespace RAHSys.Dominio.Servicos.Servicos
         }
 
         public AtividadeServico(IAtividadeRepositorio atividadeRepositorio, IRegistroRecorrenciaRepositorio registroRecorrenciaRepositorio,
-            IConfiguracaoAtividadeRepositorio configuracaoAtividadeRepositorio) : base(atividadeRepositorio)
+            IConfiguracaoAtividadeRepositorio configuracaoAtividadeRepositorio)
+            : base(atividadeRepositorio)
         {
             _atividadeRepositorio = atividadeRepositorio;
             _registroRecorrenciaRepositorio = registroRecorrenciaRepositorio;
@@ -143,20 +144,6 @@ namespace RAHSys.Dominio.Servicos.Servicos
             //}
         }
 
-        public void FinalizarRecorrencia(int idAtividade, DateTime dataRealizacaoPrevista, DateTime dataRealizacao, string observacao)
-        {
-            if (ValidarRecorrencia(idAtividade, dataRealizacaoPrevista))
-                throw new CustomBaseException(new Exception(), string.Format("Já existe um registro para [{0}].", dataRealizacaoPrevista));
-            var recorrencia = new RegistroRecorrenciaModel()
-            {
-                IdAtividade = idAtividade,
-                DataPrevista = dataRealizacaoPrevista,
-                DataRealizacao = dataRealizacao,
-                Observacao = observacao
-            };
-            _registroRecorrenciaRepositorio.Adicionar(recorrencia);
-        }
-
         public void CopiarAtividade(int idAtividade)
         {
             _atividadeRepositorio.CopiarAtividade(idAtividade);
@@ -250,14 +237,6 @@ namespace RAHSys.Dominio.Servicos.Servicos
             return _configuracaoAtividadeRepositorio.ObterPorId(idAtividade);
         }
 
-        private bool ValidarRecorrencia(int idAtividade, DateTime dataPrevista)
-        {
-            var query = _registroRecorrenciaRepositorio.Consultar().Where(e => e.IdAtividade == idAtividade && e.DataPrevista.Year == dataPrevista.Year
-            && e.DataPrevista.Month == dataPrevista.Month
-            && e.DataPrevista.Day == dataPrevista.Day);
-            return query.Count() > 0;
-        }
-
         private void ValidarMesAno(string mesAno, ref int mes, ref int ano)
         {
             string erroDataInvalida = string.Format("Data [{0}] inválida.", mesAno);
@@ -303,7 +282,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
             AtividadeRecorrenciaModel recorrencia = new AtividadeRecorrenciaModel(atividade.IdAtividade, atividade.Descricao, atividade.TipoAtividade,
                 atividade.Contrato, atividade.Equipe, atividade.Usuario,
                 atividade.TipoRecorrencia, registroRecorrencia, atividade.ConfiguracaoAtividade.TerminaEm == null &&
-                (atividade.ConfiguracaoAtividade.QtdRepeticoes == null || atividade.ConfiguracaoAtividade.QtdRepeticoes == 0), numeroAtividade)
+                (atividade.ConfiguracaoAtividade.QtdRepeticoes == null || atividade.ConfiguracaoAtividade.QtdRepeticoes == 0), numeroAtividade, registroRecorrencia.Evidencias?.Count > 0)
             {
                 Realizada = realizada,
                 EquipeInteira = atividade.EquipeInteira
@@ -331,7 +310,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
                         e.Usuario,
                         e.TipoRecorrencia,
                         e.RegistroRecorrencias.FirstOrDefault() ?? new RegistroRecorrenciaModel() { DataPrevista = e.DataInicial },
-                        false, 1)
+                        false, 1, (e.RegistroRecorrencias.FirstOrDefault() ?? new RegistroRecorrenciaModel() { DataPrevista = e.DataInicial }).Evidencias?.Count > 0)
                     {
                         Realizada = e.RegistroRecorrencias.Count > 0,
                         EquipeInteira = e.EquipeInteira

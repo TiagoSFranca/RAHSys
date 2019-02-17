@@ -39,8 +39,9 @@ namespace RAHSys.Infra.Dados.Contexto
         public DbSet<TipoRecorrenciaModel> TipoRecorrencia { get; set; }
         public DbSet<DiaSemanaModel> DiaSemana { get; set; }
         public DbSet<ConfiguracaoAtividadeModel> ConfiguracaoAtividade { get; set; }
-        public DbSet<AtividadeDiaSemanaModel> AtividadeDiaSemana{ get; set; }
-        public DbSet<RegistroRecorrenciaModel> RegistroRecorrencia{ get; set; }
+        public DbSet<AtividadeDiaSemanaModel> AtividadeDiaSemana { get; set; }
+        public DbSet<RegistroRecorrenciaModel> RegistroRecorrencia { get; set; }
+        public DbSet<EvidenciaModel> Evidencia { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -91,6 +92,7 @@ namespace RAHSys.Infra.Dados.Contexto
             modelBuilder.Configurations.Add(new ConfiguracaoAtividadeConfiguracao());
             modelBuilder.Configurations.Add(new AtividadeDiaSemanaConfiguracao());
             modelBuilder.Configurations.Add(new RegistroRecorrenciaConfiguracao());
+            modelBuilder.Configurations.Add(new EvidenciaConfiguracao());
         }
     }
 }

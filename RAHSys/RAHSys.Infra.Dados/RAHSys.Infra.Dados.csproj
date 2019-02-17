@@ -66,6 +66,7 @@
     <Compile Include="EntityConfig\EquipeUsuarioConfiguracao.cs" />
     <Compile Include="EntityConfig\EstadoCivilConfiguracao.cs" />
     <Compile Include="EntityConfig\EstadoConfiguracao.cs" />
+    <Compile Include="EntityConfig\EvidenciaConfiguracao.cs" />
     <Compile Include="EntityConfig\FiadorConfiguracao.cs" />
     <Compile Include="EntityConfig\FiadorEnderecoConfiguracao.cs" />
     <Compile Include="EntityConfig\LogErrorConfiguracao.cs" />
@@ -155,6 +156,14 @@
     <Compile Include="Migrations\201901261824087_Adicionado ApenasDiaUtil a ConfiguracaoAtividade.Designer.cs">
       <DependentUpon>201901261824087_Adicionado ApenasDiaUtil a ConfiguracaoAtividade.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902101300406_Criacao da tabela Evidencia.cs" />
+    <Compile Include="Migrations\201902101300406_Criacao da tabela Evidencia.Designer.cs">
+      <DependentUpon>201902101300406_Criacao da tabela Evidencia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902101311176_Alterado para opcional o campo Observacao em RegistroRecorrencia.cs" />
+    <Compile Include="Migrations\201902101311176_Alterado para opcional o campo Observacao em RegistroRecorrencia.Designer.cs">
+      <DependentUpon>201902101311176_Alterado para opcional o campo Observacao em RegistroRecorrencia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.cs" />
     <Compile Include="Migrations\Audit\201808101838532_CriacaoDBAudit.Designer.cs">
       <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>
@@ -193,6 +202,7 @@
     <Compile Include="Repositorios\ConfiguracaoAtividadeRepositorio.cs" />
     <Compile Include="Repositorios\DiaSemanaRepositorio.cs" />
     <Compile Include="Repositorios\EquipeRepositorio.cs" />
+    <Compile Include="Repositorios\EvidenciaRepositorio.cs" />
     <Compile Include="Repositorios\PagamentoRepositorio.cs" />
     <Compile Include="Repositorios\RegistroRecorrenciaRepositorio.cs" />
     <Compile Include="Repositorios\RepositorioAuditBase.cs" />
@@ -288,6 +298,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901261824087_Adicionado ApenasDiaUtil a ConfiguracaoAtividade.resx">
       <DependentUpon>201901261824087_Adicionado ApenasDiaUtil a ConfiguracaoAtividade.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902101300406_Criacao da tabela Evidencia.resx">
+      <DependentUpon>201902101300406_Criacao da tabela Evidencia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902101311176_Alterado para opcional o campo Observacao em RegistroRecorrencia.resx">
+      <DependentUpon>201902101311176_Alterado para opcional o campo Observacao em RegistroRecorrencia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\Audit\201808101838532_CriacaoDBAudit.resx">
       <DependentUpon>201808101838532_CriacaoDBAudit.cs</DependentUpon>

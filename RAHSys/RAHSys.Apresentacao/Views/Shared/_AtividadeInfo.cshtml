@@ -1,0 +1,135 @@
+﻿@model RAHSys.Apresentacao.Models.AtividadeInfoModel
+
+<div class="form-group form-md-line-input">
+    @Html.LabelFor(model => model.Atividade.IdAtividade, new { @class = "col-md-2 control-label" })
+    <div class="col-md-9">
+        @Html.EditorFor(model => model.Atividade.IdAtividade, new { htmlAttributes = new { @class = "form-control", @placeholder = "Código", @disabled = "disabled" } })
+    </div>
+</div>
+<div class="form-group form-md-line-input">
+    @Html.LabelFor(m => m.Atividade.IdTipoAtividade, new { @class = "col-md-2 control-label" })
+    <div class="col-md-4">
+        @Html.EditorFor(model => model.Atividade.TipoAtividade.Descricao, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tipo de Atividade", @disabled = "disabled" } })
+    </div>
+    @Html.LabelFor(m => m.Atividade.IdTipoRecorrencia, new { @class = "col-md-2 control-label" })
+    <div class="col-md-3">
+        @Html.EditorFor(model => model.Atividade.TipoRecorrencia.Descricao, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tipo de Recorrência", @id = "ddlRecorrencia", @disabled = "disabled" } })
+    </div>
+</div>
+<div class="form-group form-md-line-input">
+    @Html.LabelFor(m => m.Atividade.IdUsuario, new { @class = "col-md-2 control-label" })
+    <div class="col-md-9">
+        @Html.EditorFor(model => model.Atividade.Usuario.EmailEUserName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Atribuido Para", @disabled = "disabled" } })
+    </div>
+</div>
+<div class="form-group form-md-line-input">
+    @Html.LabelFor(m => m.Atividade.DataInicial, new { @class = "col-md-2 control-label" })
+    <div class="col-md-4">
+        @Html.EditorFor(model => model.Atividade.DataInicial, new { htmlAttributes = new { @Value = ((DateTime)Model.Atividade.DataInicial).ToString("dd/MM/yyyy"), @class = "form-control dataAtividade", @placeholder = "Começa em", @disabled = "disabled" } })
+    </div>
+    @Html.LabelFor(model => model.DataPrevista, new { @class = "col-md-2 control-label" })
+    <div class="col-md-3">
+        @Html.EditorFor(model => model.DataPrevista, new { htmlAttributes = new { @Value = ((DateTime)Model.DataPrevista).ToString("dd/MM/yyyy"), @class = "form-control dataAtividade", @placeholder = "Começa em", @disabled = "disabled" } })
+    </div>
+</div>
+<div class="form-group form-md-line-input">
+    @Html.LabelFor(m => m.Atividade.Descricao, new { @class = "col-md-2 control-label" })
+    <div class="col-md-9">
+        @Html.TextAreaFor(model => model.Atividade.Descricao, new { @class = "form-control", @placeholder = "Descrição", @disabled = "disabled" })
+    </div>
+</div>
+<div class="form-group form-md-line-input">
+    <div class="col-md-2 control-label">
+    </div>
+    <div class="col-md-9">
+        <div class="md-checkbox-inline">
+            <div class="md-checkbox">
+                @Html.CheckBoxFor(m => m.Atividade.EquipeInteira, new { @class = "md-check", @id = "equipeInteira", @disabled = "disabled" })
+                <label for="equipeInteira">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span> Equipe Inteira
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+@if (Model.Atividade.ConfiguracaoAtividade != null)
+{
+    <div class="row config-atividade-body">
+        <div class="col-md-12">
+            <div class="form-group form-md-line-input">
+                <div class="col-md-2 control-label">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart font-dark hide"></i>
+                        <span class="caption-subject font-green-steel uppercase bold">Configuração</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group form-md-line-input">
+                @Html.LabelFor(m => m.Atividade.ConfiguracaoAtividade.Frequencia, new { @class = "col-md-2 control-label" })
+                <div class="col-md-2">
+                    @Html.EditorFor(model => model.Atividade.ConfiguracaoAtividade.Frequencia, new { htmlAttributes = new { @class = "form-control", @placeholder = "Frequência", @disabled = "disabled" } })
+                </div>
+                @if (Model.Atividade.ConfiguracaoAtividade.DiaMes != null)
+                {
+                    @Html.LabelFor(m => m.Atividade.ConfiguracaoAtividade.DiaMes, new { @class = "col-md-2 control-label selectMes" })
+                    <div class="col-md-2 selectMes">
+                        @Html.EditorFor(model => model.Atividade.ConfiguracaoAtividade.DiaMes, new { htmlAttributes = new { @class = "form-control", @placeholder = "Dia do Mês", @disabled = "disabled" } })
+                    </div>
+                }
+                @if (Model.Atividade.ConfiguracaoAtividade.AtividadeDiaSemanas.Count > 0)
+                {
+                    @Html.LabelFor(m => m.Atividade.ConfiguracaoAtividade.AtividadeDiaSemanas, new { @class = "col-md-2 control-label selectSemana" })
+                    <div class="col-md-4">
+                        <select id="multiple" class="form-control select2-multiple selectSemana" multiple name="DiaSemanasSelecionadas[]" disabled>
+                            @foreach (var item in Model.Atividade.ConfiguracaoAtividade.AtividadeDiaSemanas)
+                            {
+                                <option value="@item.IdDiaSemana" selected>@item.DiaSemana.Descricao</option>
+                            }
+                        </select>
+                    </div>
+                }
+            </div>
+            <div class="form-group form-md-line-input">
+                <div class="col-md-2 control-label">
+                </div>
+                <div class="col-md-2">
+                    <div class="md-checkbox-inline">
+                        <div class="md-checkbox">
+                            @Html.CheckBoxFor(m => m.Atividade.ConfiguracaoAtividade.ApenasDiaUtil, new { @class = "md-check", @id = "apenasDiaUtil", @disabled = "disabled" })
+                            <label for="apenasDiaUtil">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span> Apenas dia útil
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                @Html.LabelFor(m => m.Atividade.ConfiguracaoAtividade.QtdRepeticoes, new { @class = "col-md-2 control-label" })
+                <div class="col-md-1">
+                    @Html.EditorFor(model => model.Atividade.ConfiguracaoAtividade.QtdRepeticoes, new { htmlAttributes = new { @class = "form-control", @placeholder = "Repetições", @disabled = "disabled" } })
+                </div>
+                @if (Model.Atividade.ConfiguracaoAtividade.TerminaEm != null)
+                {
+                    @Html.LabelFor(m => m.Atividade.ConfiguracaoAtividade.TerminaEm, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-2">
+                        @Html.EditorFor(model => model.Atividade.ConfiguracaoAtividade.TerminaEm, new { htmlAttributes = new { @Value = ((DateTime)Model.Atividade.ConfiguracaoAtividade.TerminaEm).ToString("dd/MM/yyyy"), @class = "form-control dataAtividade", @placeholder = "Termina em", @disabled = "disabled" } })
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var placeholder = "Selecione";
+            $(".select2-multiple").select2({
+                placeholder: placeholder,
+                allowClear: true
+            });
+        });
+    </script>
+}

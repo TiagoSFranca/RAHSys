@@ -230,6 +230,7 @@
     <Compile Include="Controllers\ContratoController.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\EquipeController.cs" />
+    <Compile Include="Controllers\EvidenciaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PagamentoController.cs" />
@@ -2875,6 +2876,7 @@
     <Content Include="Content\img\logo-big.png" />
     <Content Include="Scripts\atividade\atividade.js" />
     <Content Include="Scripts\buscarCidades.js" />
+    <Content Include="Scripts\atividade\evidenciasAtividadeFileInput.js" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -4053,6 +4055,10 @@
     <Content Include="Views\Shared\_ModalExcluirAtividade.cshtml" />
     <Content Include="Views\Shared\_ModalEncerrarAtividade.cshtml" />
     <Content Include="Views\Shared\_ModalAlterarEquipe.cshtml" />
+    <Content Include="Views\Contrato\FinalizarAtividade.cshtml" />
+    <Content Include="Views\Shared\_AtividadeInfo.cshtml" />
+    <Content Include="Views\Contrato\EvidenciaAtividade.cshtml" />
+    <Content Include="Views\Contrato\ExcluirEvidencia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

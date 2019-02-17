@@ -24,22 +24,6 @@
             </div>
         </div>
     </div>
-    @*<div class="col-md-6 col-sm-6">
-            <div class="portlet light ">
-                <div class="portlet-title">
-                    <div class="caption caption-md">
-                        <i class="icon-bar-chart font-dark hide"></i>
-                        <span class="caption-subject font-green-steel uppercase bold">Equipe</span>
-                    </div>
-                    <div class="tools">
-                        <a href="javascript:;" class="expand"> </a>
-                    </div>
-                </div>
-                <div class="portlet-body portlet-collapsed">
-                    @{Html.RenderPartial("_EquipeInfo", Model.Equipe);}
-                </div>
-            </div>
-        </div>*@
 </div>
 <div class="row">
     <div class="col-md-12 col-sm-12">
@@ -294,6 +278,7 @@
 <input type="hidden" value="@Url.Action("Atividades", "Contrato", new { id = Model.Contrato.IdContrato})" id="inputUrlBase" />
 <input type="hidden" value="@Url.Action("EditarAtividade", "Contrato", new { id = Model.Contrato.IdContrato})" id="inputEditarAtividade" />
 <input type="hidden" value="@Url.Action("FinalizarAtividade", "Contrato", new { id = Model.Contrato.IdContrato})" id="inputUrlFinalizarAtividade" />
+<input type="hidden" value="@Url.Action("EvidenciaAtividade", "Contrato", new { id = Model.Contrato.IdContrato})" id="inputUrlEvidencias" />
 <input type="hidden" value="@Url.Action("Atividades", "Contrato", new { id = Model.Contrato.IdContrato, dataInicial = ViewBag.DataInicial, dataFinal = ViewBag.DataFinal, modoVisualizacao = ViewBag.ModoVisualizacao })" id="inputUrlRetorno" />
 <input type="hidden" value="@JsonConvert.SerializeObject(RAHSys.Extras.Helper.EquipeHelper.EquipeInteira)" id="equipeInteiraHelper" />
 @*END -- Necessários para o calendário*@

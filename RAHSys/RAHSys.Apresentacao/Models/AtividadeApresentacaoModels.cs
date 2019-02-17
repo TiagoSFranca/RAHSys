@@ -94,4 +94,9 @@ namespace RAHSys.Apresentacao.Models
         [Display(Name = "Data Prevista")]
         public DateTime DataPrevista { get; set; }
     }
+
+    public class EvidenciaAtividadeModel
+    {
+        public AtividadeInfoModel AtividadeInfo { get; set; }
+    }
 }

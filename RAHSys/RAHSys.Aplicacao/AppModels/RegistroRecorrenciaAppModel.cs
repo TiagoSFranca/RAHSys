@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RAHSys.Aplicacao.AppModels
 {
@@ -11,5 +12,7 @@ namespace RAHSys.Aplicacao.AppModels
         public string Observacao { get; set; }
 
         public virtual AtividadeAppModel Atividade { get; set; }
+
+        public virtual List<EvidenciaAppModel> Evidencias { get; set; }
     }
 }

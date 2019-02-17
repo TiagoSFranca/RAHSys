@@ -79,6 +79,7 @@
     <Compile Include="Interfaces\Servicos\IDiaSemanaServico.cs" />
     <Compile Include="Interfaces\Servicos\IDocumentoServico.cs" />
     <Compile Include="Interfaces\Servicos\IEquipeServico.cs" />
+    <Compile Include="Interfaces\Servicos\IEvidenciaServico.cs" />
     <Compile Include="Interfaces\Servicos\IPagamentoServico.cs" />
     <Compile Include="Interfaces\Servicos\IRegistroRecorrenciaServico.cs" />
     <Compile Include="Interfaces\Servicos\IServicoAuditoriaBase.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Servicos\DiaSemanaServico.cs" />
     <Compile Include="Servicos\DocumentoServico.cs" />
     <Compile Include="Servicos\EquipeServico.cs" />
+    <Compile Include="Servicos\EvidenciaServico.cs" />
     <Compile Include="Servicos\PagamentoServico.cs" />
     <Compile Include="Servicos\RegistroRecorrenciaServico.cs" />
     <Compile Include="Servicos\ServicoAuditoriaBase.cs" />

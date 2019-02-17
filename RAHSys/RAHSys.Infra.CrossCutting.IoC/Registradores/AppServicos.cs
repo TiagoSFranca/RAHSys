@@ -25,6 +25,7 @@ namespace RAHSys.Infra.CrossCutting.IoC.Registradores
             container.Register<ITipoRecorrenciaAppServico, TipoRecorrenciaAppServico>(Lifestyle.Scoped);
             container.Register<IDiaSemanaAppServico, DiaSemanaAppServico>(Lifestyle.Scoped);
             container.Register<IRegistroRecorrenciaAppServico, RegistroRecorrenciaAppServico>(Lifestyle.Scoped);
+            container.Register<IEvidenciaAppServico, EvidenciaAppServico>(Lifestyle.Scoped);
         }
     }
 }

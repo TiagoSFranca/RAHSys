@@ -10,6 +10,7 @@ namespace RAHSys.Aplicacao.AppModels
         public int? IdTipoRecorrencia { get; set; }
         public int IdEquipe { get; set; }
         public int IdContrato { get; set; }
+        public int? IdRecorrencia { get; set; }
         public string IdUsuario { get; set; }
         public string Descricao { get; set; }
         public bool Realizada { get; set; }

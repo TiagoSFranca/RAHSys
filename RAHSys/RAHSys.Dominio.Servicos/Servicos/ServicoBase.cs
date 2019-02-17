@@ -10,6 +10,11 @@ namespace RAHSys.Dominio.Servicos.Servicos
 
         protected readonly string RootPath = AppDomain.CurrentDomain.BaseDirectory;
 
+        protected readonly string RotaAtividade = "/Atividades/";
+        protected readonly string RotaRegistroRecorrencia = "/RegistroRecorrencias/";
+        protected readonly string RotaEvidencias = "/Evidencias/";
+        protected readonly string RotaContratos = "/Contratos/";
+
         public ServicoBase(IRepositorioBase<TEntity> repository)
         {
             _repository = repository;
@@ -38,6 +43,11 @@ namespace RAHSys.Dominio.Servicos.Servicos
         public void Atualizar(TEntity obj)
         {
             _repository.Atualizar(obj);
+        }
+
+        public string MontarRotaArquivo(string rota)
+        {
+            return RootPath + rota;
         }
     }
 }

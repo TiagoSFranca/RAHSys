@@ -16,10 +16,6 @@ namespace RAHSys.Dominio.Servicos.Servicos
         private readonly IRegistroRecorrenciaRepositorio _registroRecorrenciaRepositorio;
         private readonly IEvidenciaRepositorio _evidenciaRepositorio;
 
-        private readonly string RotaAtividade = "/Atividades/";
-        private readonly string RotaRegistroRecorrencia = "/RegistroRecorrencias/";
-        private readonly string RotaEvidencias = "/Evidencias/";
-
         public RegistroRecorrenciaServico(IRegistroRecorrenciaRepositorio registroRecorrenciaRepositorio, IEvidenciaRepositorio evidenciaRepositorio)
             : base(registroRecorrenciaRepositorio)
         {
@@ -91,7 +87,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
         private void AdicionarDocumento(int idAtividade, int idRegistroRecorrencia, ArquivoModel arquivo)
         {
             string rota = CriarDiretorio(idAtividade, idRegistroRecorrencia);
-            string caminhoArquivo = AdicionarArquivo(arquivo, rota);
+            string caminhoArquivo = UploadArquivo(arquivo, rota);
             _evidenciaRepositorio.Adicionar(new EvidenciaModel()
             {
                 IdRegistroRecorrencia = idRegistroRecorrencia,
@@ -101,7 +97,7 @@ namespace RAHSys.Dominio.Servicos.Servicos
             });
         }
 
-        private string AdicionarArquivo(ArquivoModel arquivo, string rota)
+        private string UploadArquivo(ArquivoModel arquivo, string rota)
         {
             var rotaArquivo = string.Empty;
             var extensao = Path.GetExtension(arquivo.FileName);
@@ -110,8 +106,8 @@ namespace RAHSys.Dominio.Servicos.Servicos
             {
                 count++;
                 rotaArquivo = string.Format("{0}/{1}{2}", rota, count.ToString(), extensao);
-            } while (File.Exists(rotaArquivo));
-            var fileStream = File.Create(rotaArquivo);
+            } while (File.Exists(RootPath + rotaArquivo));
+            var fileStream = File.Create(RootPath + rotaArquivo);
             arquivo.InputStream.Seek(0, SeekOrigin.Begin);
             arquivo.InputStream.CopyTo(fileStream);
             fileStream.Close();
@@ -121,25 +117,25 @@ namespace RAHSys.Dominio.Servicos.Servicos
 
         private string CriarDiretorio(int idAtividade, int idRegistroRecorrencia)
         {
-            var rotaAtividades = RootPath + RotaAtividade;
-            if (!Directory.Exists(rotaAtividades))
-                Directory.CreateDirectory(rotaAtividades);
+            var rotaAtividades = RotaAtividade;
+            if (!Directory.Exists(MontarRotaArquivo(rotaAtividades)))
+                Directory.CreateDirectory(MontarRotaArquivo(rotaAtividades));
 
             var rotaAtividade = rotaAtividades + idAtividade;
-            if (!Directory.Exists(rotaAtividade))
-                Directory.CreateDirectory(rotaAtividade);
+            if (!Directory.Exists(MontarRotaArquivo(rotaAtividade)))
+                Directory.CreateDirectory(MontarRotaArquivo(rotaAtividade));
 
             var rotaRegistroRecorrencias = rotaAtividade + RotaRegistroRecorrencia;
-            if (!Directory.Exists(rotaRegistroRecorrencias))
-                Directory.CreateDirectory(rotaRegistroRecorrencias);
+            if (!Directory.Exists(MontarRotaArquivo(rotaRegistroRecorrencias)))
+                Directory.CreateDirectory(MontarRotaArquivo(rotaRegistroRecorrencias));
 
             var rotaRegistroRecorrencia = rotaRegistroRecorrencias + idRegistroRecorrencia;
-            if (!Directory.Exists(rotaRegistroRecorrencia))
-                Directory.CreateDirectory(rotaRegistroRecorrencia);
+            if (!Directory.Exists(MontarRotaArquivo(rotaRegistroRecorrencia)))
+                Directory.CreateDirectory(MontarRotaArquivo(rotaRegistroRecorrencia));
 
             var rotaEvidencias = rotaRegistroRecorrencia + RotaEvidencias;
-            if (!Directory.Exists(rotaEvidencias))
-                Directory.CreateDirectory(rotaEvidencias);
+            if (!Directory.Exists(MontarRotaArquivo(rotaEvidencias)))
+                Directory.CreateDirectory(MontarRotaArquivo(rotaEvidencias));
 
             return rotaEvidencias;
         }

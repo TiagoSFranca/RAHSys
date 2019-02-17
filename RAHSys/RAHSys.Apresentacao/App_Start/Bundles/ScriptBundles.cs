@@ -110,6 +110,10 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
             bundles.Add(new ScriptBundle("~/Select2/js").Include(
                 "~/Content/assets/global/plugins/select2/js/select2.full.min.js"
                 ));
+
+            bundles.Add(new ScriptBundle("~/Atividade/EvidenciasFileInput/js").Include(
+                "~/Scripts/atividade/evidenciasAtividadeFileInput.js"
+                ));
         }
     }
 }

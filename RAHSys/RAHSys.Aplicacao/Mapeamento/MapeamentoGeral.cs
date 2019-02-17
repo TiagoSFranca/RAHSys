@@ -24,6 +24,7 @@ namespace RAHSys.Aplicacao.Mapeamento
             new TipoRecorrenciaMapeamento().Mapear(this);
             new TipoTelhadoMapeamento().Mapear(this);
             new UsuarioMapeamento().Mapear(this);
+            new EvidenciaMapeamento().Mapear(this);
         }
     }
 }

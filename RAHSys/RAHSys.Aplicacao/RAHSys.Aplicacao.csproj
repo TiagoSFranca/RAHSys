@@ -50,6 +50,7 @@
     <Compile Include="AppModels\EquipeUsuarioAppModel.cs" />
     <Compile Include="AppModels\EstadoAppModel.cs" />
     <Compile Include="AppModels\EstadoCivilAppModel.cs" />
+    <Compile Include="AppModels\EvidenciaAppModel.cs" />
     <Compile Include="AppModels\FiadorAppModel.cs" />
     <Compile Include="AppModels\FiadorEnderecoAppModel.cs" />
     <Compile Include="AppModels\PagamentoAppModel.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Extensoes\EquipeExtensao.cs" />
     <Compile Include="Extensoes\EstadoCivilExtensao.cs" />
     <Compile Include="Extensoes\EstadoExtensao.cs" />
+    <Compile Include="Extensoes\EvidenciaExtensao.cs" />
     <Compile Include="Extensoes\PagamentoExtensao.cs" />
     <Compile Include="Extensoes\RegistroRecorrenciaExtensao.cs" />
     <Compile Include="Extensoes\TipoAtividadeExtensao.cs" />
@@ -90,6 +92,7 @@
     <Compile Include="Implementacao\EquipeAppServico.cs" />
     <Compile Include="Implementacao\EstadoAppServico.cs" />
     <Compile Include="Implementacao\EstadoCivilAppServico.cs" />
+    <Compile Include="Implementacao\EvidenciaAppServico.cs" />
     <Compile Include="Implementacao\PagamentoAppServico.cs" />
     <Compile Include="Implementacao\RegistroRecorrenciaAppServico.cs" />
     <Compile Include="Implementacao\TipoAtividadeAppServico.cs" />
@@ -108,6 +111,7 @@
     <Compile Include="Interfaces\IEquipeAppServico.cs" />
     <Compile Include="Interfaces\IEstadoAppServico.cs" />
     <Compile Include="Interfaces\IEstadoCivilAppServico.cs" />
+    <Compile Include="Interfaces\IEvidenciaAppServico.cs" />
     <Compile Include="Interfaces\IPagamentoAppServico.cs" />
     <Compile Include="Interfaces\IRegistroRecorrenciaAppServico.cs" />
     <Compile Include="Interfaces\ITipoAtividadeAppServico.cs" />
@@ -127,6 +131,7 @@
     <Compile Include="Mapeamento\Profiles\EstadoCivilMapeamento.cs" />
     <Compile Include="Mapeamento\Profiles\EstadoMapeamento.cs" />
     <Compile Include="Mapeamento\MapeamentoGeral.cs" />
+    <Compile Include="Mapeamento\Profiles\EvidenciaMapeamento.cs" />
     <Compile Include="Mapeamento\Profiles\Interfaces\IProfile.cs" />
     <Compile Include="Mapeamento\Profiles\RegistroRecorrenciaMapeamento.cs" />
     <Compile Include="Mapeamento\Profiles\TipoAtividadeMapeamento.cs" />

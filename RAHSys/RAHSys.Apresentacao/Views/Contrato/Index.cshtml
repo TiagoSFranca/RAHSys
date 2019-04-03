@@ -152,26 +152,30 @@
                                                     Ações
                                                 </a>
                                                 <ul class="dropdown-menu ">
-                                                    <li>
-                                                        @if (situacao.Nome.ToLower().Equals(SituacaoContratoEnum.NovoContrato.Nome.ToLower()))
-                                                        {
+                                                    @if (situacao.Nome.ToLower().Equals(SituacaoContratoEnum.NovoContrato.Nome.ToLower()))
+                                                    {
+                                                        <li>
                                                             @Html.ActionLink("Efetuar Análise", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-md" })
-                                                        }
-                                                        else if (situacao.Nome.ToLower().Equals(SituacaoContratoEnum.EmAnalise.Nome.ToLower()))
-                                                        {
+                                                        </li>
+                                                    }
+                                                    else if (situacao.Nome.ToLower().Equals(SituacaoContratoEnum.EmAnalise.Nome.ToLower()))
+                                                    {
+                                                        <li>
                                                             @Html.ActionLink("Efetivar Contrato", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-md" })
-                                                        }
-                                                        else
-                                                        {
+                                                        </li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li>
                                                             @Html.ActionLink("Alterar R. F.", "EditarResponsavelFinanceiro", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-md" })
-                                                        }
-                                                    </li>
-                                                    <li>
-                                                        @Html.ActionLink("Pagamentos", "Index", "Pagamento", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-md" })
-                                                    </li>
-                                                    <li>
-                                                        @Html.ActionLink("Atividades", "Atividades", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-md" })
-                                                    </li>
+                                                        </li>
+                                                        <li>
+                                                            @Html.ActionLink("Pagamentos", "Index", "Pagamento", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-md" })
+                                                        </li>
+                                                        <li>
+                                                            @Html.ActionLink("Atividades", "Atividades", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-md" })
+                                                        </li>
+                                                    }
                                                 </ul>
                                             </div>
                                             @*@Html.ActionLink("Alterar", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })*@

@@ -17,7 +17,7 @@ namespace RAHSys.Infra.Dados.EntityConfig
 
             Property(a => a.Funcao)
                 .IsRequired()
-                .HasMaxLength(100);
+                .HasMaxLength(3000);
 
             Property(a => a.EnderecoIP)
                 .IsRequired()
@@ -25,7 +25,7 @@ namespace RAHSys.Infra.Dados.EntityConfig
 
             Property(a => a.Acao)
                 .IsRequired()
-                .HasMaxLength(100);
+                .HasMaxLength(3000);
 
             Property(a => a.Dados)
                 .IsRequired()

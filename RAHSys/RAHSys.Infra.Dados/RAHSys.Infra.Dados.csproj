@@ -172,6 +172,10 @@
     <Compile Include="Migrations\Audit\201810150109071_AlterarCampoAcaoDeAuditoria.Designer.cs">
       <DependentUpon>201810150109071_AlterarCampoAcaoDeAuditoria.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Audit\201903280048545_Alteracao na tabela auditoria.cs" />
+    <Compile Include="Migrations\Audit\201903280048545_Alteracao na tabela auditoria.Designer.cs">
+      <DependentUpon>201903280048545_Alteracao na tabela auditoria.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Audit\Configuration.cs" />
     <Compile Include="Migrations\201808092205177_Criacao das tabelas endereco, cidade, estado, contrato e contratoEndereco.cs" />
     <Compile Include="Migrations\201808092205177_Criacao das tabelas endereco, cidade, estado, contrato e contratoEndereco.Designer.cs">
@@ -325,6 +329,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\Audit\201810150109071_AlterarCampoAcaoDeAuditoria.resx">
       <DependentUpon>201810150109071_AlterarCampoAcaoDeAuditoria.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\Audit\201903280048545_Alteracao na tabela auditoria.resx">
+      <DependentUpon>201903280048545_Alteracao na tabela auditoria.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -22,11 +22,11 @@ namespace RAHSys.Apresentacao.Models
         public string Usuario { get; set; }
 
         [Required]
-        [MaxLength(100)]
+        [MaxLength(3000)]
         public string Funcao { get; set; }
 
         [Required]
-        [MaxLength(100)]
+        [MaxLength(3000)]
         public string Acao { get; set; }
 
         [DataType(DataType.DateTime)]

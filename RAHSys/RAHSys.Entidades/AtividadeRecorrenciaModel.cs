@@ -26,7 +26,7 @@ namespace RAHSys.Entidades
 
         public string TipoRecorrencia { get; set; }
 
-        public string Contrato { get; set; }
+        public virtual ContratoModel Contrato { get; set; }
 
         public virtual EquipeModel Equipe { get; set; }
 
@@ -42,7 +42,7 @@ namespace RAHSys.Entidades
             TipoAtividade = tipoAtividade.Descricao;
 
             IdContrato = contrato.IdContrato;
-            Contrato = contrato.NomeEmpresa;
+            Contrato = contrato;
 
             IdEquipe = equipe.IdEquipe;
             Equipe = equipe;

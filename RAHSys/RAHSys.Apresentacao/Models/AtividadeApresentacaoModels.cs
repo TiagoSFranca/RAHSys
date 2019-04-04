@@ -1,5 +1,4 @@
-﻿using PagedList;
-using RAHSys.Aplicacao.AppModels;
+﻿using RAHSys.Aplicacao.AppModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,14 +16,9 @@ namespace RAHSys.Apresentacao.Models
 
     public class AtividadeEquipeModel
     {
+        public ContratoAppModel Contrato { get; set; }
         public EquipeAppModel Equipe { get; set; }
-        public StaticPagedList<AtividadeAppModel> Atividades { get; set; }
         public string TodasAtividadesSerializadas { get; set; }
-
-        public AtividadeEquipeModel()
-        {
-            Atividades = new StaticPagedList<AtividadeAppModel>(new List<AtividadeAppModel>(), 1, 1, 0);
-        }
     }
 
     public class AtividadeAdicionarEditarModel

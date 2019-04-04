@@ -1,4 +1,5 @@
 ﻿using RAHSys.Extras;
+using System;
 using System.Web.Mvc;
 
 namespace RAHSys.Apresentacao.Controllers
@@ -24,6 +25,15 @@ namespace RAHSys.Apresentacao.Controllers
         public void MensagemAtencao(string mensagem = null)
         {
             TempData["warning"] = mensagem ?? MensagensPadrao.AtencaoPadrao;
+        }
+
+        protected string GetData(string data, string modoVisualizacao, bool dataInicial)
+        {
+            string formato = "{0}/{1}/{2}";
+            if (!string.IsNullOrEmpty(data))
+                return data;
+            data = string.Format(formato, DateTime.Now.Day, DateTime.Now.Month, DateTime.Now.Year);
+            return data;
         }
     }
 }

@@ -26,7 +26,7 @@ namespace RAHSys.Aplicacao.AppModels
 
         public string TipoRecorrencia { get; set; }
 
-        public string Contrato { get; set; }
+        public virtual ContratoAppModel Contrato { get; set; }
 
         public virtual EquipeAppModel Equipe { get; set; }
 

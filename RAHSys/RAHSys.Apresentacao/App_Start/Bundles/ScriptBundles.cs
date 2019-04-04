@@ -114,6 +114,11 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
             bundles.Add(new ScriptBundle("~/Atividade/EvidenciasFileInput/js").Include(
                 "~/Scripts/atividade/evidenciasAtividadeFileInput.js"
                 ));
+
+
+            bundles.Add(new ScriptBundle("~/Equipe/Atividade/js").Include(
+                "~/Scripts/equipe/equipeAtividade.js"
+                ));
         }
     }
 }

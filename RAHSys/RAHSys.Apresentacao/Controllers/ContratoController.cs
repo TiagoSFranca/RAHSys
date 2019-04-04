@@ -496,7 +496,6 @@ namespace RAHSys.Apresentacao.Controllers
                 }
 
                 atividadeContratoModel.Contrato = contratoModel;
-                int idEquipe = (int)contratoModel.AnaliseInvestimento.Cliente.IdEquipe;
                 atividadeContratoModel.TodasAtividadesSerializadas = ObterAtividadesContrato(id, dataInicial, dataFinal);
                 atividadeContratoModel.TodasEquipesSerializadas = ObterTodasEquipesSerializadas();
 
@@ -1088,15 +1087,6 @@ namespace RAHSys.Apresentacao.Controllers
             List<CidadeAppModel> lista = new List<CidadeAppModel>();
             lista.AddRange(_cidadeAppServico.ObterCidadesPorEstado(id));
             return Json(lista, JsonRequestBehavior.AllowGet);
-        }
-
-        private string GetData(string data, string modoVisualizacao, bool dataInicial)
-        {
-            string formato = "{0}/{1}/{2}";
-            if (!string.IsNullOrEmpty(data))
-                return data;
-            data = string.Format(formato, DateTime.Now.Day, DateTime.Now.Month, DateTime.Now.Year);
-            return data;
         }
 
         #endregion

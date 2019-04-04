@@ -59,7 +59,7 @@ namespace RAHSys.Apresentacao.Controllers
                 {
                     _tipoAtividadeAppServico.Adicionar(tipoAtividadeAppModel);
                     MensagemSucesso(MensagensPadrao.CadastroSucesso);
-                    return RedirectToAction("Index", "TipoAtividade", new { descricao = tipoAtividadeAppModel.Descricao });
+                    return RedirectToAction("Index", "TipoAtividade");
                 }
                 catch (CustomBaseException ex)
                 {
@@ -102,7 +102,7 @@ namespace RAHSys.Apresentacao.Controllers
                 {
                     _tipoAtividadeAppServico.Atualizar(tipoAtividadeAppModel);
                     MensagemSucesso(MensagensPadrao.AtualizacaoSucesso);
-                    return RedirectToAction("Index", "TipoAtividade", new { descricao = tipoAtividadeAppModel.Descricao });
+                    return RedirectToAction("Index", "TipoAtividade");
                 }
                 catch (CustomBaseException ex)
                 {

@@ -61,7 +61,7 @@ namespace RAHSys.Apresentacao.Controllers
                 {
                     _tipoTelhadoAppServico.Adicionar(tipoTelhadoAppModel);
                     MensagemSucesso(MensagensPadrao.CadastroSucesso);
-                    return RedirectToAction("Index", "TipoTelhado", new { descricao = tipoTelhadoAppModel.Descricao });
+                    return RedirectToAction("Index", "TipoTelhado");
                 }
                 catch (CustomBaseException ex)
                 {
@@ -103,7 +103,7 @@ namespace RAHSys.Apresentacao.Controllers
                 {
                     _tipoTelhadoAppServico.Atualizar(tipoTelhadoAppModel);
                     MensagemSucesso(MensagensPadrao.AtualizacaoSucesso);
-                    return RedirectToAction("Index", "TipoTelhado", new { descricao = tipoTelhadoAppModel.Descricao });
+                    return RedirectToAction("Index", "TipoTelhado");
                 }
                 catch (CustomBaseException ex)
                 {

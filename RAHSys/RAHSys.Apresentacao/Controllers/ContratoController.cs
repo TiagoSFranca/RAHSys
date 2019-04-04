@@ -108,7 +108,7 @@ namespace RAHSys.Apresentacao.Controllers
                 {
                     _contratoAppServico.Adicionar(contratoAdicionarModel.Contrato);
                     MensagemSucesso(MensagensPadrao.CadastroSucesso);
-                    return RedirectToAction("Index", "Contrato", new { nomeEmpresa = contratoAdicionarModel.Contrato.NomeEmpresa, cidade = contratoAdicionarModel.Contrato.ContratoEndereco.Endereco.Cidade.Nome });
+                    return RedirectToAction("Index");
                 }
                 catch (CustomBaseException ex)
                 {
@@ -164,7 +164,7 @@ namespace RAHSys.Apresentacao.Controllers
                 {
                     _contratoAppServico.AdicionarAnaliseInvestimento(analiseInvestimentoAdicionarModel.AnaliseInvestimento);
                     MensagemSucesso(MensagensPadrao.CadastroSucesso);
-                    return RedirectToAction("Index", "Contrato");
+                    return RedirectToAction("Index");
                 }
                 catch (CustomBaseException ex)
                 {

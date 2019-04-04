@@ -2,14 +2,10 @@
 using RAHSys.Aplicacao.AppModels;
 using RAHSys.Aplicacao.Interfaces;
 using RAHSys.Apresentacao.Attributes;
-using RAHSys.Extras;
 using RAHSys.Extras.Enums;
 using RAHSys.Infra.CrossCutting.Exceptions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Web;
 using System.Web.Mvc;
 
 namespace RAHSys.Apresentacao.Controllers
@@ -47,21 +43,6 @@ namespace RAHSys.Apresentacao.Controllers
                 MensagemErro(ex.Mensagem);
                 return View(new StaticPagedList<AuditoriaAppModel>(new List<AuditoriaAppModel>(), 1, 1, 0));
             }
-        }
-
-        public void Adicionar(AuditoriaAppModel auditoriaAppModel)
-        {
-            //if (ModelState.IsValid)
-            //{
-            //    try
-            //    {
-            //        _auditoriaAppServico.Adicionar(auditoriaAppModel);
-            //    }
-            //    catch (CustomBaseException ex)
-            //    {
-
-            //    }
-            //}
         }
 
         [HttpGet]

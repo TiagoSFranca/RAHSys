@@ -1,13 +1,12 @@
-﻿using RAHSys.Aplicacao.AppModels;
+﻿using PagedList;
+using RAHSys.Aplicacao.AppModels;
 using RAHSys.Aplicacao.Interfaces;
-using System;
-using System.Web.Mvc;
-using PagedList;
+using RAHSys.Apresentacao.Attributes;
 using RAHSys.Extras;
+using RAHSys.Extras.Enums;
 using RAHSys.Infra.CrossCutting.Exceptions;
 using System.Collections.Generic;
-using RAHSys.Apresentacao.Attributes;
-using RAHSys.Extras.Enums;
+using System.Web.Mvc;
 
 namespace RAHSys.Apresentacao.Controllers
 {
@@ -60,7 +59,7 @@ namespace RAHSys.Apresentacao.Controllers
                 {
                     _cameraAppServico.Adicionar(cameraAppModel);
                     MensagemSucesso(MensagensPadrao.CadastroSucesso);
-                    return RedirectToAction("Index", "Camera", new { localizacao = cameraAppModel.Localizacao, descricao = cameraAppModel.Descricao });
+                    return RedirectToAction("Index");
                 }
                 catch (CustomBaseException ex)
                 {
@@ -102,7 +101,7 @@ namespace RAHSys.Apresentacao.Controllers
                 {
                     _cameraAppServico.Atualizar(cameraAppModel);
                     MensagemSucesso(MensagensPadrao.AtualizacaoSucesso);
-                    return RedirectToAction("Index", "Camera", new { localizacao = cameraAppModel.Localizacao, descricao = cameraAppModel.Descricao });
+                    return RedirectToAction("Index");
                 }
                 catch (CustomBaseException ex)
                 {
@@ -147,7 +146,7 @@ namespace RAHSys.Apresentacao.Controllers
             {
                 MensagemErro(ex.Mensagem);
             }
-            return RedirectToAction("Index", "Camera");
+            return RedirectToAction("Index");
         }
     }
 }

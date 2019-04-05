@@ -4119,6 +4119,9 @@
     <Content Include="Views\Equipe\Atividades.cshtml" />
     <Content Include="Views\Equipe\AdicionarAtividade.cshtml" />
     <Content Include="Views\Equipe\EditarAtividade.cshtml" />
+    <Content Include="Views\Equipe\FinalizarAtividade.cshtml" />
+    <Content Include="Views\Equipe\EvidenciaAtividade.cshtml" />
+    <Content Include="Views\Equipe\ExcluirEvidencia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

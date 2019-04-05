@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using PagedList;
 using RAHSys.Aplicacao.AppModels;
@@ -7,6 +8,7 @@ using RAHSys.Apresentacao.Attributes;
 using RAHSys.Apresentacao.Models;
 using RAHSys.Extras;
 using RAHSys.Extras.Enums;
+using RAHSys.Extras.Helper;
 using RAHSys.Infra.CrossCutting.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -26,10 +28,12 @@ namespace RAHSys.Apresentacao.Controllers
         private readonly IContratoAppServico _contratoAppServico;
         private readonly IDiaSemanaAppServico _diaSemanaAppServico;
         private readonly ITipoRecorrenciaAppServico _tipoRecorrenciaAppServico;
+        private readonly IRegistroRecorrenciaAppServico _registroRecorrenciaAppServico;
+        private readonly IEvidenciaAppServico _evidenciaAppServico;
 
         public EquipeController(IEquipeAppServico equipeAppServico, IUsuarioAppServico usuarioAppServico, IAtividadeAppServico atividadeAppServico,
             ITipoAtividadeAppServico tipoAtividadeAppServico, IContratoAppServico contratoAppServico, IDiaSemanaAppServico diaSemanaAppServico,
-            ITipoRecorrenciaAppServico tipoRecorrenciaAppServico)
+            ITipoRecorrenciaAppServico tipoRecorrenciaAppServico, IRegistroRecorrenciaAppServico registroRecorrenciaAppServico, IEvidenciaAppServico evidenciaAppServico)
         {
             _equipeAppServico = equipeAppServico;
             _usuarioAppServico = usuarioAppServico;
@@ -38,6 +42,8 @@ namespace RAHSys.Apresentacao.Controllers
             _contratoAppServico = contratoAppServico;
             _diaSemanaAppServico = diaSemanaAppServico;
             _tipoRecorrenciaAppServico = tipoRecorrenciaAppServico;
+            _registroRecorrenciaAppServico = registroRecorrenciaAppServico;
+            _evidenciaAppServico = evidenciaAppServico;
             ViewBag.Title = "Equipes";
         }
 
@@ -192,27 +198,6 @@ namespace RAHSys.Apresentacao.Controllers
         }
 
         #region Atividades
-
-        private UsuarioAppModel ObterUsuarioLogado()
-        {
-            var usuario = User.Identity.GetUserId();
-            var usuarioLogado = _usuarioAppServico.Consultar(new string[] { usuario }, null, null, null, true, 1, 1);
-
-            UsuarioAppModel retorno = null;
-
-            if (usuarioLogado.Resultado.Count() > 0)
-                retorno = usuarioLogado.Resultado.FirstOrDefault();
-
-            return retorno;
-        }
-
-        private void ValidarUsuarioLogado(EquipeAppModel equipeModel)
-        {
-            var usuarioLogado = ObterUsuarioLogado();
-
-            if (usuarioLogado?.UsuarioPerfis?.Where(e => e.Perfil.Nome.ToLower().Equals(PerfilEnum.Admin.Nome.ToLower())).Count() <= 0 && usuarioLogado.IdUsuario != equipeModel?.IdLider)
-                throw new UnauthorizedException();
-        }
 
         [HttpGet]
         public ActionResult Atividades(int id, string dataInicial, string dataFinal, string modoVisualizacao)
@@ -442,9 +427,325 @@ namespace RAHSys.Apresentacao.Controllers
             return View(atividadeRetornoModel);
         }
 
+        [HttpGet]
+        public ActionResult FinalizarAtividade(int id, int idAtividade, string data, string urlRetorno)
+        {
+            ViewBag.SubTitle = "Finalizar Atividade";
+            try
+            {
+                if (string.IsNullOrEmpty(urlRetorno))
+                {
+                    MensagemErro("Ocorreu um erro!");
+                    return RedirectToAction("Atividades", new { id });
+                }
+
+                ViewBag.UrlRetorno = urlRetorno;
+
+                var atividadeContratoFinalizarModel = new FinalizarAtividadeModel();
+                var atividade = _atividadeAppServico.ObterPorId(idAtividade);
+
+                if (atividade == null)
+                {
+                    MensagemErro("Atividade não encontrada");
+                    return Redirect(urlRetorno);
+                }
+
+                var equipeModel = _equipeAppServico.ObterPorId(id);
+                if (equipeModel == null)
+                {
+                    MensagemErro("Equipe não encontrada");
+                    return RedirectToAction("Index");
+                }
+
+                ValidarUsuarioLogado(equipeModel);
+
+                var dataConvertida = DataHelper.ConverterStringParaData(data);
+
+                var registroRecorrencia = _registroRecorrenciaAppServico.Consultar(idAtividade, null, dataConvertida, null, null, true, 1, Int32.MaxValue);
+
+                if (registroRecorrencia.Resultado.Count() > 0)
+                {
+                    MensagemErro("Atividade já foi finalizada");
+                    return Redirect(urlRetorno);
+                }
+
+                atividadeContratoFinalizarModel.AtividadeInfo = new AtividadeInfoModel(atividade, dataConvertida);
+
+                return View(atividadeContratoFinalizarModel);
+            }
+            catch (UnauthorizedException)
+            {
+                return RedirectToAction("Unauthorized", "Account");
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+                return Redirect(urlRetorno);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult FinalizarAtividade(FinalizarAtividadeModel finalizarAtividadeModel, string urlRetorno)
+        {
+            ViewBag.SubTitle = "Finalizar Atividade";
+
+            var idAtividade = finalizarAtividadeModel.AtividadeInfo.Atividade.IdAtividade;
+            var idEquipe = finalizarAtividadeModel.AtividadeInfo.Atividade.IdEquipe;
+            if (string.IsNullOrEmpty(urlRetorno))
+            {
+                MensagemErro("Ocorreu um erro!");
+                return RedirectToAction("Atividades", new { idEquipe });
+            }
+
+            ViewBag.UrlRetorno = urlRetorno;
+
+            var atividadeContratoFinalizarModel = new FinalizarAtividadeModel();
+            var atividade = _atividadeAppServico.ObterPorId(idAtividade);
+
+            if (atividade == null)
+            {
+                MensagemErro("Atividade não encontrada");
+                return Redirect(urlRetorno);
+            }
+
+            var equipeModel = _equipeAppServico.ObterPorId(idEquipe);
+            if (equipeModel == null)
+            {
+                MensagemErro("Equipe não encontrada");
+                return RedirectToAction("Index");
+            }
+
+            try
+            {
+                ValidarUsuarioLogado(equipeModel);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Unauthorized", "Account");
+            }
+
+            var dataConvertida = finalizarAtividadeModel.AtividadeInfo.DataPrevista;
+
+            var registroRecorrencia = _registroRecorrenciaAppServico.Consultar(idAtividade, null, dataConvertida, null, null, true, 1, Int32.MaxValue);
+
+            if (registroRecorrencia.Resultado.Count() > 0)
+            {
+                MensagemErro("Atividade já foi finalizada");
+                return Redirect(urlRetorno);
+            }
+
+            atividadeContratoFinalizarModel.AtividadeInfo = new AtividadeInfoModel(atividade, dataConvertida);
+            var arquivos = Request.Files;
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var listaArquivos = new List<ArquivoAppModel>();
+                    if (arquivos.Count > 0)
+                    {
+                        for (int i = 0; i < arquivos.Count; i++)
+                        {
+                            listaArquivos.Add(Mapper.Map<ArquivoAppModel>(arquivos[i]));
+                        }
+                    }
+
+                    _registroRecorrenciaAppServico.FinalizarRegistroRecorrencia(idAtividade, dataConvertida, finalizarAtividadeModel.DataRealizacao.Value, finalizarAtividadeModel.Observacao, listaArquivos);
+                    MensagemSucesso();
+                    return Redirect(urlRetorno);
+                }
+                catch (CustomBaseException ex)
+                {
+                    MensagemErro(ex.Mensagem);
+                    return View(atividadeContratoFinalizarModel);
+                }
+            }
+
+            return View(atividadeContratoFinalizarModel);
+        }
+
+        [HttpGet]
+        public ActionResult EvidenciaAtividade(int id, int idAtividade, string urlRetorno)
+        {
+            ViewBag.SubTitle = "Evidências da Atividade";
+            try
+            {
+                if (string.IsNullOrEmpty(urlRetorno))
+                {
+                    MensagemErro("Ocorreu um erro!");
+                    return RedirectToAction("Atividades", new { id });
+                }
+
+                ViewBag.UrlRetorno = urlRetorno;
+
+                var atividadeContratoFinalizarModel = new EvidenciaAtividadeModel();
+                var registroRecorrencia = _registroRecorrenciaAppServico.ObterPorId(idAtividade);
+
+                if (registroRecorrencia == null)
+                {
+                    MensagemErro("Atividade não encontrada");
+                    return Redirect(urlRetorno);
+                }
+
+                var equipeModel = _equipeAppServico.ObterPorId(id);
+                if (equipeModel == null)
+                {
+                    MensagemErro("Equipe não encontrado");
+                    return RedirectToAction("Index");
+                }
+
+                if (registroRecorrencia.Atividade.IdEquipe != equipeModel.IdEquipe)
+                {
+                    MensagemErro("Atividade não pertence à equipe");
+                    return Redirect(urlRetorno);
+                }
+
+                ValidarUsuarioLogado(equipeModel);
+
+                atividadeContratoFinalizarModel.AtividadeInfo = new AtividadeInfoModel(registroRecorrencia.Atividade, registroRecorrencia.DataPrevista)
+                {
+                    RegistroRecorrencia = registroRecorrencia
+                };
+
+                return View(atividadeContratoFinalizarModel);
+            }
+            catch (UnauthorizedException)
+            {
+                return RedirectToAction("Unauthorized", "Account");
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+                return Redirect(urlRetorno);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ExcluirEvidencia(int id, int idRegistroRecorrencia, int idEquipe, string urlRetorno)
+        {
+            ViewBag.SubTitle = "Excluir Evidência";
+            var evidenciaModel = new EvidenciaAppModel();
+            try
+            {
+                evidenciaModel = _evidenciaAppServico.ObterPorId(id);
+                if (evidenciaModel == null)
+                {
+                    MensagemErro("Evidência não encontrada");
+                    return RedirectToAction("EvidenciaAtividade", new { id = idEquipe, idAtividade = idRegistroRecorrencia, urlRetorno });
+                }
+
+                var equipeModel = _equipeAppServico.ObterPorId(idEquipe);
+                if (equipeModel == null)
+                {
+                    MensagemErro("Equipe não encontrada");
+                    return RedirectToAction("Index");
+                }
+
+                ValidarUsuarioLogado(equipeModel);
+            }
+            catch (UnauthorizedException)
+            {
+                return RedirectToAction("Unauthorized", "Account");
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+                return RedirectToAction("EvidenciaAtividade", new { id = idEquipe, idAtividade = idRegistroRecorrencia, urlRetorno });
+            }
+            ViewBag.IdEquipe = idEquipe;
+            ViewBag.UrlRetorno = urlRetorno;
+            return View(evidenciaModel);
+        }
+
+        [HttpPost]
+        public ActionResult ExcluirEvidencia(EvidenciaAppModel evidencia, int idEquipe, string urlRetorno)
+        {
+            try
+            {
+                var equipeModel = _equipeAppServico.ObterPorId(idEquipe);
+                if (equipeModel == null)
+                {
+                    MensagemErro("Equipe não encontrada");
+                    return RedirectToAction("Index");
+                }
+
+                ValidarUsuarioLogado(equipeModel);
+
+                _evidenciaAppServico.Remover(evidencia.IdEvidencia);
+                MensagemSucesso(MensagensPadrao.ExclusaoSucesso);
+            }
+            catch (UnauthorizedException)
+            {
+                return RedirectToAction("Unauthorized", "Account");
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+            }
+
+            return RedirectToAction("EvidenciaAtividade", new { id = idEquipe, idAtividade = evidencia.IdRegistroRecorrencia, urlRetorno });
+        }
+
+        [HttpPost]
+        public ActionResult AdicionarEvidencias(int idEquipe, int idAtividadeGeral, int idRegistroRecorrencia, string urlRetorno)
+        {
+            var arquivos = Request.Files;
+            try
+            {
+                var equipeModel = _equipeAppServico.ObterPorId(idEquipe);
+                if (equipeModel == null)
+                {
+                    MensagemErro("Equipe não encontrada");
+                    return RedirectToAction("Index");
+                }
+
+                ValidarUsuarioLogado(equipeModel);
+                var listaArquivos = new List<ArquivoAppModel>();
+                if (arquivos.Count > 0)
+                {
+                    for (int i = 0; i < arquivos.Count; i++)
+                    {
+                        listaArquivos.Add(Mapper.Map<ArquivoAppModel>(arquivos[i]));
+                    }
+                }
+
+                _evidenciaAppServico.AdicionarEvidencias(idAtividadeGeral, idRegistroRecorrencia, listaArquivos);
+            }
+            catch (UnauthorizedException)
+            {
+                return RedirectToAction("Unauthorized", "Account");
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+            }
+
+            return RedirectToAction("EvidenciaAtividade", new { id = idEquipe, idAtividade = idRegistroRecorrencia, urlRetorno });
+        }
+
         #endregion
 
         #region Métodos Aux
+
+        private UsuarioAppModel ObterUsuarioLogado()
+        {
+            var usuario = User.Identity.GetUserId();
+            var usuarioLogado = _usuarioAppServico.Consultar(new string[] { usuario }, null, null, null, true, 1, 1);
+
+            UsuarioAppModel retorno = null;
+
+            if (usuarioLogado.Resultado.Count() > 0)
+                retorno = usuarioLogado.Resultado.FirstOrDefault();
+
+            return retorno;
+        }
+
+        private void ValidarUsuarioLogado(EquipeAppModel equipeModel)
+        {
+            var usuarioLogado = ObterUsuarioLogado();
+
+            if (usuarioLogado?.UsuarioPerfis?.Where(e => e.Perfil.Nome.ToLower().Equals(PerfilEnum.Admin.Nome.ToLower())).Count() <= 0 && usuarioLogado.IdUsuario != equipeModel?.IdLider)
+                throw new UnauthorizedException();
+        }
 
         private AtividadeEquipeAdicionarEditarModel MontarAtividadeEquipeAdicionarEditar()
         {

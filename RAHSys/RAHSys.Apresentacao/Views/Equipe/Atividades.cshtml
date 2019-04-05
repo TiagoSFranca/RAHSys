@@ -260,8 +260,8 @@
 <input type="hidden" value="@Model.TodasAtividadesSerializadas" id="atividades" />
 <input type="hidden" value="@Url.Action("Atividades", "Equipe", new { id = Model.Equipe.IdEquipe})" id="inputUrlBase" />
 <input type="hidden" value="@Url.Action("EditarAtividade", "Equipe", new { id = Model.Equipe.IdEquipe})" id="inputEditarAtividade" />
-@*<input type="hidden" value="@Url.Action("FinalizarAtividade", "Contrato", new { id = Model.Contrato.IdContrato})" id="inputUrlFinalizarAtividade" />
-    <input type="hidden" value="@Url.Action("EvidenciaAtividade", "Contrato", new { id = Model.Contrato.IdContrato})" id="inputUrlEvidencias" />*@
+<input type="hidden" value="@Url.Action("FinalizarAtividade", "Equipe", new { id = Model.Equipe.IdEquipe})" id="inputUrlFinalizarAtividade" />
+<input type="hidden" value="@Url.Action("EvidenciaAtividade", "Equipe", new { id = Model.Equipe.IdEquipe})" id="inputUrlEvidencias" />
 <input type="hidden" value="@Url.Action("Atividades", "Equipe", new { id = Model.Equipe.IdEquipe, dataInicial = ViewBag.DataInicial, dataFinal = ViewBag.DataFinal, modoVisualizacao = ViewBag.ModoVisualizacao })" id="inputUrlRetorno" />
 <input type="hidden" value="@JsonConvert.SerializeObject(RAHSys.Extras.Helper.EquipeHelper.EquipeInteira)" id="equipeInteiraHelper" />
 @*END -- Necessários para o calendário*@

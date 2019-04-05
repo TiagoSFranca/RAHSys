@@ -944,7 +944,7 @@ namespace RAHSys.Apresentacao.Controllers
                 evidenciaModel = _evidenciaAppServico.ObterPorId(id);
                 if (evidenciaModel == null)
                 {
-                    MensagemErro("Evicência não encontrada");
+                    MensagemErro("Evidência não encontrada");
                     return RedirectToAction("EvidenciaAtividade", new { id = idContrato, idAtividade = idRegistroRecorrencia, urlRetorno });
                 }
             }

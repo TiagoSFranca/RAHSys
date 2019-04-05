@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 using PagedList;
 using RAHSys.Aplicacao.AppModels;
 using RAHSys.Aplicacao.Interfaces;
@@ -187,12 +188,22 @@ namespace RAHSys.Apresentacao.Controllers
 
         #region Atividades
 
-        [RAHAuthorize]
+        private UsuarioAppModel ObterUsuarioLogado()
+        {
+            var usuario = User.Identity.GetUserId();
+            var usuarioLogado = _usuarioAppServico.Consultar(new string[] { usuario }, null, null, null, true, 1, 1);
+
+            UsuarioAppModel retorno = null;
+
+            if (usuarioLogado.Resultado.Count() > 0)
+                retorno = usuarioLogado.Resultado.FirstOrDefault();
+
+            return retorno;
+        }
+
         [HttpGet]
         public ActionResult Atividades(int id, string dataInicial, string dataFinal, string modoVisualizacao)
         {
-            //TODO: Verificar se o usuário é o lider da equipe
-
             ViewBag.SubTitle = "Atividades";
 
             modoVisualizacao = modoVisualizacao ?? "basicDay";
@@ -207,7 +218,14 @@ namespace RAHSys.Apresentacao.Controllers
             AtividadeEquipeModel atividadeContratoModel = new AtividadeEquipeModel();
             try
             {
+                var usuarioLogado = ObterUsuarioLogado();
+
                 var equipeModel = _equipeAppServico.ObterPorId(id);
+
+                if (usuarioLogado?.UsuarioPerfis?.Where(e => e.Perfil.Nome.ToLower().Equals(PerfilEnum.Admin.Nome.ToLower())).Count() <= 0 && usuarioLogado.IdUsuario != equipeModel.IdLider)
+                {
+                    return RedirectToAction("Unauthorized", "Account");
+                }
 
                 if (equipeModel == null)
                 {

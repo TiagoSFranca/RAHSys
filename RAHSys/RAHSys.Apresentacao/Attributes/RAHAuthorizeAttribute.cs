@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using RAHSys.Apresentacao.Models;
+﻿using RAHSys.Extras.Enums;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -27,12 +23,12 @@ namespace RAHSys.Apresentacao.Attributes
             // Um usuário está autorizado se o seu perfil condiz com 
             // um dos perfis autorizado da função, ou se ele for um Admin 
             if (String.IsNullOrEmpty(Roles))
-                Roles = "Admin";
+                Roles = PerfilEnum.Admin.Nome;
             else
-                Roles += ", Admin";
+                Roles += ", " + PerfilEnum.Admin.Nome;
 
             var isAuthorized = base.AuthorizeCore(httpContext);
-            
+
             return isAuthorized;
         }
 

@@ -3974,6 +3974,7 @@
     <Content Include="Content\assets\global\plugins\wysihtml\minified\wysihtml.min.map" />
     <Content Include="Content\assets\global\plugins\wysihtml\minified\wysihtml.table_editing.min.map" />
     <Content Include="Content\assets\global\plugins\wysihtml\minified\wysihtml.toolbar.min.map" />
+    <Content Include="Scripts\equipe\atividadeAdicionarEditar.js" />
     <Content Include="Scripts\equipe\equipeAtividade.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
@@ -4116,6 +4117,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Equipe\Atividades.cshtml" />
+    <Content Include="Views\Equipe\AdicionarAtividade.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

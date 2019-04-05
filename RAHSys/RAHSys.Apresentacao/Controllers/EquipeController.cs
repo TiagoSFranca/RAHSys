@@ -24,15 +24,20 @@ namespace RAHSys.Apresentacao.Controllers
         private readonly IAtividadeAppServico _atividadeAppServico;
         private readonly ITipoAtividadeAppServico _tipoAtividadeAppServico;
         private readonly IContratoAppServico _contratoAppServico;
+        private readonly IDiaSemanaAppServico _diaSemanaAppServico;
+        private readonly ITipoRecorrenciaAppServico _tipoRecorrenciaAppServico;
 
-        public EquipeController(IEquipeAppServico equipeAppServico, IUsuarioAppServico usuarioAppServico, ITipoAtividadeAppServico tipoAtividadeAppServico,
-            IAtividadeAppServico atividadeAppServico, IContratoAppServico contratoAppServico)
+        public EquipeController(IEquipeAppServico equipeAppServico, IUsuarioAppServico usuarioAppServico, IAtividadeAppServico atividadeAppServico,
+            ITipoAtividadeAppServico tipoAtividadeAppServico, IContratoAppServico contratoAppServico, IDiaSemanaAppServico diaSemanaAppServico,
+            ITipoRecorrenciaAppServico tipoRecorrenciaAppServico)
         {
             _equipeAppServico = equipeAppServico;
             _usuarioAppServico = usuarioAppServico;
             _atividadeAppServico = atividadeAppServico;
             _tipoAtividadeAppServico = tipoAtividadeAppServico;
             _contratoAppServico = contratoAppServico;
+            _diaSemanaAppServico = diaSemanaAppServico;
+            _tipoRecorrenciaAppServico = tipoRecorrenciaAppServico;
             ViewBag.Title = "Equipes";
         }
 
@@ -201,6 +206,14 @@ namespace RAHSys.Apresentacao.Controllers
             return retorno;
         }
 
+        private void ValidarUsuarioLogado(EquipeAppModel equipeModel)
+        {
+            var usuarioLogado = ObterUsuarioLogado();
+
+            if (usuarioLogado?.UsuarioPerfis?.Where(e => e.Perfil.Nome.ToLower().Equals(PerfilEnum.Admin.Nome.ToLower())).Count() <= 0 && usuarioLogado.IdUsuario != equipeModel?.IdLider)
+                throw new UnauthorizedException();
+        }
+
         [HttpGet]
         public ActionResult Atividades(int id, string dataInicial, string dataFinal, string modoVisualizacao)
         {
@@ -218,14 +231,7 @@ namespace RAHSys.Apresentacao.Controllers
             AtividadeEquipeModel atividadeContratoModel = new AtividadeEquipeModel();
             try
             {
-                var usuarioLogado = ObterUsuarioLogado();
-
                 var equipeModel = _equipeAppServico.ObterPorId(id);
-
-                if (usuarioLogado?.UsuarioPerfis?.Where(e => e.Perfil.Nome.ToLower().Equals(PerfilEnum.Admin.Nome.ToLower())).Count() <= 0 && usuarioLogado.IdUsuario != equipeModel.IdLider)
-                {
-                    return RedirectToAction("Unauthorized", "Account");
-                }
 
                 if (equipeModel == null)
                 {
@@ -233,8 +239,14 @@ namespace RAHSys.Apresentacao.Controllers
                     return RedirectToAction("Index");
                 }
 
+                ValidarUsuarioLogado(equipeModel);
+
                 atividadeContratoModel.Equipe = equipeModel;
                 atividadeContratoModel.TodasAtividadesSerializadas = ObterAtividadesEquipe(id, dataInicial, dataFinal);
+            }
+            catch (UnauthorizedException)
+            {
+                return RedirectToAction("Unauthorized", "Account");
             }
             catch (CustomBaseException ex)
             {
@@ -245,9 +257,109 @@ namespace RAHSys.Apresentacao.Controllers
             return View(atividadeContratoModel);
         }
 
+        [HttpGet]
+        public ActionResult AdicionarAtividade(int id)
+        {
+            ViewBag.SubTitle = "Adicionar nova Atividade";
+            try
+            {
+                var equipeModel = _equipeAppServico.ObterPorId(id);
+
+                if (equipeModel == null)
+                {
+                    MensagemErro("Equipe não encontrada");
+                    return RedirectToAction("Index");
+                }
+
+                ValidarUsuarioLogado(equipeModel);
+
+                var atividadeEquipeAdicionarModel = MontarAtividadeEquipeAdicionarEditar();
+
+                atividadeEquipeAdicionarModel.Equipe = equipeModel;
+                atividadeEquipeAdicionarModel.Contratos = ObterContratosEquipe(id);
+                atividadeEquipeAdicionarModel.Atividade = new AtividadeAppModel()
+                {
+                    IdEquipe = id,
+                    ConfiguracaoAtividade = new ConfiguracaoAtividadeAppModel()
+                };
+
+                return View(atividadeEquipeAdicionarModel);
+            }
+            catch (UnauthorizedException)
+            {
+                return RedirectToAction("Unauthorized", "Account");
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult AdicionarAtividade(AtividadeEquipeAdicionarEditarModel atividadePostModel)
+        {
+            ViewBag.SubTitle = "Adicionar nova Atividade";
+            var equipeModel = _equipeAppServico.ObterPorId(atividadePostModel.Atividade.IdEquipe);
+
+            if (equipeModel == null)
+            {
+                MensagemErro("Equipe não encontrada");
+                return RedirectToAction("Index");
+            }
+
+            try
+            {
+                ValidarUsuarioLogado(equipeModel);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Unauthorized", "Account");
+            }
+
+            var atividadeRetornoModel = MontarAtividadeEquipeAdicionarEditar();
+            atividadeRetornoModel.Atividade = atividadePostModel.Atividade;
+            atividadeRetornoModel.DiaSemanasSelecionadas = atividadePostModel.DiaSemanasSelecionadas ?? new List<int>();
+
+            atividadeRetornoModel.Equipe = equipeModel;
+            atividadeRetornoModel.Contratos = ObterContratosEquipe(equipeModel.IdEquipe);
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var atividade = atividadePostModel.Atividade;
+                    if (atividadePostModel.DiaSemanasSelecionadas?.Count > 0)
+                    {
+                        atividade.ConfiguracaoAtividade.AtividadeDiaSemanas = atividadePostModel.DiaSemanasSelecionadas.Select(e => new AtividadeDiaSemanaAppModel() { IdDiaSemana = e }).ToList();
+                    }
+                    _atividadeAppServico.Adicionar(atividade);
+                    MensagemSucesso(MensagensPadrao.CadastroSucesso);
+                    return RedirectToAction("Atividades", "Equipe", new { id = atividadePostModel.Atividade.IdEquipe });
+                }
+                catch (CustomBaseException ex)
+                {
+                    MensagemErro(ex.Mensagem);
+                    return View(atividadeRetornoModel);
+                }
+            }
+
+            return View(atividadeRetornoModel);
+        }
         #endregion
 
         #region Métodos Aux
+
+        private AtividadeEquipeAdicionarEditarModel MontarAtividadeEquipeAdicionarEditar()
+        {
+            var atividadeContratoAdicionarModel = new AtividadeEquipeAdicionarEditarModel
+            {
+                TipoAtividades = _tipoAtividadeAppServico.ListarTodos(),
+                DiaSemanas = _diaSemanaAppServico.ListarTodos(),
+                TipoRecorrencias = _tipoRecorrenciaAppServico.ListarTodos()
+            };
+            return atividadeContratoAdicionarModel;
+        }
 
         public string ObterAtividadesEquipe(int id, string dataInicial, string dataFinal)
         {
@@ -262,20 +374,6 @@ namespace RAHSys.Apresentacao.Controllers
                 item.Equipe = null;
             });
             return JsonConvert.SerializeObject(lista);
-        }
-
-        private AtividadeEquipeAdicionarEditarModel MontarAtividadeEquipeAdicionarEditar(int idEquipe)
-        {
-            var equipeModel = _equipeAppServico.ObterPorId(idEquipe);
-            if (equipeModel != null)
-            {
-                var atividadeContratoAdicionarModel = new AtividadeEquipeAdicionarEditarModel();
-                atividadeContratoAdicionarModel.Equipe = equipeModel;
-                atividadeContratoAdicionarModel.TipoAtividades = _tipoAtividadeAppServico.ListarTodos();
-                atividadeContratoAdicionarModel.Contratos = ObterContratosEquipe(idEquipe);
-                return atividadeContratoAdicionarModel;
-            }
-            return null;
         }
 
         private List<ContratoAppModel> ObterContratosEquipe(int idEquipe)

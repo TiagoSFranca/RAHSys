@@ -44,18 +44,10 @@ namespace RAHSys.Apresentacao.Models
         public EquipeAppModel Equipe { get; set; }
     }
 
-    public class AtividadeEquipeAdicionarEditarModel
+    public class AtividadeEquipeAdicionarEditarModel : AtividadeAdicionarEditarModel
     {
         public EquipeAppModel Equipe { get; set; }
-        public AtividadeAppModel Atividade { get; set; }
         public List<ContratoAppModel> Contratos { get; set; }
-        public List<TipoAtividadeAppModel> TipoAtividades { get; set; }
-
-        public AtividadeEquipeAdicionarEditarModel()
-        {
-            TipoAtividades = new List<TipoAtividadeAppModel>();
-            Contratos = new List<ContratoAppModel>();
-        }
     }
 
     public class FinalizarAtividadeModel

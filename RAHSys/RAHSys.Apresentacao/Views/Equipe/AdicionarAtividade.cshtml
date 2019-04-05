@@ -1,4 +1,4 @@
-﻿@model  RAHSys.Apresentacao.Models.AtividadeContratoAdicionarEditarModel
+﻿@model  RAHSys.Apresentacao.Models.AtividadeEquipeAdicionarEditarModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -8,23 +8,7 @@
 }
 
 <div class="row">
-    <div class="col-md-6 col-sm-6">
-        <div class="portlet light ">
-            <div class="portlet-title">
-                <div class="caption caption-md">
-                    <i class="icon-bar-chart font-dark hide"></i>
-                    <span class="caption-subject font-green-steel uppercase bold">Contrato</span>
-                </div>
-                <div class="tools">
-                    <a href="javascript:;" class="expand"> </a>
-                </div>
-            </div>
-            <div class="portlet-body portlet-collapsed">
-                @{Html.RenderPartial("_ContratoInfo", Model.Contrato);}
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 col-sm-6">
+    <div class="col-md-12 col-sm-12">
         <div class="portlet light ">
             <div class="portlet-title">
                 <div class="caption caption-md">
@@ -41,6 +25,7 @@
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="portlet light ">
@@ -51,11 +36,18 @@
                 </div>
             </div>
             <div class="portlet-body">
-                @using (Html.BeginForm("AdicionarAtividade", "Contrato", FormMethod.Post, new { @class = "form-horizontal margin-bottom-40" }))
+                @using (Html.BeginForm("AdicionarAtividade", "Equipe", FormMethod.Post, new { @class = "form-horizontal margin-bottom-40" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(model => model.Atividade.IdEquipe)
-                    @Html.HiddenFor(model => model.Atividade.IdContrato)
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.Atividade.IdContrato, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(model => model.Atividade.IdContrato, new SelectList(Model.Contratos, "IdContrato", "NomeEmpresa"), "Selecione", new { @class = "form-control", @placeholder = "Contrato", @required = "required" })
+                            @Html.ValidationMessageFor(model => model.Atividade.IdContrato, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
                     <div class="form-group form-md-line-input">
                         @Html.LabelFor(m => m.Atividade.IdTipoAtividade, new { @class = "col-md-2 control-label" })
                         <div class="col-md-4">
@@ -183,8 +175,8 @@
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
                             <button type="submit" class="btn blue btn-circle">Salvar</button>
-                            @Html.ActionLink("Limpar", "AdicionarAtividade", "Contrato", new { id = Model.Atividade.IdContrato }, new { @class = "btn btn-white btn-outline btn-circle btn-md" })
-                            @Html.ActionLink("Cancelar", "Atividades", "Contrato", new { id = Model.Atividade.IdContrato }, new { @class = "btn yellow-haze btn-outline btn-circle btn-md" })
+                            @Html.ActionLink("Limpar", "AdicionarAtividade", "Equipe", new { id = Model.Atividade.IdEquipe }, new { @class = "btn btn-white btn-outline btn-circle btn-md" })
+                            @Html.ActionLink("Cancelar", "Atividades", "Equipe", new { id = Model.Atividade.IdEquipe }, new { @class = "btn yellow-haze btn-outline btn-circle btn-md" })
                         </div>
                     </div>
                 }
@@ -198,5 +190,5 @@
 <input type="hidden" value="@RAHSys.Entidades.Seeds.TipoRecorrenciaSeed.Semanal.IdTipoRecorrencia" id="idTipoSemana" />
 @section scripts{
     @Scripts.Render("~/Select2/js")
-    @Scripts.Render("~/Contrato/Atividade/AdicionarEditar/js")
+    @Scripts.Render("~/Equipe/Atividade/AdicionarEditar/js")
 }

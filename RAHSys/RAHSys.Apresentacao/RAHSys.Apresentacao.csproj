@@ -4118,6 +4118,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Equipe\Atividades.cshtml" />
     <Content Include="Views\Equipe\AdicionarAtividade.cshtml" />
+    <Content Include="Views\Equipe\EditarAtividade.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -199,37 +199,36 @@
                             </div>
                         </div>
                         <div class="row">
-                                <div class="col-md-12 col-sm-12">
-                                    <div class="portlet light ">
-                                        <div class="portlet-title">
-                                            <div class="caption caption-md">
-                                                <i class="icon-bar-chart font-dark hide"></i>
-                                                <span class="caption-subject font-green-steel uppercase bold">Info do Contrato <span id="codigoContrato"></span></span>
-                                            </div>
-                                            <div class="tools">
-                                                <a href="javascript:;" class="expand" id="showInfoContrato"> </a>
-                                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <div class="portlet light ">
+                                    <div class="portlet-title">
+                                        <div class="caption caption-md">
+                                            <i class="icon-bar-chart font-dark hide"></i>
+                                            <span class="caption-subject font-green-steel uppercase bold">Info do Contrato <span id="codigoContrato"></span></span>
                                         </div>
-                                        <div class="portlet-body portlet-collapsed">
-                                            <div class="row">
-                                                <div class="col-md-12" id="divInfoContrato">
-                                                    <div class="form-group form-md-line-input">
-                                                        @Html.LabelFor(model => model.Contrato.IdContrato, new { @class = "col-md-3 control-label" })
-                                                        <div class="col-md-9">
-                                                            <input type="text" class="form-control" placeholder="Código" disabled id="idContrato" />
-                                                        </div>
+                                        <div class="tools">
+                                            <a href="javascript:;" class="expand" id="showInfoContrato"> </a>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body portlet-collapsed">
+                                        <div class="row">
+                                            <div class="col-md-12" id="divInfoContrato">
+                                                <div class="form-group form-md-line-input">
+                                                    @Html.LabelFor(model => model.Contrato.IdContrato, new { @class = "col-md-3 control-label" })
+                                                    <div class="col-md-9">
+                                                        <input type="text" class="form-control" placeholder="Código" disabled id="idContrato" />
                                                     </div>
-                                                    <div class="form-group form-md-line-input">
-                                                        @Html.LabelFor(model => model.Contrato.ContatoInicial, new { @class = "col-md-3 control-label" })
-                                                        <div class="col-md-9">
-                                                            <input type="text" class="form-control" placeholder="Contato Inicial" disabled id="contatoInicial" />
-                                                        </div>
+                                                </div>
+                                                <div class="form-group form-md-line-input">
+                                                    @Html.LabelFor(model => model.Contrato.ContatoInicial, new { @class = "col-md-3 control-label" })
+                                                    <div class="col-md-9">
+                                                        <input type="text" class="form-control" placeholder="Contato Inicial" disabled id="contatoInicial" />
                                                     </div>
-                                                    <div class="form-group form-md-line-input">
-                                                        @Html.LabelFor(model => model.Contrato.NomeEmpresa, new { @class = "col-md-3 control-label" })
-                                                        <div class="col-md-9">
-                                                            <input type="text" class="form-control" placeholder="Nome da Empresa" disabled id="nomeEmpresa" />
-                                                        </div>
+                                                </div>
+                                                <div class="form-group form-md-line-input">
+                                                    @Html.LabelFor(model => model.Contrato.NomeEmpresa, new { @class = "col-md-3 control-label" })
+                                                    <div class="col-md-9">
+                                                        <input type="text" class="form-control" placeholder="Nome da Empresa" disabled id="nomeEmpresa" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -237,6 +236,7 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -259,8 +259,8 @@
 <input type="hidden" value="@ViewBag.ModoVisualizacao" id="modoVisualizacao" />
 <input type="hidden" value="@Model.TodasAtividadesSerializadas" id="atividades" />
 <input type="hidden" value="@Url.Action("Atividades", "Equipe", new { id = Model.Equipe.IdEquipe})" id="inputUrlBase" />
-@*<input type="hidden" value="@Url.Action("EditarAtividade", "Contrato", new { id = Model.Contrato.IdContrato})" id="inputEditarAtividade" />
-    <input type="hidden" value="@Url.Action("FinalizarAtividade", "Contrato", new { id = Model.Contrato.IdContrato})" id="inputUrlFinalizarAtividade" />
+<input type="hidden" value="@Url.Action("EditarAtividade", "Equipe", new { id = Model.Equipe.IdEquipe})" id="inputEditarAtividade" />
+@*<input type="hidden" value="@Url.Action("FinalizarAtividade", "Contrato", new { id = Model.Contrato.IdContrato})" id="inputUrlFinalizarAtividade" />
     <input type="hidden" value="@Url.Action("EvidenciaAtividade", "Contrato", new { id = Model.Contrato.IdContrato})" id="inputUrlEvidencias" />*@
 <input type="hidden" value="@Url.Action("Atividades", "Equipe", new { id = Model.Equipe.IdEquipe, dataInicial = ViewBag.DataInicial, dataFinal = ViewBag.DataFinal, modoVisualizacao = ViewBag.ModoVisualizacao })" id="inputUrlRetorno" />
 <input type="hidden" value="@JsonConvert.SerializeObject(RAHSys.Extras.Helper.EquipeHelper.EquipeInteira)" id="equipeInteiraHelper" />

@@ -205,18 +205,20 @@ function IniciarCalendario() {
 }
 
 function PopularModalAlterarEquipe(idEquipe) {
-    var $equipes = JSON.parse($('#equipes').val());
-    $('.equipeAtividade').empty().append($('<option>', {
-        text: 'Selecione',
-        value: ''
-    }));
-    $.each($equipes, function (i, item) {
-        if (item.IdEquipe != idEquipe)
-            $('.equipeAtividade').append($('<option>', {
-                text: item.ObterLider,
-                value: item.IdEquipe
-            }).attr('data-equipe', JSON.stringify(item)));
-    });
+    if ($('#equipes').length > 0) {
+        var $equipes = JSON.parse($('#equipes').val());
+        $('.equipeAtividade').empty().append($('<option>', {
+            text: 'Selecione',
+            value: ''
+        }));
+        $.each($equipes, function (i, item) {
+            if (item.IdEquipe != idEquipe)
+                $('.equipeAtividade').append($('<option>', {
+                    text: item.ObterLider,
+                    value: item.IdEquipe
+                }).attr('data-equipe', JSON.stringify(item)));
+        });
+    }
 }
 
 $("#ddlEquipe").change(function () {

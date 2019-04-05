@@ -346,6 +346,102 @@ namespace RAHSys.Apresentacao.Controllers
 
             return View(atividadeRetornoModel);
         }
+
+        [HttpGet]
+        public ActionResult EditarAtividade(int id, int idAtividade)
+        {
+            ViewBag.SubTitle = "Editar Atividade";
+            try
+            {
+                var atividade = _atividadeAppServico.ObterPorId(idAtividade);
+
+                if (atividade == null)
+                {
+                    MensagemErro("Atividade não encontrada");
+                    return RedirectToAction("Atividades", new { id });
+                }
+
+                var equipeModel = _equipeAppServico.ObterPorId(id);
+                if (equipeModel == null)
+                {
+                    MensagemErro("Contrato não encontrado");
+                    return RedirectToAction("Index");
+                }
+
+                ValidarUsuarioLogado(equipeModel);
+
+                var atividadeContratoAdicionarModel = MontarAtividadeEquipeAdicionarEditar();
+
+                atividadeContratoAdicionarModel.Contratos = ObterContratosEquipe(equipeModel.IdEquipe);
+                atividadeContratoAdicionarModel.Equipe = _equipeAppServico.ObterPorId(atividade.IdEquipe);
+                atividadeContratoAdicionarModel.Atividade = atividade;
+                atividadeContratoAdicionarModel.DiaSemanasSelecionadas = atividade.ConfiguracaoAtividade?.AtividadeDiaSemanas?.Select(e => e.IdDiaSemana).ToList();
+
+                return View(atividadeContratoAdicionarModel);
+            }
+            catch (UnauthorizedException)
+            {
+                return RedirectToAction("Unauthorized", "Account");
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EditarAtividade(AtividadeContratoAdicionarEditarModel atividadePostModel)
+        {
+            ViewBag.SubTitle = "Editar Atividade";
+            int idEquipe = atividadePostModel.Atividade.IdEquipe;
+
+            var equipeModel = _equipeAppServico.ObterPorId(idEquipe);
+            if (equipeModel == null)
+            {
+                MensagemErro("Equipe não encontrada");
+                return RedirectToAction("Index");
+            }
+
+            try
+            {
+                ValidarUsuarioLogado(equipeModel);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Unauthorized", "Account");
+            }
+
+            var atividadeRetornoModel = MontarAtividadeEquipeAdicionarEditar();
+            atividadeRetornoModel.Atividade = atividadePostModel.Atividade;
+            atividadeRetornoModel.DiaSemanasSelecionadas = atividadePostModel.DiaSemanasSelecionadas ?? new List<int>();
+            atividadeRetornoModel.Contratos = ObterContratosEquipe(equipeModel.IdEquipe);
+
+            atividadeRetornoModel.Equipe = equipeModel;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var atividade = atividadePostModel.Atividade;
+                    if (atividadePostModel.DiaSemanasSelecionadas?.Count > 0)
+                    {
+                        atividade.ConfiguracaoAtividade.AtividadeDiaSemanas = atividadePostModel.DiaSemanasSelecionadas.Select(e => new AtividadeDiaSemanaAppModel() { IdDiaSemana = e }).ToList();
+                    }
+                    _atividadeAppServico.Atualizar(atividade);
+                    MensagemSucesso();
+                    return RedirectToAction("Atividades", new { id = idEquipe });
+                }
+                catch (CustomBaseException ex)
+                {
+                    MensagemErro(ex.Mensagem);
+                    return View(atividadeRetornoModel);
+                }
+            }
+
+            return View(atividadeRetornoModel);
+        }
+
         #endregion
 
         #region Métodos Aux
@@ -371,7 +467,11 @@ namespace RAHSys.Apresentacao.Controllers
             List<AtividadeRecorrenciaAppModel> lista = consulta.Resultado.ToList();
             lista.ForEach(item =>
             {
-                item.Equipe = null;
+                item.Equipe.Lider.UsuarioPerfis = null;
+                item.Equipe.EquipeUsuarios.ForEach(eu =>
+                {
+                    eu.Usuario.UsuarioPerfis = null;
+                });
             });
             return JsonConvert.SerializeObject(lista);
         }

@@ -1,21 +1,20 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using RAHSys.Apresentacao.Models;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using RAHSys.Apresentacao.Models;
 
 namespace RAHSys.Apresentacao.Controllers
 {
     [Authorize]
-    public class ManageController : Controller
+    public class ManageController : ControllerBase
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        
+
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
@@ -28,9 +27,9 @@ namespace RAHSys.Apresentacao.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -50,6 +49,7 @@ namespace RAHSys.Apresentacao.Controllers
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
+            ViewBag.Title = "Gerenciar Perfil";
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
@@ -213,6 +213,7 @@ namespace RAHSys.Apresentacao.Controllers
         // GET: /Manage/ChangePassword
         public ActionResult ChangePassword()
         {
+            ViewBag.Title = "Alterar Senha";
             return View();
         }
 
@@ -222,6 +223,8 @@ namespace RAHSys.Apresentacao.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
         {
+            ViewBag.Title = "Alterar Senha";
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -234,7 +237,8 @@ namespace RAHSys.Apresentacao.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                MensagemSucesso("Senha alterada com Sucesso");
+                return RedirectToAction("Index");
             }
             AddErrors(result);
             return View(model);
@@ -329,7 +333,7 @@ namespace RAHSys.Apresentacao.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -380,6 +384,6 @@ namespace RAHSys.Apresentacao.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }

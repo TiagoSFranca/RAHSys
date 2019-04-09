@@ -15,7 +15,7 @@ using RAHSys.Apresentacao.Models;
 namespace RAHSys.Apresentacao.Controllers
 {
     [Authorize]    
-    public class AccountController : Controller
+    public class AccountController : ControllerBase
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -155,6 +155,7 @@ namespace RAHSys.Apresentacao.Controllers
 
         public ActionResult RegisterRole()
         {
+            ViewBag.Title = "Adicionar novo Perfil";
             return View("RegisterRole");
         }
 
@@ -165,6 +166,7 @@ namespace RAHSys.Apresentacao.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RegisterRole(RegisterRoleViewModel model)
         {
+            ViewBag.Title = "Adicionar novo Perfil";
             if (ModelState.IsValid)
             {
                 ApplicationDbContext context = new ApplicationDbContext();
@@ -182,6 +184,10 @@ namespace RAHSys.Apresentacao.Controllers
                     }
                     AddErrors(result);
                 }
+                else
+                {
+                    MensagemErro("Perfil já cadastrado.");
+                }
             }
 
             // If we got this far, something failed, redisplay form
@@ -193,6 +199,7 @@ namespace RAHSys.Apresentacao.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            ViewBag.Title = "Adicionar novo Usuário";
             // Busca os perfis para exibir no List
             List<SelectListItem> roles = BuscarPerfis();
             RegisterViewModel model = new RegisterViewModel();
@@ -229,6 +236,7 @@ namespace RAHSys.Apresentacao.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            ViewBag.Title = "Adicionar novo Usuário";
             if (ModelState.IsValid)
             {
                 // Não cria um usuário caso não escolha pelo menos um perfil

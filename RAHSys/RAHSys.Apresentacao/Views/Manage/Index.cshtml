@@ -1,27 +1,39 @@
 ﻿@model RAHSys.Apresentacao.Models.IndexViewModel
+
 @{
-    ViewBag.Title = "Gerenciar Perfil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewBag.Title.</h2>
-
 <p class="text-success">@ViewBag.StatusMessage</p>
-<div>
-    <h4>Modifique suas configurações de perfil</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>Senha:</dt>
-        <dd>
-            [
-            @if (Model.HasPassword)
-            {
-                @Html.ActionLink("Modificar senha", "ChangePassword")
-            }
-            else
-            {
-                @Html.ActionLink("Criar Senha", "SetPassword")
-            }
-            ]
-        </dd>
-    </dl>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart font-dark hide"></i>
+                    <span class="caption-subject font-green-steel uppercase bold">@ViewBag.Title</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="form-group form-md-line-input">
+                    <dl class="dl-horizontal">
+                        <dt>Senha:</dt>
+                        <dd>
+                            [
+                            @if (Model.HasPassword)
+                            {
+                                @Html.ActionLink("Modificar senha", "ChangePassword")
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Criar Senha", "SetPassword")
+                            }
+                            ]
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

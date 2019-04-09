@@ -722,9 +722,38 @@ namespace RAHSys.Apresentacao.Controllers
             return RedirectToAction("EvidenciaAtividade", new { id = idEquipe, idAtividade = idRegistroRecorrencia, urlRetorno });
         }
 
+        public ActionResult MinhasEquipes()
+        {
+            ViewBag.SubTitle = "Minhas Equipes";
+            try
+            {
+                var equipes = ObterEquipesUsuario();
+                return View(equipes);
+            }
+            catch (UnauthorizedException)
+            {
+                return RedirectToAction("Unauthorized", "Account");
+            }
+        }
+
         #endregion
 
         #region Métodos Aux
+
+        private List<EquipeAppModel> ObterEquipesUsuario()
+        {
+            var usuarioLogado = ObterUsuarioLogado();
+            ConsultaAppModel<EquipeAppModel> equipes = new ConsultaAppModel<EquipeAppModel>();
+            if (usuarioLogado != null)
+                equipes = _equipeAppServico.Consultar(null, usuarioLogado.Email, null, true, 1, Int32.MaxValue);
+            else
+                throw new UnauthorizedException();
+
+            var resultado = equipes.Resultado.ToList();
+            resultado = resultado.Where(e => e.IdLider.ToLower().Equals(usuarioLogado?.IdUsuario?.ToLower())).ToList();
+
+            return resultado;
+        }
 
         private UsuarioAppModel ObterUsuarioLogado()
         {

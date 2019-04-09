@@ -17,24 +17,29 @@
                             <i class="icon-user"></i> Perfil
                         </a>
                     </li>
+                    <li>
+                        <a href="@Url.Action("MinhasEquipes", "Equipe")">
+                            <i class="icon-users"></i> Minhas Equipes
+                        </a>
+                    </li>
                     @*<li>
-                        <a href="app_calendar.html">
-                            <i class="icon-calendar"></i> Meu Calendário
-                        </a>
-                    </li>
-                    <li>
-                        <a href="app_inbox.html">
-                            <i class="icon-envelope-open"></i> My Inbox
-                            <span class="badge badge-danger"> 3 </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="app_todo_2.html">
-                            <i class="icon-rocket"></i> Minhas Atividades
-                            <span class="badge badge-success"> 7 </span>
-                        </a>
-                    </li>*@
-                    @if (User.IsInRole("Admin"))
+                            <a href="app_calendar.html">
+                                <i class="icon-calendar"></i> Meu Calendário
+                            </a>
+                        </li>
+                        <li>
+                            <a href="app_inbox.html">
+                                <i class="icon-envelope-open"></i> My Inbox
+                                <span class="badge badge-danger"> 3 </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="app_todo_2.html">
+                                <i class="icon-rocket"></i> Minhas Atividades
+                                <span class="badge badge-success"> 7 </span>
+                            </a>
+                        </li>*@
+                    @if (User.IsInRole(RAHSys.Extras.Enums.PerfilEnum.Admin.Nome))
                     {
                         <li class="divider"> </li>
                         <li>
@@ -50,10 +55,10 @@
                     }
                     <li class="divider"> </li>
                     @*<li>
-            <a href="page_user_lock_1.html">
-                <i class="icon-lock"></i> Lock Screen
-            </a>
-        </li>*@
+                            <a href="page_user_lock_1.html">
+                                <i class="icon-lock"></i> Lock Screen
+                            </a>
+                        </li>*@
                     <li>
                         <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
                     </li>
@@ -61,10 +66,10 @@
             </li>
         }
         @*if (User.IsInRole("Admin"))
-        {
-            <li>@Html.ActionLink("Cadastrar Usuário", "Register", "Account")</li>
-            <li>@Html.ActionLink("Cadastrar Perfil", "RegisterRole", "Account")</li>
-        }*@
+            {
+                <li>@Html.ActionLink("Cadastrar Usuário", "Register", "Account")</li>
+                <li>@Html.ActionLink("Cadastrar Perfil", "RegisterRole", "Account")</li>
+            }*@
     }
     else
     {

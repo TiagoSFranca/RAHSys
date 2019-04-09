@@ -4122,6 +4122,7 @@
     <Content Include="Views\Equipe\FinalizarAtividade.cshtml" />
     <Content Include="Views\Equipe\EvidenciaAtividade.cshtml" />
     <Content Include="Views\Equipe\ExcluirEvidencia.cshtml" />
+    <Content Include="Views\Equipe\MinhasEquipes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

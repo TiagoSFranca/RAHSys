@@ -213,7 +213,7 @@ namespace RAHSys.Apresentacao.Controllers
             ViewBag.DataFinal = dataFinal;
             ViewBag.ModoVisualizacao = modoVisualizacao;
 
-            AtividadeEquipeModel atividadeContratoModel = new AtividadeEquipeModel();
+            AtividadeEquipeModel atividadeEquipeModel = new AtividadeEquipeModel();
             try
             {
                 var equipeModel = _equipeAppServico.ObterPorId(id);
@@ -226,8 +226,8 @@ namespace RAHSys.Apresentacao.Controllers
 
                 ValidarUsuarioLogado(equipeModel);
 
-                atividadeContratoModel.Equipe = equipeModel;
-                atividadeContratoModel.TodasAtividadesSerializadas = ObterAtividadesEquipe(id, dataInicial, dataFinal);
+                atividadeEquipeModel.Equipe = equipeModel;
+                atividadeEquipeModel.TodasAtividadesSerializadas = ObterAtividadesEquipe(id, dataInicial, dataFinal);
             }
             catch (UnauthorizedException)
             {
@@ -239,7 +239,7 @@ namespace RAHSys.Apresentacao.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(atividadeContratoModel);
+            return View(atividadeEquipeModel);
         }
 
         [HttpGet]

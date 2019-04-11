@@ -123,6 +123,10 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
             bundles.Add(new ScriptBundle("~/Equipe/Atividade/AdicionarEditar/js").Include(
                 "~/Scripts/equipe/atividadeAdicionarEditar.js"
                 ));
+
+            bundles.Add(new ScriptBundle("~/Atividade/Index/js").Include(
+                "~/Scripts/atividade/atividadeIndex.js"
+                ));
         }
     }
 }

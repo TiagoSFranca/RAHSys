@@ -1,0 +1,39 @@
+﻿@model RAHSys.Aplicacao.AppModels.EvidenciaAppModel
+@{
+    Layout = "~/Views/Shared/_LayoutModal.cshtml";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+    <h4 class="modal-title">@ViewBag.SubTitle</h4>
+</div>
+@using (Html.BeginForm("ExcluirEvidencia", "Atividade", new { urlRetorno = ViewBag.UrlRetorno }, FormMethod.Post, new { @class = "form-horizontal margin-bottom-40" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.IdEvidencia)
+    @Html.HiddenFor(model => model.IdRegistroRecorrencia)
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="portlet light ">
+                    <div class="portlet-body">
+                        <div class="form-group form-md-line-input">
+                            <div class="col-md-12">
+                                Tem certeza que deseja excluir a evidência de nome <strong>@Model.NomeArquivo</strong>?
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn red-flamingo btn-circle btn-md">Excluir</button>
+                <button type="button" class="btn yellow-haze btn-outline btn-circle btn-md" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+}
+

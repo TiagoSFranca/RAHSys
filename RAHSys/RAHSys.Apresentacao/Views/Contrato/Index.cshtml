@@ -176,9 +176,11 @@
                                                             @Html.ActionLink("Atividades", "Atividades", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-md" })
                                                         </li>
                                                     }
+                                                    <li>
+                                                        @Html.ActionLink("Visualizar", "Visualizar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-md" })
+                                                    </li>
                                                 </ul>
                                             </div>
-                                            @*@Html.ActionLink("Alterar", "Editar", "Contrato", new { id = item.IdContrato }, new { @class = "btn grey-gallery btn-outline btn-circle btn-md" })*@
                                             @Html.ActionLink("Excluir", "Excluir", "Contrato", new { id = item.IdContrato }, new { @class = "btn red-flamingo btn-circle btn-md abrirModal" })
                                         </td>
                                     </tr>

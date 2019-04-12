@@ -4133,6 +4133,7 @@
     <Content Include="Views\Usuario\FinalizarAtividade.cshtml" />
     <Content Include="Views\Usuario\EvidenciaAtividade.cshtml" />
     <Content Include="Views\Usuario\ExcluirEvidencia.cshtml" />
+    <Content Include="Views\Contrato\Visualizar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

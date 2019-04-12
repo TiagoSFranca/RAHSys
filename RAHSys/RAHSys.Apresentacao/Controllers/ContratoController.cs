@@ -460,6 +460,30 @@ namespace RAHSys.Apresentacao.Controllers
             return View(responsavelFinanceiroEditar);
         }
 
+        [HttpGet]
+        [RAHAuthorize(Roles = "Comercial")]
+        public ActionResult Visualizar(int id)
+        {
+            ViewBag.SubTitle = "Visualizar Contrato";
+
+            try
+            {
+                var contratoModel = _contratoAppServico.ObterPorId(id);
+                if (contratoModel == null)
+                {
+                    MensagemErro("Contrato não encontrado");
+                    return RedirectToAction("Index");
+                }
+
+                return View(contratoModel);
+            }
+            catch (CustomBaseException ex)
+            {
+                MensagemErro(ex.Mensagem);
+                return RedirectToAction("Index");
+            }
+        }
+
         #region Atividades
 
         [HttpGet]

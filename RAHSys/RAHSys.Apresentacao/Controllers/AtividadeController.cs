@@ -55,7 +55,7 @@ namespace RAHSys.Apresentacao.Controllers
             var atividadeContratoModel = new AtividadeIndexModel();
             try
             {
-                atividadeContratoModel.TodasAtividadesSerializadas = ObterAtividadesEquipe(dataInicial, dataFinal);
+                atividadeContratoModel.TodasAtividadesSerializadas = ObterAtividades(dataInicial, dataFinal);
                 atividadeContratoModel.TodasEquipesSerializadas = ObterTodasEquipesSerializadas();
             }
             catch (CustomBaseException ex)
@@ -281,14 +281,14 @@ namespace RAHSys.Apresentacao.Controllers
             return RedirectToAction("EvidenciaAtividade", new { id = evidencia.IdRegistroRecorrencia, urlRetorno });
         }
 
-        public string ObterAtividadesEquipe(string dataInicial, string dataFinal)
+        public string ObterAtividades(string dataInicial, string dataFinal)
         {
             DateTimeFormatInfo formatter = new CultureInfo("pt-BR", false).DateTimeFormat;
             var dataInicialConvertida = Convert.ToDateTime(dataInicial, formatter);
             var dataFinalConvertida = Convert.ToDateTime(dataFinal, formatter);
             var consulta = _atividadeAppServico.Consultar(null, null, null, null,
-                null, dataInicialConvertida, dataFinalConvertida, null, true, 1, Int32.MaxValue);
-            List<AtividadeRecorrenciaAppModel> lista = consulta.Resultado.ToList();
+                null, dataInicialConvertida, dataFinalConvertida);
+            List<AtividadeRecorrenciaAppModel> lista = consulta.ToList();
             lista.ForEach(item =>
             {
                 item.Equipe.Lider.UsuarioPerfis = null;
@@ -380,29 +380,7 @@ namespace RAHSys.Apresentacao.Controllers
 
             return Redirect(urlRetorno);
         }
-
-        //[HttpGet]
-        //public ActionResult Excluir(int id, string urlRetorno)
-        //{
-        //    ViewBag.SubTitle = "Excluir Atividade";
-        //    ViewBag.UrlRetorno = urlRetorno;
-        //    try
-        //    {
-        //        var atividade = _atividadeAppServico.ObterPorId(id);
-        //        if (atividade == null)
-        //        {
-        //            MensagemErro("Atividade não encontrada");
-        //            return Redirect(urlRetorno);
-        //        }
-        //        return View(atividade);
-        //    }
-        //    catch (CustomBaseException ex)
-        //    {
-        //        MensagemErro(ex.Mensagem);
-        //    }
-        //    return Redirect(urlRetorno);
-        //}
-
+        
         [HttpPost]
         public ActionResult ExcluirAtividade(int idAtividade, string urlRetorno)
         {
@@ -469,47 +447,5 @@ namespace RAHSys.Apresentacao.Controllers
             return Redirect(urlRetorno);
         }
 
-        //#region Métodos Auxiliares
-
-        //private static bool? ObterRealizada(string realizada)
-        //{
-        //    if (string.IsNullOrEmpty(realizada))
-        //        return null;
-        //    return realizada == "1";
-        //}
-
-        //private List<int> ObterIdsTipoAtividade(string descricao)
-        //{
-        //    if (string.IsNullOrEmpty(descricao))
-        //        return new List<int>();
-        //    var tipos = _tipoAtividadeAppServico.Consultar(null, descricao, null, true, 1, Int32.MaxValue);
-        //    return tipos.Resultado.Select(e => e.IdTipoAtividade).ToList();
-        //}
-
-        //private List<int> ObterIdsContrato(string nomeEmpresa)
-        //{
-        //    if (string.IsNullOrEmpty(nomeEmpresa))
-        //        return new List<int>();
-        //    var contratos = _contratoAppServico.Consultar(null, null, nomeEmpresa, null, null, null, true, 1, Int32.MaxValue);
-        //    return contratos.Resultado.Select(e => e.IdContrato).ToList();
-        //}
-
-        //private List<int> ObterIdsEquipe(string usuario)
-        //{
-        //    if (string.IsNullOrEmpty(usuario))
-        //        return new List<int>();
-        //    var equipes = _equipeAppServico.Consultar(null, usuario, null, true, 1, Int32.MaxValue);
-        //    return equipes.Resultado.Select(e => e.IdEquipe).ToList();
-        //}
-
-        //private List<string> ObterIdsUsuario(string usuario)
-        //{
-        //    if (string.IsNullOrEmpty(usuario))
-        //        return new List<string>();
-        //    var usuarios = _usuarioAppServico.Consultar(null, usuario, usuario, null, true, 1, Int32.MaxValue);
-        //    return usuarios.Resultado.Select(e => e.IdUsuario).ToList();
-        //}
-
-        //#endregion
     }
 }

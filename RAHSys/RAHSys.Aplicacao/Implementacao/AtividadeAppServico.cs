@@ -101,25 +101,17 @@ namespace RAHSys.Aplicacao.Implementacao
             }
         }
 
-        public ConsultaAppModel<AtividadeRecorrenciaAppModel> Consultar(IEnumerable<int> idList, IEnumerable<int> idTipoAtividadeList, IEnumerable<int> idEquipeList,
-            IEnumerable<int> idContratoList, IEnumerable<string> idUsuarioList, DateTime dataInicial, DateTime dataFinal,
-            string ordenacao, bool crescente, int pagina, int quantidade)
+        public List<AtividadeRecorrenciaAppModel> Consultar(IEnumerable<int> idList, IEnumerable<int> idTipoAtividadeList, IEnumerable<int> idEquipeList,
+            IEnumerable<int> idContratoList, IEnumerable<string> idUsuarioList, DateTime dataInicial, DateTime dataFinal)
         {
             try
             {
-                var consulta = new ConsultaAppModel<AtividadeRecorrenciaAppModel>();
-
                 var resultado = _atividadeServico.Consultar(idList, idTipoAtividadeList, idEquipeList,
-                    idContratoList, idUsuarioList, dataInicial, dataFinal, ordenacao, crescente, pagina, quantidade);
+                    idContratoList, idUsuarioList, dataInicial, dataFinal);
 
-                consulta.ItensPorPagina = resultado.ItensPorPagina;
-                consulta.PaginaAtual = resultado.PaginaAtual;
-                consulta.TotalPaginas = resultado.TotalPaginas;
-                consulta.TotalItens = resultado.TotalItens;
+                var retorno = resultado.Select(r => r.MapearParaAplicacao()).ToList();
 
-                consulta.Resultado = resultado.Resultado.Select(r => r.MapearParaAplicacao()).ToList();
-
-                return consulta;
+                return retorno;
             }
             catch (Exception ex)
             {
@@ -196,6 +188,26 @@ namespace RAHSys.Aplicacao.Implementacao
             {
                 LogExceptions(ex);
                 throw;
+            }
+            catch (Exception ex)
+            {
+                var nex = new CustomBaseException(ex);
+                LogExceptions(nex);
+                throw nex;
+            }
+        }
+
+        public List<AtividadeRecorrenciaAppModel> ObterRecorrenciasAtrasadas(IEnumerable<int> idList, IEnumerable<int> idTipoAtividadeList, IEnumerable<int> idEquipeList,
+            IEnumerable<int> idContratoList, IEnumerable<string> idUsuarioList, DateTime dataInicial)
+        {
+            try
+            {
+                var resultado = _atividadeServico.ObterRecorrenciasAtrasadas(idList, idTipoAtividadeList, idEquipeList,
+                    idContratoList, idUsuarioList, dataInicial);
+
+                var retorno = resultado.Select(r => r.MapearParaAplicacao()).ToList();
+
+                return retorno;
             }
             catch (Exception ex)
             {

@@ -27,6 +27,7 @@ namespace RAHSys.Apresentacao.Models
         public ContratoAppModel Contrato { get; set; }
         public EquipeAppModel Equipe { get; set; }
         public string TodasAtividadesSerializadas { get; set; }
+        public Dictionary<DateTime, int> AtividadesAtrasadas { get; set; }
     }
 
     public class AtividadeAdicionarEditarModel

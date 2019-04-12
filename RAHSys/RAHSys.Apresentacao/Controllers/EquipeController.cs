@@ -204,7 +204,7 @@ namespace RAHSys.Apresentacao.Controllers
         {
             ViewBag.SubTitle = "Atividades";
 
-            modoVisualizacao = modoVisualizacao ?? "basicDay";
+            modoVisualizacao = modoVisualizacao ?? ModoVisualizacaoEnum.Dia.Nome;
 
             dataInicial = GetData(dataInicial, modoVisualizacao, true);
             dataFinal = GetData(dataFinal, modoVisualizacao, false);
@@ -227,6 +227,10 @@ namespace RAHSys.Apresentacao.Controllers
                 ValidarUsuarioLogado(equipeModel);
 
                 atividadeEquipeModel.Equipe = equipeModel;
+
+                if (modoVisualizacao.Equals(ModoVisualizacaoEnum.Dia.Nome))
+                    atividadeEquipeModel.AtividadesAtrasadas = ObterAtividadesAtrasadas(id, dataInicial);
+
                 atividadeEquipeModel.TodasAtividadesSerializadas = ObterAtividadesEquipe(id, dataInicial, dataFinal);
             }
             catch (UnauthorizedException)
@@ -793,8 +797,8 @@ namespace RAHSys.Apresentacao.Controllers
             var dataInicialConvertida = Convert.ToDateTime(dataInicial, formatter);
             var dataFinalConvertida = Convert.ToDateTime(dataFinal, formatter);
             var consulta = _atividadeAppServico.Consultar(null, null, new[] { id }, null,
-                null, dataInicialConvertida, dataFinalConvertida, null, true, 1, Int32.MaxValue);
-            List<AtividadeRecorrenciaAppModel> lista = consulta.Resultado.ToList();
+                null, dataInicialConvertida, dataFinalConvertida);
+            List<AtividadeRecorrenciaAppModel> lista = consulta.ToList();
             lista.ForEach(item =>
             {
                 item.Equipe.Lider.UsuarioPerfis = null;
@@ -804,6 +808,18 @@ namespace RAHSys.Apresentacao.Controllers
                 });
             });
             return JsonConvert.SerializeObject(lista);
+        }
+
+        public Dictionary<DateTime, int> ObterAtividadesAtrasadas(int id, string dataInicial)
+        {
+            DateTimeFormatInfo formatter = new CultureInfo("pt-BR", false).DateTimeFormat;
+            var dataInicialConvertida = Convert.ToDateTime(dataInicial, formatter);
+            var consulta = _atividadeAppServico.ObterRecorrenciasAtrasadas(null, null, new[] { id }, null,
+                null, DateTime.Now);
+
+            var lista = consulta.Where(e => e.DataRealizacaoPrevista != dataInicialConvertida).GroupBy(e => e.DataRealizacaoPrevista).Select(e => new { Data = e.Key, Quantidade = e.Count() }).ToDictionary(e => e.Data, e => e.Quantidade);
+
+            return lista;
         }
 
         private List<ContratoAppModel> ObterContratosEquipe(int idEquipe)

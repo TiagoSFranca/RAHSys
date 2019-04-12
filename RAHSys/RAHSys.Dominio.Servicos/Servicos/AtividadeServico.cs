@@ -45,12 +45,9 @@ namespace RAHSys.Dominio.Servicos.Servicos
             _configuracaoAtividadeRepositorio = configuracaoAtividadeRepositorio;
         }
 
-        public ConsultaModel<AtividadeRecorrenciaModel> Consultar(IEnumerable<int> idList, IEnumerable<int> idTipoAtividadeList, IEnumerable<int> idEquipeList,
-            IEnumerable<int> idContratoList, IEnumerable<string> idUsuarioList, DateTime dataInicial, DateTime dataFinal,
-            string ordenacao, bool crescente, int pagina, int quantidade)
+        public List<AtividadeRecorrenciaModel> Consultar(IEnumerable<int> idList, IEnumerable<int> idTipoAtividadeList, IEnumerable<int> idEquipeList,
+            IEnumerable<int> idContratoList, IEnumerable<string> idUsuarioList, DateTime dataInicial, DateTime dataFinal)
         {
-            var consultaModel = new ConsultaModel<AtividadeRecorrenciaModel>(pagina, quantidade);
-
             var query = _atividadeRepositorio.Consultar().Where(c => !c.Contrato.Excluido);
 
             query = query.Where(e => (DbFunctions.TruncateTime(e.DataInicial) <= DbFunctions.TruncateTime(dataFinal) && e.ConfiguracaoAtividade != null) ||
@@ -74,26 +71,10 @@ namespace RAHSys.Dominio.Servicos.Servicos
             if (idUsuarioList?.Count() > 0)
                 query = query.Where(c => idUsuarioList.Contains(c.IdUsuario));
 
-            switch ((ordenacao ?? string.Empty).ToLower())
-            {
-                case "tipoatividade":
-                    query = crescente ? query.OrderBy(c => c.TipoAtividade.Descricao) : query.OrderByDescending(c => c.TipoAtividade.Descricao);
-                    break;
-                case "atribuidopara":
-                    query = crescente ? query.OrderBy(c => c.Usuario.UserName) : query.OrderByDescending(c => c.Usuario.UserName);
-                    break;
-                default:
-                    query = crescente ? query.OrderBy(c => c.IdAtividade) : query.OrderByDescending(c => c.IdAtividade);
-                    break;
-            }
-
             var resultado = query.ToList();
             var recorrencia = ObterRecorrenciaAtividades(resultado, dataInicial, dataFinal);
-            recorrencia = recorrencia.Skip((pagina == 1 ? 0 : pagina - 1) * quantidade).Take(quantidade).ToList();
-            consultaModel.TotalItens = recorrencia.Count();
-            consultaModel.Resultado = recorrencia;
 
-            return consultaModel;
+            return recorrencia;
         }
 
         public void Adicionar(AtividadeModel obj)
@@ -192,39 +173,36 @@ namespace RAHSys.Dominio.Servicos.Servicos
             _atividadeRepositorio.Atualizar(atividade);
         }
 
-        //public Dictionary<string, int> ObterRecorrenciasAtrasadas(string mesAno, int? idContrato, int? idEquipe, int? idAtividade, string usuario)
-        //{
-        //    Dictionary<string, int> recorrenciasAtrasadas = new Dictionary<string, int>();
+        public List<AtividadeRecorrenciaModel> ObterRecorrenciasAtrasadas(IEnumerable<int> idList, IEnumerable<int> idTipoAtividadeList, IEnumerable<int> idEquipeList,
+            IEnumerable<int> idContratoList, IEnumerable<string> idUsuarioList, DateTime dataInicial)
+        {
+            var query = _atividadeRepositorio.Consultar().Where(c => !c.Contrato.Excluido);
 
-        //    var query = _atividadeRepositorio.Consultar().Where(c => !c.Contrato.Excluido);
+            query = query.Where(e => (DbFunctions.TruncateTime(e.DataInicial) <= DbFunctions.TruncateTime(dataInicial) && e.ConfiguracaoAtividade != null) ||
+                (DbFunctions.TruncateTime(e.DataInicial) < DbFunctions.TruncateTime(dataInicial) &&
+                    e.ConfiguracaoAtividade == null)
+            );
 
-        //    mesAno = mesAno ?? string.Format("{0}/{1}", DateTime.Now.Month, DateTime.Now.Year);
+            if (idList?.Count() > 0)
+                query = query.Where(c => idList.Contains(c.IdAtividade));
 
-        //    int mes = 0;
-        //    int ano = 0;
+            if (idTipoAtividadeList?.Count() > 0)
+                query = query.Where(c => idTipoAtividadeList.Contains(c.IdTipoAtividade));
 
-        //    ValidarMesAno(mesAno, ref mes, ref ano);
-        //    DateTime dataInicioMesAno = new DateTime(ano, mes, 1);
-        //    DateTime dataFim = dataInicioMesAno.AddDays(-1);
+            if (idEquipeList?.Count() > 0)
+                query = query.Where(c => idEquipeList.Contains(c.IdEquipe));
 
-        //    query = query.Where(e => e.DataInicial <= dataFim);
+            if (idContratoList?.Count() > 0)
+                query = query.Where(c => idContratoList.Contains(c.IdContrato));
 
-        //    if (idAtividade != null)
-        //        query = query.Where(c => idAtividade == c.IdAtividade);
+            if (idUsuarioList?.Count() > 0)
+                query = query.Where(c => idUsuarioList.Contains(c.IdUsuario));
 
-        //    if (idEquipe != null)
-        //        query = query.Where(c => idEquipe == c.IdEquipe);
-
-        //    if (idContrato != null)
-        //        query = query.Where(c => idContrato == c.IdContrato);
-
-        //    if (!string.IsNullOrEmpty(usuario))
-        //        query = query.Where(c => usuario == c.IdUsuario);
-
-        //    var atividades = query.ToList();
-
-        //    return recorrenciasAtrasadas;
-        //}
+            var resultado = query.ToList();
+            var recorrencia = ObterRecorrenciaAtividades(resultado, DateTime.MinValue, dataInicial);
+            recorrencia = recorrencia.Where(e => !e.Realizada).ToList();
+            return recorrencia;
+        }
 
         private List<RegistroRecorrenciaModel> ObterRecorrenciasAtividade(int idAtividade)
         {
@@ -235,22 +213,6 @@ namespace RAHSys.Dominio.Servicos.Servicos
         private ConfiguracaoAtividadeModel ObterConfiguracaoAtividade(int idAtividade)
         {
             return _configuracaoAtividadeRepositorio.ObterPorId(idAtividade);
-        }
-
-        private void ValidarMesAno(string mesAno, ref int mes, ref int ano)
-        {
-            string erroDataInvalida = string.Format("Data [{0}] inválida.", mesAno);
-            var datas = mesAno.Split('/');
-
-            if (datas.Count() != 2)
-                throw new CustomBaseException(new Exception(), erroDataInvalida);
-
-            if (!Int32.TryParse(datas[0], out mes) || (mes < 1 && mes > 12))
-                throw new CustomBaseException(new Exception(), erroDataInvalida);
-
-            if (!Int32.TryParse(datas[1], out ano))
-                throw new CustomBaseException(new Exception(), erroDataInvalida);
-
         }
 
         private List<DayOfWeek> ObterDiasDaSemana(List<AtividadeDiaSemanaModel> atividadeDiaSemanas)

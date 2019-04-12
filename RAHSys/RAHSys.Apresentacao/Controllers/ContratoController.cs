@@ -1009,8 +1009,8 @@ namespace RAHSys.Apresentacao.Controllers
             var dataInicialConvertida = Convert.ToDateTime(dataInicial, formatter);
             var dataFinalConvertida = Convert.ToDateTime(dataFinal, formatter);
             var consulta = _atividadeAppServico.Consultar(null, null, null, new[] { id },
-                null, dataInicialConvertida, dataFinalConvertida, null, true, 1, Int32.MaxValue);
-            List<AtividadeRecorrenciaAppModel> lista = consulta.Resultado.ToList();
+                null, dataInicialConvertida, dataFinalConvertida);
+            List<AtividadeRecorrenciaAppModel> lista = consulta.ToList();
             lista.ForEach(item =>
             {
                 item.Contrato = null;

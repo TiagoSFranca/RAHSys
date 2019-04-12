@@ -19,6 +19,7 @@ using System.Web.Mvc;
 namespace RAHSys.Apresentacao.Controllers
 {
     [RAHAudit]
+    [RAHAuthorize(Roles = "Comercial, Engenharia")]
     public class EquipeController : ControllerBase
     {
         private readonly IEquipeAppServico _equipeAppServico;

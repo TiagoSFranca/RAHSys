@@ -37,6 +37,7 @@ namespace RAHSys.Apresentacao.Models
         public string EnderecoIP { get; set; }
 
         [Required]
+        [MaxLength(4000)]
         public string Dados { get; set; }
 
     }

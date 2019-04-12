@@ -1,10 +1,63 @@
 ﻿@using Newtonsoft.Json;
+@using RAHSys.Extras.Enums;
 
 @model  RAHSys.Apresentacao.Models.AtividadeUsuarioModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (ViewBag.ModoVisualizacao.Equals(ModoVisualizacaoEnum.Dia.Nome) && Model.AtividadesAtrasadas.Count > 0)
+{
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart font-dark hide"></i>
+                        <span class="caption-subject font-red uppercase bold">Atividades Atrasadas</span>
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="expand"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body portlet-collapsed">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-scrollable">
+                                <table class="table table-hover table-light">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Data
+                                            </th>
+                                            <th>
+                                                Quantidade
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.AtividadesAtrasadas)
+                                        {
+                                            var data = item.Key.ToString("dd/MM/yyyy");
+                                            <tr>
+                                                <td>
+                                                    <a href="@Url.Action("MinhasAtividades", "Usuario", new { dataInicial = data, dataFinal = data})">@data</a>
+                                                </td>
+                                                <td>
+                                                    @item.Value
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 <div class="row">
     <div class="col-md-12 col-sm-12">
         <div class="portlet light ">

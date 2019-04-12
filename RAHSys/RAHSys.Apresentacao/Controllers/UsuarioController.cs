@@ -49,7 +49,13 @@ namespace RAHSys.Apresentacao.Controllers
             var atividadeContratoModel = new AtividadeUsuarioModel();
             try
             {
-                atividadeContratoModel.TodasAtividadesSerializadas = ObterAtividades(dataInicial, dataFinal);
+                var usuarioLogado = ObterUsuarioLogado();
+                if (usuarioLogado == null)
+                    throw new UnauthorizedException();
+
+                if (modoVisualizacao.Equals(ModoVisualizacaoEnum.Dia.Nome))
+                    atividadeContratoModel.AtividadesAtrasadas = ObterAtividadesAtrasadas(dataInicial, usuarioLogado);
+                atividadeContratoModel.TodasAtividadesSerializadas = ObterAtividades(dataInicial, dataFinal, usuarioLogado);
             }
             catch (UnauthorizedException)
             {
@@ -342,11 +348,8 @@ namespace RAHSys.Apresentacao.Controllers
             return RedirectToAction("EvidenciaAtividade", new { id = evidencia.IdRegistroRecorrencia, urlRetorno });
         }
 
-        public string ObterAtividades(string dataInicial, string dataFinal)
+        public string ObterAtividades(string dataInicial, string dataFinal, UsuarioAppModel usuarioLogado)
         {
-            var usuarioLogado = ObterUsuarioLogado();
-            if (usuarioLogado == null)
-                throw new UnauthorizedException();
 
             DateTimeFormatInfo formatter = new CultureInfo("pt-BR", false).DateTimeFormat;
             var dataInicialConvertida = Convert.ToDateTime(dataInicial, formatter);
@@ -384,6 +387,18 @@ namespace RAHSys.Apresentacao.Controllers
 
             if (usuarioLogado?.UsuarioPerfis?.Where(e => e.Perfil.Nome.ToLower().Equals(PerfilEnum.Admin.Nome.ToLower())).Count() <= 0 && usuarioLogado.IdUsuario != atividadeModel?.IdUsuario)
                 throw new UnauthorizedException();
+        }
+
+        public Dictionary<DateTime, int> ObterAtividadesAtrasadas(string dataInicial, UsuarioAppModel usuarioLogado)
+        {
+            DateTimeFormatInfo formatter = new CultureInfo("pt-BR", false).DateTimeFormat;
+            var dataInicialConvertida = Convert.ToDateTime(dataInicial, formatter);
+            var consulta = _atividadeAppServico.ObterRecorrenciasAtrasadas(null, null, null, null,
+                new string[] { usuarioLogado.IdUsuario }, DateTime.Now);
+
+            var lista = consulta.Where(e => e.DataRealizacaoPrevista != dataInicialConvertida).GroupBy(e => e.DataRealizacaoPrevista).Select(e => new { Data = e.Key, Quantidade = e.Count() }).ToDictionary(e => e.Data, e => e.Quantidade);
+
+            return lista;
         }
     }
 }

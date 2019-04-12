@@ -27,7 +27,7 @@ namespace RAHSys.Apresentacao.Controllers
             TempData["warning"] = mensagem ?? MensagensPadrao.AtencaoPadrao;
         }
 
-        protected string GetData(string data, string modoVisualizacao, bool dataInicial)
+        protected string GetData(string data, string modoVisualizacao)
         {
             string formato = "{0}/{1}/{2}";
             if (!string.IsNullOrEmpty(data))

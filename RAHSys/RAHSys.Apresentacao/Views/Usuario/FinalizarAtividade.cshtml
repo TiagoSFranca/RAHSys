@@ -1,5 +1,4 @@
-﻿@using RAHSys.Aplicacao.AppModels;
-@model  RAHSys.Apresentacao.Models.FinalizarAtividadeModel
+﻿@model  RAHSys.Apresentacao.Models.FinalizarAtividadeModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -63,7 +62,7 @@
     </div>
 </div>
 
-@using (Html.BeginForm("FinalizarAtividade", "Atividade", new { urlRetorno = ViewBag.UrlRetorno }, FormMethod.Post, new { @class = "form-horizontal margin-bottom-40", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("FinalizarAtividade", "Usuario", new { urlRetorno = ViewBag.UrlRetorno }, FormMethod.Post, new { @class = "form-horizontal margin-bottom-40", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div class="row">
@@ -130,7 +129,7 @@
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
                             <button type="submit" class="btn blue btn-circle">Finalizar</button>
-                            @Html.ActionLink("Limpar", "FinalizarAtividade", "Atividade", new { id = Model.AtividadeInfo.Atividade.IdAtividade, data = Model.AtividadeInfo.DataPrevista, urlRetorno = ViewBag.UrlRetorno }, new { @class = "btn btn-white btn-outline btn-circle btn-md" })
+                            @Html.ActionLink("Limpar", "FinalizarAtividade", "Usuario", new { id = Model.AtividadeInfo.Atividade.IdAtividade, data = Model.AtividadeInfo.DataPrevista, urlRetorno = ViewBag.UrlRetorno }, new { @class = "btn btn-white btn-outline btn-circle btn-md" })
                             <a class="btn yellow-haze btn-outline btn-circle btn-md" href="@ViewBag.UrlRetorno">Cancelar</a>
                         </div>
                     </div>

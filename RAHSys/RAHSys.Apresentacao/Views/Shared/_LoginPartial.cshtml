@@ -22,23 +22,11 @@
                             <i class="icon-users"></i> Minhas Equipes
                         </a>
                     </li>
-                    @*<li>
-                            <a href="app_calendar.html">
-                                <i class="icon-calendar"></i> Meu Calendário
-                            </a>
-                        </li>
-                        <li>
-                            <a href="app_inbox.html">
-                                <i class="icon-envelope-open"></i> My Inbox
-                                <span class="badge badge-danger"> 3 </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="app_todo_2.html">
-                                <i class="icon-rocket"></i> Minhas Atividades
-                                <span class="badge badge-success"> 7 </span>
-                            </a>
-                        </li>*@
+                    <li>
+                        <a href="@Url.Action("MinhasAtividades", "Usuario")">
+                            <i class="icon-calendar"></i> Minhas Atividades
+                        </a>
+                    </li>
                     @if (User.IsInRole(RAHSys.Extras.Enums.PerfilEnum.Admin.Nome))
                     {
                         <li class="divider"> </li>

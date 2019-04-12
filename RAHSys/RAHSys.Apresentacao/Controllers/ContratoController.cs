@@ -467,10 +467,10 @@ namespace RAHSys.Apresentacao.Controllers
         {
             ViewBag.SubTitle = "Atividades";
 
-            modoVisualizacao = modoVisualizacao ?? "basicDay";
+            modoVisualizacao = modoVisualizacao ?? ModoVisualizacaoEnum.Dia.Nome;
 
-            dataInicial = GetData(dataInicial, modoVisualizacao, true);
-            dataFinal = GetData(dataFinal, modoVisualizacao, false);
+            dataInicial = GetData(dataInicial, modoVisualizacao);
+            dataFinal = GetData(dataFinal, modoVisualizacao);
 
             ViewBag.DataInicial = dataInicial;
             ViewBag.DataFinal = dataFinal;

@@ -252,6 +252,7 @@
     <Compile Include="Controllers\TipoAtividadeController.cs" />
     <Compile Include="Controllers\TipoContatoController.cs" />
     <Compile Include="Controllers\TipoTelhadoController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -4023,6 +4024,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Scripts\usuario\usuarioAtividade.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -4127,6 +4129,10 @@
     <Content Include="Views\Atividade\FinalizarAtividade.cshtml" />
     <Content Include="Views\Atividade\EvidenciaAtividade.cshtml" />
     <Content Include="Views\Atividade\ExcluirEvidencia.cshtml" />
+    <Content Include="Views\Usuario\MinhasAtividades.cshtml" />
+    <Content Include="Views\Usuario\FinalizarAtividade.cshtml" />
+    <Content Include="Views\Usuario\EvidenciaAtividade.cshtml" />
+    <Content Include="Views\Usuario\ExcluirEvidencia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

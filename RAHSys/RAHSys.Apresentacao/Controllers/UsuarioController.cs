@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using RAHSys.Aplicacao.AppModels;
 using RAHSys.Aplicacao.Interfaces;
@@ -15,34 +16,26 @@ using System.Web.Mvc;
 
 namespace RAHSys.Apresentacao.Controllers
 {
-    public class AtividadeController : ControllerBase
+    public class UsuarioController : ControllerBase
     {
         private readonly IAtividadeAppServico _atividadeAppServico;
-        private readonly ITipoAtividadeAppServico _tipoAtividadeAppServico;
-        private readonly IContratoAppServico _contratoAppServico;
-        private readonly IEquipeAppServico _equipeAppServico;
         private readonly IUsuarioAppServico _usuarioAppServico;
         private readonly IRegistroRecorrenciaAppServico _registroRecorrenciaAppServico;
         private readonly IEvidenciaAppServico _evidenciaAppServico;
 
-        public AtividadeController(IAtividadeAppServico atividadeAppServico, ITipoAtividadeAppServico tipoAtividadeAppServico,
-            IContratoAppServico contratoAppServico, IEquipeAppServico equipeAppServico, IUsuarioAppServico usuarioAppServico, IRegistroRecorrenciaAppServico registroRecorrenciaAppServico,
-            IEvidenciaAppServico evidenciaAppServico)
+        public UsuarioController(IAtividadeAppServico atividadeAppServico, IUsuarioAppServico usuarioAppServico, IRegistroRecorrenciaAppServico registroRecorrenciaAppServico, IEvidenciaAppServico evidenciaAppServico)
         {
             _atividadeAppServico = atividadeAppServico;
-            _tipoAtividadeAppServico = tipoAtividadeAppServico;
-            _contratoAppServico = contratoAppServico;
-            _equipeAppServico = equipeAppServico;
             _usuarioAppServico = usuarioAppServico;
             _registroRecorrenciaAppServico = registroRecorrenciaAppServico;
             _evidenciaAppServico = evidenciaAppServico;
-            ViewBag.Title = "Atividades";
+            ViewBag.Title = "Usuarios";
         }
 
         [HttpGet]
-        public ActionResult Index(string dataInicial, string dataFinal, string modoVisualizacao)
+        public ActionResult MinhasAtividades(string dataInicial, string dataFinal, string modoVisualizacao)
         {
-            ViewBag.SubTitle = "Calendário";
+            ViewBag.SubTitle = "Minhas Atividades";
 
             modoVisualizacao = modoVisualizacao ?? ModoVisualizacaoEnum.Dia.Nome;
 
@@ -53,11 +46,14 @@ namespace RAHSys.Apresentacao.Controllers
             ViewBag.DataFinal = dataFinal;
             ViewBag.ModoVisualizacao = modoVisualizacao;
 
-            var atividadeContratoModel = new AtividadeIndexModel();
+            var atividadeContratoModel = new AtividadeUsuarioModel();
             try
             {
                 atividadeContratoModel.TodasAtividadesSerializadas = ObterAtividades(dataInicial, dataFinal);
-                atividadeContratoModel.TodasEquipesSerializadas = ObterTodasEquipesSerializadas();
+            }
+            catch (UnauthorizedException)
+            {
+                return RedirectToAction("Unauthorized", "Account");
             }
             catch (CustomBaseException ex)
             {
@@ -77,7 +73,7 @@ namespace RAHSys.Apresentacao.Controllers
                 if (string.IsNullOrEmpty(urlRetorno))
                 {
                     MensagemErro("Ocorreu um erro!");
-                    return RedirectToAction("Index");
+                    return RedirectToAction("MinhasAtividades");
                 }
 
                 ViewBag.UrlRetorno = urlRetorno;
@@ -90,6 +86,8 @@ namespace RAHSys.Apresentacao.Controllers
                     MensagemErro("Atividade não encontrada");
                     return Redirect(urlRetorno);
                 }
+
+                ValidarUsuarioLogado(atividade);
 
                 var dataConvertida = DataHelper.ConverterStringParaData(data);
 
@@ -104,6 +102,10 @@ namespace RAHSys.Apresentacao.Controllers
                 atividadeFinalizarModel.AtividadeInfo = new AtividadeInfoModel(atividade, dataConvertida);
 
                 return View(atividadeFinalizarModel);
+            }
+            catch (UnauthorizedException)
+            {
+                return RedirectToAction("Unauthorized", "Account");
             }
             catch (CustomBaseException ex)
             {
@@ -133,6 +135,15 @@ namespace RAHSys.Apresentacao.Controllers
             {
                 MensagemErro("Atividade não encontrada");
                 return Redirect(urlRetorno);
+            }
+
+            try
+            {
+                ValidarUsuarioLogado(atividade);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Unauthorized", "Account");
             }
 
             var dataConvertida = finalizarAtividadeModel.AtividadeInfo.DataPrevista;
@@ -197,12 +208,18 @@ namespace RAHSys.Apresentacao.Controllers
                     return Redirect(urlRetorno);
                 }
 
+                ValidarUsuarioLogado(registroRecorrencia.Atividade);
+
                 atividadeContratoFinalizarModel.AtividadeInfo = new AtividadeInfoModel(registroRecorrencia.Atividade, registroRecorrencia.DataPrevista)
                 {
                     RegistroRecorrencia = registroRecorrencia
                 };
 
                 return View(atividadeContratoFinalizarModel);
+            }
+            catch (UnauthorizedException)
+            {
+                return RedirectToAction("Unauthorized", "Account");
             }
             catch (CustomBaseException ex)
             {
@@ -217,6 +234,15 @@ namespace RAHSys.Apresentacao.Controllers
             var arquivos = Request.Files;
             try
             {
+                var atividade = _atividadeAppServico.ObterPorId(idAtividadeGeral);
+                if (atividade == null)
+                {
+                    MensagemErro("Atividade não encontrada");
+                    return RedirectToAction("MinhasAtividades");
+                }
+
+                ValidarUsuarioLogado(atividade);
+
                 var listaArquivos = new List<ArquivoAppModel>();
                 if (arquivos.Count > 0)
                 {
@@ -227,6 +253,10 @@ namespace RAHSys.Apresentacao.Controllers
                 }
 
                 _evidenciaAppServico.AdicionarEvidencias(idAtividadeGeral, idRegistroRecorrencia, listaArquivos);
+            }
+            catch (UnauthorizedException)
+            {
+                return RedirectToAction("Unauthorized", "Account");
             }
             catch (CustomBaseException ex)
             {
@@ -250,6 +280,20 @@ namespace RAHSys.Apresentacao.Controllers
                     return RedirectToAction("EvidenciaAtividade", new { id = idRegistroRecorrencia, urlRetorno });
                 }
 
+                var registroRecorrencia = _registroRecorrenciaAppServico.ObterPorId(evidenciaModel.IdRegistroRecorrencia);
+                var atividade = registroRecorrencia?.Atividade;
+                if (atividade == null)
+                {
+                    MensagemErro("Atividade não encontrada");
+                    return RedirectToAction("MinhasAtividades");
+                }
+
+                ValidarUsuarioLogado(atividade);
+
+            }
+            catch (UnauthorizedException)
+            {
+                return RedirectToAction("Unauthorized", "Account");
             }
             catch (CustomBaseException ex)
             {
@@ -266,9 +310,29 @@ namespace RAHSys.Apresentacao.Controllers
         {
             try
             {
+                var evidenciaModel = _evidenciaAppServico.ObterPorId(evidencia.IdEvidencia);
+                if (evidenciaModel == null)
+                {
+                    MensagemErro("Evidência não encontrada");
+                    return RedirectToAction("EvidenciaAtividade", new { id = evidencia.IdRegistroRecorrencia, urlRetorno });
+                }
+
+                var registroRecorrencia = _registroRecorrenciaAppServico.ObterPorId(evidenciaModel.IdRegistroRecorrencia);
+                var atividade = registroRecorrencia?.Atividade;
+                if (atividade == null)
+                {
+                    MensagemErro("Atividade não encontrada");
+                    return RedirectToAction("MinhasAtividades");
+                }
+
+                ValidarUsuarioLogado(atividade);
 
                 _evidenciaAppServico.Remover(evidencia.IdEvidencia);
                 MensagemSucesso(MensagensPadrao.ExclusaoSucesso);
+            }
+            catch (UnauthorizedException)
+            {
+                return RedirectToAction("Unauthorized", "Account");
             }
             catch (CustomBaseException ex)
             {
@@ -280,11 +344,15 @@ namespace RAHSys.Apresentacao.Controllers
 
         public string ObterAtividades(string dataInicial, string dataFinal)
         {
+            var usuarioLogado = ObterUsuarioLogado();
+            if (usuarioLogado == null)
+                throw new UnauthorizedException();
+
             DateTimeFormatInfo formatter = new CultureInfo("pt-BR", false).DateTimeFormat;
             var dataInicialConvertida = Convert.ToDateTime(dataInicial, formatter);
             var dataFinalConvertida = Convert.ToDateTime(dataFinal, formatter);
             var consulta = _atividadeAppServico.Consultar(null, null, null, null,
-                null, dataInicialConvertida, dataFinalConvertida);
+                new string[] { usuarioLogado.IdUsuario }, dataInicialConvertida, dataFinalConvertida);
             List<AtividadeRecorrenciaAppModel> lista = consulta.ToList();
             lista.ForEach(item =>
             {
@@ -297,152 +365,25 @@ namespace RAHSys.Apresentacao.Controllers
             return JsonConvert.SerializeObject(lista);
         }
 
-        public string ObterTodasEquipesSerializadas()
+        private UsuarioAppModel ObterUsuarioLogado()
         {
-            var consulta = _equipeAppServico.Consultar(null, null, null, true, 1, Int32.MaxValue);
-            var lista = consulta.Resultado.ToList();
-            lista.ForEach(item =>
-            {
-                item.Lider.UsuarioPerfis = null;
-                item.EquipeUsuarios.ForEach(eu =>
-                {
-                    eu.Usuario.UsuarioPerfis = null;
-                });
-            });
-            return JsonConvert.SerializeObject(lista);
+            var usuario = User.Identity.GetUserId();
+            var usuarioLogado = _usuarioAppServico.Consultar(new string[] { usuario }, null, null, null, true, 1, 1);
+
+            UsuarioAppModel retorno = null;
+
+            if (usuarioLogado.Resultado.Count() > 0)
+                retorno = usuarioLogado.Resultado.FirstOrDefault();
+
+            return retorno;
         }
 
-        [HttpPost]
-        public ActionResult FinalizarRecorrencia(int idAtividade, DateTime dataRealizacaoPrevista, DateTime dataRealizacao, string observacao, string urlRetorno)
+        private void ValidarUsuarioLogado(AtividadeAppModel atividadeModel)
         {
-            try
-            {
-                var atividade = _atividadeAppServico.ObterPorId(idAtividade);
-                if (atividade == null)
-                    MensagemErro("Atividade não encontrada");
-                else
-                {
-                    //_atividadeAppServico.FinalizarRecorrencia(idAtividade, dataRealizacaoPrevista, dataRealizacao, observacao);
-                    MensagemSucesso();
-                }
-            }
-            catch (CustomBaseException ex)
-            {
-                MensagemErro(ex.Mensagem);
-            }
+            var usuarioLogado = ObterUsuarioLogado();
 
-            return Redirect(urlRetorno);
+            if (usuarioLogado?.UsuarioPerfis?.Where(e => e.Perfil.Nome.ToLower().Equals(PerfilEnum.Admin.Nome.ToLower())).Count() <= 0 && usuarioLogado.IdUsuario != atividadeModel?.IdUsuario)
+                throw new UnauthorizedException();
         }
-
-        [HttpPost]
-        public ActionResult CopiarAtividade(int idAtividade, string urlRetorno)
-        {
-            try
-            {
-                var atividade = _atividadeAppServico.ObterPorId(idAtividade);
-                if (atividade == null)
-                    MensagemErro("Atividade não encontrada");
-                else
-                {
-                    _atividadeAppServico.CopiarAtividade(idAtividade);
-                    MensagemSucesso();
-                }
-            }
-            catch (CustomBaseException ex)
-            {
-                MensagemErro(ex.Mensagem);
-            }
-
-            return Redirect(urlRetorno);
-        }
-
-        [HttpPost]
-        public ActionResult TransferirAtividade(AtividadeAppModel atividadeApp, string urlRetorno)
-        {
-            try
-            {
-                var atividade = _atividadeAppServico.ObterPorId(atividadeApp.IdAtividade);
-                if (atividade == null)
-                    MensagemErro("Atividade não encontrada");
-                else
-                {
-                    _atividadeAppServico.TransferirAtividade(atividadeApp.IdAtividade, atividadeApp.IdUsuario);
-                    MensagemSucesso();
-                }
-            }
-            catch (CustomBaseException ex)
-            {
-                MensagemErro(ex.Mensagem);
-            }
-
-            return Redirect(urlRetorno);
-        }
-
-        [HttpPost]
-        public ActionResult ExcluirAtividade(int idAtividade, string urlRetorno)
-        {
-            try
-            {
-                var atividade = _atividadeAppServico.ObterPorId(idAtividade);
-                if (atividade == null)
-                    MensagemErro("Atividade não encontrada");
-                else
-                {
-                    _atividadeAppServico.Remover(idAtividade);
-                    MensagemSucesso();
-                }
-            }
-            catch (CustomBaseException ex)
-            {
-                MensagemErro(ex.Mensagem);
-            }
-
-            return Redirect(urlRetorno);
-        }
-
-        [HttpPost]
-        public ActionResult EncerrarAtividade(int idAtividade, DateTime dataEncerramento, string urlRetorno)
-        {
-            try
-            {
-                var atividade = _atividadeAppServico.ObterPorId(idAtividade);
-                if (atividade == null)
-                    MensagemErro("Atividade não encontrada");
-                else
-                {
-                    _atividadeAppServico.EncerrarAtividade(idAtividade, dataEncerramento);
-                    MensagemSucesso();
-                }
-            }
-            catch (CustomBaseException ex)
-            {
-                MensagemErro(ex.Mensagem);
-            }
-
-            return Redirect(urlRetorno);
-        }
-
-        [HttpPost]
-        public ActionResult AlterarEquipe(int idAtividade, int idEquipe, string urlRetorno)
-        {
-            try
-            {
-                var atividade = _atividadeAppServico.ObterPorId(idAtividade);
-                if (atividade == null)
-                    MensagemErro("Atividade não encontrada");
-                else
-                {
-                    _atividadeAppServico.AlterarEquipe(idAtividade, idEquipe);
-                    MensagemSucesso();
-                }
-            }
-            catch (CustomBaseException ex)
-            {
-                MensagemErro(ex.Mensagem);
-            }
-
-            return Redirect(urlRetorno);
-        }
-
     }
 }

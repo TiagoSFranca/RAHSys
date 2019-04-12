@@ -127,6 +127,10 @@ namespace RAHSys.Apresentacao.App_Start.Bundles
             bundles.Add(new ScriptBundle("~/Atividade/Index/js").Include(
                 "~/Scripts/atividade/atividadeIndex.js"
                 ));
+
+            bundles.Add(new ScriptBundle("~/Usuario/Atividade/js").Include(
+                "~/Scripts/usuario/usuarioAtividade.js"
+                ));
         }
     }
 }

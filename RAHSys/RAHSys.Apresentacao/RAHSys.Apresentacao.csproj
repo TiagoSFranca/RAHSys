@@ -2894,6 +2894,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\img\logo-big.png" />
     <Content Include="Scripts\atividade\atividade.js" />
+    <Content Include="Scripts\atividade\atividadeIndex.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -4123,6 +4124,9 @@
     <Content Include="Views\Equipe\EvidenciaAtividade.cshtml" />
     <Content Include="Views\Equipe\ExcluirEvidencia.cshtml" />
     <Content Include="Views\Equipe\MinhasEquipes.cshtml" />
+    <Content Include="Views\Atividade\FinalizarAtividade.cshtml" />
+    <Content Include="Views\Atividade\EvidenciaAtividade.cshtml" />
+    <Content Include="Views\Atividade\ExcluirEvidencia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

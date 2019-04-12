@@ -1,0 +1,147 @@
+﻿@using RAHSys.Aplicacao.AppModels;
+@model  RAHSys.Apresentacao.Models.FinalizarAtividadeModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    @Styles.Render("~/FileInput/css");
+    @Styles.Render("~/Select2/css");
+}
+
+<div class="row">
+    <div class="col-md-6 col-sm-6">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart font-dark hide"></i>
+                    <span class="caption-subject font-green-steel uppercase bold">Equipe</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="expand"> </a>
+                </div>
+            </div>
+            <div class="portlet-body portlet-collapsed">
+                @{Html.RenderPartial("_EquipeInfo", Model.AtividadeInfo.Atividade.Equipe);}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart font-dark hide"></i>
+                    <span class="caption-subject font-green-steel uppercase bold">Contrato</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="expand"> </a>
+                </div>
+            </div>
+            <div class="portlet-body portlet-collapsed">
+                @{Html.RenderPartial("_ContratoInfo", Model.AtividadeInfo.Atividade.Contrato);}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart font-dark hide"></i>
+                    <span class="caption-subject font-green-steel uppercase bold">Atividade</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="expand"> </a>
+                </div>
+            </div>
+            <div class="portlet-body portlet-collapsed">
+                @{Html.RenderPartial("_AtividadeInfo", Model.AtividadeInfo);}
+            </div>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("FinalizarAtividade", "Atividade", new { urlRetorno = ViewBag.UrlRetorno }, FormMethod.Post, new { @class = "form-horizontal margin-bottom-40", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart font-dark hide"></i>
+                        <span class="caption-subject font-green-steel uppercase bold">@ViewBag.SubTitle</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    @Html.HiddenFor(model => model.AtividadeInfo.Atividade.IdEquipe)
+                    @Html.HiddenFor(model => model.AtividadeInfo.Atividade.IdAtividade)
+                    @Html.HiddenFor(model => model.AtividadeInfo.DataPrevista)
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.DataRealizacao, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-3">
+                            @Html.EditorFor(model => model.DataRealizacao, new { htmlAttributes = new { @class = "form-control dataAtividade", @placeholder = "Realizado em", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.DataRealizacao, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        @Html.LabelFor(m => m.Observacao, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.TextAreaFor(model => model.Observacao, new { @class = "form-control", @placeholder = "Observação" })
+                            @Html.ValidationMessageFor(model => model.Observacao, "", new { @class = "text-danger" })
+                            <div class="form-control-focus"> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart font-dark hide"></i>
+                        <span class="caption-subject font-green-steel uppercase bold">Evidências</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="form-group form-md-line-input" id="fileInputDiv">
+                        <div class="col-md-9 col-md-offset-1">
+                            <div class="fileinput fileinput-new" data-provides="fileinput" id="fileInput">
+                                <span class="btn green btn-file btn-circle">
+                                    <span class="fileinput-new"> Selecionar Evidência </span>
+                                    <span class="fileinput-exists"> Alterar </span>
+                                    <input type="file" name="...">
+                                </span>
+                                <span class="fileinput-filename"> </span> &nbsp;
+                                <a href="javascript:;" class="close fileinput-exists" data-dismiss="fileinput"> </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-md-line-input">
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" class="btn blue btn-circle">Finalizar</button>
+                            @Html.ActionLink("Limpar", "FinalizarAtividade", "Atividade", new { id = Model.AtividadeInfo.Atividade.IdEquipe, idAtividade = Model.AtividadeInfo.Atividade.IdAtividade, data = Model.AtividadeInfo.DataPrevista, urlRetorno = ViewBag.UrlRetorno }, new { @class = "btn btn-white btn-outline btn-circle btn-md" })
+                            <a class="btn yellow-haze btn-outline btn-circle btn-md" href="@ViewBag.UrlRetorno">Cancelar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts{
+    @Scripts.Render("~/FileInput/js")
+    @Scripts.Render("~/Select2/js")
+    @Scripts.Render("~/Atividade/EvidenciasFileInput/js")
+}

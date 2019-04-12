@@ -14,6 +14,14 @@ namespace RAHSys.Apresentacao.Models
 
     }
 
+    public class AtividadeIndexModel
+    {
+        public ContratoAppModel Contrato { get; set; }
+        public EquipeAppModel Equipe { get; set; }
+        public string TodasAtividadesSerializadas { get; set; }
+        public string TodasEquipesSerializadas { get; set; }
+    }
+
     public class AtividadeEquipeModel
     {
         public ContratoAppModel Contrato { get; set; }

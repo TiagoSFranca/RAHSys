@@ -11,6 +11,7 @@ using System.Web.Mvc;
 namespace RAHSys.Apresentacao.Controllers
 {
     [RAHAudit]
+    [RAHAuthorize(Roles = "Engenharia")]
     public class TipoAtividadeController : ControllerBase
     {
         private readonly ITipoAtividadeAppServico _tipoAtividadeAppServico;

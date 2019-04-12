@@ -29,7 +29,7 @@ namespace RAHSys.Infra.Dados.EntityConfig
 
             Property(a => a.Dados)
                 .IsRequired()
-                .IsMaxLength();
+                .HasMaxLength(4000);
 
             Property(a => a.DataHora)
                 .IsOptional();
